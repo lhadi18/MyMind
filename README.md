@@ -1,8 +1,8 @@
 # BBY-31
 
 Team Members:
-Pedro Sales Muniz, A01256119, 2D, 2022-04-26
-[Student Name], [Student ID], [Set], [Date]
+Pedro Sales Muniz, A01256119, Set 2D, 2022-04-26
+Towa Quimbayo, A01086002, Set 1D, 2022-04-26
 [Student Name], [Student ID], [Set], [Date]
 [Student Name], [Student ID], [Set], [Date]
 
