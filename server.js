@@ -1,3 +1,5 @@
+const { db } = require('./models/user');
+
 const express               =  require('express'),
       app                   =  express(),
       mongoose              =  require("mongoose"),
@@ -6,6 +8,7 @@ const express               =  require('express'),
       LocalStrategy         =  require("passport-local"),
       passportLocalMongoose =  require("passport-local-mongoose"),
       User                  =  require("./models/user");
+const existingUser = require('./models/user')
 
 mongoose.connect("mongodb+srv://DBUser:Admin123@cluster0.z9j9r.mongodb.net/MyMindDatabase?retryWrites=true&w=majority");
 app.use(require("express-session")({
@@ -41,12 +44,18 @@ app.get("/register",(req,res)=>{
     res.render("register");
 });
 app.post("/register",(req,res)=>{
+    const existing = existingUser.find({})
     
-    User.register(new User({username: req.body.username,email:req.body.email,country: req.body.country}),req.body.password,function(err,user){
+    User.register(new User({firstName: req.body.firstname, lastName: req.body.lastname, username: req.body.username,email:req.body.email, isAdministrator:req.body.isadmin}),req.body.password,function(err,user){
+        if(existing == req.body.username) {
+            res.render("register")
+            console.log("User already exists.")
+        } else {
         if(err){
             console.log(err);
             res.render("register");
         }
+    }
     passport.authenticate("local")(req,res,function(){
         res.redirect("/login");
     })    
