@@ -1,81 +1,139 @@
-const { db } = require('./models/user');
+const express = require("express");
+const path = require('path');
+const session = require('express-session');
+const User = require("./models/user");
+const mongoose = require("mongoose");
+const bcrypt = require('bcrypt')
+const port = 8000;
+const app = express();
+app.set('view engine', 'text/html');
 
-const express               =  require('express'),
-      app                   =  express(),
-      mongoose              =  require("mongoose"),
-      passport              =  require("passport"),
-      bodyParser            =  require("body-parser"),
-      LocalStrategy         =  require("passport-local"),
-      passportLocalMongoose =  require("passport-local-mongoose"),
-      User                  =  require("./models/user");
-const existingUser = require('./models/user')
-
-mongoose.connect("mongodb+srv://DBUser:Admin123@cluster0.z9j9r.mongodb.net/MyMindDatabase?retryWrites=true&w=majority");
-app.use(require("express-session")({
-    secret:"Any normal Word",
-    resave: false,          
-    saveUninitialized:false    
-}));
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
-passport.use(new LocalStrategy(User.authenticate()));
-app.set("view engine","ejs");
-app.use(bodyParser.urlencoded(
-      { extended:true }
-))
-app.use(passport.initialize());
-app.use(passport.session());
-
-app.get("/", (req,res) =>{
-    res.render("home");
-})
-app.get("/userprofile",isLoggedIn ,(req,res) =>{
-    res.render("userprofile");
-})
-app.get("/login",(req,res)=>{
-    res.render("login");
-});
-app.post("/login",passport.authenticate("local",{
-    successRedirect:"/userprofile",
-    failureRedirect:"/login"
-}),function (req, res){
-});
-app.get("/register",(req,res)=>{
-    res.render("register");
-});
-app.post("/register",(req,res)=>{
-    const existing = existingUser.find({})
-    
-    User.register(new User({firstName: req.body.firstname, lastName: req.body.lastname, username: req.body.username,email:req.body.email, isAdministrator:req.body.isadmin}),req.body.password,function(err,user){
-        if(existing == req.body.username) {
-            res.render("register")
-            console.log("User already exists.")
-        } else {
-        if(err){
-            console.log(err);
-            res.render("register");
-        }
-    }
-    passport.authenticate("local")(req,res,function(){
-        res.redirect("/login");
-    })    
+const uri = "mongodb+srv://DBUser:Admin123@cluster0.z9j9r.mongodb.net/MyMindDatabase?retryWrites=true&w=majority";
+mongoose.connect(uri, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true
     })
+    .then(() => console.log("connected to db"))
+    .catch((err) => console.log(err));
+
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static(__dirname + '/public'));
+app.use(session({
+    secret: "password",
+    resave: false,
+    saveUninitialized: true
+}));
+
+app.get('/', function(req, res) {
+    res.sendFile(path.resolve('views/index.html'));
+  });
+
+app.get("/login", (req, res) => {
+    if (req.session.isLoggedIn) {
+         return res.sendFile(path.resolve('views/userprofile.html')); 
+    }
+    res.sendFile(path.resolve('views/login/index.html'));
 })
-app.get("/logout",(req,res)=>{
-    req.logout();
-    res.redirect("/");
-});
-function isLoggedIn(req,res,next) {
-    if(req.isAuthenticated()){
-        return next();
-    }
-    res.redirect("/login");
+
+app.post('/login', async (req, res) => {
+    User.findOne({
+        email: req.body.email, 
+    }, function (err, user) {
+        if (err) {
+            console.log(err);
+        }
+        if (!user) {
+            console.log('No user with such email.')
+            res.sendFile(path.resolve('views/login/index.html'))
+        } 
+        else {
+            return auth(req, res, user);
+        }
+    }); 
+})
+
+function auth(req, res, user){
+    console.log(user);
+    bcrypt.compare(req.body.password, user.password, function(err, comp) {
+        if (err) {
+            console.log(err);
+            res.sendFile(path.resolve('views/login/index.html'))
+        }
+        else if (comp === false){
+            console.log('Incorrect password.')
+            res.sendFile(path.resolve('views/login/index.html'))
+        }
+        else{
+            req.session.user = user;
+            req.session.isLoggedIn = true;
+            res.sendFile(path.resolve('views/sign-up/index.html'))
+        }
+    })
 }
-app.listen(process.env.PORT ||8000,function (err) {
-    if(err){
-        console.log(err);
-    }else {
-        console.log("Server Started At Port 8000");
+
+app.get('/logout', (req, res) => {
+    req.session.destroy((err) => {
+        if(err) console.log('Error removing user session data. ', err);
+    });
+    res.sendFile(path.resolve('views/login/index.html'))
+})
+
+app.get('/userprofile', (req, res) => {
+    if (req.session.isLoggedIn)
+        res.sendFile(path.resolve('views/login/index.html'))
+    else
+        res.sendFile(path.resolve('views/login/index.html'))
+})
+
+app.get("/sign-up", (req, res) => {
+    if (req.session.isLoggedIn) {
+        res.sendFile(path.resolve('views/login/index.html'))
+    };
+    res.sendFile(path.resolve('views/sign-up/index.html'))
+})
+
+app.post("/sign-up", isNotRegistered, async (req, res) => {
+    try {
+        const hashedPassword = await bcrypt.hash(req.body.password, 10);
+        const new_user = new User({
+            firstName: req.body.firstname,
+            lastName: req.body.lastname,
+            username: req.body.username,
+            userType: req.body.userType,
+            email: req.body.email,
+            password: hashedPassword
+        });
+        const existsAdmin = await User.exists({ isAdmin: true });
+        if (!existsAdmin) { new_user.isAdmin = true}
+
+        new_user.save()
+            .then((result) => {
+                console.log(result);
+            });
+
+            res.sendFile(path.resolve('views/login/index.html'))
+    } catch (err) {
+        console.log("Error while checking if user was already registered. ", err);
+        res.sendFile(path.resolve('views/sign-up/index.html'))
     }
-      
-});
+})
+
+function isNotRegistered(req, res, next){
+    User.findOne({
+        email: req.body.email, 
+    }, function (err, user) {
+        if (err) {
+            console.log(err);
+            return res.sendFile(path.resolve('views/sign-up/index.html'))
+        }
+        if (user) {
+            console.log(`User with email '${user.email}' already exists`)
+            return res.sendFile(path.resolve('views/sign-up/index.html'))
+        }
+        return next();
+    })
+}
+
+app.listen(port, () => {
+    console.log(`Example app  listening on port ${port}`)
+})

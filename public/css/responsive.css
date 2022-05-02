@@ -1,0 +1,199 @@
+:root {
+    --primaryColor: #09C5A3;
+    --secondaryColor: #00A98B;
+}
+
+@media (max-width: 575.98px) {
+    #wrapper #header {
+        display: none;
+    }
+    #wrapper #headMobile {
+        display: block;
+    }
+    #wrapper #headMobile .nav-container {
+        padding: 0 3rem;
+    }
+    #wrapper #headMobile .nav-container #footerNav {
+        font-size: 15px;
+    }
+    #wrapper #headMobile .nav-container .nav-btns .nav-toggle {
+        font-size: 1.5rem;
+    }
+    #wrapper #headMobile .nav-container .nav-menu .nav-list .nav-item {
+        width: 50%;
+    }
+    #wrapper #footerPlaceHolder {
+        display: none;
+    }
+    #wrapper #signUp {
+        grid-row: 2 / span 1;
+        padding: 5rem 3rem;
+    }
+    #wrapper #signUp h2 {
+        font-size: 2rem;
+    }
+    #wrapper #signUp #formContainer {
+        width: 100%;
+        padding: 4rem 3rem 2.5rem 3rem;
+    }
+    #wrapper #signUp #formContainer #signupForm .form-row.col-6 {
+        width: 100%;
+    }
+    #wrapper #loginContainer {
+        grid-row: 2 / span 1;
+        padding: 5rem 3rem;
+        flex-direction: column-reverse;
+    }
+    #wrapper #loginContainer div {
+        width: 100%;
+        text-align: center;
+    }
+    #wrapper #loginContainer div h2 {
+        font-size: 2rem;
+    }
+    #wrapper #loginContainer div img {
+        padding-top: 5rem;
+        width: 80%;
+    }
+    #wrapper #loginContainer div #formContainer {
+        padding: 4rem 3rem 2.5rem 3rem;
+    }
+    #wrapper #loginContainer div #formContainer #loginForm .form-row .form-group label {
+        text-align: left;
+    }
+}
+
+@media (min-width: 576px) and (max-width: 767.98px) {
+    #wrapper #header {
+        display: none;
+    }
+    #wrapper #headMobile {
+        display: block;
+    }
+    #wrapper #headMobile .nav-container {
+        padding: 0 3rem;
+    }
+    #wrapper #footerPlaceHolder {
+        display: none;
+    }
+    #wrapper #signUp {
+        grid-row: 2 / span 1;
+        padding: 5rem 3rem;
+    }
+    #wrapper #signUp #formContainer {
+        width: 100%;
+        padding: 4rem 3rem 2.5rem 3rem;
+    }
+    #wrapper #signUp #formContainer #signupForm .form-row.col-6 {
+        width: 100%;
+    }
+    #wrapper #loginContainer {
+        grid-row: 2 / span 1;
+        padding: 5rem 3rem;
+        flex-direction: column-reverse;
+    }
+    #wrapper #loginContainer div {
+        width: 100%;
+        text-align: center;
+    }
+    #wrapper #loginContainer div img {
+        padding-top: 5rem;
+        width: 50%;
+    }
+    #wrapper #loginContainer div #formContainer {
+        padding: 4rem 3rem 2.5rem 3rem;
+    }
+    #wrapper #loginContainer div #formContainer #loginForm .form-row .form-group label {
+        text-align: left;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+    #wrapper #header {
+        display: none;
+    }
+    #wrapper #headMobile {
+        display: block;
+    }
+    #wrapper #footerPlaceHolder {
+        display: none;
+    }
+    #wrapper #signUp {
+        grid-row: 2 / span 1;
+        padding: 5rem;
+    }
+    #wrapper #signUp #formContainer {
+        width: 100%;
+        padding: 4rem 4rem 2.5rem 4rem;
+    }
+    #wrapper #loginContainer {
+        grid-row: 2 / span 1;
+        padding: 5rem;
+        flex-direction: column-reverse;
+    }
+    #wrapper #loginContainer div {
+        width: 100%;
+        text-align: center;
+    }
+    #wrapper #loginContainer div img {
+        padding-top: 5rem;
+        width: 50%;
+    }
+    #wrapper #loginContainer div #formContainer {
+        padding: 4rem 4rem 2.5rem 4rem;
+    }
+    #wrapper #loginContainer div #formContainer #loginForm .form-row .form-group label {
+        text-align: left;
+    }
+}
+
+@media (min-width: 992px) and (max-width: 1199.98px) {
+    #wrapper #navPlaceHolder #headContainer {
+        padding: 1rem 5rem;
+    }
+    #wrapper #navPlaceHolder #headContainer #logo img {
+        width: 60px;
+    }
+    #wrapper #navPlaceHolder #headContainer #logo h2 {
+        font-size: 2.5rem;
+    }
+    #wrapper #navPlaceHolder #headContainer #navbar #navMenu .navLinks a {
+        font-size: 14px;
+    }
+    #wrapper #navPlaceHolder #headContainer #navbar #navMenu .navLinks:not(:last-child) {
+        padding-right: 1.5rem;
+    }
+    #wrapper #navPlaceHolder #headContainer #navbar #navMenu .navLinks a.loginNav, 
+    #wrapper #navPlaceHolder #headContainer #navbar #navMenu .navLinks input {
+        font-size: 14px;
+    }
+    #wrapper #signUp {
+        padding: 5rem;
+    }
+    #wrapper #signUp #formContainer {
+        width: 100%;
+    }
+    #wrapper #loginContainer {
+        padding: 5rem;
+        flex-direction: column-reverse;
+    }
+    #wrapper #loginContainer div {
+        width: 100%;
+        text-align: center;
+    }
+    #wrapper #loginContainer div img {
+        padding-top: 5rem;
+        width: 50%;
+    }
+    #wrapper #loginContainer div #formContainer #loginForm .form-row .form-group label {
+        text-align: left;
+    }
+}
+
+@media (min-width: 1200px) and (max-width: 1499.98px) {
+    
+}
+
+@media (min-width: 2000px) {
+
+}
