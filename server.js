@@ -25,14 +25,14 @@ app.use(session({
 }));
 
 app.get('/', function(req, res) {
-    res.sendFile(path.resolve('views/index.html'));
+    res.sendFile(path.resolve('public/index.html'));
   });
 
 app.get("/login", (req, res) => {
     if (req.session.isLoggedIn) {
-         return res.sendFile(path.resolve('views/userprofile.html')); 
+         return res.redirect('/userprofile'); 
     }
-    res.sendFile(path.resolve('views/login/index.html'));
+    res.sendFile(path.resolve('public/login.html'));
 })
 
 app.post('/login', async (req, res) => {
@@ -41,10 +41,11 @@ app.post('/login', async (req, res) => {
     }, function (err, user) {
         if (err) {
             console.log(err);
+            res.sendFile(path.resolve('public/login.html'))
         }
         if (!user) {
             console.log('No user with such email.')
-            res.sendFile(path.resolve('views/login/index.html'))
+            res.sendFile(path.resolve('public/login.html'))
         } 
         else {
             return auth(req, res, user);
@@ -57,39 +58,39 @@ function auth(req, res, user){
     bcrypt.compare(req.body.password, user.password, function(err, comp) {
         if (err) {
             console.log(err);
-            res.sendFile(path.resolve('views/login/index.html'))
+            res.sendFile(path.resolve('public/login.html'))
         }
         else if (comp === false){
             console.log('Incorrect password.')
-            res.sendFile(path.resolve('views/login/index.html'))
+            res.sendFile(path.resolve('public/login.html'))
         }
         else{
             req.session.user = user;
             req.session.isLoggedIn = true;
-            res.sendFile(path.resolve('views/sign-up/index.html'))
+            res.redirect('/userprofile')
         }
     })
 }
 
-app.get('/logout', (req, res) => {
+app.post('/logout', (req, res) => {
     req.session.destroy((err) => {
         if(err) console.log('Error removing user session data. ', err);
     });
-    res.sendFile(path.resolve('views/login/index.html'))
+    res.redirect('/login')
 })
 
 app.get('/userprofile', (req, res) => {
     if (req.session.isLoggedIn)
-        res.sendFile(path.resolve('views/login/index.html'))
+        res.sendFile(path.resolve('public/userprofile.html'))
     else
-        res.sendFile(path.resolve('views/login/index.html'))
+        res.redirect('/login')
 })
 
 app.get("/sign-up", (req, res) => {
     if (req.session.isLoggedIn) {
-        res.sendFile(path.resolve('views/login/index.html'))
+        res.redirect('/userprofile')
     };
-    res.sendFile(path.resolve('views/sign-up/index.html'))
+    res.sendFile(path.resolve('public/sign-up.html'))
 })
 
 app.post("/sign-up", isNotRegistered, async (req, res) => {
@@ -104,17 +105,17 @@ app.post("/sign-up", isNotRegistered, async (req, res) => {
             password: hashedPassword
         });
         const existsAdmin = await User.exists({ isAdmin: true });
-        if (!existsAdmin) { new_user.isAdmin = true}
+        if (!existsAdmin) { new_user.isAdmin = true }
 
         new_user.save()
             .then((result) => {
                 console.log(result);
             });
 
-            res.sendFile(path.resolve('views/login/index.html'))
+            res.redirect('/login')
     } catch (err) {
         console.log("Error while checking if user was already registered. ", err);
-        res.sendFile(path.resolve('views/sign-up/index.html'))
+        res.sendFile(path.resolve('public/sign-up.html'))
     }
 })
 
@@ -124,11 +125,11 @@ function isNotRegistered(req, res, next){
     }, function (err, user) {
         if (err) {
             console.log(err);
-            return res.sendFile(path.resolve('views/sign-up/index.html'))
+            return res.sendFile(path.resolve('public/sign-up.html'))
         }
         if (user) {
             console.log(`User with email '${user.email}' already exists`)
-            return res.sendFile(path.resolve('views/sign-up/index.html'))
+            return res.sendFile(path.resolve('public/sign-up.html'))
         }
         return next();
     })
