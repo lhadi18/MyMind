@@ -37,6 +37,7 @@ body {
     width: 100%;
     position: sticky;
     top: 0;
+    z-index: 9999;
 }
 
 /* Desktop Header */
@@ -47,7 +48,7 @@ body {
 }
 
 #wrapper #navPlaceHolder #headContainer {
-    min-height: 8vh;
+    min-height: 10vh;
     padding: 1rem 7rem;
     display: flex;
 }

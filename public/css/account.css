@@ -179,6 +179,10 @@
     flex-direction: row;
 }
 
+#wrapper #profileSummary #profileDesc #buttonSec #bannerFile {
+    display: none;
+}
+
 #wrapper #profileSummary #profileDesc #buttonSec #editBanner {
     font-family: 'Nunito', sans-serif;
     margin-top: 1.5rem;

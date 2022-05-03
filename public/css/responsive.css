@@ -4,11 +4,15 @@
 }
 
 @media (max-width: 575.98px) {
+    #wrapper #navPlaceHolder {
+        display: none;
+    }
     #wrapper #header {
         display: none;
     }
     #wrapper #headMobile {
         display: block;
+        z-index: 9999;
     }
     #wrapper #headMobile .nav-container {
         padding: 0 3rem;
@@ -61,14 +65,103 @@
     #wrapper #loginContainer div #formContainer #loginForm .form-row .form-group label {
         text-align: left;
     }
+    #wrapper #banner {
+        grid-column: 1 / span 4;
+        grid-row: 1 / span 1;
+        height: 30vh;
+        background-attachment: scroll;
+    }
+    #wrapper #banner #overlay {
+        height: 30vh;
+    }
+    #wrapper #banner #overlay #profileHeader {
+        padding: 3rem;
+        display: flex;
+        flex-direction: row;
+        justify-content: end;
+    }
+    #wrapper #banner #overlay #profileHeader h2 {
+        display: none;
+    }
+    #wrapper #banner #overlay #profileHeader #editProfileBtn {
+        display: flex;
+        font-size: 1rem;
+        min-width: 10rem;
+        padding: 10px;
+        height: 3.2rem;
+    }
+    #wrapper #profileSummary {
+        background: white;
+        padding: 0 5rem 5rem;
+        margin-top: -5vh;
+        border-top-left-radius: 50px;
+        border-top-right-radius: 50px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        z-index: 5;
+    }
+    #wrapper #profileSummary #profileDesc {
+        width: 100%;
+        padding-left: 0;
+        text-align: center;
+        position: absolute;
+        top: 16vh;
+        padding-bottom: 7rem;
+    }
+    #wrapper #profileSummary #profileDesc #profileImageSecMob {
+        display: block;
+        padding: 0 27%;
+    }
+    #wrapper #profileSummary #profileDesc #profileImageSecMob #profileImgContainerMob #profileImageMob {
+        border-radius: 500px;
+        border: 7px solid white;
+        box-shadow: none;
+    } 
+    #wrapper #profileSummary #profileDesc #displayFullname {
+        padding: 1rem 3rem 0.8rem;
+        font-size: 1.5rem;
+    }
+    #wrapper #profileSummary #profileDesc #displayUsername {
+        font-size: 1.2rem;
+        font-weight: 500;
+        color: var(--primaryColor);
+        margin: 0;
+        padding-bottom: 2rem;
+    }    
+    #wrapper #profileSummary #profileDesc #contactInfoMob {
+        display: flex;
+        flex-direction: column;
+        padding: 1.5rem 2rem;
+        margin: 0 2rem 3rem;
+    }
+    #wrapper #profileSummary #profileDesc #contactInfoMob div i {
+        font-size: 1.5rem;
+    }
+    #wrapper #profileSummary #profileDesc #contactInfoMob div span {
+        font-size: 1rem;
+    }
+    #wrapper #profileSummary #profileDesc #joinedDateMob {
+        display: block;
+    }
+    #wrapper #profileSummary #profileImageSec,
+    #wrapper #profileSummary #profileDesc p,
+    #wrapper #profileSummary #profileDesc #buttonSec,
+    #wrapper #profileDetails {
+        display: none;
+    }
 }
 
 @media (min-width: 576px) and (max-width: 767.98px) {
+    #wrapper #navPlaceHolder {
+        display: none;
+    }
     #wrapper #header {
         display: none;
     }
     #wrapper #headMobile {
         display: block;
+        z-index: 9999;
     }
     #wrapper #headMobile .nav-container {
         padding: 0 3rem;
@@ -106,14 +199,97 @@
     #wrapper #loginContainer div #formContainer #loginForm .form-row .form-group label {
         text-align: left;
     }
+    #wrapper #banner {
+        grid-column: 1 / span 4;
+        grid-row: 1 / span 1;
+        height: 32vh;
+        background-attachment: scroll;
+    }
+    #wrapper #banner #overlay {
+        height: 32vh;
+    }
+    #wrapper #banner #overlay #profileHeader {
+        padding: 3rem;
+        display: flex;
+        flex-direction: row;
+        justify-content: end;
+    }
+    #wrapper #banner #overlay #profileHeader h2 {
+        display: none;
+    }
+    #wrapper #banner #overlay #profileHeader #editProfileBtn {
+        display: flex;
+        font-size: 1rem;
+        min-width: 12rem;
+        padding: 10px;
+        height: 3.7rem;
+    }
+    #wrapper #profileSummary {
+        background: white;
+        padding: 0 5rem 5rem;
+        margin-top: -5vh;
+        border-top-left-radius: 50px;
+        border-top-right-radius: 50px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        z-index: 5;
+    }
+    #wrapper #profileSummary #profileDesc {
+        width: 100%;
+        padding-left: 0;
+        text-align: center;
+        position: absolute;
+        top: 16vh;
+        padding-bottom: 7rem;
+    }
+    #wrapper #profileSummary #profileDesc #profileImageSecMob {
+        display: block;
+        padding: 0 30%;
+    }
+    #wrapper #profileSummary #profileDesc #profileImageSecMob #profileImgContainerMob #profileImageMob {
+        border-radius: 500px;
+        border: 10px solid white;
+        box-shadow: none;
+    } 
+    #wrapper #profileSummary #profileDesc #displayFullname {
+        padding-top: 1rem;
+        font-size: 1.7rem;
+    }
+    #wrapper #profileSummary #profileDesc #displayUsername {
+        font-size: 1.2rem;
+        font-weight: 500;
+        color: var(--primaryColor);
+        margin: 0;
+        padding-bottom: 2rem;
+    }    
+    #wrapper #profileSummary #profileDesc #contactInfoMob {
+        display: flex;
+        flex-direction: column;
+        padding: 1.5rem 3rem;
+        margin: 0 3rem 3rem;
+    }
+    #wrapper #profileSummary #profileDesc #joinedDateMob {
+        display: block;
+    }
+    #wrapper #profileSummary #profileImageSec,
+    #wrapper #profileSummary #profileDesc p,
+    #wrapper #profileSummary #profileDesc #buttonSec,
+    #wrapper #profileDetails {
+        display: none;
+    }
 }
 
 @media (min-width: 768px) and (max-width: 991.98px) {
+    #wrapper #navPlaceHolder {
+        display: none;
+    }
     #wrapper #header {
         display: none;
     }
     #wrapper #headMobile {
         display: block;
+        z-index: 9999;
     }
     #wrapper #footerPlaceHolder {
         display: none;
@@ -144,6 +320,83 @@
     }
     #wrapper #loginContainer div #formContainer #loginForm .form-row .form-group label {
         text-align: left;
+    }
+    #wrapper #banner {
+        grid-column: 1 / span 4;
+        grid-row: 1 / span 1;
+        height: 40vh;
+        background-attachment: scroll;
+    }
+    #wrapper #banner #overlay {
+        height: 40vh;
+    }
+    #wrapper #banner #overlay #profileHeader {
+        padding: 3rem 5rem;
+        display: flex;
+        flex-direction: row;
+        justify-content: end;
+    }
+    #wrapper #banner #overlay #profileHeader h2 {
+        display: none;
+    }
+    #wrapper #banner #overlay #profileHeader #editProfileBtn {
+        display: flex;
+        font-size: 1rem;
+        min-width: 12rem;
+        padding: 10px;
+        height: 4rem;
+    }
+    #wrapper #profileSummary {
+        background: white;
+        padding: 0 5rem 5rem;
+        margin-top: -5vh;
+        border-top-left-radius: 50px;
+        border-top-right-radius: 50px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        z-index: 5;
+    }
+    #wrapper #profileSummary #profileDesc {
+        width: 100%;
+        padding-left: 0;
+        text-align: center;
+        position: absolute;
+        top: 20vh;
+        padding-bottom: 7rem;
+    }
+    #wrapper #profileSummary #profileDesc #profileImageSecMob {
+        display: block;
+        padding: 0 35%;
+    }
+    #wrapper #profileSummary #profileDesc #profileImageSecMob #profileImgContainerMob #profileImageMob {
+        border-radius: 500px;
+        border: 10px solid white;
+        box-shadow: none;
+    } 
+    #wrapper #profileSummary #profileDesc #displayFullname {
+        padding-top: 1rem;
+        font-size: 2rem;
+    }
+    #wrapper #profileSummary #profileDesc #displayUsername {
+        font-size: 1.5rem;
+        font-weight: 500;
+        color: var(--primaryColor);
+        margin: 0;
+        padding-bottom: 2rem;
+    }    
+    #wrapper #profileSummary #profileDesc #contactInfoMob {
+        display: flex;
+        flex-direction: column;
+    }
+    #wrapper #profileSummary #profileDesc #joinedDateMob {
+        display: block;
+    }
+    #wrapper #profileSummary #profileImageSec,
+    #wrapper #profileSummary #profileDesc p,
+    #wrapper #profileSummary #profileDesc #buttonSec,
+    #wrapper #profileDetails {
+        display: none;
     }
 }
 
@@ -187,6 +440,20 @@
     }
     #wrapper #loginContainer div #formContainer #loginForm .form-row .form-group label {
         text-align: left;
+    }
+    #wrapper #profileSummary #profileImageSec {
+        width: 40%;
+    }
+    #wrapper #profileSummary #profileDesc {
+        width: 60%
+    }
+    #wrapper #profileSummary #profileDesc p {
+        font-size: 1rem;
+    }
+    #wrapper #profileSummary #profileDesc #buttonSec #editBanner,
+    #wrapper #profileSummary #profileDesc #buttonSec #saveChanges {
+        min-width: 12rem;
+        font-size: 1rem;
     }
 }
 

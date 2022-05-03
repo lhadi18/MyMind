@@ -1,18 +1,37 @@
-var imgBtn = document.getElementById('profileImage');
-var fileInp = document.querySelector('[type="file"]');
+var profileImgBtn = document.getElementById('profileImage');
+var profileFile = document.getElementById('profileFile');
 
-imgBtn.addEventListener('click', function () {
-    fileInp.click();
-})
+profileImgBtn.addEventListener('click', function () {
+    profileFile.click();
+});
 
-fileInp.addEventListener('change', function(){
-    // this refers to the file
+profileFile.addEventListener('change', function(){
     const choosedFile = this.files[0];
     
     if (choosedFile) {
         const reader = new FileReader();
         reader.addEventListener('load', function () {
-            imgBtn.setAttribute('src', reader.result);
+            profileImgBtn.setAttribute('src', reader.result);
+        });
+    
+        reader.readAsDataURL(choosedFile);
+    }
+}); 
+
+var bannerImgBtn = document.getElementById('editBanner');
+var bannerFile = document.getElementById('bannerFile');
+
+bannerImgBtn.addEventListener('click', function () {
+    bannerFile.click();
+});
+
+bannerFile.addEventListener('change', function(){
+    const choosedFile = this.files[0];
+    
+    if (choosedFile) {
+        const reader = new FileReader();
+        reader.addEventListener('load', function () {
+            document.getElementById('banner').style.backgroundImage = 'url("' + reader.result + '")';
         });
     
         reader.readAsDataURL(choosedFile);

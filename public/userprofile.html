@@ -71,7 +71,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="/userprofile" class="nav-link">
+                            <a href="/account/" class="nav-link">
                                 <i class="bi bi-person-circle nav-icon"></i>Account
                             </a>
                         </li>
@@ -105,7 +105,7 @@
             <div id="overlay">
                 <div id="profileHeader">
                     <h2>My Account</h2>
-                    <a id="editProfileBtn" href="/edit-account">Edit Profile</a>
+                    <a id="editProfileBtn" href="../edit-account/">Edit Profile</a>
                 </div>
             </div>
         </div>
@@ -113,7 +113,7 @@
         <div id="profileSummary">
             <div id="profileImageSec">
                 <div id="profileImgContainer">
-                    <input type="file"/>
+                    <input type="file" accept="image/gif, image/jpeg, image/png, image/svg" id="profileFile"/>
                     <img id="profileImage" src="../images/placeholder-profile.jpg" alt="Profile Picture">
                 </div>
             </div>
@@ -129,6 +129,7 @@
                 <h4 id="displayUsername">@tquimbayo</h4>
                 <p>Joined: <span id="joinedDate">May 1, 2022</span></p>
                 <div id="buttonSec">
+                    <input type="file" accept="image/gif, image/jpeg, image/png, image/svg" id="bannerFile"/>
                     <button id="editBanner">Edit Banner</button>
                     <button id="saveChanges">Save</button>
                 </div>
