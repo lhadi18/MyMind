@@ -240,6 +240,11 @@ body {
     font-size: 1.5rem;
 }
 
+#wrapper #headMobile .nav-container .nav-menu .nav-list .nav-item .nav-link img.nav-icon {
+    width: 24px;
+    margin: 3px;
+}
+
 #wrapper #headMobile .nav-container .nav-menu #logoMob {
     display: flex;
     flex-direction: row;

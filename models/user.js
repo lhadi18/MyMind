@@ -16,7 +16,8 @@ const userSchema = new Schema({
         unique: true
     },
     password: {
-        type: String
+        type: String,
+        required: true,
     },
     email: {
         type: String,
@@ -24,7 +25,9 @@ const userSchema = new Schema({
         unique: true
     },
     phoneNum: {
-        type: Number
+        type: Number,
+        required: true,
+        unique: true
     },
     isAdmin: {
         type: Boolean,

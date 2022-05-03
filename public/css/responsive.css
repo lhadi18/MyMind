@@ -32,13 +32,14 @@
     #wrapper #signUp {
         grid-row: 2 / span 1;
         padding: 5rem 3rem;
+        margin-bottom: 5rem;
     }
     #wrapper #signUp h2 {
         font-size: 2rem;
     }
     #wrapper #signUp #formContainer {
         width: 100%;
-        padding: 4rem 3rem 2.5rem 3rem;
+        padding: 4rem 2rem 2.5rem 2rem;
     }
     #wrapper #signUp #formContainer #signupForm .form-row.col-6 {
         width: 100%;
@@ -58,9 +59,10 @@
     #wrapper #loginContainer div img {
         padding-top: 5rem;
         width: 80%;
+        padding-bottom: 3rem;
     }
     #wrapper #loginContainer div #formContainer {
-        padding: 4rem 3rem 2.5rem 3rem;
+        padding: 4rem 2rem 2.5rem 2rem;
     }
     #wrapper #loginContainer div #formContainer #loginForm .form-row .form-group label {
         text-align: left;
@@ -75,7 +77,7 @@
         height: 30vh;
     }
     #wrapper #banner #overlay #profileHeader {
-        padding: 3rem;
+        padding: 3rem 2rem;
         display: flex;
         flex-direction: row;
         justify-content: end;
@@ -85,7 +87,7 @@
     }
     #wrapper #banner #overlay #profileHeader #editProfileBtn {
         display: flex;
-        font-size: 1rem;
+        font-size: 16px;
         min-width: 10rem;
         padding: 10px;
         height: 3.2rem;
@@ -150,6 +152,37 @@
     #wrapper #profileDetails {
         display: none;
     }
+    #wrapper #bannerMob {
+        height: 30vh;
+    }
+    #wrapper #bannerMob #overlay {
+        height: 30vh;
+    }
+    #wrapper #bannerMob #overlay #profileHeader {
+        padding: 3rem 2rem;
+    }
+    #wrapper #bannerMob #overlay #profileHeader #editBanner,
+    #wrapper #bannerMob #overlay #profileHeader #saveChanges {
+        font-size: 14px;
+        min-width: 8rem;
+        padding: 10px;
+        height: 3.2rem;
+    }
+    #wrapper #profileSummaryMob #profileDesc {
+        top: 16vh;
+    }
+    #wrapper #profileSummaryMob #profileDesc #profileImageSec {
+        padding: 0 27%;
+    }
+    #wrapper #profileSummaryMob #profileDesc #profileImageSec #profileImgContainer #profileImage {
+        border: 7px solid white;
+    } 
+    #wrapper #profileDetailsMob {
+        padding: 5rem 3rem;
+    }
+    #wrapper #profileDetailsMob #profileForm .form-row .form-group label {
+        font-size: 1rem;
+    }
 }
 
 @media (min-width: 576px) and (max-width: 767.98px) {
@@ -172,6 +205,7 @@
     #wrapper #signUp {
         grid-row: 2 / span 1;
         padding: 5rem 3rem;
+        margin-bottom: 5rem;
     }
     #wrapper #signUp #formContainer {
         width: 100%;
@@ -192,6 +226,7 @@
     #wrapper #loginContainer div img {
         padding-top: 5rem;
         width: 50%;
+        padding-bottom: 3rem;
     }
     #wrapper #loginContainer div #formContainer {
         padding: 4rem 3rem 2.5rem 3rem;
@@ -278,6 +313,31 @@
     #wrapper #profileDetails {
         display: none;
     }
+    #wrapper #bannerMob {
+        height: 32vh;
+    }
+    #wrapper #bannerMob #overlay {
+        height: 32vh;
+    }
+    #wrapper #bannerMob #overlay #profileHeader {
+        padding: 3rem;
+    }
+    #wrapper #bannerMob #overlay #profileHeader #editBanner,
+    #wrapper #bannerMob #overlay #profileHeader #saveChanges {
+        font-size: 1rem;
+        min-width: 12rem;
+        padding: 10px;
+        height: 3.7rem;
+    }
+    #wrapper #profileSummaryMob #profileDesc {
+        top: 16vh;
+    }
+    #wrapper #profileSummaryMob #profileDesc #profileImageSec {
+        padding: 0 30%;
+    }
+    #wrapper #profileDetailsMob {
+        padding: 5rem 3rem;
+    }
 }
 
 @media (min-width: 768px) and (max-width: 991.98px) {
@@ -297,6 +357,7 @@
     #wrapper #signUp {
         grid-row: 2 / span 1;
         padding: 5rem;
+        margin-bottom: 5rem;
     }
     #wrapper #signUp #formContainer {
         width: 100%;
@@ -314,6 +375,7 @@
     #wrapper #loginContainer div img {
         padding-top: 5rem;
         width: 50%;
+        padding-bottom: 3rem;
     }
     #wrapper #loginContainer div #formContainer {
         padding: 4rem 4rem 2.5rem 4rem;

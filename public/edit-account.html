@@ -24,12 +24,11 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" type="text/css" href="../css/style.css"/>
-    <link rel="stylesheet" type="text/css" href="../css/account.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/edit-account.css"/>
     <link rel="stylesheet" type="text/css" href="../css/responsive.css"/>
 </head>
 <body>
     <div id="wrapper">
-        <div id="navPlaceHolder"></div>
         <header id="headMobile">
             <nav class="nav-container">
                 <p id="footerNav">MyMind 2022 © COMP 2800</p>
@@ -52,7 +51,7 @@
                         </li>
                         <li class="nav-item">
                             <a href="/therapists/" class="nav-link"> 
-                                <img src="../images/heart-pulse.svg" class="nav-icon" alt="therapists" width="24px" style="margin:3px;">Therapists
+                                <img src="../images/heart-pulse.svg" class="nav-icon" alt="therapists">Therapists
                             </a>
                         </li>
                         <li class="nav-item">
@@ -71,7 +70,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="/userprofile" class="nav-link">
+                            <a href="/account/" class="nav-link">
                                 <i class="bi bi-person-circle nav-icon"></i>Account
                             </a>
                         </li>
@@ -101,76 +100,51 @@
             </nav>
         </header>
         
-        <div id="banner">
+        <div id="bannerMob">
             <div id="overlay">
                 <div id="profileHeader">
-                    <h2>My Account</h2>
-                    <button id="editProfileBtn">Edit Profile</button>
-                </div>
-            </div>
-        </div>
-
-        <div id="profileSummary">
-            <div id="profileImageSec">
-                <div id="profileImgContainer">
-                    <input type="file"/>
-                    <img id="profileImage" src="../images/placeholder-profile.jpg" alt="Profile Picture">
-                </div>
-            </div>
-
-            <div id="profileDesc">
-                <div id="profileImageSecMob">
-                    <div id="profileImgContainerMob">
-                        <img id="profileImageMob" src="../images/placeholder-profile.jpg" alt="Profile Picture">
-                    </div>
-                </div>
-                
-                <h2 id="displayFullname">Towa Quimbayo</h2>
-                <h4 id="displayUsername">@tquimbayo</h4>
-                <p>Joined: <span id="joinedDate">May 1, 2022</span></p>
-                <div id="buttonSec">
+                    <input type="file" accept="image/gif, image/jpeg, image/png, image/svg" id="bannerFile"/>
                     <button id="editBanner">Edit Banner</button>
                     <button id="saveChanges">Save</button>
                 </div>
-
-                <div id="contactInfoMob">
-                    <div>
-                        <i class="bi bi-telephone"></i>
-                        <span>(778)555 - 5555</span>
-                    </div>
-                    <div>
-                        <i class="bi bi-envelope"></i>
-                        <span>towacurtis@hotmail.com</span>
-                    </div>
-                </div>
-                <span id="joinedDateMob">Joined: May 1, 2022</span>
             </div>
         </div>
 
-        <div id="profileDetails">
+        <div id="profileSummaryMob">
+            <div id="profileDesc">
+                <div id="profileImageSec">
+                    <div id="profileImgContainer">
+                        <input type="file" accept="image/gif, image/jpeg, image/png, image/svg" id="profileFile"/>
+                        <img id="profileImage" src="../images/placeholder-profile.jpg" alt="Profile Picture">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="profileDetailsMob">
             <form id="profileForm">
-                <div class="form-row col-6">
+                <div class="form-row">
                     <div class="form-group">
                         <label>First Name</label>
                         <input type="text" class="form-control" name="firstname" id="firstname" placeholder="First Name" value="Towa" required="required">
                     </div>
                 </div>
 
-                <div class="form-row col-6">
+                <div class="form-row">
                     <div class="form-group">
                         <label>Last Name</label>
                         <input type="text" class="form-control" name="lastname" id="lastname" placeholder="Last Name" value="Quimbayo" required="required">
                     </div>
                 </div>
 
-                <div class="form-row col-6">
+                <div class="form-row">
                     <div class="form-group">
                         <label>Username</label>
                         <input type="text" class="form-control" name="username" id="username" placeholder="Username" value="tquimbayo" required="required">
                     </div>
                 </div>
 
-                <div class="form-row col-6">
+                <div class="form-row">
                     <div class="form-group">
                         <label>Phone</label>
                         <input type="tel" class="form-control" name="phone" id="phone" placeholder="phone" value="7785555555" required="required">
@@ -186,9 +160,9 @@
 
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="password">Password</label>
+                        <label for="password">Change Password</label>
                         <div class="input-group" id="show-hide-password">
-                            <input type="password" name="password" class="form-control" id="password" value="abc123" required="required">
+                            <input type="password" name="password" class="form-control" id="password">
                             <div class="input-group-addon">
                                 <a href=""><i class="fa fa-eye-slash" aria-hidden="true"></i></a>
                             </div>
@@ -197,8 +171,6 @@
                 </div>
             </form>
         </div>
-
-        <div id="footerPlaceHolder"></div>
     </div>
     
     <!-- jQuery CDN -->

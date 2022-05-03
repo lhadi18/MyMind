@@ -31,7 +31,11 @@ bannerFile.addEventListener('change', function(){
     if (choosedFile) {
         const reader = new FileReader();
         reader.addEventListener('load', function () {
-            document.getElementById('banner').style.backgroundImage = 'url("' + reader.result + '")';
+            if (window.location.pathname == '/account/') {
+                document.getElementById('banner').style.backgroundImage = 'url("' + reader.result + '")';
+            } else {
+                document.getElementById('bannerMob').style.backgroundImage = 'url("' + reader.result + '")';
+            }
         });
     
         reader.readAsDataURL(choosedFile);

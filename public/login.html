@@ -52,7 +52,7 @@
                         </li>
                         <li class="nav-item">
                             <a href="/therapists/" class="nav-link"> 
-                                <img src="../images/heart-pulse.svg" class="nav-icon" alt="therapists" width="24px" style="margin:3px;">Therapists
+                                <img src="../images/heart-pulse.svg" class="nav-icon" alt="therapists">Therapists
                             </a>
                         </li>
                         <li class="nav-item">
@@ -71,7 +71,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="/userprofile" class="nav-link">
+                            <a href="/account/" class="nav-link">
                                 <i class="bi bi-person-circle nav-icon"></i>Account
                             </a>
                         </li>
@@ -110,14 +110,7 @@
                 <h2>Welcome Back!</h2>
 
                 <div id="formContainer">
-                    <form id="loginForm" action="/login" method="POST">
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Username</label>
-                                <input type="text" class="form-control" name="username" id="username" placeholder="Username" value="tquimbayo" required="required">
-                            </div>
-                        </div>
-        
+                    <form id="loginForm" action="/login" method="POST">     
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="email">Email Address</label>
@@ -137,8 +130,8 @@
                             </div>
                         </div>
         
-                        <input type="submit" id="loginBtn" value="Login" />
-                        <p id="signupDesc">Don't have an account? <a href="/sign-up">Sign Up</a></p>
+                        <input type="submit" id="loginBtn" value="Login"/>
+                        <p id="signupDesc">Don't have an account? <a href="../sign-up/">Sign Up</a></p>
                         <p id="loginErrorMessage">&nbsp;</p>
                     </form>
                 </div>

@@ -155,6 +155,7 @@ app.post("/sign-up", isNotRegistered, async (req, res) => {
             firstName: req.body.firstname,
             lastName: req.body.lastname,
             username: req.body.username,
+            phoneNum: req.body.phone,
             userType: req.body.userType,
             email: req.body.email,
             password: hashedPassword
