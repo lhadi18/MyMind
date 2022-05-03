@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+    <title>MyMind</title>
+</head>
+<body>
+    <h1>Admin Dashboard</h1>
+    <span>If a user is an admin they will reach this page.</span>
+    <br>
+    <button type="button" onclick="getData()">Click me</button>
+    <br>
+    <span>Users:</span>
+    <br>
+
+    <div id="populate">
+
+    </div>
+</body>
+
+<script>
+    var clicked = false;
+    function getData() {
+        if(!clicked) {
+    $.ajax({
+        url: '/getAllUsersData',
+        type: "GET",
+        success: function(data) {
+            var userData = JSON.stringify(data);
+            data.forEach(userData => {
+                $("#populate")
+                .append(`First Name: ${userData.firstName} <br>`)
+                .append(`Last name: ${userData.lastName} <br>`)
+                .append(`Username: ${userData.username} <br>`)
+                .append(`Email address: ${userData.email} <br>`)
+                .append(`Administrator: ${userData.isAdmin} <br>`)
+                .append(`User type: ${userData.userType} <br>`)
+                .append(`User since: ${userData.createdAt} <br>`)
+                .append(`Updated last: ${userData.updatedAt} <br><br>`)
+            });
+        }
+    });
+}
+    clicked = true;
+}
+</script>
+</html>
