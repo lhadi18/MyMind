@@ -25,6 +25,20 @@ $(document).ready(function () {
             navMenu.classList.remove('show-menu');
         });
     }
+    $.get('/isLoggedIn', function(response){
+        // LogInBtn = document.getElementById('log-in-out')
+        if (response){
+            $('#log-in-out').text('Logout');
+            $('#log-in-out').click(function(){
+                $.post('/logout');
+                window.location = '/login'
+            })
+        }
+        else {
+            $('#log-in-out').text('Login');
+            $('#log-in-out').attr('href', '/login');
+        }
+    })
 });
 
 // Load the Navbar and Footer 
