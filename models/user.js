@@ -23,6 +23,9 @@ const userSchema = new Schema({
         required: true,
         unique: true
     },
+    phoneNum: {
+        type: Number
+    },
     isAdmin: {
         type: Boolean,
         default: false

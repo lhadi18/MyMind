@@ -3,7 +3,8 @@ const path = require('path');
 const session = require('express-session');
 const User = require("./models/user");
 const mongoose = require("mongoose");
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcrypt');
+const { isatty } = require("tty");
 const port = 8000;
 const app = express();
 app.set('view engine', 'text/html');
@@ -82,6 +83,11 @@ app.get('/getAllUsersData', isLoggedIn, isAdmin, setHeaders, (req, res) => {
         res.json(user);
     });
 });
+
+app.get('/getUserInfo', isLoggedIn, setHeaders, (req, res) => {
+    let user = req.session.user;
+    res.json(user);
+})
 
 app.post('/login', async (req, res) => {
     User.findOne({

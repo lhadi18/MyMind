@@ -125,9 +125,9 @@
                     </div>
                 </div>
                 
-                <h2 id="displayFullname">Towa Quimbayo</h2>
-                <h4 id="displayUsername">@tquimbayo</h4>
-                <p>Joined: <span id="joinedDate">May 1, 2022</span></p>
+                <h2 id="displayFullname"></h2>
+                <h4 id="displayUsername"></h4>
+                <p>Joined: <span id="joinedDate"></span></p>
                 <div id="buttonSec">
                     <input type="file" accept="image/gif, image/jpeg, image/png, image/svg" id="bannerFile"/>
                     <button id="editBanner">Edit Banner</button>
@@ -174,7 +174,7 @@
                 <div class="form-row col-6">
                     <div class="form-group">
                         <label>Phone</label>
-                        <input type="tel" class="form-control" name="phone" id="phone" placeholder="phone" value="7785555555" required="required">
+                        <input type="tel" class="form-control" name="phone" id="phone" placeholder="phone" value="" required="required">
                     </div>
                 </div>
 
@@ -206,5 +206,28 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="../js/main.js"></script>
     <script src="../js/account.js"></script>
+    <script>
+        $.ajax({
+        url: '/getUserInfo',
+        type: "GET",
+        success: function(data) {
+            console.log(data.firstName);
+            let fullname = data.Firstname + " " + data.Lastname;
+            $("#displayFullname").text(`${data.firstName}  ${data.lastName}`)
+            $("#displayUsername").text(`@${data.username}`)
+            $("#joinedDate").text(`${new Date(data.createdAt).toDateString()}`)
+            $("#firstname").attr("value", `${data.firstName}`)
+            $("#lastname").attr("value", `${data.lastName}`)
+            $("#username").attr("value", `${data.username}`)
+            $("#email").attr("value", `${data.email}`)
+            $("#password").attr("value", `${data.password}`)
+            if(!data.phoneNum) {
+                $("#phone").attr("value", )
+            } else {
+                $("#phone").attr("value", `${data.phoneNum}`)
+            }
+        }
+    });
+    </script>
 </body>
 </html>
