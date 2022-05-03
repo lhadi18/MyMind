@@ -33,7 +33,17 @@ app.get("/login", (req, res) => {
          return res.redirect('/userprofile'); 
     }
     res.sendFile(path.resolve('public/login.html'));
-})
+});
+
+app.get('/admin-dashboard', (req, res) => {
+    res.sendFile(path.resolve('public/admin-dashboard.html'))
+});
+
+app.get('/getAllUsersData', (req, res, next) => {
+    User.find({}, function(err, user) {
+        res.json(user);
+    });
+});
 
 app.post('/login', async (req, res) => {
     User.findOne({
@@ -67,7 +77,11 @@ function auth(req, res, user){
         else{
             req.session.user = user;
             req.session.isLoggedIn = true;
+            if(user.isAdmin == true) {
+                res.redirect('/admin-dashboard')
+            } else {
             res.redirect('/userprofile')
+            }
         }
     })
 }
@@ -84,6 +98,10 @@ app.get('/userprofile', (req, res) => {
         res.sendFile(path.resolve('public/userprofile.html'))
     else
         res.redirect('/login')
+})
+
+app.get('/edit-account', (req, res) => {
+    res.sendFile(path.resolve('public/edit-account.html'))
 })
 
 app.get("/sign-up", (req, res) => {
