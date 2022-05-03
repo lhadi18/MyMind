@@ -52,21 +52,32 @@ function isAdmin(req, res, next){
    }
 }
 
+function setHeaders(req, res, next){
+    res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
+    res.setHeader("Pragma", "no-cache"); // HTTP 1.0.
+    res.setHeader("Expires", "0"); // Proxies.
+    return next();
+}
+
 //Routes
+
+app.get('/isLoggedIn', (req, res) => {
+    res.send(req.session.isLoggedIn);
+})
 
 app.get('/', function(req, res) {
     res.sendFile(path.resolve('public/index.html'));
   });
 
-app.get("/login", isLoggedOut, (req, res) => {
+app.get("/login", isLoggedOut, setHeaders, (req, res) => {
     res.sendFile(path.resolve('public/login.html'));
 });
 
-app.get('/admin-dashboard', isLoggedIn, isAdmin, (req, res) => {
+app.get('/admin-dashboard', isLoggedIn, isAdmin, setHeaders, (req, res) => {
     res.sendFile(path.resolve('public/admin-dashboard.html'))
 });
 
-app.get('/getAllUsersData', isLoggedIn, isAdmin, (req, res) => {
+app.get('/getAllUsersData', isLoggedIn, isAdmin, setHeaders, (req, res) => {
     User.find({}, function(err, user) {
         res.json(user);
     });
@@ -78,12 +89,11 @@ app.post('/login', async (req, res) => {
     }, function (err, user) {
         if (err) {
             console.log(err);
-            res.sendFile(path.resolve('public/login.html'))
+            res.redirect('/login');
         }
         if (!user) {
-            console.log('No user with such email.')
-            res.sendFile(path.resolve('public/login.html'))
-        } 
+            console.log('No user with such email.');
+            res.redirect('/login');        } 
         else {
             return auth(req, res, user);
         }
@@ -95,11 +105,11 @@ function auth(req, res, user){
     bcrypt.compare(req.body.password, user.password, function(err, comp) {
         if (err) {
             console.log(err);
-            res.sendFile(path.resolve('public/login.html'))
+            res.redirect('/login');
         }
         else if (comp === false){
             console.log('Incorrect password.')
-            res.sendFile(path.resolve('public/login.html'))
+            res.redirect('/login');
         }
         else{
             req.session.user = user;
@@ -120,15 +130,15 @@ app.post('/logout', (req, res) => {
     res.redirect('/login')
 })
 
-app.get('/userprofile', isLoggedIn, (req, res) => {
+app.get('/userprofile', isLoggedIn, setHeaders, (req, res) => {
     res.sendFile(path.resolve('public/userprofile.html'))
 })
 
-app.get('/edit-account', isLoggedIn, (req, res) => {
+app.get('/edit-account', isLoggedIn, setHeaders, (req, res) => {
     res.sendFile(path.resolve('public/edit-account.html'))
 })
 
-app.get("/sign-up", isLoggedOut, (req, res) => {
+app.get("/sign-up", isLoggedOut, setHeaders, (req, res) => {
     res.sendFile(path.resolve('public/sign-up.html'))
 })
 
@@ -151,10 +161,10 @@ app.post("/sign-up", isNotRegistered, async (req, res) => {
                 console.log(result);
             });
 
-            res.redirect('/login')
+        res.redirect('/login')
     } catch (err) {
         console.log("Error while checking if user was already registered. ", err);
-        res.sendFile(path.resolve('public/sign-up.html'))
+        res.redirect('/sign-up');
     }
 })
 
@@ -164,11 +174,11 @@ function isNotRegistered(req, res, next){
     }, function (err, user) {
         if (err) {
             console.log(err);
-            return res.sendFile(path.resolve('public/sign-up.html'))
+            return res.redirect('/sign-up');
         }
         if (user) {
             console.log(`User with email '${user.email}' already exists`)
-            return res.sendFile(path.resolve('public/sign-up.html'))
+            return res.redirect('/sign-up');
         }
         return next();
     })
