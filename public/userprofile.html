@@ -235,11 +235,21 @@
                     $("#phone").attr("value",)
                     $("#phonemobile").text()
                 } else {
-                    $("#phone").attr("value", `${data.phoneNum}`)
-                    $("#phonemobile").text(`${data.phoneNum}`)
+                    let phonenumber = data.phoneNum;
+                    phonenumber = formatPhoneNumber(phonenumber);
+                    $("#phone").attr("value", phonenumber)
+                    $("#phonemobile").text(phonenumber)
                 }
             }
         });
+        function formatPhoneNumber(phoneNumberString) {
+        var cleaned = ('' + phoneNumberString).replace(/\D/g, '');
+        var match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
+        if (match) {
+            return '(' + match[1] + ') ' + match[2] + '-' + match[3];
+        }
+    return null;
+}
     </script>
 </body>
 
