@@ -24,22 +24,49 @@ app.use(session({
     saveUninitialized: true
 }));
 
+//Custom middleware functions
+function isLoggedIn(req, res, next){
+    if (req.session.isLoggedIn) {
+        return next(); 
+   } 
+   else {
+        return res.redirect('/login');
+   }
+}
+
+function isLoggedOut(req, res, next){
+    if (!req.session.isLoggedIn) {
+        return next(); 
+   } 
+   else {
+        return res.redirect('/userprofile');
+   }
+}
+
+function isAdmin(req, res, next){
+    if (req.session.user.isAdmin) {
+        return next(); 
+   } 
+   else {
+        return res.redirect('/userprofile');
+   }
+}
+
+//Routes
+
 app.get('/', function(req, res) {
     res.sendFile(path.resolve('public/index.html'));
   });
 
-app.get("/login", (req, res) => {
-    if (req.session.isLoggedIn) {
-         return res.redirect('/userprofile'); 
-    }
+app.get("/login", isLoggedOut, (req, res) => {
     res.sendFile(path.resolve('public/login.html'));
 });
 
-app.get('/admin-dashboard', (req, res) => {
+app.get('/admin-dashboard', isLoggedIn, isAdmin, (req, res) => {
     res.sendFile(path.resolve('public/admin-dashboard.html'))
 });
 
-app.get('/getAllUsersData', (req, res, next) => {
+app.get('/getAllUsersData', isLoggedIn, isAdmin, (req, res) => {
     User.find({}, function(err, user) {
         res.json(user);
     });
@@ -80,7 +107,7 @@ function auth(req, res, user){
             if(user.isAdmin == true) {
                 res.redirect('/admin-dashboard')
             } else {
-            res.redirect('/userprofile')
+                res.redirect('/userprofile')
             }
         }
     })
@@ -93,21 +120,15 @@ app.post('/logout', (req, res) => {
     res.redirect('/login')
 })
 
-app.get('/userprofile', (req, res) => {
-    if (req.session.isLoggedIn)
-        res.sendFile(path.resolve('public/userprofile.html'))
-    else
-        res.redirect('/login')
+app.get('/userprofile', isLoggedIn, (req, res) => {
+    res.sendFile(path.resolve('public/userprofile.html'))
 })
 
-app.get('/edit-account', (req, res) => {
+app.get('/edit-account', isLoggedIn, (req, res) => {
     res.sendFile(path.resolve('public/edit-account.html'))
 })
 
-app.get("/sign-up", (req, res) => {
-    if (req.session.isLoggedIn) {
-        res.redirect('/userprofile')
-    };
+app.get("/sign-up", isLoggedOut, (req, res) => {
     res.sendFile(path.resolve('public/sign-up.html'))
 })
 
