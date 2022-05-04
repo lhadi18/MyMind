@@ -183,7 +183,6 @@ app.post('/editProfile', isLoggedIn, async (req, res) => {
     )
     .then((obj) => {
         console.log('Updated - ' + obj);
-        res.redirect('/userprofile')
     })
     .catch((err) => {
         console.log('Error: ' + err);

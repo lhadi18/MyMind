@@ -245,13 +245,27 @@
             }
         });
         function formatPhoneNumber(phoneNumberString) {
-        var cleaned = ('' + phoneNumberString).replace(/\D/g, '');
-        var match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
-        if (match) {
-            return '(' + match[1] + ') ' + match[2] + '-' + match[3];
+            var cleaned = ('' + phoneNumberString).replace(/\D/g, '');
+            var match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
+            if (match) {
+                return '(' + match[1] + ') ' + match[2] + '-' + match[3];
+            }
+            return null;
         }
-    return null;
-}
+
+        $('#saveChanges').click(() => {
+            $.post('/editProfile', {
+                firstname: $("#firstname").val(),
+                lastname: $("#lastname").val(),
+                email: $("#email").val(),
+                username: $("#username").val(),
+                phone: $("#phone").val(),
+            })
+            .done(function( data ){
+                console.log('got here')
+            });
+        })
+
     </script>
 </body>
 
