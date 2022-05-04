@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+const profileImagePath = 'uploads/profileCover'
 
 const userSchema = new Schema({
     firstName: {
@@ -25,7 +26,7 @@ const userSchema = new Schema({
         unique: true
     },
     phoneNum: {
-        type: Number,
+        type: String,
         required: true,
         unique: true
     },
@@ -41,3 +42,4 @@ const userSchema = new Schema({
 
 const User = mongoose.model('user', userSchema);
 module.exports = User;
+module.exports.profileImagePath = profileImagePath;

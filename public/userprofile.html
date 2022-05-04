@@ -109,7 +109,7 @@
             <div id="overlay">
                 <div id="profileHeader">
                     <h2>My Account</h2>
-                    <a id="editProfileBtn" href="../edit-account/">Edit Profile</a>
+                    <a id="editProfileBtn" href="../edit-account">Edit Profile</a>
                 </div>
             </div>
         </div>
@@ -137,7 +137,7 @@
                     <!-- Banner image for full screen -->
                     <input type="file" accept="image/gif, image/jpeg, image/png, image/svg" id="bannerFile" />
                     <button id="editBanner">Edit Banner</button>
-                    <button id="saveChanges">Save</button>
+                    <button type="submit" id="saveChanges">Save</button>
                 </div>
 
                 <div id="contactInfoMob">
@@ -155,7 +155,7 @@
         </div>
 
         <div id="profileDetails">
-            <form id="profileForm">
+            <form id="profileForm" action="/editProfile" method="POST">
                 <div class="form-row col-6">
                     <div class="form-group">
                         <label>First Name</label>

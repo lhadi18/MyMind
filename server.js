@@ -3,8 +3,17 @@ const path = require('path');
 const session = require('express-session');
 const User = require("./models/user");
 const mongoose = require("mongoose");
+const fs = require('fs');
 const bcrypt = require('bcrypt');
-const { isatty } = require("tty");
+const imageType = ['images/jpeg', 'images/png', 'images/gifs']
+const multer = require('multer');
+const uploadPath = path.join('public', User.profileImagePath);
+const upload = multer({
+    dest: uploadPath,
+    fileFilter: (req, file, callback) => {
+        callback(null, imageType.includes(file.mimetype))
+    }
+})
 const port = 8000;
 const app = express();
 app.set('view engine', 'text/html');
@@ -85,8 +94,15 @@ app.get('/getAllUsersData', isLoggedIn, isAdmin, setHeaders, (req, res) => {
 });
 
 app.get('/getUserInfo', isLoggedIn, setHeaders, (req, res) => {
-    let user = req.session.user;
-    res.json(user);
+    let userId = req.session.user._id;
+    User.findById({
+        _id : userId
+    }, function(err, user) {
+        if(err) console.log(err)
+        if(user) {
+            res.json(user);
+        }
+    })
 })
 
 app.post('/login', async (req, res) => {
@@ -148,6 +164,26 @@ app.get("/sign-up", isLoggedOut, setHeaders, (req, res) => {
     res.sendFile(path.resolve('public/sign-up.html'))
 })
 
+app.post('/editProfile', isLoggedIn, async (req, res) => {
+    // upload.single('profileFile'),
+    // const fileName = req.file != null ? req.file.filename : null
+    User.updateOne(
+        {"_id": req.session.user._id},
+        {"firstName": req.body.firstname,
+         "lastName:": req.body.lastname,
+         "username": req.body.username,
+         "email": req.body.email,
+         "phoneNum": req.body.phone}
+    )
+    .then((obj) => {
+        console.log('Updated - ' + obj);
+        res.redirect('/userprofile')
+    })
+    .catch((err) => {
+        console.log('Error: ' + err);
+    })
+  })
+
 app.post("/sign-up", isNotRegistered, async (req, res) => {
     try {
         const hashedPassword = await bcrypt.hash(req.body.password, 10);
@@ -174,6 +210,14 @@ app.post("/sign-up", isNotRegistered, async (req, res) => {
         res.redirect('/sign-up');
     }
 })
+
+function removeProfileImage(fileName) {
+    fs.unlink(path.join(uploadPath, fileName), err => {
+        if(err){
+            console.log(err)
+        }
+    })
+}
 
 function isNotRegistered(req, res, next){
     User.findOne({
