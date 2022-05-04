@@ -7,13 +7,8 @@ const fs = require('fs');
 const bcrypt = require('bcrypt');
 const imageType = ['images/jpeg', 'images/png', 'images/gifs']
 const multer = require('multer');
-const uploadPath = path.join('public', User.profileImagePath);
-const upload = multer({
-    dest: uploadPath,
-    fileFilter: (req, file, callback) => {
-        callback(null, imageType.includes(file.mimetype))
-    }
-})
+
+
 const port = 8000;
 const app = express();
 app.set('view engine', 'text/html');
@@ -171,15 +166,24 @@ app.get("/sign-up", isLoggedOut, setHeaders, (req, res) => {
 })
 
 app.post('/editProfile', isLoggedIn, async (req, res) => {
-    // upload.single('profileFile'),
-    // const fileName = req.file != null ? req.file.filename : null
+    const hashedPassword = await bcrypt.hash(req.body.password, 10);
+    var pass = req.session.user.password;
+    var newpass;
+    if(req.body.password == "") {
+        newpass = pass;
+    } else {
+        newpass = hashedPassword;
+    }
+    
     User.updateOne(
         {"_id": req.session.user._id},
         {"firstName": req.body.firstname,
-         "lastName:": req.body.lastname,
+         "lastName": req.body.lastname,
          "username": req.body.username,
          "email": req.body.email,
-         "phoneNum": req.body.phone}
+         "phoneNum": req.body.phone,
+         "password": newpass
+        }
     )
     .then((obj) => {
         console.log('Updated - ' + obj);
@@ -215,14 +219,6 @@ app.post("/sign-up", isNotRegistered, async (req, res) => {
         res.redirect('/sign-up');
     }
 })
-
-function removeProfileImage(fileName) {
-    fs.unlink(path.join(uploadPath, fileName), err => {
-        if(err){
-            console.log(err)
-        }
-    })
-}
 
 function isNotRegistered(req, res, next){
     User.findOne({

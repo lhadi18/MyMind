@@ -37,7 +37,7 @@
         <header id="headMobile">
             <nav class="nav-container">
                 <p id="footerNav">MyMind 2022 © COMP 2800</p>
-        
+
                 <div class="nav-menu" id="nav-menu">
                     <div id="logoMob">
                         <a href="/">
@@ -45,9 +45,9 @@
                             <h2>MyMind</h2>
                         </a>
                     </div>
-        
+
                     <i class="bi bi-x nav-close" id="nav-close"></i>
-        
+
                     <ul class="nav-list">
                         <li class="nav-item">
                             <a href="/" class="nav-link">
@@ -55,7 +55,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="/therapists" class="nav-link"> 
+                            <a href="/therapists" class="nav-link">
                                 <img src="../images/heart-pulse.svg" class="nav-icon" alt="therapists">Therapists
                             </a>
                         </li>
@@ -65,7 +65,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="/chat-session" class="nav-link"> 
+                            <a href="/chat-session" class="nav-link">
                                 <i class="bi bi-chat-left-dots nav-icon"></i>Chat Session
                             </a>
                         </li>
@@ -96,7 +96,7 @@
                         </li>
                     </ul>
                 </div>
-                
+
                 <div class="nav-btns">
                     <div class="nav-toggle" id="nav-toggle">
                         <i class="bi bi-grid"></i>
@@ -114,7 +114,7 @@
             </div>
         </div>
 
-        <div id="profileSummary">
+        <form id="profileSummary">
             <div id="profileImageSec">
                 <div id="profileImgContainer">
                     <!-- Profile image for full screen -->
@@ -129,10 +129,9 @@
                         <img id="profileImageMob" src="../images/placeholder-profile.jpg" alt="Profile Picture">
                     </div>
                 </div>
-
-                <h2 id="displayFullname">Towa Quimbayo</h2>
-                <h4 id="displayUsername">@tquimbayo</h4>
-                <p>Joined: <span id="joinedDate">May 1, 2022</span></p>
+                <h2 id="displayFullname"></h2>
+                <h4 id="displayUsername"></h4>
+                <p>Joined: <span id="joinedDate"></span></p>
                 <div id="buttonSec">
                     <!-- Banner image for full screen -->
                     <input type="file" accept="image/gif, image/jpeg, image/png, image/svg" id="bannerFile" />
@@ -152,47 +151,43 @@
                 </div>
                 <span id="joinedDateMob"></span>
             </div>
-        </div>
+        </form>
 
         <div id="profileDetails">
             <form id="profileForm" action="/editProfile" method="POST">
                 <div class="form-row col-6">
                     <div class="form-group">
                         <label>First Name</label>
-                        <input type="text" class="form-control" name="firstname" id="firstname" placeholder="First Name"
-                            value="Towa" required="required">
+                        <input type="text" class="form-control" name="firstname" id="firstname" placeholder="First Name" required="required">
                     </div>
                 </div>
 
                 <div class="form-row col-6">
                     <div class="form-group">
                         <label>Last Name</label>
-                        <input type="text" class="form-control" name="lastname" id="lastname" placeholder="Last Name"
-                            value="Quimbayo" required="required">
+                        <input type="text" class="form-control" name="lastname" id="lastname" placeholder="Last Name" required="required">
                     </div>
                 </div>
 
                 <div class="form-row col-6">
                     <div class="form-group">
                         <label>Username</label>
-                        <input type="text" class="form-control" name="username" id="username" placeholder="Username"
-                            value="tquimbayo" required="required">
+                        <input type="text" class="form-control" name="username" id="username" placeholder="Username" 
+                        value="a" required="required">
                     </div>
                 </div>
 
                 <div class="form-row col-6">
                     <div class="form-group">
                         <label>Phone</label>
-                        <input type="tel" class="form-control" name="phone" id="phone" placeholder="phone"
-                            value="7785555555" required="required">
+                        <input type="tel" class="form-control" name="phone" id="phone" placeholder="phone" required="required">
                     </div>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group">
                         <label for="email">Email Address</label>
-                        <input type="email" class="form-control" name="email" id="email" placeholder="Email"
-                            value="towacurtis@hotmail.com" required="required">
+                        <input type="email" class="form-control" name="email" id="email" placeholder="Email"  required="required">
                     </div>
                 </div>
 
@@ -217,56 +212,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="../js/main.js"></script>
     <script src="../js/account.js"></script>
-    <script>
-        $.ajax({
-            url: '/getUserInfo',
-            type: "GET",
-            success: function (data) {
-                let fullname = data.Firstname + " " + data.Lastname;
-                $("#displayFullname").text(`${data.firstName}  ${data.lastName}`)
-                $("#displayUsername").text(`@${data.username}`)
-                $("#joinedDate").text(`${new Date(data.createdAt).toDateString()}`)
-                $("#joinedDateMob").text(`Joined: ${new Date(data.createdAt).toDateString()}`)
-                $("#firstname").attr("value", `${data.firstName}`)
-                $("#lastname").attr("value", `${data.lastName}`)
-                $("#username").attr("value", `${data.username}`)
-                $("#email").attr("value", `${data.email}`)
-                $("#emailmobile").text(`${data.email}`)
-                $("#password").attr("value", `${data.password}`)
-                if (!data.phoneNum) {
-                    $("#phone").attr("value",)
-                    $("#phonemobile").text()
-                } else {
-                    let phonenumber = data.phoneNum;
-                    phonenumber = formatPhoneNumber(phonenumber);
-                    $("#phone").attr("value", phonenumber)
-                    $("#phonemobile").text(phonenumber)
-                }
-            }
-        });
-        function formatPhoneNumber(phoneNumberString) {
-            var cleaned = ('' + phoneNumberString).replace(/\D/g, '');
-            var match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
-            if (match) {
-                return '(' + match[1] + ') ' + match[2] + '-' + match[3];
-            }
-            return null;
-        }
-
-        $('#saveChanges').click(() => {
-            $.post('/editProfile', {
-                firstname: $("#firstname").val(),
-                lastname: $("#lastname").val(),
-                email: $("#email").val(),
-                username: $("#username").val(),
-                phone: $("#phone").val(),
-            })
-            .done(function( data ){
-                console.log('got here')
-            });
-        })
-
-    </script>
 </body>
 
 </html>
