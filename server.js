@@ -87,8 +87,15 @@ app.get('/admin-dashboard', isLoggedIn, isAdmin, setHeaders, (req, res) => {
     res.sendFile(path.resolve('public/admin-dashboard.html'))
 });
 
-app.get('/getAllUsersData', isLoggedIn, isAdmin, setHeaders, (req, res) => {
-    User.find({}, function(err, user) {
+app.post('/searchByEmail', isLoggedIn, isAdmin, setHeaders, (req, res) => {
+    User.findOne({ email: req.body.email }, function(err, user) {
+        if (err){
+            console.log('Error searching user.', err);s
+        }
+        if (!user) {
+            console.log('User does not exist.');
+        } 
+        console.log('user sent:' + user)
         res.json(user);
     });
 });
@@ -123,7 +130,6 @@ app.post('/login', async (req, res) => {
 })
 
 function auth(req, res, user){
-    console.log(user);
     bcrypt.compare(req.body.password, user.password, function(err, comp) {
         if (err) {
             console.log(err);
