@@ -15,9 +15,9 @@ app.set('view engine', 'text/html');
 
 const uri = "mongodb+srv://DBUser:Admin123@cluster0.z9j9r.mongodb.net/MyMindDatabase?retryWrites=true&w=majority";
 mongoose.connect(uri, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true
-    })
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+})
     .then(() => console.log("connected to db"))
     .catch((err) => console.log(err));
 
@@ -30,34 +30,34 @@ app.use(session({
 }));
 
 //Custom middleware functions
-function isLoggedIn(req, res, next){
+function isLoggedIn(req, res, next) {
     if (req.session.isLoggedIn) {
-        return next(); 
-   } 
-   else {
+        return next();
+    }
+    else {
         return res.redirect('/login');
-   }
+    }
 }
 
-function isLoggedOut(req, res, next){
+function isLoggedOut(req, res, next) {
     if (!req.session.isLoggedIn) {
-        return next(); 
-   } 
-   else {
+        return next();
+    }
+    else {
         return res.redirect('/userprofile');
-   }
+    }
 }
 
-function isAdmin(req, res, next){
+function isAdmin(req, res, next) {
     if (req.session.user.isAdmin) {
-        return next(); 
-   } 
-   else {
+        return next();
+    }
+    else {
         return res.redirect('/userprofile');
-   }
+    }
 }
 
-function setHeaders(req, res, next){
+function setHeaders(req, res, next) {
     res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
     res.setHeader("Pragma", "no-cache"); // HTTP 1.0.
     res.setHeader("Expires", "0"); // Proxies.
@@ -70,9 +70,9 @@ app.get('/isLoggedIn', (req, res) => {
     res.send(req.session.isLoggedIn);
 })
 
-app.get('/', function(req, res) {
+app.get('/', function (req, res) {
     res.sendFile(path.resolve('public/index.html'));
-  });
+});
 
 app.get("/login", isLoggedOut, setHeaders, (req, res) => {
     res.sendFile(path.resolve('public/login.html'));
@@ -83,13 +83,13 @@ app.get('/admin-dashboard', isLoggedIn, isAdmin, setHeaders, (req, res) => {
 });
 
 app.post('/searchByEmail', isLoggedIn, isAdmin, setHeaders, (req, res) => {
-    User.findOne({ email: req.body.email }, function(err, user) {
-        if (err){
-            console.log('Error searching user.', err);s
+    User.findOne({ email: req.body.email }, function (err, user) {
+        if (err) {
+            console.log('Error searching user.', err); s
         }
         if (!user) {
             console.log('User does not exist.');
-        } 
+        }
         console.log('user sent:' + user)
         res.json(user);
     });
@@ -98,10 +98,10 @@ app.post('/searchByEmail', isLoggedIn, isAdmin, setHeaders, (req, res) => {
 app.get('/getUserInfo', isLoggedIn, setHeaders, (req, res) => {
     let userId = req.session.user._id;
     User.findById({
-        _id : userId
-    }, function(err, user) {
-        if(err) console.log(err)
-        if(user) {
+        _id: userId
+    }, function (err, user) {
+        if (err) console.log(err)
+        if (user) {
             res.json(user);
         }
     })
@@ -109,7 +109,7 @@ app.get('/getUserInfo', isLoggedIn, setHeaders, (req, res) => {
 
 app.post('/login', async (req, res) => {
     User.findOne({
-        email: req.body.email, 
+        email: req.body.email,
     }, function (err, user) {
         if (err) {
             console.log(err);
@@ -117,25 +117,25 @@ app.post('/login', async (req, res) => {
         }
         if (!user) {
             res.json("NoEmailExist");
-            console.log('No user with such email.');      
-        } 
+            console.log('No user with such email.');
+        }
         else {
             return auth(req, res, user);
         }
-    }); 
+    });
 })
 
-function auth(req, res, user){
-    bcrypt.compare(req.body.password, user.password, function(err, comp) {
+function auth(req, res, user) {
+    bcrypt.compare(req.body.password, user.password, function (err, comp) {
         if (err) {
             console.log(err);
             res.redirect('/login');
         }
-        else if (comp === false){
+        else if (comp === false) {
             console.log("Wrong password");
             res.json("wrongPassword");
         }
-        else{
+        else {
             req.session.user = user;
             req.session.isLoggedIn = true;
             res.json(user);
@@ -145,7 +145,7 @@ function auth(req, res, user){
 
 app.post('/logout', (req, res) => {
     req.session.destroy((err) => {
-        if(err) console.log('Error removing user session data. ', err);
+        if (err) console.log('Error removing user session data. ', err);
     });
     res.redirect('/login')
 })
@@ -162,33 +162,69 @@ app.get("/sign-up", isLoggedOut, setHeaders, (req, res) => {
     res.sendFile(path.resolve('public/sign-up.html'))
 })
 
-app.post('/editProfile', isLoggedIn, async (req, res) => {
-    const hashedPassword = await bcrypt.hash(req.body.password, 10);
+app.post('/editProfile', isLoggedIn, isNotExisting, async (req, res) => {
+    let hashedPassword;
     var pass = req.session.user.password;
     var newpass;
-    if(req.body.password == "") {
+    if (req.body.password == "") {
         newpass = pass;
     } else {
+        hashedPassword = await bcrypt.hash(req.body.password, 10);
         newpass = hashedPassword;
     }
-    
+
     User.updateOne(
-        {"_id": req.session.user._id},
-        {"firstName": req.body.firstname,
-         "lastName": req.body.lastname,
-         "username": req.body.username,
-         "email": req.body.email,
-         "phoneNum": req.body.phone,
-         "password": newpass
+        { "_id": req.session.user._id },
+        {
+            "firstName": req.body.firstname,
+            "lastName": req.body.lastname,
+            "username": req.body.username,
+            "email": req.body.email,
+            "phoneNum": req.body.phone,
+            "password": newpass
         }
     )
-    .then((obj) => {
-        console.log('Updated - ' + obj);
+        .then((obj) => {
+            console.log('Updated - ' + obj);
+            return res.json("updated");
+        })
+        .catch((err) => {
+            console.log('Error: ' + err);
+        })
+})
+
+async function isNotExisting(req, res, next) {
+    var emailExists = await User.exists({
+        email: req.body.email
     })
-    .catch((err) => {
-        console.log('Error: ' + err);
+    var phoneExists = await User.exists({
+        phoneNum: req.body.phone
     })
-  })
+    var usernameExists = await User.exists({
+        username: req.body.username
+    })
+
+    let userId = req.session.user._id;
+    User.findById({
+        _id: userId
+    }, function (err, user) {
+        if (err) console.log(err)
+        if (user) {
+            if (emailExists && req.body.email != user.email) {
+                return res.json("existingEmail");
+            } else if (phoneExists && req.body.phone != user.phoneNum) {
+                return res.json("existingPhone")
+            } else if (usernameExists && req.body.username != user.username) {
+                return res.json("existingUsername")
+            } else {
+                return next();
+            }
+        } else {
+            req.session.destroy();
+            return res.json("logout");
+        }
+    })
+}
 
 app.post("/sign-up", isNotRegistered, async (req, res) => {
     try {
@@ -208,39 +244,34 @@ app.post("/sign-up", isNotRegistered, async (req, res) => {
         new_user.save()
             .then((result) => {
                 console.log(result);
+                res.json("login");
             });
-
-        // res.redirect('/login')
     } catch (err) {
         console.log("Error while checking if user was already registered. ", err);
         res.redirect('/sign-up');
     }
 })
 
-function isNotRegistered(req, res, next){
-    User.findOne({
+async function isNotRegistered(req, res, next) {
+    var emailExists = await User.exists({
         email: req.body.email
-    }, function (err, user) {
-        if (err) {
-            console.log(err);
-            return res.redirect('/sign-up');
-        }
-        if (user) {
-            if(user.email == req.body.email) {
-                res.json("existingEmail");
-            }
-        } else {
-        return next();
-        }
     })
+    var phoneExists = await User.exists({
+        phoneNum: req.body.phone
+    })
+    var usernameExists = await User.exists({
+        username: req.body.username
+    })
+    if (emailExists) {
+        return res.json("existingEmail");
+    } else if(phoneExists) {
+        return res.json("existingPhone")
+    } else if(usernameExists) {
+        return res.json("existingUsername")
+    } else {
+        return next();
+    }
 }
-
-// if(user.username == req.body.username) {
-//     res.json("existingUsername");
-// }
-// if(user.phoneNum == req.body.phone) {
-//     res.json("existingPhoneNum")
-// }
 
 app.listen(port, () => {
     console.log(`Example app  listening on port ${port}`)

@@ -136,7 +136,7 @@
                     <!-- Banner image for full screen -->
                     <input type="file" accept="image/gif, image/jpeg, image/png, image/svg" id="bannerFile" />
                     <button id="editBanner">Edit Banner</button>
-                    <button type="submit" id="saveChanges">Save</button>
+                    <button type="button" id="saveChanges">Save</button>
                 </div>
 
                 <div id="contactInfoMob">
@@ -174,6 +174,7 @@
                         <label>Username</label>
                         <input type="text" class="form-control" name="username" id="username" placeholder="Username" 
                         value="a" required="required">
+                        <p id="usernameErrorMessage">&nbsp;</p>
                     </div>
                 </div>
 
@@ -181,6 +182,7 @@
                     <div class="form-group">
                         <label>Phone</label>
                         <input type="tel" class="form-control" name="phone" id="phone" placeholder="phone" required="required">
+                        <p id="phoneErrorMessage">&nbsp;</p>
                     </div>
                 </div>
 
@@ -188,6 +190,7 @@
                     <div class="form-group">
                         <label for="email">Email Address</label>
                         <input type="email" class="form-control" name="email" id="email" placeholder="Email"  required="required">
+                        <p id="emailErrorMessage">&nbsp;</p>
                     </div>
                 </div>
 

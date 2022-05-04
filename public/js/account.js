@@ -60,38 +60,56 @@ $.ajax({
             $("#phonemobile").text()
         } else {
             let phonenumber = data.phoneNum;
-            phonenumber = formatPhoneNumber(phonenumber);
+            // phonenumber = formatPhoneNumber(phonenumber);
             $("#phone").attr("value", phonenumber)
             $("#phonemobile").text(phonenumber)
         }
     }
 });
-function formatPhoneNumber(phoneNumberString) {
-    var cleaned = ('' + phoneNumberString).replace(/\D/g, '');
-    var match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
-    if (match) {
-        return '(' + match[1] + ') ' + match[2] + '-' + match[3];
-    }
-    return null;
-}
+// function formatPhoneNumber(phoneNumberString) {
+//     var cleaned = ('' + phoneNumberString).replace(/\D/g, '');
+//     var match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
+//     if (match) {
+//         return '(' + match[1] + ') ' + match[2] + '-' + match[3];
+//     }
+//     return null;
+// }
 
 $('#saveChanges').click(() => {
     var emp = document.getElementById("password").value;
-    $.post('/editProfile', {
-        firstname: $("#firstname").val(),
-        lastname: $("#lastname").val(),
-        email: $("#email").val(),
-        username: $("#username").val(),
-        phone: $("#phone").val(),
-        password: $("#password").val(),
-    });
-    if (emp == "") {
-        setTimeout(() => {
-            window.location = '/userprofile'
-        }, 50);
-    } else {
-        $.post("/logout");
-        window.location = '/login'
-    }
-
+    $.ajax({
+        url: '/editProfile',
+        type: 'POST',
+        data: {
+            firstname: $("#firstname").val(),
+            lastname: $("#lastname").val(),
+            email: $("#email").val(),
+            username: $("#username").val(),
+            phone: $("#phone").val(),
+            password: $("#password").val(),
+        }, success: function (data) {
+            console.log(data);
+            if(data == "existingEmail") {
+                document.getElementById("emailErrorMessage").innerHTML = "A user with that email already exists";
+            } else if (data == "existingPhone") {
+                document.getElementById("phoneErrorMessage").innerHTML = "A user with that phone number already exists";
+                document.getElementById("emailErrorMessage").innerHTML = "";
+            } else if (data == "existingUsername") {
+                document.getElementById("usernameErrorMessage").innerHTML = "A user with that username already exists";
+                document.getElementById("emailErrorMessage").innerHTML = "";
+                document.getElementById("phoneErrorMessage").innerHTML = "";
+            } else if(data == "updated") {
+                if (emp == "") {
+                    setTimeout(() => {
+                        window.location = '/userprofile'
+                    }, 50);
+                } else {
+                    $.post("/logout");
+                    window.location = '/login'
+                }
+            } else if(data == "logout") {
+                window.location = '/login'
+            }
+        }
+    })
 });

@@ -173,7 +173,7 @@
                         </div>
                     </div>
 
-                    <input type="submit" id="signupBtn" value="Sign Up" />
+                    <button type="button" id="signupBtn">Sign up</button>
                     <p id="loginDesc">Already have an account? <a href="../login/">Login</a></p>
                     <p id="signUpErrorMessage">&nbsp;</p>
                 </form>
@@ -203,6 +203,12 @@
                     console.log(data);
                     if(data == "existingEmail") {
                         document.getElementById("signUpErrorMessage").innerHTML = "A user with that email already exists";
+                    } else if (data == "existingPhone") {
+                        document.getElementById("signUpErrorMessage").innerHTML = "A user with that phone number already exists";
+                    } else if (data == "existingUsername") {
+                        document.getElementById("signUpErrorMessage").innerHTML = "A user with that username already exists";
+                    } else if(data == "login") {
+                        window.location = '/login'
                     }
                 }
             })
