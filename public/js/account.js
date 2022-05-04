@@ -31,7 +31,7 @@ bannerFile.addEventListener('change', function(){
     if (choosedFile) {
         const reader = new FileReader();
         reader.addEventListener('load', function () {
-            if (window.location.pathname == '/account/') {
+            if (window.location.pathname == '/userprofile') {
                 document.getElementById('banner').style.backgroundImage = 'url("' + reader.result + '")';
             } else {
                 document.getElementById('bannerMob').style.backgroundImage = 'url("' + reader.result + '")';

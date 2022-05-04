@@ -49,22 +49,22 @@
         padding: 5rem 3rem;
         flex-direction: column-reverse;
     }
-    #wrapper #loginContainer div {
+    #wrapper #loginContainer .col-6 {
         width: 100%;
         text-align: center;
     }
-    #wrapper #loginContainer div h2 {
+    #wrapper #loginContainer .col-6 h2 {
         font-size: 2rem;
     }
-    #wrapper #loginContainer div img {
+    #wrapper #loginContainer .col-6 img {
         padding-top: 5rem;
         width: 80%;
         padding-bottom: 3rem;
     }
-    #wrapper #loginContainer div #formContainer {
+    #wrapper #loginContainer .col-6 #loginSec #formContainer {
         padding: 4rem 2rem 2.5rem 2rem;
     }
-    #wrapper #loginContainer div #formContainer #loginForm .form-row .form-group label {
+    #wrapper #loginContainer .col-6 #loginSec #formContainer #loginForm .form-row .form-group label {
         text-align: left;
     }
     #wrapper #banner {
@@ -219,19 +219,19 @@
         padding: 5rem 3rem;
         flex-direction: column-reverse;
     }
-    #wrapper #loginContainer div {
+    #wrapper #loginContainer .col-6 {
         width: 100%;
         text-align: center;
     }
-    #wrapper #loginContainer div img {
+    #wrapper #loginContainer .col-6 img {
         padding-top: 5rem;
         width: 50%;
         padding-bottom: 3rem;
     }
-    #wrapper #loginContainer div #formContainer {
+    #wrapper #loginContainer .col-6 #loginSec #formContainer {
         padding: 4rem 3rem 2.5rem 3rem;
     }
-    #wrapper #loginContainer div #formContainer #loginForm .form-row .form-group label {
+    #wrapper #loginContainer .col-6 #loginSec #formContainer #loginForm .form-row .form-group label {
         text-align: left;
     }
     #wrapper #banner {
@@ -368,19 +368,19 @@
         padding: 5rem;
         flex-direction: column-reverse;
     }
-    #wrapper #loginContainer div {
+    #wrapper #loginContainer .col-6 {
         width: 100%;
         text-align: center;
     }
-    #wrapper #loginContainer div img {
+    #wrapper #loginContainer .col-6 img {
         padding-top: 5rem;
         width: 50%;
         padding-bottom: 3rem;
     }
-    #wrapper #loginContainer div #formContainer {
+    #wrapper #loginContainer .col-6 #loginSec #formContainer {
         padding: 4rem 4rem 2.5rem 4rem;
     }
-    #wrapper #loginContainer div #formContainer #loginForm .form-row .form-group label {
+    #wrapper #loginContainer .col-6 #loginSec #formContainer #loginForm .form-row .form-group label {
         text-align: left;
     }
     #wrapper #banner {
@@ -492,15 +492,15 @@
         padding: 5rem;
         flex-direction: column-reverse;
     }
-    #wrapper #loginContainer div {
+    #wrapper #loginContainer .col-6 {
         width: 100%;
         text-align: center;
     }
-    #wrapper #loginContainer div img {
+    #wrapper #loginContainer .col-6 img {
         padding-top: 5rem;
         width: 50%;
     }
-    #wrapper #loginContainer div #formContainer #loginForm .form-row .form-group label {
+    #wrapper #loginContainer .col-6 #loginSec #formContainer #loginForm .form-row .form-group label {
         text-align: left;
     }
     #wrapper #profileSummary #profileImageSec {

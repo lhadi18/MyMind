@@ -51,42 +51,42 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="/therapists/" class="nav-link"> 
+                            <a href="/therapists" class="nav-link"> 
                                 <img src="../images/heart-pulse.svg" class="nav-icon" alt="therapists">Therapists
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="/checkout/" class="nav-link">
+                            <a href="/checkout" class="nav-link">
                                 <i class="bi bi-bag-check nav-icon"></i>Checkout
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="/chat-session/" class="nav-link"> 
+                            <a href="/chat-session" class="nav-link"> 
                                 <i class="bi bi-chat-left-dots nav-icon"></i>Chat Session
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="/my-patients/" class="nav-link">
+                            <a href="/my-patients" class="nav-link">
                                 <i class="bi bi-people nav-icon"></i>My Patients
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="/account/" class="nav-link">
+                            <a href="/userprofile" class="nav-link">
                                 <i class="bi bi-person-circle nav-icon"></i>Account
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="/contact/" class="nav-link">
+                            <a href="/contact" class="nav-link">
                                 <i class="bi bi-info-circle nav-icon"></i>Contact
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="/login/" class="nav-link">
+                            <a href="/login" class="nav-link">
                                 <i class="bi bi-box-arrow-in-right nav-icon"></i>Login
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="/logout/" class="nav-link">
+                            <a href="/logout" class="nav-link">
                                 <i class="bi bi-box-arrow-left nav-icon"></i>Logout
                             </a>
                         </li>
@@ -102,38 +102,49 @@
         </header>
         
         <div id="loginContainer">
-            <div>
+            <div class="col-6">
                 <img src="../images/login-graphic.svg" alt="Login Graphic">
             </div>
 
-            <div>
-                <h2>Welcome Back!</h2>
+            <div class="col-6">
+                <div id="loginSec">
+                    <h2>Welcome Back!</h2>
 
-                <div id="formContainer">
-                    <form id="loginForm" action="/login" method="POST">     
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="email">Email Address</label>
-                                <input type="email" class="form-control" name="email" id="email" placeholder="Email" value="towacurtis@hotmail.com" required="required">
+                    <div id="formContainer">
+                        <form id="loginForm" action="/login" method="POST">        
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="email">Email Address</label>
+                                    <input type="email" class="form-control" name="email" id="email" placeholder="Email" value="towacurtis@hotmail.com" required="required">
+                                </div>
                             </div>
-                        </div>
-        
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="password">Password</label>
-                                <div class="input-group" id="show-hide-password">
-                                    <input type="password" name="password" class="form-control" id="password" value="abc123" required="required">
-                                    <div class="input-group-addon">
-                                        <a href=""><i class="fa fa-eye-slash" aria-hidden="true"></i></a>
+            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="password">Password</label>
+                                    <div class="input-group" id="show-hide-password">
+                                        <input type="password" name="password" class="form-control" id="password" value="12345" required="required">
+                                        <div class="input-group-addon">
+                                            <a href=""><i class="fa fa-eye-slash" aria-hidden="true"></i></a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+<<<<<<< HEAD
                         </div>
         
                         <input type="submit" id="loginBtn" value="Login"/>
                         <p id="signupDesc">Don't have an account? <a href="../sign-up">Sign Up</a></p>
                         <p id="loginErrorMessage">&nbsp;</p>
                     </form>
+=======
+            
+                            <input type="submit" id="loginBtn" value="Login" />
+                            <p id="signupDesc">Don't have an account? <a href="../sign-up/">Sign Up</a></p>
+                            <p id="loginErrorMessage">&nbsp;</p>
+                        </form>
+                    </div>
+>>>>>>> 609ec798534dfd2ff2e88330892e5967830da85e
                 </div>
             </div>
         </div>
