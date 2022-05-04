@@ -116,8 +116,9 @@ app.post('/login', async (req, res) => {
             res.redirect('/login');
         }
         if (!user) {
-            console.log('No user with such email.');
-            res.redirect('/login');        } 
+            res.json("NoEmailExist");
+            console.log('No user with such email.');      
+        } 
         else {
             return auth(req, res, user);
         }
@@ -131,17 +132,13 @@ function auth(req, res, user){
             res.redirect('/login');
         }
         else if (comp === false){
-            console.log('Incorrect password.')
-            res.redirect('/login');
+            console.log("Wrong password");
+            res.json("wrongPassword");
         }
         else{
             req.session.user = user;
             req.session.isLoggedIn = true;
-            if(user.isAdmin == true) {
-                res.redirect('/admin-dashboard')
-            } else {
-                res.redirect('/userprofile')
-            }
+            res.json(user);
         }
     })
 }
@@ -213,7 +210,7 @@ app.post("/sign-up", isNotRegistered, async (req, res) => {
                 console.log(result);
             });
 
-        res.redirect('/login')
+        // res.redirect('/login')
     } catch (err) {
         console.log("Error while checking if user was already registered. ", err);
         res.redirect('/sign-up');
@@ -222,19 +219,28 @@ app.post("/sign-up", isNotRegistered, async (req, res) => {
 
 function isNotRegistered(req, res, next){
     User.findOne({
-        email: req.body.email, 
+        email: req.body.email
     }, function (err, user) {
         if (err) {
             console.log(err);
             return res.redirect('/sign-up');
         }
         if (user) {
-            console.log(`User with email '${user.email}' already exists`)
-            return res.redirect('/sign-up');
-        }
+            if(user.email == req.body.email) {
+                res.json("existingEmail");
+            }
+        } else {
         return next();
+        }
     })
 }
+
+// if(user.username == req.body.username) {
+//     res.json("existingUsername");
+// }
+// if(user.phoneNum == req.body.phone) {
+//     res.json("existingPhoneNum")
+// }
 
 app.listen(port, () => {
     console.log(`Example app  listening on port ${port}`)
