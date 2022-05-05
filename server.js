@@ -13,7 +13,7 @@ const port = 8000;
 const app = express();
 app.set('view engine', 'text/html');
 
-const uri = "mongodb+srv://DBUser:Admin123@cluster0.z9j9r.mongodb.net/MyMindDatabase?retryWrites=true&w=majority";
+const uri = "mongodb+srv://DBUser:Admin123@cluster0.z9j9r.mongodb.net/BBY-31?retryWrites=true&w=majority";
 mongoose.connect(uri, {
     useNewUrlParser: true,
     useUnifiedTopology: true
@@ -67,7 +67,7 @@ function setHeaders(req, res, next) {
 //Routes
 
 app.get('/isLoggedIn', (req, res) => {
-    res.send(req.session.isLoggedIn);
+    res.send(req.session.user);
 })
 
 app.get('/', function (req, res) {

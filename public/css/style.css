@@ -324,3 +324,7 @@ body {
     color: black;
     text-align: center;
 }
+
+.isTherapist, .isPatient, .isLoggedIn, .isLoggedOut {
+    display: none;
+}

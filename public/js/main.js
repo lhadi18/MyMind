@@ -4,41 +4,68 @@ const navClose = document.getElementById('nav-close');
 const navLink = document.querySelectorAll('.nav-link');
 
 $(document).ready(function () {
+
     // Load the Navbar and Footer 
     loadNavbarFooter();
+
+    $.get('/isLoggedIn', function (user) {
+        if (user) {
+            // if (user.isAdmin) {
+            //     document.querySelector(".isAdmin").style.display = "list-item";
+            //     loadNavbarFooter("../headerfooter/therapist-nav.html");
+            // } else 
+            if (user.userType == 'patient') {
+                var patientEls = document.querySelectorAll(".isPatient");
+                for (var x = 0; x < patientEls.length; x++)
+                    patientEls[x].style.display = 'list-item';
+
+                let loggedInEls = document.querySelectorAll(".isLoggedIn");
+                for (var x = 0; x < loggedInEls.length; x++)
+                    loggedInEls[x].style.display = 'list-item';
+
+            } else if (user.userType == 'therapist') {
+                let therapistEls = document.querySelectorAll(".isTherapist");
+                for (var x = 0; x < therapistEls.length; x++)
+                    therapistEls[x].style.display = 'list-item';
+
+                let loggedInEls = document.querySelectorAll(".isLoggedIn");
+                for (var x = 0; x < loggedInEls.length; x++)
+                    loggedInEls[x].style.display = 'list-item';
+            }
+            setTimeout(() => {
+                $('#logout-link').click(function () {
+                    console.log('clicked')
+                    $.post('/logout');
+                    window.location = '/login'
+                })
+            }, 400);
+        } else {
+            document.querySelector(".isLoggedOut").style.display = "list-item";
+        }
+    })
+
+
 
     // Display hashed password for signup and login form
     displayPassword();
 
     /* Show Menu */
     // Validation if constant var exists
-    if(navToggle) {
-        navToggle.addEventListener('click', function() {
+    if (navToggle) {
+        navToggle.addEventListener('click', function () {
             navMenu.classList.add('show-menu');
         });
     }
 
     /* Hide Menu */
     // Validation if constant var exists
-    if(navClose) {
-        navClose.addEventListener('click', function() {
+    if (navClose) {
+        navClose.addEventListener('click', function () {
             navMenu.classList.remove('show-menu');
         });
     }
-    $.get('/isLoggedIn', function(response){
-        // LogInBtn = document.getElementById('log-in-out')
-        if (response){
-            $('#log-in-out').text('Logout');
-            $('#log-in-out').click(function(){
-                $.post('/logout');
-                window.location = '/login'
-            })
-        }
-        else {
-            $('#log-in-out').text('Login');
-            $('#log-in-out').attr('href', '/login');
-        }
-    })
+
+
 });
 
 // Load the Navbar and Footer 
@@ -76,5 +103,4 @@ function linkAction() {
     document.getElementById('nav-menu').classList.remove('show-menu');
 }
 
-navLink.forEach( n => n.addEventListener('click', linkAction));
-
+navLink.forEach(n => n.addEventListener('click', linkAction));
