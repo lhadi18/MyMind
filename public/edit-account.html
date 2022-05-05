@@ -107,23 +107,21 @@
         <div id="bannerMob">
             <div id="overlay">
                 <div id="profileHeader">
-                    <input type="file" accept="image/gif, image/jpeg, image/png, image/svg" id="bannerFile" />
-                    <button id="editBanner">Edit Banner</button>
-                    <button id="saveChanges">Save</button>
                 </div>
             </div>
         </div>
 
-        <div id="profileSummaryMob">
+        <form id="profileSummaryMob" action="/uploadProfile" enctype="multipart/form-data" method="POST">
             <div id="profileDesc">
                 <div id="profileImageSec">
                     <div id="profileImgContainer">
-                        <input type="file" accept="image/gif, image/jpeg, image/png, image/svg" id="profileFile" />
+                        <input type="file" accept="image/gif, image/jpeg, image/png, image/svg" name="profileFile" id="profileFile" />
                         <img id="profileImage" src="../images/placeholder-profile.jpg" alt="Profile Picture">
+                        <button id="saveChanges">Save</button>
                     </div>
                 </div>
             </div>
-        </div>
+        </form>
 
         <div id="profileDetailsMob">
             <form id="profileForm">

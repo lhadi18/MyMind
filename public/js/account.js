@@ -49,6 +49,7 @@ $.ajax({
     success: function(data) {
         console.log(data);
         $("#profileImage").attr('src', data.profileImg)
+        $("#profileImageMob").attr('src', data.profileImg)
     }
 })
 // function formatPhoneNumber(phoneNumberString) {
