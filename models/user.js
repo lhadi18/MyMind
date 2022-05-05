@@ -37,9 +37,9 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
-    img: {
-        data: Buffer,
-        contentType: String
+    profileImg: {
+        type: String,
+        default: "../uploads/placeholder-profile.jpg"
     }
 }, { timestamps: true, versionKey: false });
 

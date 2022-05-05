@@ -18,30 +18,6 @@ profileFile.addEventListener('change', function(){
     }
 }); 
 
-var bannerImgBtn = document.getElementById('editBanner');
-var bannerFile = document.getElementById('bannerFile');
-
-bannerImgBtn.addEventListener('click', function () {
-    bannerFile.click();
-});
-
-bannerFile.addEventListener('change', function(){
-    const choosedFile = this.files[0];
-    
-    if (choosedFile) {
-        const reader = new FileReader();
-        reader.addEventListener('load', function () {
-            if (window.location.pathname == '/userprofile') {
-                document.getElementById('banner').style.backgroundImage = 'url("' + reader.result + '")';
-            } else {
-                document.getElementById('bannerMob').style.backgroundImage = 'url("' + reader.result + '")';
-            }
-        });
-    
-        reader.readAsDataURL(choosedFile);
-    }
-}); 
-
 $.ajax({
     url: '/getUserInfo',
     type: "GET",
@@ -71,7 +47,8 @@ $.ajax({
     url: '/getProfilePicture',
     type: 'GET',
     success: function(data) {
-        $("#profileImage").attr('src', data)
+        console.log(data);
+        $("#profileImage").attr('src', data.profileImg)
     }
 })
 // function formatPhoneNumber(phoneNumberString) {

@@ -3,7 +3,6 @@ const path = require('path');
 const session = require('express-session');
 const User = require("./models/user");
 const mongoose = require("mongoose");
-const fs = require('fs');
 const multer = require("multer");
 const bcrypt = require('bcrypt');
 const port = 8000;
@@ -62,36 +61,32 @@ function setHeaders(req, res, next) {
 }
 
 //Routes
-
-//--------------------------------------------------------------
-
-var storage = multer.diskStorage({
+var profileStorage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, './uploads')
+        cb(null, 'public/uploads')
     },
     filename: function (req, file, cb) {
-        cb(null, Date.now() + "-" + file.originalname);
+        cb(null, file.originalname);
     }
 })
 
-var upload = multer({storage:storage})
+var profileUpload = multer({storage:profileStorage})
 
-app.post('/upload', upload.single('profileFile'), (req, res) => {
-    var bitmap = fs.readFileSync(path.join(__dirname + '/uploads/' + req.file.filename));
-    var url = new Buffer(bitmap).toString('base64');
-    var final_img = {
-        contentType:req.file.mimetype,
-        data: url
-    };
+app.post('/uploadProfile', profileUpload.single('profileFile'), (req, res) => {
+    if(req.file) {
+    var fileName = req.file.filename;
     var id = req.session.user._id;
     User.updateOne(
         { "_id": id },
         {
-            img: final_img
+            profileImg: "../uploads/" + fileName
         }
     ).then((obj) => {
         console.log('Updated - ' + obj);
     })
+} else {
+    return;
+}
 });
 
 app.get('/getProfilePicture', (req, res) => {
@@ -100,14 +95,11 @@ app.get('/getProfilePicture', (req, res) => {
         _id: id
     },function(err, user) {
         if(user) {
-            var bitmap = new Buffer(user.img.data, 'base64');
-            res.send(bitmap)
-            console.log(bitmap)
+            res.send(user)
         }
     })
 })
 
-//-------------------------------------------------------------
 
 app.get('/isLoggedIn', (req, res) => {
     res.send(req.session.user);
