@@ -7,7 +7,7 @@ $(document).ready(function () {
 
     // Load the Navbar and Footer 
     loadNavbarFooter();
-    setTimeout(() => {
+   // setTimeout(() => {
         $.get('/isLoggedIn', function (user) {
             if (user) {
                 // if (user.isAdmin) {
@@ -40,11 +40,13 @@ $(document).ready(function () {
                     })
                 }, 400);
             } else {
-                document.querySelector(".isLoggedOut").style.display = "list-item";
+                let loggedOutEls = document.querySelectorAll(".isLoggedOut")
+                    for (var x = 0; x < loggedOutEls.length; x++)
+                    loggedOutEls[x].style.display = 'list-item';
             }
         })
 
-    }, 50);
+    //}, 50);
 
 
 
