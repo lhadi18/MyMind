@@ -66,6 +66,14 @@ $.ajax({
         }
     }
 });
+
+$.ajax({
+    url: '/getProfilePicture',
+    type: 'GET',
+    success: function(data) {
+        $("#profileImage").attr('src', data)
+    }
+})
 // function formatPhoneNumber(phoneNumberString) {
 //     var cleaned = ('' + phoneNumberString).replace(/\D/g, '');
 //     var match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);

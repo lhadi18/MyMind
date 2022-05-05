@@ -4,11 +4,8 @@ const session = require('express-session');
 const User = require("./models/user");
 const mongoose = require("mongoose");
 const fs = require('fs');
+const multer = require("multer");
 const bcrypt = require('bcrypt');
-const imageType = ['images/jpeg', 'images/png', 'images/gifs']
-const multer = require('multer');
-
-
 const port = 8000;
 const app = express();
 app.set('view engine', 'text/html');
@@ -65,6 +62,52 @@ function setHeaders(req, res, next) {
 }
 
 //Routes
+
+//--------------------------------------------------------------
+
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, './uploads')
+    },
+    filename: function (req, file, cb) {
+        cb(null, Date.now() + "-" + file.originalname);
+    }
+})
+
+var upload = multer({storage:storage})
+
+app.post('/upload', upload.single('profileFile'), (req, res) => {
+    var bitmap = fs.readFileSync(path.join(__dirname + '/uploads/' + req.file.filename));
+    var url = new Buffer(bitmap).toString('base64');
+    var final_img = {
+        contentType:req.file.mimetype,
+        data: url
+    };
+    var id = req.session.user._id;
+    User.updateOne(
+        { "_id": id },
+        {
+            img: final_img
+        }
+    ).then((obj) => {
+        console.log('Updated - ' + obj);
+    })
+});
+
+app.get('/getProfilePicture', (req, res) => {
+    var id = req.session.user._id;
+    User.findById({
+        _id: id
+    },function(err, user) {
+        if(user) {
+            var bitmap = new Buffer(user.img.data, 'base64');
+            res.send(bitmap)
+            console.log(bitmap)
+        }
+    })
+})
+
+//-------------------------------------------------------------
 
 app.get('/isLoggedIn', (req, res) => {
     res.send(req.session.user);
@@ -264,9 +307,9 @@ async function isNotRegistered(req, res, next) {
     })
     if (emailExists) {
         return res.json("existingEmail");
-    } else if(phoneExists) {
+    } else if (phoneExists) {
         return res.json("existingPhone")
-    } else if(usernameExists) {
+    } else if (usernameExists) {
         return res.json("existingUsername")
     } else {
         return next();

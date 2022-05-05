@@ -114,11 +114,11 @@
             </div>
         </div>
 
-        <form id="profileSummary">
+        <form id="profileSummary" action="/upload" enctype="multipart/form-data" method="POST">
             <div id="profileImageSec">
                 <div id="profileImgContainer">
                     <!-- Profile image for full screen -->
-                    <input type="file" accept="image/gif, image/jpeg, image/png, image/svg" id="profileFile" />
+                    <input type="file" accept="image/gif, image/jpeg, image/png, image/svg" name="profileFile" id="profileFile" />
                     <img id="profileImage" src="../images/placeholder-profile.jpg" alt="Profile Picture">
                 </div>
             </div>
@@ -136,7 +136,7 @@
                     <!-- Banner image for full screen -->
                     <input type="file" accept="image/gif, image/jpeg, image/png, image/svg" id="bannerFile" />
                     <button id="editBanner">Edit Banner</button>
-                    <button type="button" id="saveChanges">Save</button>
+                    <button type="submit" id="saveChanges">Save</button>
                 </div>
 
                 <div id="contactInfoMob">

@@ -36,6 +36,10 @@ const userSchema = new Schema({
     userType: {
         type: String,
         required: true
+    },
+    img: {
+        data: Buffer,
+        contentType: String
     }
 }, { timestamps: true, versionKey: false });
 
