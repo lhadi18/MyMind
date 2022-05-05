@@ -7,42 +7,45 @@ $(document).ready(function () {
 
     // Load the Navbar and Footer 
     loadNavbarFooter();
+    setTimeout(() => {
+        $.get('/isLoggedIn', function (user) {
+            if (user) {
+                // if (user.isAdmin) {
+                //     document.querySelector(".isAdmin").style.display = "list-item";
+                //     loadNavbarFooter("../headerfooter/therapist-nav.html");
+                // } else 
+                if (user.userType == 'patient') {
+                    var patientEls = document.querySelectorAll(".isPatient");
+                    for (var x = 0; x < patientEls.length; x++)
+                        patientEls[x].style.display = 'list-item';
 
-    $.get('/isLoggedIn', function (user) {
-        if (user) {
-            // if (user.isAdmin) {
-            //     document.querySelector(".isAdmin").style.display = "list-item";
-            //     loadNavbarFooter("../headerfooter/therapist-nav.html");
-            // } else 
-            if (user.userType == 'patient') {
-                var patientEls = document.querySelectorAll(".isPatient");
-                for (var x = 0; x < patientEls.length; x++)
-                    patientEls[x].style.display = 'list-item';
+                    let loggedInEls = document.querySelectorAll(".isLoggedIn");
+                    for (var x = 0; x < loggedInEls.length; x++)
+                        loggedInEls[x].style.display = 'list-item';
 
-                let loggedInEls = document.querySelectorAll(".isLoggedIn");
-                for (var x = 0; x < loggedInEls.length; x++)
-                    loggedInEls[x].style.display = 'list-item';
+                } else if (user.userType == 'therapist') {
+                    let therapistEls = document.querySelectorAll(".isTherapist");
+                    for (var x = 0; x < therapistEls.length; x++)
+                        therapistEls[x].style.display = 'list-item';
 
-            } else if (user.userType == 'therapist') {
-                let therapistEls = document.querySelectorAll(".isTherapist");
-                for (var x = 0; x < therapistEls.length; x++)
-                    therapistEls[x].style.display = 'list-item';
-
-                let loggedInEls = document.querySelectorAll(".isLoggedIn");
-                for (var x = 0; x < loggedInEls.length; x++)
-                    loggedInEls[x].style.display = 'list-item';
+                    let loggedInEls = document.querySelectorAll(".isLoggedIn");
+                    for (var x = 0; x < loggedInEls.length; x++)
+                        loggedInEls[x].style.display = 'list-item';
+                }
+                setTimeout(() => {
+                    $('.logout-link').click(function () {
+                        console.log('clicked')
+                        $.post('/logout');
+                        window.location = '/login'
+                    })
+                }, 400);
+            } else {
+                document.querySelector(".isLoggedOut").style.display = "list-item";
             }
-            setTimeout(() => {
-                $('#logout-link').click(function () {
-                    console.log('clicked')
-                    $.post('/logout');
-                    window.location = '/login'
-                })
-            }, 400);
-        } else {
-            document.querySelector(".isLoggedOut").style.display = "list-item";
-        }
-    })
+        })
+
+    }, 50);
+
 
 
 
