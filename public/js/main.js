@@ -7,7 +7,7 @@ $(document).ready(function () {
 
     // Load the Navbar and Footer 
     loadNavbarFooter();
-   // setTimeout(() => {
+   setTimeout(() => {
         $.get('/isLoggedIn', function (user) {
             if (user) {
                 // if (user.isAdmin) {
@@ -46,7 +46,7 @@ $(document).ready(function () {
             }
         })
 
-    //}, 50);
+    }, 50);
 
 
 
