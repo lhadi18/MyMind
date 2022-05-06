@@ -72,6 +72,7 @@ var profileStorage = multer.diskStorage({
 
 var profileUpload = multer({storage:profileStorage})
 
+//this post method updates user profile page
 app.post('/uploadProfile', profileUpload.single('profileFile'), (req, res) => {
     if(req.file) {
     var fileName = req.file.filename;
@@ -107,6 +108,10 @@ app.get('/isLoggedIn', (req, res) => {
 
 app.get('/', function (req, res) {
     res.sendFile(path.resolve('public/index.html'));
+});
+
+app.get('/therapists', function (req, res) {
+    res.sendFile(path.resolve('public/therapists.html'));
 });
 
 app.get("/login", isLoggedOut, setHeaders, (req, res) => {

@@ -15,11 +15,11 @@
     -ms-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
-    -webkit-background-repeat: fixed;
-    -moz-background-repeat: fixed;
-    -ms-background-repeat: fixed;
-    -o-background-repeat: fixed;
-    background-repeat: fixed;
+    -webkit-background-repeat: no-repeat;
+    -moz-background-repeat: no-repeat;
+    -ms-background-repeat: no-repeat;
+    -o-background-repeat: no-repeat;
+    background-repeat: no-repeat;
     background-position: center center;
     background-attachment: fixed;
 }
@@ -348,4 +348,6 @@
     font-family: 'Nunito', sans-serif;
     color: red;
     font-size: 1rem;
+    padding-top: 1rem;
+    text-align: center;
 }
