@@ -348,4 +348,6 @@
     font-family: 'Nunito', sans-serif;
     color: red;
     font-size: 1rem;
+    padding-top: 1rem;
+    text-align: center;
 }
