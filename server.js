@@ -72,6 +72,7 @@ var profileStorage = multer.diskStorage({
 
 var profileUpload = multer({storage:profileStorage})
 
+//this post method updates user profile page
 app.post('/uploadProfile', profileUpload.single('profileFile'), (req, res) => {
     if(req.file) {
     var fileName = req.file.filename;
