@@ -271,6 +271,54 @@
     #wrapper #profileDetailsMob #profileForm .form-row .form-group label {
         font-size: 1rem;
     }
+    #wrapper #bannerTherapist {
+        grid-row: 1 / span 1;
+        height: 30vh;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -ms-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+        -webkit-background-repeat: no-repeat;
+        -moz-background-repeat: no-repeat;
+        -ms-background-repeat: no-repeat;
+        -o-background-repeat: no-repeat;
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-attachment: scroll;
+    }
+    #wrapper #bannerTherapist #overlay {
+        height: 30vh;
+    }
+    #wrapper #bannerTherapist #overlay #therapistHeader {
+        padding: 3rem;
+    }
+    #wrapper #bannerTherapist #overlay #therapistHeader h2 {
+        font-size: 2rem;
+    }
+    #wrapper #therapistListSec {
+        grid-row: 2 / span 1;
+        padding: 7rem 3rem;
+    }
+    #wrapper #therapistListSec h2 {
+        font-size: 1.7rem;
+    }
+    #wrapper #therapistListSec h4 {
+        font-size: 1rem;
+    }
+    #wrapper #therapistListSec #therapistList .therapistCard {
+        width: 100%;
+    }
+    #wrapper #therapistListSec #therapistList .therapistCard .cardContent {
+        padding: 2rem;
+    }
+    #wrapper #therapistListSec #therapistList .therapistCard .cardContent h3 {
+        font-size: 1.3rem;
+    }
+    #wrapper #therapistListSec #therapistList .therapistCard .cardContent div a {
+        padding: 18px 0;
+        font-size: 1rem;
+    }
 }
 
 @media (min-width: 576px) and (max-width: 767.98px) {
@@ -505,6 +553,54 @@
     #wrapper #profileDetailsMob {
         padding: 5rem 3rem;
     }
+    #wrapper #bannerTherapist {
+        grid-row: 1 / span 1;
+        height: 30vh;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -ms-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+        -webkit-background-repeat: no-repeat;
+        -moz-background-repeat: no-repeat;
+        -ms-background-repeat: no-repeat;
+        -o-background-repeat: no-repeat;
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-attachment: scroll;
+    }
+    #wrapper #bannerTherapist #overlay {
+        height: 30vh;
+    }
+    #wrapper #bannerTherapist #overlay #therapistHeader {
+        padding: 3rem;
+    }
+    #wrapper #bannerTherapist #overlay #therapistHeader h2 {
+        font-size: 2.5rem;
+    }
+    #wrapper #therapistListSec {
+        grid-row: 2 / span 1;
+        padding: 7rem 3rem;
+    }
+    #wrapper #therapistListSec h2 {
+        font-size: 2.2rem;
+    }
+    #wrapper #therapistListSec h4 {
+        font-size: 1.2rem;
+    }
+    #wrapper #therapistListSec #therapistList .therapistCard {
+        width: 100%;
+    }
+    #wrapper #therapistListSec #therapistList .therapistCard .cardContent {
+        padding: 2rem;
+    }
+    #wrapper #therapistListSec #therapistList .therapistCard .cardContent h3 {
+        font-size: 1.7rem;
+    }
+    #wrapper #therapistListSec #therapistList .therapistCard .cardContent div a {
+        padding: 18px 0;
+        font-size: 1.1rem;
+    }
 }
 
 @media (min-width: 768px) and (max-width: 991.98px) {
@@ -697,6 +793,34 @@
     #wrapper #profileDetails {
         display: none;
     }
+    #wrapper #bannerTherapist {
+        grid-row: 1 / span 1;
+    }
+    #wrapper #bannerTherapist #overlay #therapistHeader {
+        padding: 5rem;
+    }
+    #wrapper #therapistListSec {
+        grid-row: 2 / span 1;
+        padding: 10rem 5rem 3rem;
+    }
+    #wrapper #therapistListSec h2 {
+        font-size: 2.5rem;
+    }
+    #wrapper #therapistListSec h4 {
+        font-size: 1.2rem;
+    }
+    #wrapper #therapistListSec #therapistList .therapistCard {
+        width: 47.5%;
+    }
+    #wrapper #therapistListSec #therapistList .therapistCard .cardContent {
+        padding: 2rem;
+    }
+    #wrapper #therapistListSec #therapistList .therapistCard .cardContent h3 {
+        font-size: 1.2rem;
+    }
+    #wrapper #therapistListSec #therapistList .therapistCard .cardContent div a {
+        padding: 16px 0;
+    }
 }
 
 @media (min-width: 992px) and (max-width: 1199.98px) {
@@ -798,6 +922,21 @@
     #wrapper #profileSummary #profileDesc #buttonSec #saveChanges {
         min-width: 12rem;
         font-size: 1rem;
+    }
+    #wrapper #bannerTherapist #overlay #therapistHeader {
+        padding: 5rem;
+    }
+    #wrapper #therapistListSec {
+        padding: 10rem 5rem 3rem;
+    }
+    #wrapper #therapistListSec #therapistList .therapistCard .cardContent {
+        padding: 2rem;
+    }
+    #wrapper #therapistListSec #therapistList .therapistCard .cardContent h3 {
+        font-size: 1.2rem;
+    }
+    #wrapper #therapistListSec #therapistList .therapistCard .cardContent div a {
+        padding: 16px 0;
     }
 }
 
