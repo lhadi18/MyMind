@@ -3,13 +3,17 @@ const path = require('path');
 const session = require('express-session');
 const User = require("./models/user");
 const mongoose = require("mongoose");
-const multer = require("multer");
+const fs = require('fs');
 const bcrypt = require('bcrypt');
+const imageType = ['images/jpeg', 'images/png', 'images/gifs']
+const multer = require('multer');
+
+
 const port = 8000;
 const app = express();
 app.set('view engine', 'text/html');
 
-const uri = "mongodb+srv://DBUser:Admin123@cluster0.z9j9r.mongodb.net/BBY-31?retryWrites=true&w=majority";
+const uri = "mongodb+srv://DBUser:Admin123@cluster0.z9j9r.mongodb.net/MyMindDatabase?retryWrites=true&w=majority";
 mongoose.connect(uri, {
     useNewUrlParser: true,
     useUnifiedTopology: true
@@ -61,49 +65,9 @@ function setHeaders(req, res, next) {
 }
 
 //Routes
-var profileStorage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, 'public/uploads')
-    },
-    filename: function (req, file, cb) {
-        cb(null, file.originalname);
-    }
-})
-
-var profileUpload = multer({storage:profileStorage})
-
-//this post method updates user profile page
-app.post('/uploadProfile', profileUpload.single('profileFile'), (req, res) => {
-    if(req.file) {
-    var fileName = req.file.filename;
-    var id = req.session.user._id;
-    User.updateOne(
-        { "_id": id },
-        {
-            profileImg: "../uploads/" + fileName
-        }
-    ).then((obj) => {
-        console.log('Updated - ' + obj);
-    })
-} else {
-    return;
-}
-});
-
-app.get('/getProfilePicture', (req, res) => {
-    var id = req.session.user._id;
-    User.findById({
-        _id: id
-    },function(err, user) {
-        if(user) {
-            res.send(user)
-        }
-    })
-})
-
 
 app.get('/isLoggedIn', (req, res) => {
-    res.send(req.session.user);
+    res.send(req.session.isLoggedIn);
 })
 
 app.get('/', function (req, res) {
@@ -300,9 +264,9 @@ async function isNotRegistered(req, res, next) {
     })
     if (emailExists) {
         return res.json("existingEmail");
-    } else if (phoneExists) {
+    } else if(phoneExists) {
         return res.json("existingPhone")
-    } else if (usernameExists) {
+    } else if(usernameExists) {
         return res.json("existingUsername")
     } else {
         return next();

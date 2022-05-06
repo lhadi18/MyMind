@@ -59,22 +59,22 @@
                                 <img src="../images/heart-pulse.svg" class="nav-icon" alt="therapists">Therapists
                             </a>
                         </li>
-                        <li class="nav-item isPatient">
+                        <li class="nav-item">
                             <a href="/checkout" class="nav-link">
                                 <i class="bi bi-bag-check nav-icon"></i>Checkout
                             </a>
                         </li>
-                        <li class="nav-item isPatient">
+                        <li class="nav-item">
                             <a href="/chat-session" class="nav-link">
                                 <i class="bi bi-chat-left-dots nav-icon"></i>Chat Session
                             </a>
                         </li>
-                        <li class="nav-item isTherapist">
+                        <li class="nav-item">
                             <a href="/my-patients" class="nav-link">
                                 <i class="bi bi-people nav-icon"></i>My Patients
                             </a>
                         </li>
-                        <li class="nav-item isLoggedIn">
+                        <li class="nav-item">
                             <a href="/userprofile" class="nav-link">
                                 <i class="bi bi-person-circle nav-icon"></i>Account
                             </a>
@@ -84,13 +84,13 @@
                                 <i class="bi bi-info-circle nav-icon"></i>Contact
                             </a>
                         </li>
-                        <li class="nav-item isLoggedOut">
+                        <li class="nav-item">
                             <a href="/login" class="nav-link">
                                 <i class="bi bi-box-arrow-in-right nav-icon"></i>Login
                             </a>
                         </li>
-                        <li class="nav-item isLoggedIn">
-                            <a href="#!" class="nav-link logout-link">
+                        <li class="nav-item">
+                            <a href="/logout" class="nav-link">
                                 <i class="bi bi-box-arrow-left nav-icon"></i>Logout
                             </a>
                         </li>
@@ -114,19 +114,19 @@
             </div>
         </div>
 
-        <form id="profileSummary" action="/uploadProfile" enctype="multipart/form-data" method="POST">
+        <form id="profileSummary">
             <div id="profileImageSec">
                 <div id="profileImgContainer">
                     <!-- Profile image for full screen -->
-                    <input type="file" accept="image/gif, image/jpeg, image/png, image/svg" name="profileFile" id="profileFile" />
-                    <img id="profileImage" src="" alt="Profile Picture">
+                    <input type="file" accept="image/gif, image/jpeg, image/png, image/svg" id="profileFile" />
+                    <img id="profileImage" src="../images/placeholder-profile.jpg" alt="Profile Picture">
                 </div>
             </div>
 
             <div id="profileDesc">
                 <div id="profileImageSecMob">
                     <div id="profileImgContainerMob">
-                        <img id="profileImageMob" src="" alt="Profile Picture">
+                        <img id="profileImageMob" src="../images/placeholder-profile.jpg" alt="Profile Picture">
                     </div>
                 </div>
                 <h2 id="displayFullname"></h2>
@@ -134,7 +134,9 @@
                 <p>Joined: <span id="joinedDate"></span></p>
                 <div id="buttonSec">
                     <!-- Banner image for full screen -->
-                    <button type="submit" id="saveChanges">Save</button>
+                    <input type="file" accept="image/gif, image/jpeg, image/png, image/svg" id="bannerFile" />
+                    <button id="editBanner">Edit Banner</button>
+                    <button type="button" id="saveChanges">Save</button>
                 </div>
 
                 <div id="contactInfoMob">

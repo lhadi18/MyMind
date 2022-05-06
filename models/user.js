@@ -36,10 +36,6 @@ const userSchema = new Schema({
     userType: {
         type: String,
         required: true
-    },
-    profileImg: {
-        type: String,
-        default: "../uploads/placeholder-profile.jpg"
     }
 }, { timestamps: true, versionKey: false });
 

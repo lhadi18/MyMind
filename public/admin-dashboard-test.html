@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="COMP 2800 - MyMind" />
+
+    <title>MyMind - Admin Dashboard</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="../images/logo.svg" />
+
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/410249dbdb.js" crossorigin="anonymous"></script>
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" type="text/css" href="../css/style.css" />
+    <link rel="stylesheet" type="text/css" href="../css/admin-dashboard.css" />
+    <link rel="stylesheet" type="text/css" href="../css/responsive.css" />
+</head>
+
+<body>
+    <div id="wrapper">
+        <div id="navPlaceHolder"></div>
+        <header id="headMobile">
+            <nav class="nav-container">
+                <p id="footerNav">MyMind 2022 © COMP 2800</p>
+
+                <div class="nav-menu" id="nav-menu">
+                    <div id="logoMob">
+                        <a href="/">
+                            <img src="../images/logo.svg" alt="Logo">
+                            <h2>MyMind</h2>
+                        </a>
+                    </div>
+
+                    <i class="bi bi-x nav-close" id="nav-close"></i>
+
+                    <ul class="nav-list">
+                        <li class="nav-item">
+                            <a href="/" class="nav-link">
+                                <i class="bi bi-house-door nav-icon"></i>Home
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/therapists" class="nav-link">
+                                <img src="../images/heart-pulse.svg" class="nav-icon" alt="therapists">Therapists
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/checkout" class="nav-link">
+                                <i class="bi bi-bag-check nav-icon"></i>Checkout
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/chat-session" class="nav-link">
+                                <i class="bi bi-chat-left-dots nav-icon"></i>Chat Session
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/my-patients" class="nav-link">
+                                <i class="bi bi-people nav-icon"></i>My Patients
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/userprofile" class="nav-link">
+                                <i class="bi bi-person-circle nav-icon"></i>Account
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/contact" class="nav-link">
+                                <i class="bi bi-info-circle nav-icon"></i>Contact
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/login" class="nav-link">
+                                <i class="bi bi-box-arrow-in-right nav-icon"></i>Login
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/logout" class="nav-link">
+                                <i class="bi bi-box-arrow-left nav-icon"></i>Logout
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="nav-btns">
+                    <div class="nav-toggle" id="nav-toggle">
+                        <i class="bi bi-grid"></i>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+        <div id="dashboardHeroContainer">
+            <div id="overlay">
+                <div id="dashboardHero">
+                    <h2>Admin Dashboard</h2>
+                </div>
+            </div>
+        </div>
+
+        <div id="createUserModal">
+            <div id="modalContent">
+                <div id="modalHeader">
+                    <i class="fa-solid fa-xmark" id="close"></i>
+                </div>
+                
+                <div id="formContainer">
+                    <form id="createUserForm" action="/sign-up" method="POST">
+                        <div class="form-row col-6">
+                            <div class="form-group">
+                                <label>First Name</label>
+                                <input type="text" class="form-control" name="firstname" id="firstname"
+                                    placeholder="First Name" value="Towa" required="required">
+                            </div>
+                        </div>
+    
+                        <div class="form-row col-6">
+                            <div class="form-group">
+                                <label>Last Name</label>
+                                <input type="text" class="form-control" name="lastname" id="lastname"
+                                    placeholder="Last Name" value="Quimbayo" required="required">
+                            </div>
+                        </div>
+    
+                        <div class="form-row col-6">
+                            <div class="form-group">
+                                <label>Username</label>
+                                <input type="text" class="form-control" name="username" id="username" placeholder="Username"
+                                    value="tquimbayo" required="required">
+                            </div>
+                        </div>
+    
+                        <div class="form-row col-6">
+                            <div class="form-group">
+                                <label for="phone">Phone</label>
+                                <input type="tel" class="form-control" name="phone" id="phone" placeholder="Phone"
+                                    value="7785555555" required="required">
+                            </div>
+                        </div>
+    
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="email">Email Address</label>
+                                <input type="email" class="form-control" name="email" id="email" placeholder="Email"
+                                    value="towacurtis@hotmail.com" required="required">
+                            </div>
+                        </div>
+    
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="userType">I am a</label>
+                                <select name="userType" id="userType">
+                                    <option value="patient">Patient</option>
+                                    <option value="therapist">Therapist</option>
+                                </select>
+                            </div>
+                        </div>
+    
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <div class="input-group" id="show-hide-password">
+                                    <input type="password" name="password" class="form-control" id="password" value="abc123"
+                                        required="required">
+                                    <div class="input-group-addon">
+                                        <a href=""><i class="fa fa-eye-slash" aria-hidden="true"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <button type="button" id="createUserBtn">Create User</button>
+                        <p id="createUserErrorMessage">&nbsp;</p>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div id="dashboardToolbar">
+            <p>Results Found: <span id="resultsFound">12 Users</span></p>
+            <form id="searchForm">
+                <input id="searchbar" type="text" placeholder="Search..." />
+                <button type="submit" id="searchBtn"><i class="bi bi-search"></i></button>
+                <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
+            </form>
+            <button id="createUser">Create User</button>
+        </div>
+
+        <div id="tableContainer">
+            <table id="dashboardTable">
+                <thead>
+                    <tr id="tableHeader">
+                        <th class="tHead" data-type="number">ID<i id="0"></i></th>
+                        <th class="tHead">First Name<i id="1"></i></th>
+                        <th class="tHead">Last Name<i id="2"></i></th>
+                        <th class="tHead">Username<i id="3"></i></th>
+                        <th class="tHead">Email<i id="4"></i></th>
+                        <th>UserType</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="tableRows">
+                        <td>1</td>
+                        <td>Towa</td>
+                        <td>Ddd</td>
+                        <td>tquimbayo</td>
+                        <td>tquimbayo@hotmai.com</td>
+                        <td>Patient</td>
+                        <td>
+                            <div class="dashSettings inactive">
+                                <i class="bi bi-gear-fill" id="setIcon1"></i>
+                                <i class="bi bi-pencil-fill settingIcon"></i>
+                                <i class="bi bi-trash-fill settingIcon"></i>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="tableRows">
+                        <td>2</td>
+                        <td>Alex</td>
+                        <td>Ggg</td>
+                        <td>aquimbayo</td>
+                        <td>aquimbayo@hotmai.com</td>
+                        <td>Patient</td>
+                        <td>
+                            <div class="dashSettings inactive">
+                                <i class="bi bi-gear-fill" id="setIcon2"></i>
+                                <i class="bi bi-pencil-fill settingIcon"></i>
+                                <i class="bi bi-trash-fill settingIcon"></i>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="tableRows">
+                        <td>3</td>
+                        <td>Jason</td>
+                        <td>Bbb</td>
+                        <td>zquimbayo</td>
+                        <td>zquimbayo@hotmai.com</td>
+                        <td>Therapist</td>
+                        <td>
+                            <div class="dashSettings inactive">
+                                <i class="bi bi-gear-fill" id="setIcon3"></i>
+                                <i class="bi bi-pencil-fill settingIcon"></i>
+                                <i class="bi bi-trash-fill settingIcon"></i>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="tableRows">
+                        <td>4</td>
+                        <td>Jacob</td>
+                        <td>Zzz</td>
+                        <td>dquimbayo</td>
+                        <td>dquimbayo@hotmai.com</td>
+                        <td>Patient</td>
+                        <td>
+                            <div class="dashSettings inactive">
+                                <i class="bi bi-gear-fill" id="setIcon4"></i>
+                                <i class="bi bi-pencil-fill settingIcon"></i>
+                                <i class="bi bi-trash-fill settingIcon"></i>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="tableRows">
+                        <td>5</td>
+                        <td>Martin</td>
+                        <td>Qqq</td>
+                        <td>equimbayo</td>
+                        <td>equimbayo@hotmai.com</td>
+                        <td>Admin</td>
+                        <td>
+                            <div class="dashSettings inactive">
+                                <i class="bi bi-gear-fill" id="setIcon5"></i>
+                                <i class="bi bi-pencil-fill settingIcon"></i>
+                                <i class="bi bi-trash-fill settingIcon"></i>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="tableRows">
+                        <td>6</td>
+                        <td>Brown</td>
+                        <td>Yyy</td>
+                        <td>yquimbayo</td>
+                        <td>yquimbayo@hotmai.com</td>
+                        <td>Admin</td>
+                        <td>
+                            <div class="dashSettings inactive">
+                                <i class="bi bi-gear-fill" id="setIcon6"></i>
+                                <i class="bi bi-pencil-fill settingIcon"></i>
+                                <i class="bi bi-trash-fill settingIcon"></i>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="tableRows">
+                        <td>7</td>
+                        <td>James</td>
+                        <td>Rrr</td>
+                        <td>kquimbayo</td>
+                        <td>kquimbayo@hotmai.com</td>
+                        <td>Patient</td>
+                        <td>
+                            <div class="dashSettings inactive">
+                                <i class="bi bi-gear-fill" id="setIcon7"></i>
+                                <i class="bi bi-pencil-fill settingIcon"></i>
+                                <i class="bi bi-trash-fill settingIcon"></i>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="tableRows">
+                        <td>8</td>
+                        <td>Leo</td>
+                        <td>Eee</td>
+                        <td>pquimbayo</td>
+                        <td>pquimbayo@hotmai.com</td>
+                        <td>Therapist</td>
+                        <td>
+                            <div class="dashSettings inactive">
+                                <i class="bi bi-gear-fill" id="setIcon8"></i>
+                                <i class="bi bi-pencil-fill settingIcon"></i>
+                                <i class="bi bi-trash-fill settingIcon"></i>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="tableRows">
+                        <td>9</td>
+                        <td>Roman</td>
+                        <td>Jjj</td>
+                        <td>lquimbayo</td>
+                        <td>lquimbayo@hotmai.com</td>
+                        <td>Therapist</td>
+                        <td>
+                            <div class="dashSettings inactive">
+                                <i class="bi bi-gear-fill" id="setIcon9"></i>
+                                <i class="bi bi-pencil-fill settingIcon"></i>
+                                <i class="bi bi-trash-fill settingIcon"></i>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="tableRows">
+                        <td>10</td>
+                        <td>Lucas</td>
+                        <td>Ggg</td>
+                        <td>uquimbayo</td>
+                        <td>uquimbayo@hotmai.com</td>
+                        <td>Patient</td>
+                        <td>
+                            <div class="dashSettings inactive">
+                                <i class="bi bi-gear-fill" id="setIcon10"></i>
+                                <i class="bi bi-pencil-fill settingIcon"></i>
+                                <i class="bi bi-trash-fill settingIcon"></i>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="tableRows">
+                        <td>11</td>
+                        <td>Cole</td>
+                        <td>Sss</td>
+                        <td>equimbayo</td>
+                        <td>equimbayo@hotmai.com</td>
+                        <td>Patient</td>
+                        <td>
+                            <div class="dashSettings inactive">
+                                <i class="bi bi-gear-fill" id="setIcon11"></i>
+                                <i class="bi bi-pencil-fill settingIcon"></i>
+                                <i class="bi bi-trash-fill settingIcon"></i>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="tableRows">
+                        <td>12</td>
+                        <td>Katie</td>
+                        <td>Lll</td>
+                        <td>vquimbayo</td>
+                        <td>vquimbayo@hotmai.com</td>
+                        <td>Patient</td>
+                        <td>
+                            <div class="dashSettings inactive">
+                                <i class="bi bi-gear-fill" id="setIcon12"></i>
+                                <i class="bi bi-pencil-fill settingIcon"></i>
+                                <i class="bi bi-trash-fill settingIcon"></i>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div id="footerPlaceHolder"></div>
+    </div>
+
+    <!-- jQuery CDN -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="../js/admin-dashboard.js"></script>
+</body>
+
+</html>
