@@ -67,6 +67,94 @@
     #wrapper #loginContainer .col-6 #loginSec #formContainer #loginForm .form-row .form-group label {
         text-align: left;
     }
+    #wrapper #bannerHome {
+        grid-row: 1 / span 1;
+        height: 100vh;
+    }
+    #wrapper #bannerHome #overlay {
+        height: 100vh;
+        background: rgba(2, 105, 86, 0.2);
+    }
+    #wrapper #bannerHome #overlay #homeHeader {
+        padding: 0 3rem 10rem;
+        justify-content: end;
+        width: 100%;
+    }
+    #wrapper #bannerHome #overlay #homeHeader h2 {
+        font-size: 2.2rem;
+    }
+    #wrapper #bannerHome #overlay #homeHeader div {
+        display: flex;
+        padding-top: 2rem;
+    }
+    #wrapper #bannerHome #overlay #homeHeader div a {
+        text-align: center;
+        padding: 18px 0;
+        width: 100%;
+    }
+    #wrapper #therapySec {
+        grid-row: 2 / span 1;
+        padding: 7rem 3rem;
+    }
+    #wrapper #therapySec h2 {
+        font-size: 2rem;
+        padding-bottom: 5rem;
+    }
+    #wrapper #therapySec #therapistCards {
+        flex-direction: column;
+    }
+    #wrapper #therapySec #therapistCards .therapyCard {
+        padding: 3rem 2rem;
+        margin-top: 0;
+        margin-bottom: 3rem;
+    }
+    #wrapper #therapySec #therapistCards .mainCard {
+        margin-bottom: 3rem;
+    }
+    #wrapper #therapySec #therapistCards .therapyCard:first-child {
+        margin-right: 0;
+    }
+    #wrapper #therapySec #therapistCards .therapyCard:nth-child(3) {
+        margin-left: 0;
+        margin-bottom: 0;
+    }
+    #wrapper #therapySec #therapistCards .therapyCard h2,
+    #wrapper #therapySec #therapistCards .mainCard h2 {
+        font-size: 3.5rem;
+        padding-bottom: 2rem;
+    }
+    #wrapper #therapySec #therapistCards .therapyCard h2 span,
+    #wrapper #therapySec #therapistCards .mainCard span {
+        font-size: 1.3rem;
+    }
+    #wrapper #therapySec #therapistCards .therapyCard h4,
+    #wrapper #therapySec #therapistCards .mainCard h4 {
+        font-size: 1rem;
+    }
+    #wrapper #therapySec #therapistCards .therapyCard div a {
+        font-size: 1rem;
+        padding: 16px 0;
+    }
+    #wrapper #companySec {
+        grid-row: 3 / span 1;
+        flex-direction: column-reverse;
+        width: 100%;
+    }
+    #wrapper #companySec div {
+        width: 100%;
+    }
+    #wrapper #companySec #companyDesc {
+        padding: 5rem 3rem;
+    }
+    #wrapper #companySec #companyDesc h2 {
+        font-size: 2rem;
+    }
+    #wrapper #companySec #companyDesc p {
+        font-size: 1rem;
+    }
+    #wrapper #companySec #companyDesc p:nth-child(3) {
+        padding-bottom: 0;
+    }
     #wrapper #banner {
         grid-column: 1 / span 4;
         grid-row: 1 / span 1;
@@ -234,6 +322,85 @@
     #wrapper #loginContainer .col-6 #loginSec #formContainer #loginForm .form-row .form-group label {
         text-align: left;
     }
+    #wrapper #bannerHome {
+        grid-row: 1 / span 1;
+        height: 100vh;
+    }
+    #wrapper #bannerHome #overlay {
+        height: 100vh;
+        background: rgba(2, 105, 86, 0.2);
+    }
+    #wrapper #bannerHome #overlay #homeHeader {
+        padding: 0 3rem 10rem;
+        justify-content: end;
+        width: 100%;
+    }
+    #wrapper #bannerHome #overlay #homeHeader h2 {
+        font-size: 2.4rem;
+    }
+    #wrapper #bannerHome #overlay #homeHeader div {
+        display: flex;
+        padding-top: 2rem;
+    }
+    #wrapper #bannerHome #overlay #homeHeader div a {
+        text-align: center;
+        padding: 18px 0;
+        width: 100%;
+    }
+    #wrapper #therapySec {
+        grid-row: 2 / span 1;
+        padding: 7rem 3rem;
+    }
+    #wrapper #therapySec h2 {
+        font-size: 2.5rem;
+        padding-bottom: 5rem;
+    }
+    #wrapper #therapySec #therapistCards {
+        flex-direction: column;
+    }
+    #wrapper #therapySec #therapistCards .therapyCard {
+        padding: 3rem;
+        margin-top: 0;
+        margin-bottom: 3rem;
+    }
+    #wrapper #therapySec #therapistCards .mainCard {
+        margin-bottom: 3rem;
+    }
+    #wrapper #therapySec #therapistCards .therapyCard:first-child {
+        margin-right: 0;
+    }
+    #wrapper #therapySec #therapistCards .therapyCard:nth-child(3) {
+        margin-left: 0;
+        margin-bottom: 0;
+    }
+    #wrapper #therapySec #therapistCards .therapyCard h2,
+    #wrapper #therapySec #therapistCards .mainCard h2 {
+        font-size: 4rem;
+        padding-bottom: 2rem;
+    }
+    #wrapper #therapySec #therapistCards .therapyCard h2 span,
+    #wrapper #therapySec #therapistCards .mainCard span {
+        font-size: 1.5rem;
+    }
+    #wrapper #therapySec #therapistCards .therapyCard h4,
+    #wrapper #therapySec #therapistCards .mainCard h4 {
+        font-size: 1.2rem;
+    }
+    #wrapper #therapySec #therapistCards .therapyCard div a {
+        font-size: 1rem;
+        padding: 16px 0;
+    }
+    #wrapper #companySec {
+        grid-row: 3 / span 1;
+        flex-direction: column-reverse;
+        width: 100%;
+    }
+    #wrapper #companySec div {
+        width: 100%;
+    }
+    #wrapper #companySec #companyDesc {
+        padding: 5rem 3rem;
+    }
     #wrapper #banner {
         grid-column: 1 / span 4;
         grid-row: 1 / span 1;
@@ -383,6 +550,76 @@
     #wrapper #loginContainer .col-6 #loginSec #formContainer #loginForm .form-row .form-group label {
         text-align: left;
     }
+    #wrapper #bannerHome {
+        grid-row: 1 / span 1;
+        height: 100vh;
+    }
+    #wrapper #bannerHome #overlay {
+        height: 100vh;
+        background: rgba(2, 105, 86, 0.2);
+    }
+    #wrapper #bannerHome #overlay #homeHeader {
+        padding: 0 5rem 12rem;
+        justify-content: end;
+        width: 98%;
+    }
+    #wrapper #bannerHome #overlay #homeHeader h2 {
+        font-size: 3rem;
+    }
+    #wrapper #therapySec {
+        grid-row: 2 / span 1;
+        padding: 10rem 5rem;
+    }
+    #wrapper #therapySec h2 {
+        font-size: 2.5rem;
+        padding-bottom: 5rem;
+    }
+    #wrapper #therapySec #therapistCards {
+        flex-direction: column;
+    }
+    #wrapper #therapySec #therapistCards .therapyCard {
+        padding: 3rem;
+        margin-top: 0;
+        margin-bottom: 3rem;
+    }
+    #wrapper #therapySec #therapistCards .mainCard {
+        margin-bottom: 3rem;
+    }
+    #wrapper #therapySec #therapistCards .therapyCard:first-child {
+        margin-right: 0;
+    }
+    #wrapper #therapySec #therapistCards .therapyCard:nth-child(3) {
+        margin-left: 0;
+        margin-bottom: 0;
+    }
+    #wrapper #therapySec #therapistCards .therapyCard h2,
+    #wrapper #therapySec #therapistCards .mainCard h2 {
+        font-size: 4rem;
+        padding-bottom: 2rem;
+    }
+    #wrapper #therapySec #therapistCards .therapyCard h2 span,
+    #wrapper #therapySec #therapistCards .mainCard span {
+        font-size: 1.5rem;
+    }
+    #wrapper #therapySec #therapistCards .therapyCard h4,
+    #wrapper #therapySec #therapistCards .mainCard h4 {
+        font-size: 1.2rem;
+    }
+    #wrapper #therapySec #therapistCards .therapyCard div a {
+        font-size: 1rem;
+        padding: 16px 0;
+    }
+    #wrapper #companySec {
+        grid-row: 3 / span 1;
+        flex-direction: column-reverse;
+        width: 100%;
+    }
+    #wrapper #companySec div {
+        width: 100%;
+    }
+    #wrapper #companySec #companyDesc {
+        padding: 5rem;
+    }
     #wrapper #banner {
         grid-column: 1 / span 4;
         grid-row: 1 / span 1;
@@ -481,6 +718,51 @@
     #wrapper #navPlaceHolder #headContainer #navbar #navMenu .navLinks a.loginNav, 
     #wrapper #navPlaceHolder #headContainer #navbar #navMenu .navLinks input {
         font-size: 14px;
+    }
+    #wrapper #bannerHome #overlay #homeHeader {
+        padding: 5rem;
+        width: 85%;
+    }
+    #wrapper #therapySec {
+        padding: 10rem 5rem;
+    }
+    #wrapper #therapySec h2 {
+        font-size: 3rem;
+    }
+    #wrapper #therapySec #therapistCards .therapyCard {
+        padding: 3rem 2rem;
+    }
+    #wrapper #therapySec #therapistCards .therapyCard:first-child {
+        margin-right: 2rem;
+    }
+    #wrapper #therapySec #therapistCards .therapyCard:nth-child(3) {
+        margin-left: 2rem;
+    }
+    #wrapper #therapySec #therapistCards .therapyCard h2 {
+        font-size: 2.5rem;
+        padding-bottom: 2.5rem;
+    }
+    #wrapper #therapySec #therapistCards .mainCard h2 {
+        font-size: 3.5rem;
+    }
+    #wrapper #therapySec #therapistCards .therapyCard h2 span {
+        font-size: 1.2rem;
+    }
+    #wrapper #therapySec #therapistCards .mainCard span {
+        font-size: 1.5rem;
+    }
+    #wrapper #therapySec #therapistCards .therapyCard h4 {
+        font-size: 1rem;
+    }
+    #wrapper #therapySec #therapistCards .mainCard h4 {
+        font-size: 1.2rem;
+    }
+    #wrapper #therapySec #therapistCards .therapyCard div a {
+        font-size: 1rem;
+        padding: 16px 0;
+    }
+    #wrapper #companySec #companyDesc {
+        padding: 5rem;
     }
     #wrapper #signUp {
         padding: 5rem;

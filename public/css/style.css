@@ -106,7 +106,7 @@ body {
 }
 
 #wrapper #navPlaceHolder #headContainer #navbar #navMenu .navLinks:not(:last-child) {
-    padding-right: 2rem;
+    padding-left: 2rem;
 }
 
 #wrapper #navPlaceHolder #headContainer #navbar #navMenu .navLinks a.active {

@@ -4,12 +4,11 @@
 }
 
 /* Home Page */
-#wrapper #banner {
+#wrapper #bannerHome {
     grid-column: 1 / span 4;
     grid-row: 2 / span 1;
     width: 100%;
     height: 90vh;
-    top: 10vh;
     background: url('../images/hero.jpg');
     -webkit-background-size: cover;
     -moz-background-size: cover;
@@ -25,7 +24,7 @@
     background-attachment: fixed;
 }
 
-#wrapper #banner #overlay {
+#wrapper #bannerHome #overlay {
     position: relative;
     top: 0;
     left: 0;
@@ -35,7 +34,7 @@
     background: rgba(2, 105, 86, 0.2);
 }
 
-#wrapper #banner #overlay #homeHeader {
+#wrapper #bannerHome #overlay #homeHeader {
     padding: 5rem 7rem;
     display: flex;
     flex-direction: column;
@@ -44,18 +43,18 @@
     width: 70%;
 }
 
-#wrapper #banner #overlay #homeHeader h2 {
+#wrapper #bannerHome #overlay #homeHeader h2 {
     font-size: 3.5rem;
     font-weight: 700;
     color: white;
 }
 
-#wrapper #banner #overlay #homeHeader div {
+#wrapper #bannerHome #overlay #homeHeader div {
     padding-top: 3rem;
     width: 100%;
 }
 
-#wrapper #banner #overlay #homeHeader div a {
+#wrapper #bannerHome #overlay #homeHeader div a {
     font-family: 'Nunito', sans-serif;
     font-size: 1rem;
     font-weight: 600;
@@ -76,7 +75,7 @@
     transition: all ease-in-out 0.3s;
 }
 
-#wrapper #banner #overlay #homeHeader div a:hover {
+#wrapper #bannerHome #overlay #homeHeader div a:hover {
     border: 2px solid var(--secondaryColor);
     background-color: var(--secondaryColor);
 }
@@ -110,7 +109,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 5rem 3rem;
+    padding: 5rem 2rem;
     margin: 3rem 0;
     width: 100%;
     background: white;
@@ -118,9 +117,17 @@
     box-shadow: 0px 0px 25px -2px rgba(0, 0, 0, 0.1);
 }
 
+#wrapper #therapySec #therapistCards .therapyCard:first-child {
+    margin-right: 2rem;
+}
+
+#wrapper #therapySec #therapistCards .therapyCard:nth-child(3) {
+    margin-left: 2rem;
+}
+
 #wrapper #therapySec #therapistCards .mainCard {
     background: var(--primaryColor);
-    margin: 0 3rem;
+    margin: 0;
 }
 
 #wrapper #therapySec #therapistCards .therapyCard h2 {
@@ -171,7 +178,6 @@
 }
 
 #wrapper #therapySec #therapistCards .mainCard p {
-    font-size: 1rem;
     color: white;
 }
 
