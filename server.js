@@ -110,6 +110,10 @@ app.get('/', function (req, res) {
     res.sendFile(path.resolve('public/index.html'));
 });
 
+app.get('/therapists', function (req, res) {
+    res.sendFile(path.resolve('public/therapists.html'));
+});
+
 app.get("/login", isLoggedOut, setHeaders, (req, res) => {
     res.sendFile(path.resolve('public/login.html'));
 });
