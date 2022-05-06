@@ -87,6 +87,10 @@ body {
     margin: 0;
 }
 
+#wrapper #navPlaceHolder #headContainer #navbar #navMenu .navLinks {
+    padding-left: 2rem;
+}
+
 #wrapper #navPlaceHolder #headContainer #navbar #navMenu .navLinks a {
     text-decoration: none;
     color: black;
@@ -103,10 +107,6 @@ body {
 #wrapper #navPlaceHolder #headContainer #navbar #navMenu .navLinks a:focus,
 #wrapper #navPlaceHolder #headContainer #navbar #navMenu .navLinks a:active {
     color: var(--primaryColor);
-}
-
-#wrapper #navPlaceHolder #headContainer #navbar #navMenu .navLinks:not(:last-child) {
-    padding-left: 2rem;
 }
 
 #wrapper #navPlaceHolder #headContainer #navbar #navMenu .navLinks a.active {
