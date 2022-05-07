@@ -46,37 +46,26 @@
     display: none;
 }
 
-#wrapper #bannerMob #overlay #profileHeader #editBanner {
+#wrapper #profileSummaryMob {
+    grid-column: 1 / span 4;
+    grid-row: 2 / span 1;
     display: flex;
-    font-family: 'Nunito', sans-serif;
-    font-size: 1rem;
-    font-weight: 600;
-    padding: 10px;
-    text-decoration: none;
-    min-width: 12rem;
-    height: 3.8rem;
-    align-items: center;
+    flex-direction: row;
     justify-content: center;
-    color: var(--primaryColor);
-    background-color: white;
-    border: solid white 2px;
-    border-radius: 500px;
-    cursor: pointer;
-    -webkit-transition: all ease-in-out 0.3s;
-    -moz-transition: all ease-in-out 0.3s;
-    -ms-transition: all ease-in-out 0.3s;
-    -o-transition: all ease-in-out 0.3s;
-    transition: all ease-in-out 0.3s;
+    width: 100%;
+    background: white;
+    padding: 0 5rem 5rem;
+    margin-top: -5vh;
+    border-top-left-radius: 50px;
+    border-top-right-radius: 50px;
+    z-index: 5;
 }
 
-#wrapper #bannerMob #overlay #profileHeader #editBanner:hover {
-    border: 2px solid var(--primaryColor);
-    background-color: var(--primaryColor);
-    color: white;
-}
-
-#wrapper #bannerMob #overlay #profileHeader #saveChanges {
+#wrapper #profileSummaryMob #saveChanges {
     display: flex;
+    position: absolute;
+    top: 3rem;
+    right: 5rem;
     font-family: 'Nunito', sans-serif;
     font-size: 1rem;
     font-weight: 600;
@@ -98,24 +87,9 @@
     transition: all ease-in-out 0.3s;
 }
 
-#wrapper #bannerMob #overlay #profileHeader #saveChanges:hover {
+#wrapper #profileSummaryMob #saveChanges:hover {
     border: 2px solid var(--secondaryColor);
     background-color: var(--secondaryColor);
-}
-
-#wrapper #profileSummaryMob {
-    grid-column: 1 / span 4;
-    grid-row: 2 / span 1;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    width: 100%;
-    background: white;
-    padding: 0 5rem 5rem;
-    margin-top: -5vh;
-    border-top-left-radius: 50px;
-    border-top-right-radius: 50px;
-    z-index: 5;
 }
 
 #wrapper #profileSummaryMob #profileDesc {
