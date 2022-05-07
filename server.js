@@ -1,7 +1,7 @@
 const express = require("express");
 const path = require('path');
 const session = require('express-session');
-const User = require("./models/user");
+const User = require("./models/BBY_31_users");
 const mongoose = require("mongoose");
 const multer = require("multer");
 const bcrypt = require('bcrypt');
@@ -130,7 +130,6 @@ app.post('/searchByEmail', isLoggedIn, isAdmin, setHeaders, (req, res) => {
         if (!user) {
             console.log('User does not exist.');
         }
-        console.log('user sent:' + user)
         res.json(user);
     });
 });
@@ -225,7 +224,6 @@ app.post('/editProfile', isLoggedIn, isNotExisting, async (req, res) => {
         }
     )
         .then((obj) => {
-            console.log('Updated - ' + obj);
             return res.json("updated");
         })
         .catch((err) => {
