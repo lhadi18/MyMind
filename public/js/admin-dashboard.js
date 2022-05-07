@@ -3,7 +3,6 @@ $(document).ready(function () {
     document.getElementById('1').setAttribute("class", "bi bi-caret-down-fill");
     document.getElementById('2').setAttribute("class", "bi bi-caret-down-fill");
     document.getElementById('3').setAttribute("class", "bi bi-caret-down-fill");
-    document.getElementById('4').setAttribute("class", "bi bi-caret-down-fill");
 
     var modal = document.getElementById("createUserModal");
 
@@ -36,7 +35,7 @@ $(document).ready(function () {
                 if (this.children[1].classList.contains('active')
                     || this.children[1].classList.contains('inactive')
                     || this.children[2].classList.contains('active')
-                    || this.children[2].classList.contains('inactive'))  {
+                    || this.children[2].classList.contains('inactive')) {
                     this.children[1].classList.toggle('active');
                     this.children[1].classList.toggle('inactive');
                     this.children[2].classList.toggle('active');
@@ -54,21 +53,26 @@ $(document).ready(function () {
     }
 });
 
-function searchTable() {
-    var input = document.getElementById("myInput").value.toUpperCase();
-    var table = document.getElementById("myTable");
-    var tr = table.getElementsByTagName("tr");
 
-    for (var i = 0; i < tr.length; i++) {
-        var td = tr[i].getElementsByTagName("td")[0];
-        if (td) {
-            var txtValue = td.textContent || td.innerText;
-            if (txtValue.toUpperCase().indexOf(input) > -1) {
-                tr[i].style.display = "";
-            } else {
-                tr[i].style.display = "none";
+
+function searchTable() {
+    const searchInput = document.getElementById("searchbar").value.toUpperCase();
+    const table = document.getElementById("dashboardTable");
+    const trs = table.tBodies[0].getElementsByTagName("tr");
+
+    // Loop through tbody's rows
+    for (var i = 0; i < trs.length; i++) {
+        var tds = trs[i].getElementsByTagName("td");
+        trs[i].style.display = "none";
+
+        // loop through row cells to check each element
+        for (var j = 0; j < tds.length; j++) {
+            // check if there's a match in the table
+            if (tds[j].innerHTML.toUpperCase().indexOf(searchInput) > -1) {
+                trs[i].style.display = "";
+                continue;
             }
-        }       
+        }
     }
 }
 

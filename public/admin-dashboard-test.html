@@ -194,9 +194,7 @@
         <div id="dashboardToolbar">
             <p>Results Found: <span id="resultsFound">12 Users</span></p>
             <form id="searchForm">
-                <input id="searchbar" type="text" placeholder="Search..." />
-                <button type="submit" id="searchBtn"><i class="bi bi-search"></i></button>
-                <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
+                <input type="text" id="searchbar" onkeyup="searchTable()" placeholder="Search..." />
             </form>
             <button id="createUser">Create User</button>
         </div>
@@ -205,22 +203,20 @@
             <table id="dashboardTable">
                 <thead>
                     <tr id="tableHeader">
-                        <th class="tHead" data-type="number">ID<i id="0"></i></th>
-                        <th class="tHead">First Name<i id="1"></i></th>
-                        <th class="tHead">Last Name<i id="2"></i></th>
-                        <th class="tHead">Username<i id="3"></i></th>
-                        <th class="tHead">Email<i id="4"></i></th>
+                        <th class="tHead">First Name<i id="0"></i></th>
+                        <th class="tHead">Last Name<i id="1"></i></th>
+                        <th class="tHead">Username<i id="2"></i></th>
+                        <th class="tHead">Email<i id="3"></i></th>
                         <th>UserType</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr class="tableRows">
-                        <td>1</td>
                         <td>Towa</td>
                         <td>Ddd</td>
                         <td>tquimbayo</td>
-                        <td>tquimbayo@hotmai.com</td>
+                        <td>tquimbayo@hotmail.com</td>
                         <td>Patient</td>
                         <td>
                             <div class="dashSettings inactive">
@@ -231,11 +227,10 @@
                         </td>
                     </tr>
                     <tr class="tableRows">
-                        <td>2</td>
                         <td>Alex</td>
                         <td>Ggg</td>
                         <td>aquimbayo</td>
-                        <td>aquimbayo@hotmai.com</td>
+                        <td>aquimbayo@hotmail.com</td>
                         <td>Patient</td>
                         <td>
                             <div class="dashSettings inactive">
@@ -246,11 +241,10 @@
                         </td>
                     </tr>
                     <tr class="tableRows">
-                        <td>3</td>
                         <td>Jason</td>
                         <td>Bbb</td>
                         <td>zquimbayo</td>
-                        <td>zquimbayo@hotmai.com</td>
+                        <td>zquimbayo@hotmail.com</td>
                         <td>Therapist</td>
                         <td>
                             <div class="dashSettings inactive">
@@ -261,11 +255,10 @@
                         </td>
                     </tr>
                     <tr class="tableRows">
-                        <td>4</td>
                         <td>Jacob</td>
                         <td>Zzz</td>
                         <td>dquimbayo</td>
-                        <td>dquimbayo@hotmai.com</td>
+                        <td>dquimbayo@hotmail.com</td>
                         <td>Patient</td>
                         <td>
                             <div class="dashSettings inactive">
@@ -276,11 +269,10 @@
                         </td>
                     </tr>
                     <tr class="tableRows">
-                        <td>5</td>
                         <td>Martin</td>
                         <td>Qqq</td>
                         <td>equimbayo</td>
-                        <td>equimbayo@hotmai.com</td>
+                        <td>equimbayo@hotmail.com</td>
                         <td>Admin</td>
                         <td>
                             <div class="dashSettings inactive">
@@ -291,11 +283,10 @@
                         </td>
                     </tr>
                     <tr class="tableRows">
-                        <td>6</td>
                         <td>Brown</td>
                         <td>Yyy</td>
                         <td>yquimbayo</td>
-                        <td>yquimbayo@hotmai.com</td>
+                        <td>yquimbayo@hotmail.com</td>
                         <td>Admin</td>
                         <td>
                             <div class="dashSettings inactive">
@@ -306,11 +297,10 @@
                         </td>
                     </tr>
                     <tr class="tableRows">
-                        <td>7</td>
                         <td>James</td>
                         <td>Rrr</td>
                         <td>kquimbayo</td>
-                        <td>kquimbayo@hotmai.com</td>
+                        <td>kquimbayo@hotmail.com</td>
                         <td>Patient</td>
                         <td>
                             <div class="dashSettings inactive">
@@ -321,11 +311,10 @@
                         </td>
                     </tr>
                     <tr class="tableRows">
-                        <td>8</td>
                         <td>Leo</td>
                         <td>Eee</td>
                         <td>pquimbayo</td>
-                        <td>pquimbayo@hotmai.com</td>
+                        <td>pquimbayo@hotmail.com</td>
                         <td>Therapist</td>
                         <td>
                             <div class="dashSettings inactive">
@@ -336,11 +325,10 @@
                         </td>
                     </tr>
                     <tr class="tableRows">
-                        <td>9</td>
                         <td>Roman</td>
                         <td>Jjj</td>
                         <td>lquimbayo</td>
-                        <td>lquimbayo@hotmai.com</td>
+                        <td>lquimbayo@hotmail.com</td>
                         <td>Therapist</td>
                         <td>
                             <div class="dashSettings inactive">
@@ -351,11 +339,10 @@
                         </td>
                     </tr>
                     <tr class="tableRows">
-                        <td>10</td>
                         <td>Lucas</td>
                         <td>Ggg</td>
                         <td>uquimbayo</td>
-                        <td>uquimbayo@hotmai.com</td>
+                        <td>uquimbayo@hotmail.com</td>
                         <td>Patient</td>
                         <td>
                             <div class="dashSettings inactive">
@@ -366,11 +353,10 @@
                         </td>
                     </tr>
                     <tr class="tableRows">
-                        <td>11</td>
                         <td>Cole</td>
                         <td>Sss</td>
                         <td>equimbayo</td>
-                        <td>equimbayo@hotmai.com</td>
+                        <td>equimbayo@hotmail.com</td>
                         <td>Patient</td>
                         <td>
                             <div class="dashSettings inactive">
@@ -381,11 +367,10 @@
                         </td>
                     </tr>
                     <tr class="tableRows">
-                        <td>12</td>
                         <td>Katie</td>
                         <td>Lll</td>
                         <td>vquimbayo</td>
-                        <td>vquimbayo@hotmai.com</td>
+                        <td>vquimbayo@hotmail.com</td>
                         <td>Patient</td>
                         <td>
                             <div class="dashSettings inactive">
