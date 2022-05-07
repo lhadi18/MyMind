@@ -146,6 +146,17 @@ app.get('/getUserInfo', isLoggedIn, setHeaders, (req, res) => {
     })
 })
 
+app.get('/getTherapists', (req, res) => {
+    User.find({
+        userType: "therapist"
+    }, function(err, user) {
+        if(err) console.log(err)
+        if(user) {
+            res.json(user);
+        }
+    })
+})
+
 app.post('/login', async (req, res) => {
     User.findOne({
         email: req.body.email,

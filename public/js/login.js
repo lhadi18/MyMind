@@ -12,7 +12,7 @@ $('#loginBtn').click(() => {
             } else if (data == "wrongPassword") {
                 document.getElementById("loginErrorMessage").innerHTML = "Wrong password"
             } else {
-                    window.location = '/userprofile'
+                    window.location = '/'
             }
         }
     })
