@@ -249,15 +249,16 @@
     #wrapper #bannerMob #overlay #profileHeader {
         padding: 3rem 2rem;
     }
-    #wrapper #bannerMob #overlay #profileHeader #editBanner,
-    #wrapper #bannerMob #overlay #profileHeader #saveChanges {
-        font-size: 14px;
-        min-width: 8rem;
-        padding: 10px;
-        height: 3.2rem;
-    }
     #wrapper #profileSummaryMob #profileDesc {
         top: 16vh;
+    }
+    #wrapper #profileSummaryMob #saveChanges {
+        top: 3rem;
+        right: 2rem;
+        font-size: 16px;
+        min-width: 10rem;
+        padding: 10px;
+        height: 3.2rem;
     }
     #wrapper #profileSummaryMob #profileDesc #profileImageSec {
         padding: 0 27%;
@@ -537,13 +538,6 @@
     #wrapper #bannerMob #overlay #profileHeader {
         padding: 3rem;
     }
-    #wrapper #bannerMob #overlay #profileHeader #editBanner,
-    #wrapper #bannerMob #overlay #profileHeader #saveChanges {
-        font-size: 1rem;
-        min-width: 12rem;
-        padding: 10px;
-        height: 3.7rem;
-    }
     #wrapper #profileSummaryMob #profileDesc {
         top: 16vh;
     }
@@ -552,6 +546,14 @@
     }
     #wrapper #profileDetailsMob {
         padding: 5rem 3rem;
+    }
+    #wrapper #profileSummaryMob #saveChanges {
+        top: 3rem;
+        right: 3rem;
+        font-size: 1rem;
+        min-width: 12rem;
+        padding: 10px;
+        height: 3.7rem;
     }
     #wrapper #bannerTherapist {
         grid-row: 1 / span 1;
@@ -793,6 +795,12 @@
     #wrapper #profileDetails {
         display: none;
     }
+    #wrapper #profileSummaryMob #profileDesc {
+        top: 16vh;
+    }
+    #wrapper #profileSummaryMob #profileDesc #profileImageSec {
+        padding: 0 30%;
+    }
     #wrapper #bannerTherapist {
         grid-row: 1 / span 1;
     }
@@ -918,7 +926,6 @@
     #wrapper #profileSummary #profileDesc p {
         font-size: 1rem;
     }
-    #wrapper #profileSummary #profileDesc #buttonSec #editBanner,
     #wrapper #profileSummary #profileDesc #buttonSec #saveChanges {
         min-width: 12rem;
         font-size: 1rem;
