@@ -4,22 +4,51 @@ $(document).ready(function () {
     document.getElementById('2').setAttribute("class", "bi bi-caret-down-fill");
     document.getElementById('3').setAttribute("class", "bi bi-caret-down-fill");
 
-    var modal = document.getElementById("createUserModal");
+    var createUserModal = document.getElementById("createUserModal");
+    var deleteUserModal = document.getElementById("deleteUserModal");
 
     document.getElementById('createUser').onclick = function () {
-        modal.style.display = "block";
+        createUserModal.style.display = "block";
         document.body.style.overflow = 'hidden';
     }
 
-    document.getElementById("close").onclick = function () {
-        modal.style.display = "none";
+    // document.getElementById('deleteUser').onclick = function () {
+    //     deleteUserModal.style.display = "block";
+    //     document.body.style.overflow = 'hidden';
+    // }
+
+    const deleteUserBtns = document.querySelectorAll('.deleteUser');
+    for (var i = 0; i < deleteUserBtns.length; i++) {
+        deleteUserBtns[i].onclick = function(e) {
+            deleteUserModal.style.display = "block";
+            document.body.style.overflow = 'hidden';
+            // console.log(this.closest('tr'));
+            const currentRow = this.closest('tr');
+            document.getElementById('deleteUsername').innerHTML = "@" + this.closest('tr').children[2].innerHTML;
+            document.getElementById('deleteUserBtn').onclick = function() {
+                currentRow.remove();
+                deleteUserModal.style.display = "none";
+                document.body.style.overflow = 'auto';
+            }
+        }
+    }
+
+    document.getElementById("closeCreate").onclick = function () {
+        createUserModal.style.display = "none";
+        document.body.style.overflow = 'auto';
+    }
+
+    document.getElementById("closeDelete").onclick = function () {
+        deleteUserModal.style.display = "none";
         document.body.style.overflow = 'auto';
     }
 
     window.onclick = function (event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
+        if (event.target == createUserModal) {
+            createUserModal.style.display = "none";
             document.body.style.overflow = 'auto';
+        } else if (event.target == deleteUserModal) {
+            deleteUserModal.style.display = "none";
         }
     }
 
@@ -52,8 +81,6 @@ $(document).ready(function () {
         };
     }
 });
-
-
 
 function searchTable() {
     const searchInput = document.getElementById("searchbar").value.toUpperCase();

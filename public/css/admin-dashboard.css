@@ -418,13 +418,12 @@
     transform: rotate(250deg);
 }
 
-#createUserModal {
+#createUserModal,
+#deleteUserModal {
     display: none;
     position: fixed;
     backdrop-filter: blur(5px);
     background-color: rgba(0, 0, 0, 0.5);
-    padding-top: 5vh;
-    padding-bottom: 5vh;
     left: 0;
     top: 0;
     width: 100%;
@@ -433,7 +432,18 @@
     z-index: 10000;
 }
 
-#createUserModal #modalContent {
+#createUserModal {
+    padding-top: 5vh;
+    padding-bottom: 5vh;
+}
+
+#deleteUserModal {
+    padding-top: 25%;
+    padding-bottom: 25%;
+}
+
+#createUserModal #modalContent,
+#deleteUserModal #modalContent {
     display: flex;
     flex-direction: column;
     position: relative;
@@ -454,7 +464,7 @@
     animation-duration: 1s;
 }
 
-#createUserModal #modalContent #modalHeader #close {
+#createUserModal #modalContent #modalHeader #closeCreate {
     color: black;
     display: flex;
     justify-content: end;
@@ -466,8 +476,8 @@
     transition: all ease-in-out 0.3s;
 }
 
-#createUserModal #modalContent #modalHeader #close:hover,
-#createUserModal #modalContent #modalHeader #close:focus {
+#createUserModal #modalContent #modalHeader #closeCreate:hover,
+#createUserModal #modalContent #modalHeader #closeCreate:focus {
     color: var(--primaryColor);
     cursor: pointer;
 }
@@ -667,4 +677,65 @@
     padding-top: 1.5rem;
     margin: 0;
     color: red;
+}
+
+#deleteUserModal #modalContent h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: black;
+    padding-bottom: 1.5rem;
+    margin: 0;
+}
+
+#deleteUserModal #modalContent h2 #deleteUsername {
+    color: var(--primaryColor);
+}
+
+#deleteUserModal #modalContent p {
+    font-size: 1rem;
+    font-weight: 500;
+    color: black;
+    line-height: 1.5rem;
+    padding-bottom: 1rem;
+    margin: 0;
+}
+
+#deleteUserModal #modalContent #deleteButtonsSec {
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    width: 100%;
+}
+
+#deleteUserModal #modalContent #deleteButtonsSec #closeDelete {
+    font-family: 'Nunito', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: black;
+    padding-right: 2rem;
+    border: none;
+    background: transparent;
+}
+
+#deleteUserModal #modalContent #deleteButtonsSec #deleteUserBtn {
+    font-family: 'Nunito', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    padding: 14px;
+    width: 20%;
+    color: white;
+    background-color: #DD1A00;
+    border: solid #DD1A00 2px;
+    border-radius: 500px;
+    cursor: pointer;
+    -webkit-transition: all ease-in-out 0.3s;
+    -moz-transition: all ease-in-out 0.3s;
+    -ms-transition: all ease-in-out 0.3s;
+    -o-transition: all ease-in-out 0.3s;
+    transition: all ease-in-out 0.3s;
+}
+
+#deleteUserModal #modalContent #deleteButtonsSec #deleteUserBtn:hover {
+    border: 2px solid #c41700;
+    background-color: #c41700;
 }

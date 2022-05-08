@@ -113,10 +113,11 @@
             </div>
         </div>
 
+        <!-- Create User Modal -->
         <div id="createUserModal">
             <div id="modalContent">
                 <div id="modalHeader">
-                    <i class="fa-solid fa-xmark" id="close"></i>
+                    <i class="fa-solid fa-xmark" id="closeCreate"></i>
                 </div>
                 
                 <div id="formContainer">
@@ -191,6 +192,18 @@
             </div>
         </div>
 
+        <!-- Delete User Modal -->
+        <div id="deleteUserModal">
+            <div id="modalContent">
+                <h2>You're about to delete the user <span id="deleteUsername"></span></h2>
+                <p>All information regarding this user will be permanently removed and this process can't be undone. Are you sure?</p>
+                <div id="deleteButtonsSec">
+                    <button id="closeDelete">Cancel</button>
+                    <button id="deleteUserBtn">Delete</button>
+                </div>
+            </div>
+        </div>
+
         <div id="dashboardToolbar">
             <p>Results Found: <span id="resultsFound">12 Users</span></p>
             <form id="searchForm">
@@ -222,7 +235,7 @@
                             <div class="dashSettings inactive">
                                 <i class="bi bi-gear-fill" id="setIcon1"></i>
                                 <i class="bi bi-pencil-fill settingIcon"></i>
-                                <i class="bi bi-trash-fill settingIcon"></i>
+                                <i class="bi bi-trash-fill settingIcon deleteUser"></i>
                             </div>
                         </td>
                     </tr>
@@ -236,7 +249,7 @@
                             <div class="dashSettings inactive">
                                 <i class="bi bi-gear-fill" id="setIcon2"></i>
                                 <i class="bi bi-pencil-fill settingIcon"></i>
-                                <i class="bi bi-trash-fill settingIcon"></i>
+                                <i class="bi bi-trash-fill settingIcon deleteUser"></i>
                             </div>
                         </td>
                     </tr>
@@ -250,7 +263,7 @@
                             <div class="dashSettings inactive">
                                 <i class="bi bi-gear-fill" id="setIcon3"></i>
                                 <i class="bi bi-pencil-fill settingIcon"></i>
-                                <i class="bi bi-trash-fill settingIcon"></i>
+                                <i class="bi bi-trash-fill settingIcon deleteUser"></i>
                             </div>
                         </td>
                     </tr>
@@ -264,7 +277,7 @@
                             <div class="dashSettings inactive">
                                 <i class="bi bi-gear-fill" id="setIcon4"></i>
                                 <i class="bi bi-pencil-fill settingIcon"></i>
-                                <i class="bi bi-trash-fill settingIcon"></i>
+                                <i class="bi bi-trash-fill settingIcon deleteUser"></i>
                             </div>
                         </td>
                     </tr>
@@ -278,7 +291,7 @@
                             <div class="dashSettings inactive">
                                 <i class="bi bi-gear-fill" id="setIcon5"></i>
                                 <i class="bi bi-pencil-fill settingIcon"></i>
-                                <i class="bi bi-trash-fill settingIcon"></i>
+                                <i class="bi bi-trash-fill settingIcon deleteUser"></i>
                             </div>
                         </td>
                     </tr>
@@ -292,7 +305,7 @@
                             <div class="dashSettings inactive">
                                 <i class="bi bi-gear-fill" id="setIcon6"></i>
                                 <i class="bi bi-pencil-fill settingIcon"></i>
-                                <i class="bi bi-trash-fill settingIcon"></i>
+                                <i class="bi bi-trash-fill settingIcon deleteUser"></i>
                             </div>
                         </td>
                     </tr>
@@ -306,7 +319,7 @@
                             <div class="dashSettings inactive">
                                 <i class="bi bi-gear-fill" id="setIcon7"></i>
                                 <i class="bi bi-pencil-fill settingIcon"></i>
-                                <i class="bi bi-trash-fill settingIcon"></i>
+                                <i class="bi bi-trash-fill settingIcon deleteUser"></i>
                             </div>
                         </td>
                     </tr>
@@ -320,7 +333,7 @@
                             <div class="dashSettings inactive">
                                 <i class="bi bi-gear-fill" id="setIcon8"></i>
                                 <i class="bi bi-pencil-fill settingIcon"></i>
-                                <i class="bi bi-trash-fill settingIcon"></i>
+                                <i class="bi bi-trash-fill settingIcon deleteUser"></i>
                             </div>
                         </td>
                     </tr>
@@ -334,7 +347,7 @@
                             <div class="dashSettings inactive">
                                 <i class="bi bi-gear-fill" id="setIcon9"></i>
                                 <i class="bi bi-pencil-fill settingIcon"></i>
-                                <i class="bi bi-trash-fill settingIcon"></i>
+                                <i class="bi bi-trash-fill settingIcon deleteUser"></i>
                             </div>
                         </td>
                     </tr>
@@ -348,7 +361,7 @@
                             <div class="dashSettings inactive">
                                 <i class="bi bi-gear-fill" id="setIcon10"></i>
                                 <i class="bi bi-pencil-fill settingIcon"></i>
-                                <i class="bi bi-trash-fill settingIcon"></i>
+                                <i class="bi bi-trash-fill settingIcon deleteUser"></i>
                             </div>
                         </td>
                     </tr>
@@ -362,7 +375,7 @@
                             <div class="dashSettings inactive">
                                 <i class="bi bi-gear-fill" id="setIcon11"></i>
                                 <i class="bi bi-pencil-fill settingIcon"></i>
-                                <i class="bi bi-trash-fill settingIcon"></i>
+                                <i class="bi bi-trash-fill settingIcon deleteUser"></i>
                             </div>
                         </td>
                     </tr>
@@ -376,7 +389,7 @@
                             <div class="dashSettings inactive">
                                 <i class="bi bi-gear-fill" id="setIcon12"></i>
                                 <i class="bi bi-pencil-fill settingIcon"></i>
-                                <i class="bi bi-trash-fill settingIcon"></i>
+                                <i class="bi bi-trash-fill settingIcon deleteUser"></i>
                             </div>
                         </td>
                     </tr>
