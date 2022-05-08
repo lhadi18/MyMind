@@ -4,6 +4,7 @@ $(document).ready(function () {
     document.getElementById('1').setAttribute("class", "bi bi-caret-down-fill");
     document.getElementById('2').setAttribute("class", "bi bi-caret-down-fill");
     document.getElementById('3').setAttribute("class", "bi bi-caret-down-fill");
+    document.getElementById('4').setAttribute("class", "bi bi-caret-down-fill");
 
     // Call sort table fucntion when user clicks table headings
     sortTable();
@@ -50,6 +51,13 @@ $(document).ready(function () {
         editUserBtns[i].onclick = function (e) {
             editUserModal.style.display = "block";
             document.body.style.overflow = 'hidden';
+
+            document.getElementById('editFirstname').value = this.closest('tr').children[0].innerHTML;
+            document.getElementById('editLastname').value = this.closest('tr').children[1].innerHTML;
+            document.getElementById('editUsername').value = this.closest('tr').children[2].innerHTML;
+            document.getElementById('editEmail').value = this.closest('tr').children[3].innerHTML;
+            document.getElementById('editPhone').value = this.closest('tr').children[4].innerHTML;
+            document.getElementById("editUserType").value = this.closest('tr').children[5].innerHTML.toLowerCase();
         }
     }
 

@@ -204,7 +204,7 @@
                         <div class="form-row col-6">
                             <div class="form-group">
                                 <label>First Name</label>
-                                <input type="text" class="form-control" name="firstname" id="firstname"
+                                <input type="text" class="form-control" name="firstname" id="editFirstname"
                                     placeholder="First Name" required="required">
                             </div>
                         </div>
@@ -212,7 +212,7 @@
                         <div class="form-row col-6">
                             <div class="form-group">
                                 <label>Last Name</label>
-                                <input type="text" class="form-control" name="lastname" id="lastname"
+                                <input type="text" class="form-control" name="lastname" id="editLastname"
                                     placeholder="Last Name" required="required">
                             </div>
                         </div>
@@ -220,27 +220,35 @@
                         <div class="form-row col-6">
                             <div class="form-group">
                                 <label>Username</label>
-                                <input type="text" class="form-control" name="username" id="username"
-                                    placeholder="Username" value="a" required="required">
-                                <p id="usernameErrorMessage">&nbsp;</p>
+                                <input type="text" class="form-control" name="username" id="editUsername"
+                                    placeholder="Username" required="required">
                             </div>
                         </div>
 
                         <div class="form-row col-6">
                             <div class="form-group">
                                 <label>Phone</label>
-                                <input type="tel" class="form-control" name="phone" id="phone" placeholder="phone"
+                                <input type="tel" class="form-control" name="phone" id="editPhone" placeholder="phone"
                                     required="required">
-                                <p id="phoneErrorMessage">&nbsp;</p>
                             </div>
                         </div>
 
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="email">Email Address</label>
-                                <input type="email" class="form-control" name="email" id="email" placeholder="Email"
+                                <input type="email" class="form-control" name="email" id="editEmail" placeholder="Email"
                                     required="required">
-                                <p id="emailErrorMessage">&nbsp;</p>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="userType">I am a</label>
+                                <select name="userType" id="editUserType">
+                                    <option value="patient">Patient</option>
+                                    <option value="therapist">Therapist</option>
+                                    <option value="admin">Admin</option>
+                                </select>
                             </div>
                         </div>
 
@@ -248,7 +256,7 @@
                             <div class="form-group">
                                 <label for="password">Change Password</label>
                                 <div class="input-group" id="show-hide-password">
-                                    <input type="password" name="password" class="form-control" id="password">
+                                    <input type="password" name="password" class="form-control" id="editPassword">
                                     <div class="input-group-addon">
                                         <a href=""><i class="fa fa-eye-slash" aria-hidden="true"></i></a>
                                     </div>
@@ -292,6 +300,7 @@
                         <th class="tHead">Last Name<i id="1"></i></th>
                         <th class="tHead">Username<i id="2"></i></th>
                         <th class="tHead">Email<i id="3"></i></th>
+                        <th class="tHead">Phone<i id="4"></i></th>
                         <th>UserType</th>
                         <th>Action</th>
                     </tr>
@@ -302,6 +311,7 @@
                         <td>Ddd</td>
                         <td>tquimbayo</td>
                         <td>tquimbayo@hotmail.com</td>
+                        <td>6041234567</td>
                         <td>Patient</td>
                         <td>
                             <div class="dashSettings inactive">
@@ -316,6 +326,7 @@
                         <td>Ggg</td>
                         <td>aquimbayo</td>
                         <td>aquimbayo@hotmail.com</td>
+                        <td>6045121662</td>
                         <td>Patient</td>
                         <td>
                             <div class="dashSettings inactive">
@@ -330,6 +341,7 @@
                         <td>Bbb</td>
                         <td>zquimbayo</td>
                         <td>zquimbayo@hotmail.com</td>
+                        <td>5042811923</td>
                         <td>Therapist</td>
                         <td>
                             <div class="dashSettings inactive">
@@ -344,11 +356,12 @@
                         <td>Zzz</td>
                         <td>dquimbayo</td>
                         <td>dquimbayo@hotmail.com</td>
+                        <td>3331234567</td>
                         <td>Patient</td>
                         <td>
                             <div class="dashSettings inactive">
                                 <i class="bi bi-gear-fill" id="setIcon4"></i>
-                                <i class="bi bi-pencil-fill settingIcon"></i>
+                                <i class="bi bi-pencil-fill settingIcon editUser"></i>
                                 <i class="bi bi-trash-fill settingIcon deleteUser"></i>
                             </div>
                         </td>
@@ -358,11 +371,12 @@
                         <td>Qqq</td>
                         <td>equimbayo</td>
                         <td>equimbayo@hotmail.com</td>
+                        <td>1234567891</td>
                         <td>Admin</td>
                         <td>
                             <div class="dashSettings inactive">
                                 <i class="bi bi-gear-fill" id="setIcon5"></i>
-                                <i class="bi bi-pencil-fill settingIcon"></i>
+                                <i class="bi bi-pencil-fill settingIcon editUser"></i>
                                 <i class="bi bi-trash-fill settingIcon deleteUser"></i>
                             </div>
                         </td>
@@ -372,11 +386,12 @@
                         <td>Yyy</td>
                         <td>yquimbayo</td>
                         <td>yquimbayo@hotmail.com</td>
+                        <td>6661115252</td>
                         <td>Admin</td>
                         <td>
                             <div class="dashSettings inactive">
                                 <i class="bi bi-gear-fill" id="setIcon6"></i>
-                                <i class="bi bi-pencil-fill settingIcon"></i>
+                                <i class="bi bi-pencil-fill settingIcon editUser"></i>
                                 <i class="bi bi-trash-fill settingIcon deleteUser"></i>
                             </div>
                         </td>
@@ -386,11 +401,12 @@
                         <td>Rrr</td>
                         <td>kquimbayo</td>
                         <td>kquimbayo@hotmail.com</td>
+                        <td>8005002000</td>
                         <td>Patient</td>
                         <td>
                             <div class="dashSettings inactive">
                                 <i class="bi bi-gear-fill" id="setIcon7"></i>
-                                <i class="bi bi-pencil-fill settingIcon"></i>
+                                <i class="bi bi-pencil-fill settingIcon editUser"></i>
                                 <i class="bi bi-trash-fill settingIcon deleteUser"></i>
                             </div>
                         </td>
@@ -400,11 +416,12 @@
                         <td>Eee</td>
                         <td>pquimbayo</td>
                         <td>pquimbayo@hotmail.com</td>
+                        <td>5021253961</td>
                         <td>Therapist</td>
                         <td>
                             <div class="dashSettings inactive">
                                 <i class="bi bi-gear-fill" id="setIcon8"></i>
-                                <i class="bi bi-pencil-fill settingIcon"></i>
+                                <i class="bi bi-pencil-fill settingIcon editUser"></i>
                                 <i class="bi bi-trash-fill settingIcon deleteUser"></i>
                             </div>
                         </td>
@@ -414,11 +431,12 @@
                         <td>Jjj</td>
                         <td>lquimbayo</td>
                         <td>lquimbayo@hotmail.com</td>
+                        <td>9991235021</td>
                         <td>Therapist</td>
                         <td>
                             <div class="dashSettings inactive">
                                 <i class="bi bi-gear-fill" id="setIcon9"></i>
-                                <i class="bi bi-pencil-fill settingIcon"></i>
+                                <i class="bi bi-pencil-fill settingIcon editUser"></i>
                                 <i class="bi bi-trash-fill settingIcon deleteUser"></i>
                             </div>
                         </td>
@@ -428,11 +446,12 @@
                         <td>Ggg</td>
                         <td>uquimbayo</td>
                         <td>uquimbayo@hotmail.com</td>
+                        <td>7785551234</td>
                         <td>Patient</td>
                         <td>
                             <div class="dashSettings inactive">
                                 <i class="bi bi-gear-fill" id="setIcon10"></i>
-                                <i class="bi bi-pencil-fill settingIcon"></i>
+                                <i class="bi bi-pencil-fill settingIcon editUser"></i>
                                 <i class="bi bi-trash-fill settingIcon deleteUser"></i>
                             </div>
                         </td>
@@ -442,11 +461,12 @@
                         <td>Sss</td>
                         <td>equimbayo</td>
                         <td>equimbayo@hotmail.com</td>
+                        <td>7785125923</td>
                         <td>Patient</td>
                         <td>
                             <div class="dashSettings inactive">
                                 <i class="bi bi-gear-fill" id="setIcon11"></i>
-                                <i class="bi bi-pencil-fill settingIcon"></i>
+                                <i class="bi bi-pencil-fill settingIcon editUser"></i>
                                 <i class="bi bi-trash-fill settingIcon deleteUser"></i>
                             </div>
                         </td>
@@ -456,11 +476,12 @@
                         <td>Lll</td>
                         <td>vquimbayo</td>
                         <td>vquimbayo@hotmail.com</td>
+                        <td>6045447815</td>
                         <td>Patient</td>
                         <td>
                             <div class="dashSettings inactive">
                                 <i class="bi bi-gear-fill" id="setIcon12"></i>
-                                <i class="bi bi-pencil-fill settingIcon"></i>
+                                <i class="bi bi-pencil-fill settingIcon editUser"></i>
                                 <i class="bi bi-trash-fill settingIcon deleteUser"></i>
                             </div>
                         </td>
