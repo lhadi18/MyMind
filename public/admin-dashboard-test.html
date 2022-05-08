@@ -119,9 +119,9 @@
                 <div id="modalHeader">
                     <i class="fa-solid fa-xmark" id="closeCreate"></i>
                 </div>
-                
+
                 <div id="formContainer">
-                    <form id="createUserForm" action="/sign-up" method="POST">
+                    <form id="createUserForm" method="POST">
                         <div class="form-row col-6">
                             <div class="form-group">
                                 <label>First Name</label>
@@ -129,7 +129,7 @@
                                     placeholder="First Name" value="Towa" required="required">
                             </div>
                         </div>
-    
+
                         <div class="form-row col-6">
                             <div class="form-group">
                                 <label>Last Name</label>
@@ -137,15 +137,15 @@
                                     placeholder="Last Name" value="Quimbayo" required="required">
                             </div>
                         </div>
-    
+
                         <div class="form-row col-6">
                             <div class="form-group">
                                 <label>Username</label>
-                                <input type="text" class="form-control" name="username" id="username" placeholder="Username"
-                                    value="tquimbayo" required="required">
+                                <input type="text" class="form-control" name="username" id="username"
+                                    placeholder="Username" value="tquimbayo" required="required">
                             </div>
                         </div>
-    
+
                         <div class="form-row col-6">
                             <div class="form-group">
                                 <label for="phone">Phone</label>
@@ -153,7 +153,7 @@
                                     value="7785555555" required="required">
                             </div>
                         </div>
-    
+
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="email">Email Address</label>
@@ -161,7 +161,7 @@
                                     value="towacurtis@hotmail.com" required="required">
                             </div>
                         </div>
-    
+
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="userType">I am a</label>
@@ -171,22 +171,93 @@
                                 </select>
                             </div>
                         </div>
-    
+
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="password">Password</label>
                                 <div class="input-group" id="show-hide-password">
-                                    <input type="password" name="password" class="form-control" id="password" value="abc123"
-                                        required="required">
+                                    <input type="password" name="password" class="form-control" id="password"
+                                        value="abc123" required="required">
                                     <div class="input-group-addon">
                                         <a href=""><i class="fa fa-eye-slash" aria-hidden="true"></i></a>
                                     </div>
                                 </div>
                             </div>
                         </div>
-    
+
                         <button type="button" id="createUserBtn">Create User</button>
                         <p id="createUserErrorMessage">&nbsp;</p>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Edit User Modal -->
+        <div id="editUserModal">
+            <div id="modalContent">
+                <div id="modalHeader">
+                    <i class="fa-solid fa-xmark" id="closeEdit"></i>
+                </div>
+
+                <div id="formContainer">
+                    <form id="editUserForm" method="POST">
+                        <div class="form-row col-6">
+                            <div class="form-group">
+                                <label>First Name</label>
+                                <input type="text" class="form-control" name="firstname" id="firstname"
+                                    placeholder="First Name" required="required">
+                            </div>
+                        </div>
+
+                        <div class="form-row col-6">
+                            <div class="form-group">
+                                <label>Last Name</label>
+                                <input type="text" class="form-control" name="lastname" id="lastname"
+                                    placeholder="Last Name" required="required">
+                            </div>
+                        </div>
+
+                        <div class="form-row col-6">
+                            <div class="form-group">
+                                <label>Username</label>
+                                <input type="text" class="form-control" name="username" id="username"
+                                    placeholder="Username" value="a" required="required">
+                                <p id="usernameErrorMessage">&nbsp;</p>
+                            </div>
+                        </div>
+
+                        <div class="form-row col-6">
+                            <div class="form-group">
+                                <label>Phone</label>
+                                <input type="tel" class="form-control" name="phone" id="phone" placeholder="phone"
+                                    required="required">
+                                <p id="phoneErrorMessage">&nbsp;</p>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="email">Email Address</label>
+                                <input type="email" class="form-control" name="email" id="email" placeholder="Email"
+                                    required="required">
+                                <p id="emailErrorMessage">&nbsp;</p>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="password">Change Password</label>
+                                <div class="input-group" id="show-hide-password">
+                                    <input type="password" name="password" class="form-control" id="password">
+                                    <div class="input-group-addon">
+                                        <a href=""><i class="fa fa-eye-slash" aria-hidden="true"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="button" id="editUserBtn">Save Changes</button>
+                        <p id="editUserErrorMessage">&nbsp;</p>
                     </form>
                 </div>
             </div>
@@ -196,7 +267,8 @@
         <div id="deleteUserModal">
             <div id="modalContent">
                 <h2>You're about to delete the user <span id="deleteUsername"></span></h2>
-                <p>All information regarding this user will be permanently removed and this process can't be undone. Are you sure?</p>
+                <p>All information regarding this user will be permanently removed and this process can't be undone. Are
+                    you sure?</p>
                 <div id="deleteButtonsSec">
                     <button id="closeDelete">Cancel</button>
                     <button id="deleteUserBtn">Delete</button>
@@ -234,7 +306,7 @@
                         <td>
                             <div class="dashSettings inactive">
                                 <i class="bi bi-gear-fill" id="setIcon1"></i>
-                                <i class="bi bi-pencil-fill settingIcon"></i>
+                                <i class="bi bi-pencil-fill settingIcon editUser"></i>
                                 <i class="bi bi-trash-fill settingIcon deleteUser"></i>
                             </div>
                         </td>
@@ -248,7 +320,7 @@
                         <td>
                             <div class="dashSettings inactive">
                                 <i class="bi bi-gear-fill" id="setIcon2"></i>
-                                <i class="bi bi-pencil-fill settingIcon"></i>
+                                <i class="bi bi-pencil-fill settingIcon editUser"></i>
                                 <i class="bi bi-trash-fill settingIcon deleteUser"></i>
                             </div>
                         </td>
@@ -262,7 +334,7 @@
                         <td>
                             <div class="dashSettings inactive">
                                 <i class="bi bi-gear-fill" id="setIcon3"></i>
-                                <i class="bi bi-pencil-fill settingIcon"></i>
+                                <i class="bi bi-pencil-fill settingIcon editUser"></i>
                                 <i class="bi bi-trash-fill settingIcon deleteUser"></i>
                             </div>
                         </td>

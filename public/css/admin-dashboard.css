@@ -419,6 +419,7 @@
 }
 
 #createUserModal,
+#editUserModal,
 #deleteUserModal {
     display: none;
     position: fixed;
@@ -432,17 +433,19 @@
     z-index: 10000;
 }
 
-#createUserModal {
+#createUserModal,
+#editUserModal {
     padding-top: 5vh;
     padding-bottom: 5vh;
 }
 
 #deleteUserModal {
-    padding-top: 25%;
-    padding-bottom: 25%;
+    padding-top: 15%;
+    padding-bottom: 5%;
 }
 
 #createUserModal #modalContent,
+#editUserModal #modalContent,
 #deleteUserModal #modalContent {
     display: flex;
     flex-direction: column;
@@ -464,7 +467,8 @@
     animation-duration: 1s;
 }
 
-#createUserModal #modalContent #modalHeader #closeCreate {
+#createUserModal #modalContent #modalHeader #closeCreate,
+#editUserModal #modalContent #modalHeader #closeEdit {
     color: black;
     display: flex;
     justify-content: end;
@@ -477,7 +481,9 @@
 }
 
 #createUserModal #modalContent #modalHeader #closeCreate:hover,
-#createUserModal #modalContent #modalHeader #closeCreate:focus {
+#createUserModal #modalContent #modalHeader #closeCreate:focus,
+#editUserModal #modalContent #modalHeader #closeEdit:hover,
+#editUserModal #modalContent #modalHeader #closeEdit:focus {
     color: var(--primaryColor);
     cursor: pointer;
 }
@@ -542,7 +548,8 @@
     }
 }
 
-#createUserModal #modalContent #formContainer #createUserForm {
+#createUserModal #modalContent #formContainer #createUserForm,
+#editUserModal #modalContent #formContainer #editUserForm {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -550,7 +557,8 @@
     width: 100%;
 }
 
-#createUserModal #modalContent #formContainer #createUserForm .form-row {
+#createUserModal #modalContent #formContainer #createUserForm .form-row,
+#editUserModal #modalContent #formContainer #editUserForm .form-row {
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -558,24 +566,28 @@
     padding-bottom: 1.5rem;
 }
 
-#createUserModal #modalContent #formContainer #createUserForm .form-row.col-6 {
+#createUserModal #modalContent #formContainer #createUserForm .form-row.col-6,
+#editUserModal #modalContent #formContainer #editUserForm .form-row.col-6 {
     width: 48%;
 }
 
-#createUserModal #modalContent #formContainer #createUserForm .form-row .form-group {
+#createUserModal #modalContent #formContainer #createUserForm .form-row .form-group,
+#editUserModal #modalContent #formContainer #editUserForm .form-row .form-group {
     width: 100%;
     display: flex;
     flex-direction: column;
 }
 
-#createUserModal #modalContent #formContainer #createUserForm .form-row .form-group label {
+#createUserModal #modalContent #formContainer #createUserForm .form-row .form-group label,
+#editUserModal #modalContent #formContainer #editUserForm .form-row .form-group label {
     padding-bottom: 1rem;
     font-size: 14px;
     font-weight: 600;
     color: black;
 }
 
-#createUserModal #modalContent #formContainer #createUserForm .form-row .form-group input {
+#createUserModal #modalContent #formContainer #createUserForm .form-row .form-group input,
+#editUserModal #modalContent #formContainer #editUserForm .form-row .form-group input {
     font-family: 'Nunito', sans-serif;
     color: black;
     opacity: 1;
@@ -623,12 +635,14 @@
     font-weight: 500;
 }
 
-#createUserModal #modalContent #formContainer #createUserForm .input-group {
+#createUserModal #modalContent #formContainer #createUserForm .input-group,
+#editUserModal #modalContent #formContainer #editUserForm .input-group {
     display: flex;
     flex-direction: row;
 }
 
-#createUserModal #modalContent #formContainer #createUserForm .input-group input {
+#createUserModal #modalContent #formContainer #createUserForm .input-group input,
+#editUserModal #modalContent #formContainer #editUserForm .input-group input {
     font-family: 'Nunito', sans-serif;
     color: black;
     opacity: 1;
@@ -642,12 +656,14 @@
     margin-right: -3rem;
 }
 
-#createUserModal #modalContent #formContainer #createUserForm .input-group .input-group-addon {
+#createUserModal #modalContent #formContainer #createUserForm .input-group .input-group-addon,
+#editUserModal #modalContent #formContainer #editUserForm .input-group .input-group-addon {
     align-self: center;
     margin-right: 1.5rem;
 }
 
-#createUserModal #modalContent #formContainer #createUserForm #createUserBtn {
+#createUserModal #modalContent #formContainer #createUserForm #createUserBtn,
+#editUserModal #modalContent #formContainer #editUserForm #editUserBtn {
     font-family: 'Nunito', sans-serif;
     margin-top: 1.5rem;
     font-size: 1.1rem;
@@ -666,12 +682,14 @@
     transition: all ease-in-out 0.3s;
 }
 
-#createUserModal #modalContent #formContainer #createUserForm #createUserBtn:hover {
+#createUserModal #modalContent #formContainer #createUserForm #createUserBtn:hover,
+#editUserModal #modalContent #formContainer #editUserForm #editUserBtn:hover {
     border: 2px solid var(--secondaryColor);
     background-color: var(--secondaryColor);
 }
 
-#createUserModal #modalContent #formContainer #createUserForm #createUserErrorMessage {
+#createUserModal #modalContent #formContainer #createUserForm #createUserErrorMessage,
+#editUserModal #modalContent #formContainer #editUserForm #editUserErrorMessage {
     font-size: 1rem;
     font-weight: 500;
     padding-top: 1.5rem;
@@ -715,6 +733,16 @@
     padding-right: 2rem;
     border: none;
     background: transparent;
+    -webkit-transition: all ease-in-out 0.3s;
+    -moz-transition: all ease-in-out 0.3s;
+    -ms-transition: all ease-in-out 0.3s;
+    -o-transition: all ease-in-out 0.3s;
+    transition: all ease-in-out 0.3s;
+}
+
+#deleteUserModal #modalContent #deleteButtonsSec #closeDelete:hover {
+    opacity: 0.5;
+    cursor: pointer;
 }
 
 #deleteUserModal #modalContent #deleteButtonsSec #deleteUserBtn {
