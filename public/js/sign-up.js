@@ -10,6 +10,8 @@ $('#signupBtn').click(() => {
             email: $("#email").val(),
             userType: $("#userType").val(),
             password: $("#password").val(),
+            yearsExperience: $("#yearsExperience").val(),
+            sessionCost: $("#sessionCost").val(),
         }, success: function (data) {
             console.log(data);
             if (data == "existingEmail") {

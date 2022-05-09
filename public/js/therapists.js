@@ -7,7 +7,7 @@ $.ajax({
                 x += `<img src="${Therapist.profileImg}" alt="Therapist 1">`
                 x += '<div class="cardContent">'
                 x += `<h3>${Therapist.firstName} ${Therapist.lastName}</h3>`
-                x += '<p>15+ years of experience in the profession, and offers $90 per session</p>'
+                x += `<p>${Therapist.yearsExperience} years of experience in the profession, and offers $${Therapist.sessionCost} per session</p>`
                 x += '<div><a href="/checkout">Purchase Session</a></div>'
                 x += '</div>'
                 x += '</div>'
