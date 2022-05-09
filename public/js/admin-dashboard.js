@@ -5,16 +5,16 @@ $(document).ready(async function () {
         type: "GET",
         success: function(data) {
             data.forEach(userData => {
-                var x = `<tr class="tableRows">`;
+                var x = `<tr class="tableRows" id="${userData._id}">`;
                 x += `<td>${userData.firstName}</td>`;
                 x += `<td>${userData.lastName}</td>`
                 x += `<td>${userData.username}</td>`
                 x += `<td>${userData.email}</td>`
-                x += `<td>${userData.phone}</td>`
+                x += `<td>${userData.phoneNum}</td>`
                 x += `<td>${userData.userType}</td>`
                 x += `<td>`
                 x += `<div class="dashSettings inactive">`
-                x += `<i class="bi bi-gear-fill" id="setIcon1"></i>`
+                x += `<i class="bi bi-gear-fill"></i>`
                 x += `<i class="bi bi-pencil-fill settingIcon editUser"></i>`
                 x += `<i class="bi bi-trash-fill settingIcon deleteUser"></i>`
                 x += `</div>`
@@ -45,6 +45,33 @@ $(document).ready(async function () {
     document.getElementById('createUser').onclick = function () {
         createUserModal.style.display = "block";
         document.body.style.overflow = 'hidden';
+        $('#createUserBtn').off();
+        $('#createUserBtn').click(() => {
+            $.ajax({
+                url: '/sign-up',
+                type: 'POST',
+                data: {
+                    firstname: $("#firstname").val(),
+                    lastname: $("#lastname").val(),
+                    username: $("#username").val(),
+                    phone: $("#phone").val(),
+                    email: $("#email").val(),
+                    userType: $("#userType").val(),
+                    password: $("#password").val(),
+                }, success: function (data) {
+                    if (data == "existingEmail") {
+                        document.getElementById("createUserErrorMessage").innerHTML = "A user with that email already exists";
+                    } else if (data == "existingPhone") {
+                        document.getElementById("createUserErrorMessage").innerHTML = "A user with that phone number already exists";
+                    } else if (data == "existingUsername") {
+                        document.getElementById("createUserErrorMessage").innerHTML = "A user with that username already exists";
+                    } else {
+                        alert('User successfully created.')
+                        location.reload();
+                    }
+                }
+            })
+        });
     }
 
     // Get all classnames to check which row was clicked to delete user
@@ -63,9 +90,19 @@ $(document).ready(async function () {
             document.getElementById('deleteUsername').innerHTML = "@" + this.closest('tr').children[2].innerHTML;
             document.getElementById('deleteUserBtn').onclick = function () {
                 // Remove row and hide modal
-                currentRow.remove();
-                deleteUserModal.style.display = "none";
-                document.body.style.overflow = 'auto';
+                $.ajax({
+                    url: '/deleteUser',
+                    type: 'DELETE',
+                    data:{
+                        id: currentRow.id
+                    },
+                    success: function(){
+                        alert('User successfuly deleted.')
+                        currentRow.remove();
+                        deleteUserModal.style.display = "none";
+                        document.body.style.overflow = 'auto';
+                    }
+                })
             }
         }
     }
@@ -78,13 +115,51 @@ $(document).ready(async function () {
         editUserBtns[i].onclick = function (e) {
             editUserModal.style.display = "block";
             document.body.style.overflow = 'hidden';
+            const currentRow = this.closest('tr');
 
-            document.getElementById('editFirstname').value = this.closest('tr').children[0].innerHTML;
-            document.getElementById('editLastname').value = this.closest('tr').children[1].innerHTML;
-            document.getElementById('editUsername').value = this.closest('tr').children[2].innerHTML;
-            document.getElementById('editEmail').value = this.closest('tr').children[3].innerHTML;
-            document.getElementById('editPhone').value = this.closest('tr').children[4].innerHTML;
-            document.getElementById("editUserType").value = this.closest('tr').children[5].innerHTML.toLowerCase();
+            document.getElementById('editFirstname').value = currentRow.children[0].innerHTML;
+            document.getElementById('editLastname').value = currentRow.children[1].innerHTML;
+            document.getElementById('editUsername').value = currentRow.children[2].innerHTML;
+            document.getElementById('editEmail').value = currentRow.children[3].innerHTML;
+            document.getElementById('editPhone').value = currentRow.children[4].innerHTML;
+            document.getElementById("editUserType").value = currentRow.children[5].innerHTML.toLowerCase();
+            document.getElementById("editPassword").value = "";
+
+            $('#editUserBtn').off();
+            $('#editUserBtn').click(() => {
+                console.log("button clicked")
+                $.ajax({
+                    url: '/editUser',
+                    type: 'PUT',
+                    data: {
+                        id: currentRow.id,
+                        firstname: $("#editFirstname").val(),
+                        lastname: $("#editLastname").val(),
+                        username: $("#editUsername").val(),
+                        email: $("#editEmail").val(),
+                        phone: $("#editPhone").val(),
+                        userType: $("#editUserType").val(),
+                        password: $("#editPassword").val()
+                    }, 
+                    success: function (data) {
+                        if(data == "existingEmail") {
+                            $("#editUserErrorMessage").html("A user with that email already exists");
+                        } else if (data == "existingPhone") {
+                            $("#editUserErrorMessage").html("A user with that phone number already exists");
+                        } else if (data == "existingUsername") {
+                            $("#editUserErrorMessage").html("A user with that username already exists");
+                        } else if(data == "updatedWithPassword") {
+                            $("#editUserErrorMessage").html("");
+                            alert('User successfully updated.')
+                            location.reload();
+                        } else {
+                            $("#editUserErrorMessage").html("");
+                            alert('User successfully updated. Except password.')
+                            location.reload();
+                        }
+                    }
+                })
+            });
         }
     }
 
@@ -235,4 +310,62 @@ function sortTable() {
             sortColumn(index);
         });
     });
+
+    // $('#createUserBtn').click(() => {
+    //     $.ajax({
+    //         url: '/sign-up',
+    //         type: 'POST',
+    //         data: {
+    //             firstname: $("#firstname").val(),
+    //             lastname: $("#lastname").val(),
+    //             username: $("#username").val(),
+    //             phone: $("#phone").val(),
+    //             email: $("#email").val(),
+    //             userType: $("#userType").val(),
+    //             password: $("#password").val(),
+    //         }, success: function (data) {
+    //             if (data == "existingEmail") {
+    //                 document.getElementById("createUserErrorMessage").innerHTML = "A user with that email already exists";
+    //             } else if (data == "existingPhone") {
+    //                 document.getElementById("createUserErrorMessage").innerHTML = "A user with that phone number already exists";
+    //             } else if (data == "existingUsername") {
+    //                 document.getElementById("createUserErrorMessage").innerHTML = "A user with that username already exists";
+    //             } else {
+    //                 alert('User successfully created.')
+    //             }
+    //         }
+    //     })
+    // });
+
+
+    // $('#editUserBtn').click(() => {
+    //     $.ajax({
+    //         url: '/editUser',
+    //         type: 'PUT',
+    //         data: {
+    //             id: "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!",
+    //             firstname: $("#firstname").val(),
+    //             lastname: $("#lastname").val(),
+    //             email: $("#email").val(),
+    //             username: $("#username").val(),
+    //             phone: $("#phone").val(),
+    //             password: $("#password").val(),
+    //         }, 
+    //         success: function (data) {
+    //             console.log(data);
+    //             if(data == "existingEmail") {
+    //                 $("#emailErrorMessage").html("A user with that email already exists");
+    //             } else if (data == "existingPhone") {
+    //                 $("#phoneErrorMessage").html("A user with that phone number already exists");
+    //                 $("#emailErrorMessage").html("");
+    //             } else if (data == "existingUsername") {
+    //                 $("#usernameErrorMessage").html("A user with that username already exists");
+    //                 $("#emailErrorMessage").html("");
+    //                 $("#phoneErrorMessage").html("");
+    //             } else {
+    //                 alert('User successfully updated. Except password.')
+    //             }
+    //         }
+    //     })
+    // });
 }

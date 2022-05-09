@@ -322,6 +322,90 @@ app.get('/getAllUsersData', isLoggedIn, isAdmin, setHeaders, (req, res) => {
     }); 
 })
 
+app.delete('/deleteUser', isLoggedIn, isAdmin, async (req, res) => {
+    console.log("id: " + req.body.id)
+    User.deleteOne({ _id: req.body.id })
+    .then(function(){
+        res.send();
+    }).catch(function(error){
+        console.log(error); // Failure
+    });
+})
+
+async function isNotExistingAdmin(req, res, next) {
+    var emailExists = await User.exists({
+        email: req.body.email
+    })
+    var phoneExists = await User.exists({
+        phoneNum: req.body.phone
+    })
+    var usernameExists = await User.exists({
+        username: req.body.username
+    })
+
+    let userId = req.body.id;
+    User.findById({
+        _id: userId
+    }, function (err, user) {
+        if (err) console.log(err)
+        if (user) {
+            if (emailExists && req.body.email != user.email) {
+                return res.send("existingEmail");
+            } else if (phoneExists && req.body.phone != user.phoneNum) {
+                return res.send("existingPhone")
+            } else if (usernameExists && req.body.username != user.username) {
+                return res.send("existingUsername")
+            } else {
+                return next();
+            }
+        } else {
+            res.send("unexistingUser")
+        }
+    })
+}
+
+app.put('/editUser', isLoggedIn, isAdmin, isNotExistingAdmin, (req, res) => {
+    if (req.body.password != ""){
+        return updateUserWithPassword(req, res);
+    }
+    User.updateOne(
+        { "_id": req.body.id },
+        {
+            "firstName": req.body.firstname,
+            "lastName": req.body.lastname,
+            "username": req.body.username,
+            "email": req.body.email,
+            "phoneNum": req.body.phone
+        }
+    )
+        .then((obj) => {
+            return res.send("updatedWithoutPassword");
+        })
+        .catch((err) => {
+            console.log('Error: ' + err);
+        })
+})
+
+async function updateUserWithPassword(req, res){
+    var hashedPassword = await bcrypt.hash(req.body.password, 10);
+    User.updateOne(
+        { "_id": req.body.id },
+        {
+            "firstName": req.body.firstname,
+            "lastName": req.body.lastname,
+            "username": req.body.username,
+            "email": req.body.email,
+            "phoneNum": req.body.phone,
+            "password": hashedPassword
+        })
+        .then((obj) => {
+            return res.send("updatedWithPassword");
+        })
+        .catch((err) => {
+            console.log('Error: ' + err);
+        })
+}
+
 app.listen(port, () => {
     console.log(`Example app  listening on port ${port}`)
 })
