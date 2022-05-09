@@ -118,19 +118,7 @@ app.get("/login", isLoggedOut, setHeaders, (req, res) => {
 });
 
 app.get('/admin-dashboard', isLoggedIn, isAdmin, setHeaders, (req, res) => {
-    res.sendFile(path.resolve('public/admin-dashboard-test.html'))
-});
-
-app.post('/searchByEmail', isLoggedIn, isAdmin, setHeaders, (req, res) => {
-    User.findOne({ email: req.body.email }, function (err, user) {
-        if (err) {
-            console.log('Error searching user.', err); s
-        }
-        if (!user) {
-            console.log('User does not exist.');
-        }
-        res.json(user);
-    });
+    res.sendFile(path.resolve('public/admin-dashboard.html'))
 });
 
 app.get('/getUserInfo', isLoggedIn, setHeaders, (req, res) => {
@@ -320,6 +308,19 @@ async function isNotRegistered(req, res, next) {
         return next();
     }
 }
+
+//Admin Dashboard
+app.get('/getAllUsersData', isLoggedIn, isAdmin, setHeaders, (req, res) => {
+    User.find({ }, function (err, user) {
+        if (err) {
+            console.log('Error searching user.', err); s
+        }
+        if (!user) {
+            console.log('Database is empty.');
+        }
+        res.json(user);
+    }); 
+})
 
 app.listen(port, () => {
     console.log(`Example app  listening on port ${port}`)

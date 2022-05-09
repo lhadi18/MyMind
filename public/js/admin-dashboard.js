@@ -1,4 +1,31 @@
-$(document).ready(function () {
+$(document).ready(async function () {
+
+    await $.ajax({
+        url: '/getAllUsersData',
+        type: "GET",
+        success: function(data) {
+            data.forEach(userData => {
+                var x = `<tr class="tableRows">`;
+                x += `<td>${userData.firstName}</td>`;
+                x += `<td>${userData.lastName}</td>`
+                x += `<td>${userData.username}</td>`
+                x += `<td>${userData.email}</td>`
+                x += `<td>${userData.phone}</td>`
+                x += `<td>${userData.userType}</td>`
+                x += `<td>`
+                x += `<div class="dashSettings inactive">`
+                x += `<i class="bi bi-gear-fill" id="setIcon1"></i>`
+                x += `<i class="bi bi-pencil-fill settingIcon editUser"></i>`
+                x += `<i class="bi bi-trash-fill settingIcon deleteUser"></i>`
+                x += `</div>`
+                x += `</td>`
+                x += `</tr>`
+                $("tbody").append(x);
+            });
+        }
+    });
+
+
     // Set the caret icons faced down by default
     document.getElementById('0').setAttribute("class", "bi bi-caret-down-fill");
     document.getElementById('1').setAttribute("class", "bi bi-caret-down-fill");
