@@ -37,6 +37,12 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
+    yearsExperience: {
+        type: String
+    },
+    sessionCost: {
+        type: String
+    },
     profileImg: {
         type: String,
         default: "../uploads/placeholder-profile.jpg"

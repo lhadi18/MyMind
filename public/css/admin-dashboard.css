@@ -571,6 +571,11 @@
     width: 48%;
 }
 
+#createUserModal #modalContent #formContainer #createUserForm .form-row.therapistOptions,
+#createUserModal #modalContent #formContainer #createUserForm .form-row.therapistOptions {
+    display: none;
+}
+
 #createUserModal #modalContent #formContainer #createUserForm .form-row .form-group,
 #editUserModal #modalContent #formContainer #editUserForm .form-row .form-group {
     width: 100%;
