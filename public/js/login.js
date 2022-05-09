@@ -11,6 +11,8 @@ $('#loginBtn').click(() => {
                 document.getElementById("loginErrorMessage").innerHTML = "User with that email does not exist"
             } else if (data == "wrongPassword") {
                 document.getElementById("loginErrorMessage").innerHTML = "Wrong password"
+            } else if (data.isAdmin) {
+                window.location = '/admin-dashboard'
             } else {
                     window.location = '/'
             }

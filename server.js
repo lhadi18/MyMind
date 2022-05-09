@@ -118,7 +118,7 @@ app.get("/login", isLoggedOut, setHeaders, (req, res) => {
 });
 
 app.get('/admin-dashboard', isLoggedIn, isAdmin, setHeaders, (req, res) => {
-    res.sendFile(path.resolve('public/admin-dashboard.html'))
+    res.sendFile(path.resolve('public/admin-dashboard-test.html'))
 });
 
 app.post('/searchByEmail', isLoggedIn, isAdmin, setHeaders, (req, res) => {
