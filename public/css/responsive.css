@@ -183,6 +183,272 @@
     #wrapper #profileDetailsMob #profileForm .form-row .form-group label {
         font-size: 1rem;
     }
+    #wrapper #dashboardHeroContainer {
+        grid-row: 1 / span 1;
+        height: 30vh;
+        background-attachment: scroll;
+    }
+    #wrapper #dashboardHeroContainer #overlay {
+        height: 30vh;
+    }
+    #wrapper #dashboardHeroContainer #overlay #dashboardHero {
+        padding: 3rem;
+    }  
+    #wrapper #dashboardHeroContainer #overlay #dashboardHero h2 {
+        font-size: 2.5rem;
+    }
+    #wrapper #dashboardToolbar {
+        grid-row: 2 / span 1;
+        padding: 5rem 3rem 2rem;
+        flex-wrap: wrap;
+    }
+    #wrapper #dashboardToolbar p {
+        width: 100%;
+        padding-bottom: 2rem;
+        text-align: center;
+    }
+    #wrapper #dashboardToolbar #searchForm {
+        width: 100%;
+        order: 3;
+        margin: 2rem 0 0;
+    }
+    #wrapper #dashboardToolbar #searchForm #searchbar {
+        padding: 1.5rem 2rem;
+    }
+    #wrapper #dashboardToolbar #createUser {
+        width: 100%;
+        order: 2;
+    }
+    #wrapper #tableContainer {
+        grid-row: 3 / span 1;
+        padding: 0 3rem 7rem;
+    }
+    #wrapper #tableContainer #dashboardTable thead {
+        display: none;
+    }
+    #wrapper #tableContainer #dashboardTable tbody {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+    #wrapper #tableContainer #dashboardTable tbody .tableRows {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        padding: 2rem 1rem;
+        margin-bottom: 1.5rem;
+    }
+    #wrapper #tableContainer #dashboardTable tbody td {
+        font-size: 1rem;
+        padding: 0.5rem;
+    }
+    #wrapper #tableContainer #dashboardTable tbody td:nth-child(1):before {
+        content: 'First Name: ';
+        font-size: 1rem;
+        font-weight: 700;
+    }
+    #wrapper #tableContainer #dashboardTable tbody td:nth-child(2):before {
+        content: 'Last Name: ';
+        font-size: 1rem;
+        font-weight: 700;
+    }
+    #wrapper #tableContainer #dashboardTable tbody td:nth-child(3):before {
+        content: 'Username: ';
+        font-size: 1rem;
+        font-weight: 700;
+    }
+    #wrapper #tableContainer #dashboardTable tbody td:nth-child(4):before {
+        content: 'Email: ';
+        font-size: 1rem;
+        font-weight: 700;
+    }
+    #wrapper #tableContainer #dashboardTable tbody td:nth-child(5):before {
+        content: 'Phone: ';
+        font-size: 1rem;
+        font-weight: 700;
+    }
+    #wrapper #tableContainer #dashboardTable tbody td:nth-child(6):before {
+        content: 'User Type: ';
+        font-size: 1rem;
+        font-weight: 700;
+    }
+    #deleteUserModal {
+        padding-top: 35%;
+        padding-bottom: 0%;
+    }
+    #createUserModal #modalContent,
+    #editUserModal #modalContent,
+    #deleteUserModal #modalContent {
+        padding: 2rem 1.5rem;
+        width: 90%;
+    }
+    #createUserModal #modalContent #modalHeader #closeCreate, 
+    #editUserModal #modalContent #modalHeader #closeEdit {
+        font-size: 1.7rem;
+    }
+    #deleteUserModal #modalContent h2 {
+        font-size: 1.2rem;
+    }
+    #deleteUserModal #modalContent #deleteButtonsSec {
+        flex-direction: row-reverse;
+        justify-content: center;
+    }
+    #deleteUserModal #modalContent #deleteButtonsSec #deleteUserBtn {
+        padding: 12px;
+        width: 50%;
+        font-size: 1rem;
+        margin-left: 0;
+    }
+    #deleteUserModal #modalContent #deleteButtonsSec #closeDelete {
+        font-size: 1rem;
+        padding-left: 1rem;
+        padding-right: 1.5rem;
+    }
+    #wrapper #tableContainer #dashboardTable tbody td .dashSettings,
+    #wrapper #tableContainer #dashboardTable tbody td .dashSettings.inactive {
+        padding: 10px;
+    }
+    #wrapper #tableContainer #dashboardTable tbody td .dashSettings i {
+        font-size: 1.5rem;
+    }
+    #wrapper #tableContainer #dashboardTable tbody td .dashSettings .settingIcon {
+        margin-left: -1.5rem;
+    }
+    #wrapper #tableContainer #dashboardTable tbody td .dashSettings .settingIcon.inactive {
+        margin-left: -1.5rem;
+    }
+    #wrapper #tableContainer #dashboardTable tbody td .dashSettings .settingIcon.active {
+        padding-left: 2rem;
+    }
+    @-webkit-keyframes animateSlideClose {
+        from {
+            padding-left: 2rem;
+            margin: 0;
+            opacity: 1;
+        }
+        to {
+            padding-left: 0;
+            margin-left: -1.5rem;
+            opacity: 0;
+        }
+    }
+    @-moz-keyframes animateSlideClose {
+        from {
+            padding-left: 2rem;
+            margin: 0;
+            opacity: 1;
+        }
+        to {
+            padding-left: 0;
+            margin-left: -1.5rem;
+            opacity: 0;
+        }
+    }
+    @-ms-keyframes animateSlideClose {
+        from {
+            padding-left: 2rem;
+            margin: 0;
+            opacity: 1;
+        }
+        to {
+            padding-left: 0;
+            margin-left: -1.5rem;
+            opacity: 0;
+        }
+    }
+    @-o-keyframes animateSlideClose {
+        from {
+            padding-left: 2rem;
+            margin: 0;
+            opacity: 1;
+        }
+        to {
+            padding-left: 0;
+            margin-left: -1.5rem;
+            opacity: 0;
+        }
+    }
+    @keyframes animateSlideClose {
+        from {
+            padding-left: 2rem;
+            margin: 0;
+            opacity: 1;
+        }
+        to {
+            padding-left: 0;
+            margin-left: -1.5rem;
+            opacity: 0;
+        }
+    }
+    @-webkit-keyframes animateSlide {
+        from {
+            padding-left: 0;
+            margin-left: -1.5rem;
+            opacity: 0;
+        }
+        to {
+            padding-left: 2rem;
+            margin: 0;
+            opacity: 1;
+        }
+    }
+    @-moz-keyframes animateSlide {
+        from {
+            padding-left: 0;
+            margin-left: -1.5rem;
+            opacity: 0;
+        }
+        to {
+            padding-left: 2rem;
+            margin: 0;
+            opacity: 1;
+        }
+    }
+    @-ms-keyframes animateSlide {
+        from {
+            padding-left: 0;
+            margin-left: -1.5rem;
+            opacity: 0;
+        }
+        to {
+            padding-left: 2rem;
+            margin: 0;
+            opacity: 1;
+        }
+    }
+    @-o-keyframes animateSlide {
+        from {
+            padding-left: 0;
+            margin-left: -1.5rem;
+            opacity: 0;
+        }
+        to {
+            padding-left: 2rem;
+            margin: 0;
+            opacity: 1;
+        }
+    }
+    @keyframes animateSlide {
+        from {
+            padding-left: 0;
+            margin-left: -1.5rem;
+            opacity: 0;
+        }
+        to {
+            padding-left: 2rem;
+            margin: 0;
+            opacity: 1;
+        }
+    }
+    #createUserModal #modalContent #formContainer #createUserForm .form-row.col-6,
+    #editUserModal #modalContent #formContainer #editUserForm .form-row.col-6 {
+        width: 100%;
+    }
+    #deleteUserModal {
+        padding-top: 40%;
+        padding-bottom: 0;
+    }
 }
 
 @media (min-width: 576px) and (max-width: 767.98px) {
@@ -338,6 +604,259 @@
     #wrapper #profileDetailsMob {
         padding: 5rem 3rem;
     }
+    #wrapper #dashboardHeroContainer {
+        grid-row: 1 / span 1;
+        height: 30vh;
+        background-attachment: scroll;
+    }
+    #wrapper #dashboardHeroContainer #overlay {
+        height: 30vh;
+    }
+    #wrapper #dashboardHeroContainer #overlay #dashboardHero {
+        padding: 3rem;
+    }  
+    #wrapper #dashboardHeroContainer #overlay #dashboardHero h2 {
+        font-size: 2.5rem;
+    }
+    #wrapper #dashboardToolbar {
+        grid-row: 2 / span 1;
+        padding: 5rem 3rem 2rem;
+        flex-wrap: wrap;
+    }
+    #wrapper #dashboardToolbar p {
+        width: 50%;
+    }
+    #wrapper #dashboardToolbar #searchForm {
+        width: 100%;
+        order: 3;
+        margin: 2rem 0 0;
+    }
+    #wrapper #dashboardToolbar #createUser {
+        width: 50%;
+        order: 2;
+    }
+    #wrapper #tableContainer {
+        grid-row: 3 / span 1;
+        padding: 0 3rem 7rem;
+    }
+    #wrapper #tableContainer #dashboardTable thead {
+        display: none;
+    }
+    #wrapper #tableContainer #dashboardTable tbody {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+    #wrapper #tableContainer #dashboardTable tbody .tableRows {
+        display: flex;
+        flex-direction: column;
+        width: 47%;
+        padding: 2rem 1rem;
+        margin-bottom: 1.5rem;
+    }
+    #wrapper #tableContainer #dashboardTable tbody td {
+        font-size: 1rem;
+        padding: 0.5rem;
+    }
+    #wrapper #tableContainer #dashboardTable tbody td:nth-child(1):before {
+        content: 'First Name: ';
+        font-size: 1rem;
+        font-weight: 700;
+    }
+    #wrapper #tableContainer #dashboardTable tbody td:nth-child(2):before {
+        content: 'Last Name: ';
+        font-size: 1rem;
+        font-weight: 700;
+    }
+    #wrapper #tableContainer #dashboardTable tbody td:nth-child(3):before {
+        content: 'Username: ';
+        font-size: 1rem;
+        font-weight: 700;
+    }
+    #wrapper #tableContainer #dashboardTable tbody td:nth-child(4):before {
+        content: 'Email: ';
+        font-size: 1rem;
+        font-weight: 700;
+    }
+    #wrapper #tableContainer #dashboardTable tbody td:nth-child(5):before {
+        content: 'Phone: ';
+        font-size: 1rem;
+        font-weight: 700;
+    }
+    #wrapper #tableContainer #dashboardTable tbody td:nth-child(6):before {
+        content: 'User Type: ';
+        font-size: 1rem;
+        font-weight: 700;
+    }
+    #deleteUserModal {
+        padding-top: 30%;
+        padding-bottom: 0%;
+    }
+    #createUserModal #modalContent,
+    #editUserModal #modalContent,
+    #deleteUserModal #modalContent {
+        width: 80%;
+    }
+    #createUserModal #modalContent #modalHeader #closeCreate, 
+    #editUserModal #modalContent #modalHeader #closeEdit {
+        font-size: 1.7rem;
+    }
+    #deleteUserModal #modalContent h2 {
+        font-size: 1.3rem;
+    }
+    #deleteUserModal #modalContent #deleteButtonsSec #deleteUserBtn {
+        padding: 12px;
+        width: 25%;
+        font-size: 1rem;
+    }
+    #deleteUserModal #modalContent #deleteButtonsSec #closeDelete {
+        font-size: 1rem;
+    }
+    #wrapper #tableContainer #dashboardTable tbody td .dashSettings,
+    #wrapper #tableContainer #dashboardTable tbody td .dashSettings.inactive {
+        padding: 10px;
+    }
+    #wrapper #tableContainer #dashboardTable tbody td .dashSettings i {
+        font-size: 1.5rem;
+    }
+    #wrapper #tableContainer #dashboardTable tbody td .dashSettings .settingIcon {
+        margin-left: -1.5rem;
+    }
+    #wrapper #tableContainer #dashboardTable tbody td .dashSettings .settingIcon.inactive {
+        margin-left: -1.5rem;
+    }
+    #wrapper #tableContainer #dashboardTable tbody td .dashSettings .settingIcon.active {
+        padding-left: 2rem;
+    }
+    @-webkit-keyframes animateSlideClose {
+        from {
+            padding-left: 2rem;
+            margin: 0;
+            opacity: 1;
+        }
+        to {
+            padding-left: 0;
+            margin-left: -1.5rem;
+            opacity: 0;
+        }
+    }
+    @-moz-keyframes animateSlideClose {
+        from {
+            padding-left: 2rem;
+            margin: 0;
+            opacity: 1;
+        }
+        to {
+            padding-left: 0;
+            margin-left: -1.5rem;
+            opacity: 0;
+        }
+    }
+    @-ms-keyframes animateSlideClose {
+        from {
+            padding-left: 2rem;
+            margin: 0;
+            opacity: 1;
+        }
+        to {
+            padding-left: 0;
+            margin-left: -1.5rem;
+            opacity: 0;
+        }
+    }
+    @-o-keyframes animateSlideClose {
+        from {
+            padding-left: 2rem;
+            margin: 0;
+            opacity: 1;
+        }
+        to {
+            padding-left: 0;
+            margin-left: -1.5rem;
+            opacity: 0;
+        }
+    }
+    @keyframes animateSlideClose {
+        from {
+            padding-left: 2rem;
+            margin: 0;
+            opacity: 1;
+        }
+        to {
+            padding-left: 0;
+            margin-left: -1.5rem;
+            opacity: 0;
+        }
+    }
+    @-webkit-keyframes animateSlide {
+        from {
+            padding-left: 0;
+            margin-left: -1.5rem;
+            opacity: 0;
+        }
+        to {
+            padding-left: 2rem;
+            margin: 0;
+            opacity: 1;
+        }
+    }
+    @-moz-keyframes animateSlide {
+        from {
+            padding-left: 0;
+            margin-left: -1.5rem;
+            opacity: 0;
+        }
+        to {
+            padding-left: 2rem;
+            margin: 0;
+            opacity: 1;
+        }
+    }
+    @-ms-keyframes animateSlide {
+        from {
+            padding-left: 0;
+            margin-left: -1.5rem;
+            opacity: 0;
+        }
+        to {
+            padding-left: 2rem;
+            margin: 0;
+            opacity: 1;
+        }
+    }
+    @-o-keyframes animateSlide {
+        from {
+            padding-left: 0;
+            margin-left: -1.5rem;
+            opacity: 0;
+        }
+        to {
+            padding-left: 2rem;
+            margin: 0;
+            opacity: 1;
+        }
+    }
+    @keyframes animateSlide {
+        from {
+            padding-left: 0;
+            margin-left: -1.5rem;
+            opacity: 0;
+        }
+        to {
+            padding-left: 2rem;
+            margin: 0;
+            opacity: 1;
+        }
+    }
+    #createUserModal #modalContent #formContainer #createUserForm .form-row.col-6,
+    #editUserModal #modalContent #formContainer #editUserForm .form-row.col-6 {
+        width: 100%;
+    }
+    #deleteUserModal {
+        padding-top: 40%;
+        padding-bottom: 0;
+    }
 }
 
 @media (min-width: 768px) and (max-width: 991.98px) {
@@ -460,6 +979,211 @@
     #wrapper #profileDetails {
         display: none;
     }
+    #wrapper #dashboardHeroContainer {
+        grid-row: 1 / span 1;
+    }
+    #wrapper #dashboardHeroContainer #overlay #dashboardHero {
+        padding: 5rem;
+    }  
+    #wrapper #dashboardHeroContainer #overlay #dashboardHero h2 {
+        font-size: 3rem;
+    }
+    #wrapper #dashboardToolbar {
+        grid-row: 2 / span 1;
+        padding: 5rem 3rem 2rem;
+        flex-wrap: wrap;
+    }
+    #wrapper #dashboardToolbar p {
+        width: 50%;
+    }
+    #wrapper #dashboardToolbar #searchForm {
+        width: 100%;
+        order: 3;
+        margin: 2rem 0 0;
+    }
+    #wrapper #dashboardToolbar #createUser {
+        width: 50%;
+        order: 2;
+    }
+    #wrapper #tableContainer {
+        grid-row: 3 / span 1;
+        padding: 0 2.5rem 7rem;
+    }
+    #wrapper #tableContainer #dashboardTable thead #tableHeader th i {
+        padding-left: 0.5rem;
+    }
+    #wrapper #tableContainer #dashboardTable thead th,
+    #wrapper #tableContainer #dashboardTable tbody td {
+        font-size: 14px;
+        padding: 0.5rem;
+    }
+    #wrapper #tableContainer #dashboardTable tbody .tableRows td:first-child {
+        padding-left: 1rem;
+    }
+    
+    #wrapper #tableContainer #dashboardTable tbody .tableRows td:last-child {
+        padding-right: 1rem;
+    }
+    #deleteUserModal {
+        padding-top: 30%;
+        padding-bottom: 0%;
+    }
+    #createUserModal #modalContent,
+    #editUserModal #modalContent,
+    #deleteUserModal #modalContent {
+        width: 80%;
+    }
+    #createUserModal #modalContent #modalHeader #closeCreate, 
+    #editUserModal #modalContent #modalHeader #closeEdit {
+        font-size: 1.7rem;
+    }
+    #deleteUserModal #modalContent h2 {
+        font-size: 1.3rem;
+    }
+    #deleteUserModal #modalContent #deleteButtonsSec #deleteUserBtn {
+        padding: 12px;
+        width: 25%;
+        font-size: 1rem;
+    }
+    #deleteUserModal #modalContent #deleteButtonsSec #closeDelete {
+        font-size: 1rem;
+    }
+    #wrapper #tableContainer #dashboardTable tbody td .dashSettings,
+    #wrapper #tableContainer #dashboardTable tbody td .dashSettings.inactive {
+        padding: 5px;
+    }
+    #wrapper #tableContainer #dashboardTable tbody td .dashSettings i {
+        font-size: 1.2rem;
+    }
+    #wrapper #tableContainer #dashboardTable tbody td .dashSettings .settingIcon {
+        margin-left: -1.2rem;
+    }
+    #wrapper #tableContainer #dashboardTable tbody td .dashSettings .settingIcon.inactive {
+        margin-left: -1.2rem;
+    }
+    #wrapper #tableContainer #dashboardTable tbody td .dashSettings .settingIcon.active {
+        padding-left: 0.7rem;
+    }
+    @-webkit-keyframes animateSlideClose {
+        from {
+            padding-left: 0.7rem;
+            margin: 0;
+            opacity: 1;
+        }
+        to {
+            padding-left: 0;
+            margin-left: -1.2rem;
+            opacity: 0;
+        }
+    }
+    @-moz-keyframes animateSlideClose {
+        from {
+            padding-left: 0.7rem;
+            margin: 0;
+            opacity: 1;
+        }
+        to {
+            padding-left: 0;
+            margin-left: -1.2rem;
+            opacity: 0;
+        }
+    }
+    @-ms-keyframes animateSlideClose {
+        from {
+            padding-left: 0.7rem;
+            margin: 0;
+            opacity: 1;
+        }
+        to {
+            padding-left: 0;
+            margin-left: -1.2rem;
+            opacity: 0;
+        }
+    }
+    @-o-keyframes animateSlideClose {
+        from {
+            padding-left: 0.7rem;
+            margin: 0;
+            opacity: 1;
+        }
+        to {
+            padding-left: 0;
+            margin-left: -1.2rem;
+            opacity: 0;
+        }
+    }
+    @keyframes animateSlideClose {
+        from {
+            padding-left: 0.7rem;
+            margin: 0;
+            opacity: 1;
+        }
+        to {
+            padding-left: 0;
+            margin-left: -1.2rem;
+            opacity: 0;
+        }
+    }
+    @-webkit-keyframes animateSlide {
+        from {
+            padding-left: 0;
+            margin-left: -1.2rem;
+            opacity: 0;
+        }
+        to {
+            padding-left: 0.7rem;
+            margin: 0;
+            opacity: 1;
+        }
+    }
+    @-moz-keyframes animateSlide {
+        from {
+            padding-left: 0;
+            margin-left: -1.2rem;
+            opacity: 0;
+        }
+        to {
+            padding-left: 0.7rem;
+            margin: 0;
+            opacity: 1;
+        }
+    }
+    @-ms-keyframes animateSlide {
+        from {
+            padding-left: 0;
+            margin-left: -1.2rem;
+            opacity: 0;
+        }
+        to {
+            padding-left: 0.7rem;
+            margin: 0;
+            opacity: 1;
+        }
+    }
+    @-o-keyframes animateSlide {
+        from {
+            padding-left: 0;
+            margin-left: -1.2rem;
+            opacity: 0;
+        }
+        to {
+            padding-left: 0.7rem;
+            margin: 0;
+            opacity: 1;
+        }
+    }
+    @keyframes animateSlide {
+        from {
+            padding-left: 0;
+            margin-left: -1.2rem;
+            opacity: 0;
+        }
+        to {
+            padding-left: 0.7rem;
+            margin: 0;
+            opacity: 1;
+        }
+    }
 }
 
 @media (min-width: 992px) and (max-width: 1199.98px) {
@@ -516,6 +1240,50 @@
     #wrapper #profileSummary #profileDesc #buttonSec #saveChanges {
         min-width: 12rem;
         font-size: 1rem;
+    }
+    #wrapper #dashboardHeroContainer #overlay #dashboardHero {
+        padding: 5rem;
+    }  
+    #wrapper #dashboardHeroContainer #overlay #dashboardHero h2 {
+        font-size: 3rem;
+    }
+    #wrapper #dashboardToolbar {
+        padding: 5rem;
+    }
+    #wrapper #dashboardToolbar p {
+        width: 25%;
+    }
+    #wrapper #dashboardToolbar #searchForm {
+        width: 55%;
+    }
+    #wrapper #dashboardToolbar #createUser {
+        width: 20%;
+    }
+    #wrapper #tableContainer {
+        padding: 0 5rem 5rem;
+    }
+    #wrapper #tableContainer #dashboardTable thead #tableHeader th i {
+        padding-left: 0.5rem;
+    }
+    #wrapper #tableContainer #dashboardTable thead th,
+    #wrapper #tableContainer #dashboardTable tbody td {
+        font-size: 14px;
+        padding: 0.7rem;
+    }
+    #wrapper #tableContainer #dashboardTable tbody .tableRows td:first-child {
+        padding-left: 1rem;
+    }
+    #wrapper #tableContainer #dashboardTable tbody .tableRows td:last-child {
+        padding-right: 1rem;
+    }
+    #deleteUserModal {
+        padding-top: 25%;
+        padding-bottom: 0%;
+    }
+    #createUserModal #modalContent,
+    #editUserModal #modalContent,
+    #deleteUserModal #modalContent {
+        width: 80%;
     }
 }
 
