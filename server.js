@@ -70,37 +70,36 @@ var profileStorage = multer.diskStorage({
     }
 })
 
-var profileUpload = multer({storage:profileStorage})
+var profileUpload = multer({ storage: profileStorage })
 
 //this post method updates user profile page
 app.post('/uploadProfile', profileUpload.single('profileFile'), (req, res) => {
-    if(req.file) {
-    var fileName = req.file.filename;
-    var id = req.session.user._id;
-    User.updateOne(
-        { "_id": id },
-        {
-            profileImg: "../uploads/" + fileName
-        }
-    ).then((obj) => {
-        console.log('Updated - ' + obj);
-    })
-} else {
-    return;
-}
+    if (req.file) {
+        var fileName = req.file.filename;
+        var id = req.session.user._id;
+        User.updateOne(
+            { "_id": id },
+            {
+                profileImg: "../uploads/" + fileName
+            }
+        ).then((obj) => {
+            console.log('Updated - ' + obj);
+        })
+    } else {
+        return;
+    }
 });
 
 app.get('/getProfilePicture', (req, res) => {
     var id = req.session.user._id;
     User.findById({
         _id: id
-    },function(err, user) {
-        if(user) {
+    }, function (err, user) {
+        if (user) {
             res.send(user)
         }
     })
 })
-
 
 app.get('/isLoggedIn', (req, res) => {
     res.send(req.session.user);
@@ -149,9 +148,9 @@ app.get('/getUserInfo', isLoggedIn, setHeaders, (req, res) => {
 app.get('/getTherapists', (req, res) => {
     User.find({
         userType: "therapist"
-    }, function(err, user) {
-        if(err) console.log(err)
-        if(user) {
+    }, function (err, user) {
+        if (err) console.log(err)
+        if (user) {
             res.json(user);
         }
     })

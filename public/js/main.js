@@ -7,7 +7,8 @@ $(document).ready(function () {
 
     // Load the Navbar and Footer 
     loadNavbarFooter();
-   setTimeout(() => {
+
+    setTimeout(() => {
         $.get('/isLoggedIn', function (user) {
             if (user) {
                 // if (user.isAdmin) {
@@ -48,29 +49,24 @@ $(document).ready(function () {
 
     }, 50);
 
-
-
-
     // Display hashed password for signup and login form
     displayPassword();
 
     /* Show Menu */
     // Validation if constant var exists
-    if (navToggle) {
-        navToggle.addEventListener('click', function () {
+    if(navToggle) {
+        navToggle.addEventListener('click', function() {
             navMenu.classList.add('show-menu');
         });
     }
 
     /* Hide Menu */
     // Validation if constant var exists
-    if (navClose) {
-        navClose.addEventListener('click', function () {
+    if(navClose) {
+        navClose.addEventListener('click', function() {
             navMenu.classList.remove('show-menu');
         });
     }
-
-
 });
 
 // Load the Navbar and Footer 
@@ -108,4 +104,5 @@ function linkAction() {
     document.getElementById('nav-menu').classList.remove('show-menu');
 }
 
-navLink.forEach(n => n.addEventListener('click', linkAction));
+navLink.forEach( n => n.addEventListener('click', linkAction));
+
