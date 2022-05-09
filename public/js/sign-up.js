@@ -24,3 +24,18 @@ $('#signupBtn').click(() => {
         }
     })
 });
+
+// Display therapy field options if usertype is a therapist
+function showTherapyOptions(selectObject) {
+    const value = selectObject.value;  
+    const therapyFieldOptions = document.querySelectorAll('.therapistOptions');
+    if (value == 'therapist') {
+        for (var i = 0; i < therapyFieldOptions.length; i++) {
+            therapyFieldOptions[i].style.display = 'flex';
+        }
+    } else {
+        for (var i = 0; i < therapyFieldOptions.length; i++) {
+            therapyFieldOptions[i].style.display = 'none';
+        }
+    }
+}
