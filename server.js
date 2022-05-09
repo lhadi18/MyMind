@@ -251,6 +251,8 @@ async function isNotExisting(req, res, next) {
         username: req.body.username
     })
 
+    var phoneLength = req.body.phone;
+
     let userId = req.session.user._id;
     User.findById({
         _id: userId
@@ -263,6 +265,8 @@ async function isNotExisting(req, res, next) {
                 return res.json("existingPhone")
             } else if (usernameExists && req.body.username != user.username) {
                 return res.json("existingUsername")
+            } else if (phoneLength.length != 10) {
+                return res.json("invalidPhoneLength")
             } else {
                 return next();
             }

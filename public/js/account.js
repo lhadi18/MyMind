@@ -78,6 +78,9 @@ $('#saveChanges').click(() => {
                 document.getElementById("usernameErrorMessage").innerHTML = "A user with that username already exists";
                 document.getElementById("emailErrorMessage").innerHTML = "";
                 document.getElementById("phoneErrorMessage").innerHTML = "";
+            } else if (data == "invalidPhoneLength") {
+                document.getElementById("phoneErrorMessage").innerHTML = "Your phone number must be at least of length 10";
+                document.getElementById("emailErrorMessage").innerHTML = "";
             } else if(data == "updated") {
                 if (emp == "") {
                     setTimeout(() => {
