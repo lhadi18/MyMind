@@ -12,6 +12,8 @@ $(document).ready(async function () {
                 x += `<td>${userData.email}</td>`
                 x += `<td>${userData.phoneNum}</td>`
                 x += `<td>${userData.userType.charAt(0).toUpperCase() + userData.userType.substring(1)}</td>`
+                x += `<td class="hiddenRow">${userData.yearsExperience}</td>`
+                x += `<td class="hiddenRow">${userData.sessionCost}</td>`
                 x += `<td>`
                 x += `<div class="dashSettings inactive">`
                 x += `<i class="bi bi-gear-fill"></i>`
@@ -157,6 +159,8 @@ $(document).ready(async function () {
             document.getElementById('editEmail').value = currentRow.children[3].innerHTML;
             document.getElementById('editPhone').value = currentRow.children[4].innerHTML;
             document.getElementById("editUserType").value = currentRow.children[5].innerHTML.toLowerCase();
+            document.getElementById('editYearsExperience').value = currentRow.children[6].innerHTML;
+            document.getElementById("editSessionCost").value = currentRow.children[7].innerHTML.toLowerCase();
             document.getElementById("editPassword").value = "";
             showTherapyOptions($("#editUserType"));
             $('#editUserBtn').off();

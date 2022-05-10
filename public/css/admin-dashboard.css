@@ -838,6 +838,10 @@
     animation: animateCheck 0.35s forwards 1.25s ease-out;
 }
 
+.hiddenRow {
+    display: none;
+}
+
 @keyframes animateModal {
     from {
         background: rgba(0, 0, 0, 0);
