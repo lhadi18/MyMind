@@ -121,17 +121,22 @@ $(document).ready(async function () {
 
             // Display username for the user's table row that was clicked
             document.getElementById('deleteUsername').innerHTML = "@" + this.closest('tr').children[2].innerHTML;
+            let userType = currentRow.children[5].innerHTML.toLowerCase();
             document.getElementById('deleteUserBtn').onclick = function () {
                 // Remove row and hide modal
                 $.ajax({
                     url: '/deleteUser',
                     type: 'DELETE',
                     data: {
-                        id: currentRow.id
+                        id: currentRow.id,
+                        userType: userType
                     },
-                    success: function () {
-                        currentRow.remove();
-                        document.getElementById('dashboardSuccessModal').style.display = 'flex';
+                    success: function (data) {
+                        if(data == 'lastAdmin'){
+                            alert('Deletion failed. Database needs to have at least 1 administrator.')
+                        } else {
+                            document.getElementById('dashboardSuccessModal').style.display = 'flex';
+                        }
                         setTimeout(() => {
                             deleteUserModal.style.display = "none";
                             document.body.style.overflow = 'auto';
@@ -152,7 +157,7 @@ $(document).ready(async function () {
             editUserModal.style.display = "block";
             document.body.style.overflow = 'hidden';
             const currentRow = this.closest('tr');
-
+            let previousUserType = currentRow.children[5].innerHTML.toLowerCase();
             document.getElementById('editFirstname').value = currentRow.children[0].innerHTML;
             document.getElementById('editLastname').value = currentRow.children[1].innerHTML;
             document.getElementById('editUsername').value = currentRow.children[2].innerHTML;
@@ -180,6 +185,7 @@ $(document).ready(async function () {
                         type: 'PUT',
                         data: {
                             id: currentRow.id,
+                            previousUserType: previousUserType,
                             firstname: $("#editFirstname").val().charAt(0).toUpperCase() + $("#editFirstname").val().substring(1),
                             lastname: $("#editLastname").val().charAt(0).toUpperCase() + $("#editLastname").val().substring(1),
                             username: $("#editUsername").val().toLowerCase(),

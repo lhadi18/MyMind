@@ -11,13 +11,15 @@ app.set('view engine', 'text/html');
 
 const uri = "mongodb+srv://DBUser:Admin123@cluster0.z9j9r.mongodb.net/BBY-31?retryWrites=true&w=majority";
 mongoose.connect(uri, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-})
+        useNewUrlParser: true,
+        useUnifiedTopology: true
+    })
     .then(() => console.log("connected to db"))
     .catch((err) => console.log(err));
 
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({
+    extended: true
+}));
 app.use(express.static(__dirname + '/public'));
 app.use(session({
     secret: "password",
@@ -29,8 +31,7 @@ app.use(session({
 function isLoggedIn(req, res, next) {
     if (req.session.isLoggedIn) {
         return next();
-    }
-    else {
+    } else {
         return res.redirect('/login');
     }
 }
@@ -38,19 +39,27 @@ function isLoggedIn(req, res, next) {
 function isLoggedOut(req, res, next) {
     if (!req.session.isLoggedIn) {
         return next();
-    }
-    else {
+    } else {
         return res.redirect('/userprofile');
     }
 }
 
 function isAdmin(req, res, next) {
-    if (req.session.user.userType == "admin") {
-        return next();
-    }
-    else {
-        return res.redirect('/userprofile');
-    }
+    let userId = req.session.user._id;
+    User.findById({
+        _id: userId
+    }, function (err, user) {
+        if (err) console.log(err)
+        else if (!user) {
+            return res.redirect('/login')
+        }
+        if (user.userType == 'admin') {
+            return next();
+        }
+        else {
+            return res.redirect('/userprofile');
+        }
+    })
 }
 
 function setHeaders(req, res, next) {
@@ -70,18 +79,19 @@ var profileStorage = multer.diskStorage({
     }
 })
 
-var profileUpload = multer({ storage: profileStorage })
+var profileUpload = multer({
+    storage: profileStorage
+})
 
 app.post('/uploadProfile', profileUpload.single('profileFile'), (req, res) => {
     if (req.file) {
         var fileName = req.file.filename;
         var id = req.session.user._id;
-        User.updateOne(
-            { "_id": id },
-            {
-                profileImg: "../uploads/" + fileName
-            }
-        ).then((obj) => {
+        User.updateOne({
+            "_id": id
+        }, {
+            profileImg: "../uploads/" + fileName
+        }).then((obj) => {
             console.log('Updated - ' + obj);
         })
     } else {
@@ -154,8 +164,7 @@ app.post('/login', async (req, res) => {
         if (!user) {
             res.json("NoEmailExist");
             console.log('No user with such email.');
-        }
-        else {
+        } else {
             return auth(req, res, user);
         }
     });
@@ -166,12 +175,10 @@ function auth(req, res, user) {
         if (err) {
             console.log(err);
             res.redirect('/login');
-        }
-        else if (comp === false) {
+        } else if (comp === false) {
             console.log("Wrong password");
             res.json("wrongPassword");
-        }
-        else {
+        } else {
             req.session.user = user;
             req.session.isLoggedIn = true;
             res.json(user);
@@ -209,17 +216,16 @@ app.post('/editProfile', isLoggedIn, isNotExisting, async (req, res) => {
         newpass = hashedPassword;
     }
 
-    User.updateOne(
-        { "_id": req.session.user._id },
-        {
+    User.updateOne({
+            "_id": req.session.user._id
+        }, {
             "firstName": req.body.firstname,
             "lastName": req.body.lastname,
             "username": req.body.username,
             "email": req.body.email,
             "phoneNum": req.body.phone,
             "password": newpass
-        }
-    )
+        })
         .then((obj) => {
             return res.json("updated");
         })
@@ -262,6 +268,7 @@ async function isNotExisting(req, res, next) {
 }
 
 app.post("/sign-up", isNotRegistered, async (req, res) => {
+    //let userType = (req.body.userType != 'patient' && req.body.userType != 'therapist') ? 'patient' : req.body.userType;
     if (req.body.userType == "therapist") {
         try {
             const hashedPassword = await bcrypt.hash(req.body.password, 10);
@@ -276,8 +283,6 @@ app.post("/sign-up", isNotRegistered, async (req, res) => {
                 email: req.body.email,
                 password: hashedPassword
             });
-            const existsAdmin = await User.exists({ isAdmin: true });
-            if (!existsAdmin) { new_user.isAdmin = true }
 
             new_user.save()
                 .then((result) => {
@@ -300,8 +305,12 @@ app.post("/sign-up", isNotRegistered, async (req, res) => {
                 email: req.body.email,
                 password: hashedPassword
             });
-            const existsAdmin = await User.exists({ isAdmin: true });
-            if (!existsAdmin) { new_user.isAdmin = true }
+            const existsAdmin = await User.exists({
+                isAdmin: true
+            });
+            if (!existsAdmin) {
+                new_user.isAdmin = true
+            }
 
             new_user.save()
                 .then((result) => {
@@ -336,26 +345,57 @@ async function isNotRegistered(req, res, next) {
     }
 }
 
-//Admin Dashboard
+//////Admin Dashboard////////
+
+//MiddleWare
+
+function isNotLastAdmin(req, res, next) {
+    console.log(req.body.userType)
+    if (req.body.userType == 'admin') {
+        User.count({
+            userType: 'admin'
+        }, (err, count) => {
+            if (err) {
+                console.log("Error while checking if user is last admin in db. ", err);
+            } else if (count > 1) {
+                return next();
+            } else {
+                return res.send('lastAdmin');
+            }
+        })
+    } else{
+        return next();
+    }
+}
+
+//Routes
+
 app.get('/getAllUsersData', isLoggedIn, isAdmin, setHeaders, (req, res) => {
-    User.find({ }, function (err, user) {
+    User.find({}, function (err, user) {
         if (err) {
-            console.log('Error searching user.', err); s
+            console.log('Error searching user.', err);
+            s
         }
         if (!user) {
             console.log('Database is empty.');
         }
         res.json(user);
-    }); 
+    });
 })
 
-app.delete('/deleteUser', isLoggedIn, isAdmin, async (req, res) => {
-    User.deleteOne({ _id: req.body.id })
-    .then(function(){
-        res.send();
-    }).catch(function(error){
-        console.log(error); // Failure
-    });
+app.delete('/deleteUser', isLoggedIn, isAdmin, isNotLastAdmin, async (req, res) => {
+    User.deleteOne({
+            _id: req.body.id
+        })
+        .then(function () {
+            //if user is deleting themselves, delete session data
+            if(req.body.id == req.session.user._id){
+                req.session.destroy();
+            }
+            res.send();
+        }).catch(function (error) {
+            console.log(error); // Failure
+        });
 })
 
 async function isNotExistingAdmin(req, res, next) {
@@ -391,42 +431,43 @@ async function isNotExistingAdmin(req, res, next) {
 }
 
 app.put('/editUser', isLoggedIn, isAdmin, isNotExistingAdmin, (req, res) => {
-    if (req.body.password != ""){
+    if (req.body.password != "") {
         return updateUserWithPassword(req, res);
     }
     if (req.body.userType == "therapist") {
-    User.updateOne(
-        { "_id": req.body.id },
-        { 
-            "firstName": req.body.firstname,
-            "lastName": req.body.lastname,
-            "username": req.body.username,
-            "email": req.body.email,
-            "phoneNum": req.body.phone,
-            "userType": req.body.userType,
-            "yearsExperience": req.body.yearsExperience,
-            "sessionCost": req.body.sessionCost
-        }
-    )
-        .then((obj) => {
-            return res.send("updatedWithoutPassword");
-        })
-        .catch((err) => {
-            console.log('Error: ' + err);
-        })
+        User.updateOne({
+                "_id": req.body.id
+            }, {
+                "firstName": req.body.firstname,
+                "lastName": req.body.lastname,
+                "username": req.body.username,
+                "email": req.body.email,
+                "phoneNum": req.body.phone,
+                "userType": req.body.userType,
+                "yearsExperience": req.body.yearsExperience,
+                "sessionCost": req.body.sessionCost
+            })
+            .then((obj) => {
+                return res.send("updatedWithoutPassword");
+            })
+            .catch((err) => {
+                console.log('Error: ' + err);
+            })
     } else {
-        User.updateOne(
-            { "_id": req.body.id },
-            {
-                $unset:  {"yearsExperience": "", "sessionCost": ""},
+        User.updateOne({
+                "_id": req.body.id
+            }, {
+                $unset: {
+                    "yearsExperience": "",
+                    "sessionCost": ""
+                },
                 "firstName": req.body.firstname,
                 "lastName": req.body.lastname,
                 "username": req.body.username,
                 "email": req.body.email,
                 "phoneNum": req.body.phone,
                 "userType": req.body.userType
-            }
-        )
+            })
             .then((obj) => {
                 return res.send("updatedWithoutPassword");
             })
@@ -436,33 +477,36 @@ app.put('/editUser', isLoggedIn, isAdmin, isNotExistingAdmin, (req, res) => {
     }
 })
 
-async function updateUserWithPassword(req, res){
+async function updateUserWithPassword(req, res) {
     var hashedPassword = await bcrypt.hash(req.body.password, 10);
     if (req.body.userType == "therapist") {
-    User.updateOne(
-        { "_id": req.body.id },
-        {
-            "firstName": req.body.firstname,
-            "lastName": req.body.lastname,
-            "username": req.body.username,
-            "email": req.body.email,
-            "phoneNum": req.body.phone,
-            "userType": req.body.userType,
-            "yearsExperience": req.body.yearsExperience,
-            "sessionCost": req.body.sessionCost,
-            "password": hashedPassword
-        })
-        .then((obj) => {
-            return res.send("updatedWithPassword");
-        })
-        .catch((err) => {
-            console.log('Error: ' + err);
-        })
+        User.updateOne({
+                "_id": req.body.id
+            }, {
+                "firstName": req.body.firstname,
+                "lastName": req.body.lastname,
+                "username": req.body.username,
+                "email": req.body.email,
+                "phoneNum": req.body.phone,
+                "userType": req.body.userType,
+                "yearsExperience": req.body.yearsExperience,
+                "sessionCost": req.body.sessionCost,
+                "password": hashedPassword
+            })
+            .then((obj) => {
+                return res.send("updatedWithPassword");
+            })
+            .catch((err) => {
+                console.log('Error: ' + err);
+            })
     } else {
-        User.updateOne(
-            { "_id": req.body.id },
-            {
-                $unset:  {"yearsExperience": "", "sessionCost": ""},
+        User.updateOne({
+                "_id": req.body.id
+            }, {
+                $unset: {
+                    "yearsExperience": "",
+                    "sessionCost": ""
+                },
                 "firstName": req.body.firstname,
                 "lastName": req.body.lastname,
                 "username": req.body.username,
