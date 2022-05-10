@@ -187,7 +187,7 @@ body {
 
 #wrapper #headMobile .nav-container .nav-menu.show-menu {
     bottom: 0;
-    background: rgba(255, 255, 255, 0.6);
+    background: rgba(255, 255, 255, 0.8);
     backdrop-filter: blur(5px);
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
@@ -242,11 +242,8 @@ body {
 
 #wrapper #headMobile .nav-container .nav-menu .nav-list .nav-item .nav-link .nav-icon {
     font-size: 1.5rem;
-}
-
-#wrapper #headMobile .nav-container .nav-menu .nav-list .nav-item .nav-link img.nav-icon {
-    width: 24px;
-    margin: 3px;
+    height: 40px;
+    padding-bottom: 0.5rem;
 }
 
 #wrapper #headMobile .nav-container .nav-menu #logoMob {
