@@ -397,7 +397,7 @@ app.put('/editUser', isLoggedIn, isAdmin, isNotExistingAdmin, (req, res) => {
     if (req.body.userType == "therapist") {
     User.updateOne(
         { "_id": req.body.id },
-        {
+        { 
             "firstName": req.body.firstname,
             "lastName": req.body.lastname,
             "username": req.body.username,
@@ -418,6 +418,7 @@ app.put('/editUser', isLoggedIn, isAdmin, isNotExistingAdmin, (req, res) => {
         User.updateOne(
             { "_id": req.body.id },
             {
+                $unset:  {"yearsExperience": "", "sessionCost": ""},
                 "firstName": req.body.firstname,
                 "lastName": req.body.lastname,
                 "username": req.body.username,
@@ -461,6 +462,7 @@ async function updateUserWithPassword(req, res){
         User.updateOne(
             { "_id": req.body.id },
             {
+                $unset:  {"yearsExperience": "", "sessionCost": ""},
                 "firstName": req.body.firstname,
                 "lastName": req.body.lastname,
                 "username": req.body.username,
