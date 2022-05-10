@@ -7,6 +7,12 @@ const multer = require("multer");
 const bcrypt = require('bcrypt');
 const port = 8000;
 const app = express();
+const io = require("socket.io")(3000, {
+    cors: {
+        origin: ['http://localhost:8000']
+    }
+});
+
 app.set('view engine', 'text/html');
 
 const uri = "mongodb+srv://DBUser:Admin123@cluster0.z9j9r.mongodb.net/BBY-31?retryWrites=true&w=majority";
@@ -72,6 +78,10 @@ var profileStorage = multer.diskStorage({
 
 var profileUpload = multer({ storage: profileStorage })
 
+io.on('connection', socket => {
+  console.log(socket.id);
+});
+
 app.post('/uploadProfile', profileUpload.single('profileFile'), (req, res) => {
     if (req.file) {
         var fileName = req.file.filename;
@@ -118,6 +128,10 @@ app.get("/login", isLoggedOut, setHeaders, (req, res) => {
 
 app.get('/admin-dashboard', isLoggedIn, isAdmin, setHeaders, (req, res) => {
     res.sendFile(path.resolve('public/admin-dashboard.html'))
+});
+
+app.get('/chat-session', isLoggedIn, setHeaders, (req, res) => {
+    res.sendFile(path.resolve('public/chat-session.html'))
 });
 
 app.get('/getUserInfo', isLoggedIn, setHeaders, (req, res) => {
@@ -338,7 +352,7 @@ async function isNotRegistered(req, res, next) {
 
 //Admin Dashboard
 app.get('/getAllUsersData', isLoggedIn, isAdmin, setHeaders, (req, res) => {
-    User.find({ }, function (err, user) {
+    User.find({}, function (err, user) {
         if (err) {
             console.log('Error searching user.', err); s
         }
@@ -346,16 +360,16 @@ app.get('/getAllUsersData', isLoggedIn, isAdmin, setHeaders, (req, res) => {
             console.log('Database is empty.');
         }
         res.json(user);
-    }); 
+    });
 })
 
 app.delete('/deleteUser', isLoggedIn, isAdmin, async (req, res) => {
     User.deleteOne({ _id: req.body.id })
-    .then(function(){
-        res.send();
-    }).catch(function(error){
-        console.log(error); // Failure
-    });
+        .then(function () {
+            res.send();
+        }).catch(function (error) {
+            console.log(error); // Failure
+        });
 })
 
 async function isNotExistingAdmin(req, res, next) {
@@ -391,7 +405,7 @@ async function isNotExistingAdmin(req, res, next) {
 }
 
 app.put('/editUser', isLoggedIn, isAdmin, isNotExistingAdmin, (req, res) => {
-    if (req.body.password != ""){
+    if (req.body.password != "") {
         return updateUserWithPassword(req, res);
     }
     User.updateOne(
@@ -412,7 +426,7 @@ app.put('/editUser', isLoggedIn, isAdmin, isNotExistingAdmin, (req, res) => {
         })
 })
 
-async function updateUserWithPassword(req, res){
+async function updateUserWithPassword(req, res) {
     var hashedPassword = await bcrypt.hash(req.body.password, 10);
     User.updateOne(
         { "_id": req.body.id },
