@@ -78,8 +78,10 @@ $(document).ready(async function () {
                         } else if (data == "existingUsername") {
                             document.getElementById("createUserErrorMessage").innerHTML = "A user with that username already exists";
                         } else {
-                            alert('User successfully created.')
-                            location.reload();
+                            document.getElementById('dashboardSuccessModal').style.display = 'flex';
+                            setTimeout(() => {
+                                location.reload();
+                            }, 2500);
                         }
                     }
                 })
@@ -125,10 +127,13 @@ $(document).ready(async function () {
                         id: currentRow.id
                     },
                     success: function () {
-                        alert('User successfuly deleted.')
                         currentRow.remove();
-                        deleteUserModal.style.display = "none";
-                        document.body.style.overflow = 'auto';
+                        document.getElementById('dashboardSuccessModal').style.display = 'flex';
+                        setTimeout(() => {
+                            deleteUserModal.style.display = "none";
+                            document.body.style.overflow = 'auto';
+                            location.reload();
+                        }, 2500);
                     }
                 })
             }
@@ -189,12 +194,16 @@ $(document).ready(async function () {
                                 $("#editUserErrorMessage").html("A user with that username already exists");
                             } else if (data == "updatedWithPassword") {
                                 $("#editUserErrorMessage").html("");
-                                alert('User successfully updated.')
-                                location.reload();
+                                document.getElementById('dashboardSuccessModal').style.display = 'flex';
+                                setTimeout(() => {
+                                    location.reload();
+                                }, 2500);
                             } else {
                                 $("#editUserErrorMessage").html("");
-                                alert('User successfully updated. Except password.')
-                                location.reload();
+                                document.getElementById('dashboardSuccessModal').style.display = 'flex';
+                                setTimeout(() => {
+                                    location.reload();
+                                }, 2500);
                             }
                         }
                     })

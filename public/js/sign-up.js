@@ -32,7 +32,10 @@ $('#signupBtn').click(() => {
                 } else if (data == "existingUsername") {
                     document.getElementById("signUpErrorMessage").innerHTML = "A user with that username already exists";
                 } else if (data == "login") {
-                    window.location = '/login'
+                    document.getElementById('signupSuccessModal').style.display = 'flex';
+                    setTimeout(() => {
+                        window.location = '/login'
+                    }, 2500);
                 }
             }
         })

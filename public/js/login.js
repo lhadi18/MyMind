@@ -12,10 +12,17 @@ $('#loginBtn').click(() => {
             } else if (data == "wrongPassword") {
                 document.getElementById("loginErrorMessage").innerHTML = "Incorrect Password"
             } else if (data.isAdmin) {
-                window.location = '/admin-dashboard'
+                document.getElementById('loginSuccessModal').style.display = 'flex';
+                setTimeout(() => {
+                    window.location = '/admin-dashboard'
+                }, 2500);
             } else {
-                window.location = '/'
+                document.getElementById('loginSuccessModal').style.display = 'flex';
+                setTimeout(() => {
+                    window.location = '/'
+                }, 2500);
             }
+            
         }
     })
 });
