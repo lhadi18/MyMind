@@ -45,7 +45,7 @@ function isLoggedOut(req, res, next) {
 }
 
 function isAdmin(req, res, next) {
-    if (req.session.user.isAdmin) {
+    if (req.session.user.userType == "admin") {
         return next();
     }
     else {
