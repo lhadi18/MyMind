@@ -7,6 +7,8 @@ $('#signupBtn').click(() => {
     } else if (inputValidation()) {
         window.scrollTo(0, document.body.scrollHeight);
         document.getElementById("signUpErrorMessage").innerHTML = "There are empty fields";
+    } else if(passwordValidation()) {
+        document.getElementById("signUpErrorMessage").innerHTML = "Password must be at least 5 or less than 20 characters long";
     } else {
         $.ajax({
             url: '/sign-up',

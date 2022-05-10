@@ -22,6 +22,7 @@ $(document).ready(async function () {
                 x += `</tr>`
                 $("tbody").append(x);
             });
+            document.getElementById("resultsFound").innerHTML = data.length + " Users"
         }
     });
 
@@ -53,6 +54,8 @@ $(document).ready(async function () {
                 document.getElementById("createUserErrorMessage").innerHTML = "Please follow this email pattern: example@email.com";
             } else if (inputValidationCreate()) {
                 document.getElementById("createUserErrorMessage").innerHTML = "There are empty fields";
+            } else if (passwordValidationCreate()) {
+                document.getElementById("createUserErrorMessage").innerHTML = "Password must be at least 5 or less than 20 characters long";
             } else {
                 $.ajax({
                     url: '/sign-up',
@@ -64,6 +67,8 @@ $(document).ready(async function () {
                         phone: $("#phone").val(),
                         email: $("#email").val(),
                         userType: $("#userType").val(),
+                        yearsExperience: $("#yearsExperience").val(),
+                        sessionCost: $("#sessionCost").val(),
                         password: $("#password").val(),
                     }, success: function (data) {
                         if (data == "existingEmail") {
@@ -87,6 +92,12 @@ $(document).ready(async function () {
         const inpObjLastName = document.getElementById("lastname");
         const inpObjUsername = document.getElementById("username");
         if (!inpObjFirstName.checkValidity() || !inpObjLastName.checkValidity() || !inpObjUsername.checkValidity()) {
+            return true;
+        }
+    }
+    function passwordValidationCreate() {
+        const inpObjPassword = document.getElementById("password");
+        if (!inpObjPassword.checkValidity()) {
             return true;
         }
     }
@@ -151,6 +162,8 @@ $(document).ready(async function () {
                     document.getElementById("editUserErrorMessage").innerHTML = "Please follow this email pattern: example@gmail.com";
                 } else if (inputValidationEdit()) {
                     document.getElementById("editUserErrorMessage").innerHTML = "There are empty fields.";
+                } else if (passwordValidationEdit()) {
+                    document.getElementById("editUserErrorMessage").innerHTML = "Password must be at least 5 or less than 20 characters long";
                 } else {
                     $.ajax({
                         url: '/editUser',
@@ -163,6 +176,8 @@ $(document).ready(async function () {
                             email: $("#editEmail").val(),
                             phone: $("#editPhone").val(),
                             userType: $("#editUserType").val(),
+                            yearsExperience: $("#editYearsExperience").val(),
+                            sessionCost: $("#editSessionCost").val(),
                             password: $("#editPassword").val()
                         },
                         success: function (data) {
@@ -193,6 +208,12 @@ $(document).ready(async function () {
         const inpObjLastName = document.getElementById("editLastname");
         const inpObjUsername = document.getElementById("editUsername");
         if (!inpObjFirstName.checkValidity() || !inpObjLastName.checkValidity() || !inpObjUsername.checkValidity()) {
+            return true;
+        }
+    }
+    function passwordValidationEdit() {
+        const inpObjPassword = document.getElementById("editPassword");
+        if (!inpObjPassword.checkValidity()) {
             return true;
         }
     }

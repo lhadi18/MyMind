@@ -194,7 +194,7 @@
                                 <label for="password">Password</label>
                                 <div class="input-group" id="show-hide-password">
                                     <input type="password" name="password" class="form-control" id="password"
-                                        required="required">
+                                        required="required" minlength="5" maxlength="20">
                                     <div class="input-group-addon">
                                         <a href=""><i class="fa fa-eye-slash" aria-hidden="true"></i></a>
                                     </div>
@@ -289,7 +289,7 @@
                             <div class="form-group">
                                 <label for="password">Change Password</label>
                                 <div class="input-group" id="show-hide-password">
-                                    <input type="password" name="password" class="form-control" id="editPassword">
+                                    <input type="password" name="password" class="form-control" id="editPassword" minlength="5" maxlength="20">
                                     <div class="input-group-addon">
                                         <a href=""><i class="fa fa-eye-slash" aria-hidden="true"></i></a>
                                     </div>
@@ -318,7 +318,7 @@
         </div>
 
         <div id="dashboardToolbar">
-            <p>Results Found: <span id="resultsFound">12 Users</span></p>
+            <p>Results Found: <span id="resultsFound"></span></p>
             <form id="searchForm">
                 <input type="text" id="searchbar" onkeypress="return event.keyCode != 13;" onkeyup="searchTable()" placeholder="Search..." />
             </form>

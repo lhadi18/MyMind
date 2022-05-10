@@ -394,26 +394,7 @@ app.put('/editUser', isLoggedIn, isAdmin, isNotExistingAdmin, (req, res) => {
     if (req.body.password != ""){
         return updateUserWithPassword(req, res);
     }
-    User.updateOne(
-        { "_id": req.body.id },
-        {
-            "firstName": req.body.firstname,
-            "lastName": req.body.lastname,
-            "username": req.body.username,
-            "email": req.body.email,
-            "phoneNum": req.body.phone
-        }
-    )
-        .then((obj) => {
-            return res.send("updatedWithoutPassword");
-        })
-        .catch((err) => {
-            console.log('Error: ' + err);
-        })
-})
-
-async function updateUserWithPassword(req, res){
-    var hashedPassword = await bcrypt.hash(req.body.password, 10);
+    if (req.body.userType == "therapist") {
     User.updateOne(
         { "_id": req.body.id },
         {
@@ -422,6 +403,52 @@ async function updateUserWithPassword(req, res){
             "username": req.body.username,
             "email": req.body.email,
             "phoneNum": req.body.phone,
+            "userType": req.body.userType,
+            "yearsExperience": req.body.yearsExperience,
+            "sessionCost": req.body.sessionCost
+        }
+    )
+        .then((obj) => {
+            return res.send("updatedWithoutPassword");
+        })
+        .catch((err) => {
+            console.log('Error: ' + err);
+        })
+    } else {
+        User.updateOne(
+            { "_id": req.body.id },
+            {
+                "firstName": req.body.firstname,
+                "lastName": req.body.lastname,
+                "username": req.body.username,
+                "email": req.body.email,
+                "phoneNum": req.body.phone,
+                "userType": req.body.userType
+            }
+        )
+            .then((obj) => {
+                return res.send("updatedWithoutPassword");
+            })
+            .catch((err) => {
+                console.log('Error: ' + err);
+            })
+    }
+})
+
+async function updateUserWithPassword(req, res){
+    var hashedPassword = await bcrypt.hash(req.body.password, 10);
+    if (req.body.userType == "therapist") {
+    User.updateOne(
+        { "_id": req.body.id },
+        {
+            "firstName": req.body.firstname,
+            "lastName": req.body.lastname,
+            "username": req.body.username,
+            "email": req.body.email,
+            "phoneNum": req.body.phone,
+            "userType": req.body.userType,
+            "yearsExperience": req.body.yearsExperience,
+            "sessionCost": req.body.sessionCost,
             "password": hashedPassword
         })
         .then((obj) => {
@@ -430,6 +457,25 @@ async function updateUserWithPassword(req, res){
         .catch((err) => {
             console.log('Error: ' + err);
         })
+    } else {
+        User.updateOne(
+            { "_id": req.body.id },
+            {
+                "firstName": req.body.firstname,
+                "lastName": req.body.lastname,
+                "username": req.body.username,
+                "email": req.body.email,
+                "phoneNum": req.body.phone,
+                "userType": req.body.userType,
+                "password": hashedPassword
+            })
+            .then((obj) => {
+                return res.send("updatedWithPassword");
+            })
+            .catch((err) => {
+                console.log('Error: ' + err);
+            })
+    }
 }
 
 app.listen(port, () => {
