@@ -6,7 +6,9 @@ $('#loginBtn').click(() => {
             email: $("#email").val(),
             password: $("#password").val(),
         }, success: function (data) {
-            console.log(data);
+            document.getElementById('loginSuccessModal').style.display = 'flex';
+            setTimeout(() => {
+                console.log(data);
             if (data == "NoEmailExist") {
                 document.getElementById("loginErrorMessage").innerHTML = "User with that email does not exist"
             } else if (data == "wrongPassword") {
@@ -16,6 +18,7 @@ $('#loginBtn').click(() => {
             } else {
                 window.location = '/'
             }
+            }, 2500);
         }
     })
 });
