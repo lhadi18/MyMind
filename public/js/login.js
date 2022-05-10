@@ -10,12 +10,23 @@ $('#loginBtn').click(() => {
             if (data == "NoEmailExist") {
                 document.getElementById("loginErrorMessage").innerHTML = "User with that email does not exist"
             } else if (data == "wrongPassword") {
-                document.getElementById("loginErrorMessage").innerHTML = "Wrong password"
+                document.getElementById("loginErrorMessage").innerHTML = "Incorrect Password"
             } else if (data.isAdmin) {
                 window.location = '/admin-dashboard'
             } else {
-                    window.location = '/'
+                window.location = '/'
             }
         }
     })
 });
+
+// Trigger click function for enter key for all input fields
+const input = document.querySelectorAll(".form-control");
+for (var i = 0; i < input.length; i++) {
+    input[i].addEventListener("keypress", function (e) {
+        if (e.key === "Enter") {
+            e.preventDefault();
+            document.getElementById("loginBtn").click();
+        }
+    });
+}

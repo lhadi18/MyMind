@@ -48,7 +48,6 @@ setTimeout(() => {
         url: '/getProfilePicture',
         type: 'GET',
         success: function (data) {
-            console.log(data);
             $("#profileImage").attr('src', data.profileImg)
             $("#profileImageMob").attr('src', data.profileImg)
         }
@@ -59,11 +58,25 @@ $('#saveChanges').click(() => {
     var emp = document.getElementById("password").value;
     var phoneLength = $("#phone").val();
     if (phoneLength.length != 10) {
+        document.getElementById("phoneErrorMessage").style.display = 'block';
+        document.getElementById("emailErrorMessage").style.display = 'none';
+        document.getElementById("usernameErrorMessage").style.display = 'none';
+        document.getElementById("validationErrorMessage").style.display = 'none';
         document.getElementById("phoneErrorMessage").innerHTML = "Your phone number must be of length 10";
     } else if (!isEmail($("#email").val())) {
-        document.getElementById("emailErrorMessage").innerHTML = "Please follow this email pattern: example@gmail.com";
-    } else if(inputValidation()) {
-        document.getElementById("validationErrorMessage").innerHTML = "There are empty fields.";
+        document.getElementById("phoneErrorMessage").style.display = 'none';
+        document.getElementById("emailErrorMessage").style.display = 'block';
+        document.getElementById("usernameErrorMessage").style.display = 'none';
+        document.getElementById("validationErrorMessage").style.display = 'none';
+        document.getElementById("emailErrorMessage").innerHTML = "Please follow this email pattern: example@email.com";
+    } else if (inputValidation()) {
+        window.scrollTo(0, document.body.scrollHeight);
+        document.getElementById("phoneErrorMessage").style.display = 'none';
+        document.getElementById("emailErrorMessage").style.display = 'none';
+        document.getElementById("usernameErrorMessage").style.display = 'none';
+        document.getElementById("validationErrorMessage").style.display = 'block';
+        window.scrollTo(0, document.body.scrollHeight);
+        document.getElementById("validationErrorMessage").innerHTML = "There are empty fields";
     } else {
         $.ajax({
             url: '/editProfile',
@@ -78,14 +91,23 @@ $('#saveChanges').click(() => {
             }, success: function (data) {
                 console.log(data);
                 if (data == "existingEmail") {
+                    document.getElementById("phoneErrorMessage").style.display = 'none';
+                    document.getElementById("emailErrorMessage").style.display = 'block';
+                    document.getElementById("usernameErrorMessage").style.display = 'none';
+                    document.getElementById("validationErrorMessage").style.display = 'none';
                     document.getElementById("emailErrorMessage").innerHTML = "A user with that email already exists";
                 } else if (data == "existingPhone") {
+                    document.getElementById("phoneErrorMessage").style.display = 'block';
+                    document.getElementById("emailErrorMessage").style.display = 'none';
+                    document.getElementById("usernameErrorMessage").style.display = 'none';
+                    document.getElementById("validationErrorMessage").style.display = 'none';
                     document.getElementById("phoneErrorMessage").innerHTML = "A user with that phone number already exists";
-                    document.getElementById("emailErrorMessage").innerHTML = "";
                 } else if (data == "existingUsername") {
+                    document.getElementById("phoneErrorMessage").style.display = 'none';
+                    document.getElementById("emailErrorMessage").style.display = 'none';
+                    document.getElementById("usernameErrorMessage").style.display = 'block';
+                    document.getElementById("validationErrorMessage").style.display = 'none';
                     document.getElementById("usernameErrorMessage").innerHTML = "A user with that username already exists";
-                    document.getElementById("emailErrorMessage").innerHTML = "";
-                    document.getElementById("phoneErrorMessage").innerHTML = "";
                 } else if (data == "updated") {
                     if (emp == "") {
                         setTimeout(() => {
@@ -115,4 +137,15 @@ function inputValidation() {
     if (!inpObjFirstName.checkValidity() || !inpObjLastName.checkValidity() || !inpObjUsername.checkValidity()) {
         return true;
     }
+}
+
+// Trigger click function for enter key for all input fields
+const input = document.querySelectorAll(".form-control");
+for (var i = 0; i < input.length; i++) {
+    input[i].addEventListener("keypress", function (e) {
+        if (e.key === "Enter") {
+            e.preventDefault();
+            document.getElementById("saveChanges").click();
+        }
+    });
 }

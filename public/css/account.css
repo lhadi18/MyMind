@@ -339,10 +339,11 @@
     margin-right: 1.5rem;
 }
 
-#usernameErrorMessage, #emailErrorMessage, #phoneErrorMessage {
+#usernameErrorMessage, #emailErrorMessage, #phoneErrorMessage, #validationErrorMessage {
     font-family: 'Nunito', sans-serif;
     color: red;
     font-size: 1rem;
     padding-top: 1rem;
     text-align: center;
+    width: 100%;
 }
