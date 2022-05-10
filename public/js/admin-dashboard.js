@@ -129,17 +129,18 @@ $(document).ready(async function () {
                     type: 'DELETE',
                     data: {
                         id: currentRow.id,
-                        userType: userType
+                        previousUserType: userType
                     },
                     success: function (data) {
                         if(data == 'lastAdmin'){
+                            deleteUserModal.style.display = "none";
+                            document.body.style.overflow = 'auto';
                             alert('Deletion failed. Database needs to have at least 1 administrator.')
+                            return;
                         } else {
                             document.getElementById('dashboardSuccessModal').style.display = 'flex';
                         }
                         setTimeout(() => {
-                            deleteUserModal.style.display = "none";
-                            document.body.style.overflow = 'auto';
                             location.reload();
                         }, 2500);
                     }
@@ -209,6 +210,10 @@ $(document).ready(async function () {
                                 setTimeout(() => {
                                     location.reload();
                                 }, 2500);
+                            } else if (data == 'lastAdmin'){
+                                alert('Edit failed. Database needs to have at least 1 administrator.')
+                                editUserModal.style.display = "none";
+                                document.body.style.overflow = 'auto';
                             } else {
                                 $("#editUserErrorMessage").html("");
                                 document.getElementById('dashboardSuccessModal').style.display = 'flex';

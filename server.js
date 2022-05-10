@@ -349,9 +349,26 @@ async function isNotRegistered(req, res, next) {
 
 //MiddleWare
 
-function isNotLastAdmin(req, res, next) {
-    console.log(req.body.userType)
-    if (req.body.userType == 'admin') {
+function isNotLastAdminDelete(req, res, next) {
+    if (req.body.previousUserType == 'admin') {
+        User.count({
+            userType: 'admin'
+        }, (err, count) => {
+            if (err) {
+                console.log("Error while checking if user is last admin in db. ", err);
+            } else if (count > 1) {
+                return next();
+            } else {
+                return res.send('lastAdmin');
+            }
+        })
+    } else{
+        return next();
+    }
+}
+
+function isNotLastAdminEdit(req, res, next) {
+    if (req.body.previousUserType == 'admin' && req.body.userType != 'admin') {
         User.count({
             userType: 'admin'
         }, (err, count) => {
@@ -383,7 +400,7 @@ app.get('/getAllUsersData', isLoggedIn, isAdmin, setHeaders, (req, res) => {
     });
 })
 
-app.delete('/deleteUser', isLoggedIn, isAdmin, isNotLastAdmin, async (req, res) => {
+app.delete('/deleteUser', isLoggedIn, isAdmin, isNotLastAdminDelete, async (req, res) => {
     User.deleteOne({
             _id: req.body.id
         })
@@ -430,7 +447,7 @@ async function isNotExistingAdmin(req, res, next) {
     })
 }
 
-app.put('/editUser', isLoggedIn, isAdmin, isNotExistingAdmin, (req, res) => {
+app.put('/editUser', isLoggedIn, isAdmin, isNotExistingAdmin, isNotLastAdminEdit, (req, res) => {
     if (req.body.password != "") {
         return updateUserWithPassword(req, res);
     }
