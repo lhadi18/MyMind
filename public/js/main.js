@@ -11,10 +11,6 @@ $(document).ready(function () {
     setTimeout(() => {
         $.get('/isLoggedIn', function (user) {
             if (user) {
-                // if (user.isAdmin) {
-                //     document.querySelector(".isAdmin").style.display = "list-item";
-                //     loadNavbarFooter("../headerfooter/therapist-nav.html");
-                // } else 
                 if (user.userType == 'patient') {
                     var patientEls = document.querySelectorAll(".isPatient");
                     for (var x = 0; x < patientEls.length; x++)
@@ -32,6 +28,18 @@ $(document).ready(function () {
                     let loggedInEls = document.querySelectorAll(".isLoggedIn");
                     for (var x = 0; x < loggedInEls.length; x++)
                         loggedInEls[x].style.display = 'list-item';
+                } else if (user.userType == 'admin') {
+                    let therapyBtns = document.querySelectorAll('.therapistBtn');
+                    for (var i = 0; i < therapyBtns.length; i++) {
+                        therapyBtns[i].disabled = true;
+                    }
+                    let adminEls = document.querySelectorAll(".isAdmin");
+                    for (var x = 0; x < adminEls.length; x++)
+                        adminEls[x].style.display = 'list-item';
+
+                    let loggedInEls = document.querySelectorAll(".isLoggedIn");
+                    for (var x = 0; x < loggedInEls.length; x++)
+                        loggedInEls[x].style.display = 'list-item';
                 }
                 setTimeout(() => {
                     $('.logout-link').click(function () {
@@ -42,7 +50,7 @@ $(document).ready(function () {
                 }, 400);
             } else {
                 let loggedOutEls = document.querySelectorAll(".isLoggedOut")
-                    for (var x = 0; x < loggedOutEls.length; x++)
+                for (var x = 0; x < loggedOutEls.length; x++)
                     loggedOutEls[x].style.display = 'list-item';
             }
         })
@@ -54,16 +62,16 @@ $(document).ready(function () {
 
     /* Show Menu */
     // Validation if constant var exists
-    if(navToggle) {
-        navToggle.addEventListener('click', function() {
+    if (navToggle) {
+        navToggle.addEventListener('click', function () {
             navMenu.classList.add('show-menu');
         });
     }
 
     /* Hide Menu */
     // Validation if constant var exists
-    if(navClose) {
-        navClose.addEventListener('click', function() {
+    if (navClose) {
+        navClose.addEventListener('click', function () {
             navMenu.classList.remove('show-menu');
         });
     }
@@ -72,10 +80,17 @@ $(document).ready(function () {
 // Load the Navbar and Footer 
 function loadNavbarFooter() {
     $('#navPlaceHolder').load('../headerfooter/nav.html', function () {
-        $('.navbar-nav .nav-item .nav-link').each(function () {
+        // For mobile nav links
+        $('.nav-item .nav-link').each(function () {
             $(this).toggleClass('active', this.getAttribute('href') === location.pathname);
         });
-        $('.nav-menu .nav-list .nav-item .nav-link').each(function () {
+        // For mobile nav icons
+        $('.nav-link .nav-icon').each(function () {
+            $(this).toggleClass('active', this.getAttribute('href') === location.pathname);
+        });
+
+        // For desktop nav links
+        $('.navLinks a').each(function () {
             $(this).toggleClass('active', this.getAttribute('href') === location.pathname);
         });
     });
@@ -104,5 +119,4 @@ function linkAction() {
     document.getElementById('nav-menu').classList.remove('show-menu');
 }
 
-navLink.forEach( n => n.addEventListener('click', linkAction));
-
+navLink.forEach(n => n.addEventListener('click', linkAction));

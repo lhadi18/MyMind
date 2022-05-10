@@ -8,7 +8,7 @@ $.ajax({
                 x += '<div class="cardContent">'
                 x += `<h3>${Therapist.firstName} ${Therapist.lastName}</h3>`
                 x += `<p>${Therapist.yearsExperience} years of experience in the profession, and offers $${Therapist.sessionCost} per session</p>`
-                x += '<div><a href="/checkout">Purchase Session</a></div>'
+                x += '<div><button class="therapistBtn">Purchase Session</button></div>'
                 x += '</div>'
                 x += '</div>'
                 document.getElementById("therapistList").innerHTML += x;

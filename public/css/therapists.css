@@ -131,7 +131,7 @@
     display: flex;
 }
 
-#wrapper #therapistListSec #therapistList .therapistCard .cardContent div a {
+#wrapper #therapistListSec #therapistList .therapistCard .cardContent div .therapistBtn {
     font-family: 'Nunito', sans-serif;
     font-size: 1rem;
     font-weight: 600;
@@ -154,7 +154,13 @@
     transition: all ease-in-out 0.3s;
 }
 
-#wrapper #therapistListSec #therapistList .therapistCard .cardContent div a:hover {
+#wrapper #therapistListSec #therapistList .therapistCard .cardContent div .therapistBtn:hover {
     border: 2px solid var(--secondaryColor);
     background-color: var(--secondaryColor);
+}
+
+#wrapper #therapistListSec #therapistList .therapistCard .cardContent div .therapistBtn:disabled {
+    background-color: #8b8b8b;
+    border-color: #8b8b8b;
+    color: #c4c4c4;
 }

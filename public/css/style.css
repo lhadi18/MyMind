@@ -329,6 +329,6 @@ body {
     text-align: center;
 }
 
-.isTherapist, .isPatient, .isLoggedIn, .isLoggedOut {
+.isTherapist, .isPatient, .isLoggedIn, .isLoggedOut, .isAdmin {
     display: none;
 }
