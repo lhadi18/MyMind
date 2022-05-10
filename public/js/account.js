@@ -110,12 +110,16 @@ $('#saveChanges').click(() => {
                     document.getElementById("usernameErrorMessage").innerHTML = "A user with that username already exists";
                 } else if (data == "updated") {
                     if (emp == "") {
+                        document.getElementById('profileSuccessModal').style.display = 'flex';
                         setTimeout(() => {
                             window.location = '/userprofile'
-                        }, 50);
+                        }, 2500);
                     } else {
                         $.post("/logout");
-                        window.location = '/login'
+                        document.getElementById('profileSuccessModal').style.display = 'flex';
+                        setTimeout(() => {
+                            window.location = '/login'
+                        }, 2500);
                     }
                 } else if (data == "logout") {
                     window.location = '/login'

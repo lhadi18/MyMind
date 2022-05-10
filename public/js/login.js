@@ -6,19 +6,23 @@ $('#loginBtn').click(() => {
             email: $("#email").val(),
             password: $("#password").val(),
         }, success: function (data) {
-            document.getElementById('loginSuccessModal').style.display = 'flex';
-            setTimeout(() => {
-                console.log(data);
+            console.log(data);
             if (data == "NoEmailExist") {
                 document.getElementById("loginErrorMessage").innerHTML = "User with that email does not exist"
             } else if (data == "wrongPassword") {
                 document.getElementById("loginErrorMessage").innerHTML = "Incorrect Password"
             } else if (data.isAdmin) {
-                window.location = '/admin-dashboard'
+                document.getElementById('loginSuccessModal').style.display = 'flex';
+                setTimeout(() => {
+                    window.location = '/admin-dashboard'
+                }, 2500);
             } else {
-                window.location = '/'
+                document.getElementById('loginSuccessModal').style.display = 'flex';
+                setTimeout(() => {
+                    window.location = '/'
+                }, 2500);
             }
-            }, 2500);
+            
         }
     })
 });
