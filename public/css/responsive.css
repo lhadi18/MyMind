@@ -267,7 +267,7 @@
         border: 7px solid white;
     } 
     #wrapper #profileDetailsMob {
-        padding: 5rem 3rem;
+        padding: 5rem 3rem 7rem;
     }
     #wrapper #profileDetailsMob #profileForm .form-row .form-group label {
         font-size: 1rem;
@@ -819,7 +819,7 @@
         padding: 0 30%;
     }
     #wrapper #profileDetailsMob {
-        padding: 5rem 3rem;
+        padding: 5rem 3rem 7rem;
     }
     #wrapper #profileSummaryMob #saveChanges {
         top: 3rem;

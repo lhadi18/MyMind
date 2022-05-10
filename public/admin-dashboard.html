@@ -165,11 +165,27 @@
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="userType">User Type</label>
-                                <select name="userType" id="userType">
+                                <select name="userType" id="userType" onchange="showTherapyOptions(this)">
                                     <option value="patient">Patient</option>
                                     <option value="therapist">Therapist</option>
                                     <option value="admin">Admin</option>
                                 </select>
+                            </div>
+                        </div>
+    
+                        <div class="form-row col-6 therapistOptions">
+                            <div class="form-group">
+                                <label for="yearsExperience">Years Of Experience</label>
+                                <input type="number" class="form-control" name="yearsExperience" id="yearsExperience" placeholder="5"
+                                    value="5" min="1" step="1" required="required">
+                            </div>
+                        </div>
+    
+                        <div class="form-row col-6 therapistOptions">
+                            <div class="form-group">
+                                <label for="sessionCost">Session Cost</label>
+                                <input type="number" class="form-control" name="sessionCost" id="sessionCost" placeholder="90"
+                                    value="90" min="0.01" step="0.01" required="required">
                             </div>
                         </div>
 
@@ -245,11 +261,27 @@
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="userType">User Type</label>
-                                <select name="userType" id="editUserType">
+                                <select name="userType" id="editUserType" onchange="showTherapyOptions(this)">
                                     <option value="patient">Patient</option>
                                     <option value="therapist">Therapist</option>
                                     <option value="admin">Admin</option>
                                 </select>
+                            </div>
+                        </div>
+    
+                        <div class="form-row col-6 therapistOptions">
+                            <div class="form-group">
+                                <label for="yearsExperience">Years Of Experience</label>
+                                <input type="number" class="form-control" name="yearsExperience" id="editYearsExperience" placeholder="5"
+                                    value="5" min="1" step="1" required="required">
+                            </div>
+                        </div>
+    
+                        <div class="form-row col-6 therapistOptions">
+                            <div class="form-group">
+                                <label for="sessionCost">Session Cost</label>
+                                <input type="number" class="form-control" name="sessionCost" id="editSessionCost" placeholder="90"
+                                    value="90" min="0.01" step="0.01" required="required">
                             </div>
                         </div>
 
@@ -288,7 +320,7 @@
         <div id="dashboardToolbar">
             <p>Results Found: <span id="resultsFound">12 Users</span></p>
             <form id="searchForm">
-                <input type="text" id="searchbar" onkeyup="searchTable()" placeholder="Search..." />
+                <input type="text" id="searchbar" onkeypress="return event.keyCode != 13;" onkeyup="searchTable()" placeholder="Search..." />
             </form>
             <button id="createUser">Create User</button>
         </div>

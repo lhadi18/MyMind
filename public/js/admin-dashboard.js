@@ -11,7 +11,7 @@ $(document).ready(async function () {
                 x += `<td>${userData.username}</td>`
                 x += `<td>${userData.email}</td>`
                 x += `<td>${userData.phoneNum}</td>`
-                x += `<td>${userData.userType}</td>`
+                x += `<td>${userData.userType.charAt(0).toUpperCase() + userData.userType.substring(1)}</td>`
                 x += `<td>`
                 x += `<div class="dashSettings inactive">`
                 x += `<i class="bi bi-gear-fill"></i>`
@@ -24,7 +24,6 @@ $(document).ready(async function () {
             });
         }
     });
-
 
     // Set the caret icons faced down by default
     document.getElementById('0').setAttribute("class", "bi bi-caret-down-fill");
@@ -51,9 +50,9 @@ $(document).ready(async function () {
             if (phoneLength.length != 10) {
                 document.getElementById("createUserErrorMessage").innerHTML = "The phone number must be of length 10";
             } else if (!isEmail($("#email").val())) {
-                document.getElementById("createUserErrorMessage").innerHTML = "Please follow this email pattern: example@gmail.com";
-            } else if (inputValidationCreate) {
-                document.getElementById("createUserErrorMessage").innerHTML = "There are empty fields.";
+                document.getElementById("createUserErrorMessage").innerHTML = "Please follow this email pattern: example@email.com";
+            } else if (inputValidationCreate()) {
+                document.getElementById("createUserErrorMessage").innerHTML = "There are empty fields";
             } else {
                 $.ajax({
                     url: '/sign-up',
@@ -150,9 +149,9 @@ $(document).ready(async function () {
                     document.getElementById("editUserErrorMessage").innerHTML = "The phone number must be of length 10";
                 } else if (!isEmail($("#editEmail").val())) {
                     document.getElementById("editUserErrorMessage").innerHTML = "Please follow this email pattern: example@gmail.com";
-                } else if (inputValidationEdit) {
+                } else if (inputValidationEdit()) {
                     document.getElementById("editUserErrorMessage").innerHTML = "There are empty fields.";
-                }else {
+                } else {
                     $.ajax({
                         url: '/editUser',
                         type: 'PUT',
@@ -365,4 +364,26 @@ function showTherapyOptions(selectObject) {
 function isEmail(email) {
     var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
     return regex.test(email);
+}
+
+// Trigger click function for enter key for all input fields for create form
+const inputCreate = document.querySelectorAll("#createUserForm .form-control");
+for (var i = 0; i < inputCreate.length; i++) {
+    inputCreate[i].addEventListener("keypress", function (e) {
+        if (e.key === "Enter") {
+            e.preventDefault();
+            document.getElementById("createUserBtn").click();
+        }
+    });
+}
+
+// Trigger click function for enter key for all input fields for create form
+const inputEdit = document.querySelectorAll("#editUserForm .form-control");
+for (var i = 0; i < inputEdit.length; i++) {
+    inputEdit[i].addEventListener("keypress", function (e) {
+        if (e.key === "Enter") {
+            e.preventDefault();
+            document.getElementById("editUserBtn").click();
+        }
+    });
 }

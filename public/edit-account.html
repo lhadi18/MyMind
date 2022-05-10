@@ -120,7 +120,7 @@
                     </div>
                 </div>
             </div>
-            <button id="saveChanges">Save</button>
+            <button type="button" id="saveChanges">Save</button>
         </form>
 
         <div id="profileDetailsMob">
@@ -128,16 +128,16 @@
                 <div class="form-row">
                     <div class="form-group">
                         <label>First Name</label>
-                        <input type="text" class="form-control" name="firstname" id="firstname"
-                            placeholder="First Name" value="Towa" required="required" onkeydown="return /[a-z]/i.test(event.key)">
+                        <input type="text" class="form-control" name="firstname" id="firstname" 
+                            placeholder="First Name" required="required" onkeydown="return /[a-z]/i.test(event.key)">
                     </div>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group">
                         <label>Last Name</label>
-                        <input type="text" class="form-control" name="lastname" id="lastname"
-                            placeholder="Last Name" value="Quimbayo" required="required" onkeydown="return /[a-z]/i.test(event.key)">
+                        <input type="text" class="form-control" name="lastname" id="lastname" 
+                            placeholder="Last Name" required="required" onkeydown="return /[a-z]/i.test(event.key)">
                     </div>
                 </div>
 
@@ -179,6 +179,7 @@
                         </div>
                     </div>
                 </div>
+                <p id="validationErrorMessage">&nbsp;</p>
             </form>
         </div>
     </div>

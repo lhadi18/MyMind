@@ -204,3 +204,13 @@
     align-self: center;
     margin-right: 1.5rem;
 }
+
+#usernameErrorMessage, #emailErrorMessage, #phoneErrorMessage, #validationErrorMessage {
+    display: none;
+    font-family: 'Nunito', sans-serif;
+    color: red;
+    font-size: 1rem;
+    padding-top: 1rem;
+    text-align: center;
+    width: 100%;
+}

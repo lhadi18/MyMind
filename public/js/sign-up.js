@@ -3,9 +3,10 @@ $('#signupBtn').click(() => {
     if (phoneLength.length != 10) {
         document.getElementById("signUpErrorMessage").innerHTML = "Your phone number must be of length 10";
     } else if (!isEmail($("#email").val())) {
-        document.getElementById("signUpErrorMessage").innerHTML = "Please follow this email pattern: example@gmail.com";
-    } else if(inputValidation()) { 
-        document.getElementById("signUpErrorMessage").innerHTML = "There are empty fields.";
+        document.getElementById("signUpErrorMessage").innerHTML = "Please follow this email pattern: example@email.com";
+    } else if (inputValidation()) {
+        window.scrollTo(0, document.body.scrollHeight);
+        document.getElementById("signUpErrorMessage").innerHTML = "There are empty fields";
     } else {
         $.ajax({
             url: '/sign-up',
@@ -63,4 +64,15 @@ function showTherapyOptions(selectObject) {
             therapyFieldOptions[i].style.display = 'none';
         }
     }
+}
+
+// Trigger click function for enter key for all input fields
+const input = document.querySelectorAll(".form-control");
+for (var i = 0; i < input.length; i++) {
+    input[i].addEventListener("keypress", function (e) {
+        if (e.key === "Enter") {
+            e.preventDefault();
+            document.getElementById("signupBtn").click();
+        }
+    });
 }
