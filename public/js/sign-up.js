@@ -6,6 +6,8 @@ $('#signupBtn').click(() => {
         document.getElementById("signUpErrorMessage").innerHTML = "Please follow this email pattern: example@gmail.com";
     } else if(inputValidation()) { 
         document.getElementById("signUpErrorMessage").innerHTML = "There are empty fields.";
+    } else if(passwordValidation){
+        document.getElementById("signUpErrorMessage").innerHTML = "Password must be at least 5 or less than 20 characters long";
     } else {
         $.ajax({
             url: '/sign-up',
@@ -46,6 +48,13 @@ function inputValidation() {
     const inpObjLastName = document.getElementById("lastname");
     const inpObjUsername = document.getElementById("username");
     if (!inpObjFirstName.checkValidity() || !inpObjLastName.checkValidity() || !inpObjUsername.checkValidity()) {
+        return true;
+    }
+}
+
+function passwordValidation() {
+    const inpObjPassword = document.getElementById("password");
+    if (!inpObjPassword.checkValidity()) {
         return true;
     }
 }
