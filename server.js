@@ -5,12 +5,16 @@ const User = require("./models/BBY_31_users");
 const mongoose = require("mongoose");
 const multer = require("multer");
 const bcrypt = require('bcrypt');
-const port = 8000;
+const port = process.env.port || 8000;
 const app = express();
 app.set('view engine', 'text/html');
 
-const uri = "mongodb+srv://DBUser:Admin123@cluster0.z9j9r.mongodb.net/BBY-31?retryWrites=true&w=majority";
-mongoose.connect(uri, {
+if(process.env.NODE_ENV != 'production') {
+    require('dotenv').config()
+}
+
+// const uri = "mongodb+srv://DBUser:Admin123@cluster0.z9j9r.mongodb.net/BBY-31?retryWrites=true&w=majority";
+mongoose.connect(process.env.DATABASE_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 })
