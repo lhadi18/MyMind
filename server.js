@@ -112,6 +112,10 @@ app.get('/therapists', function (req, res) {
     res.sendFile(path.resolve('public/therapists.html'));
 });
 
+app.get('/checkout', function (req, res) {
+    res.sendFile(path.resolve('public/checkout.html'));
+});
+
 app.get("/login", isLoggedOut, setHeaders, (req, res) => {
     res.sendFile(path.resolve('public/login.html'));
 });

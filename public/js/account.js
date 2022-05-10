@@ -13,7 +13,6 @@ profileFile.addEventListener('change', function () {
         reader.addEventListener('load', function () {
             profileImgBtn.setAttribute('src', reader.result);
         });
-
         reader.readAsDataURL(choosedFile);
     }
 });
