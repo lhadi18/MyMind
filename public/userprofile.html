@@ -179,7 +179,7 @@
                 <div class="form-row col-6">
                     <div class="form-group">
                         <label>Phone</label>
-                        <input type="tel" class="form-control" name="phone" id="phone" placeholder="ex. 6041231234" required="required">
+                        <input type="tel" class="form-control" name="phone" id="phone" placeholder="ex. 6041231234" required="required" onkeyup="this.value=this.value.replace(/[^\d]/,'')">
                         <p id="phoneErrorMessage">&nbsp;</p>
                     </div>
                 </div>
@@ -203,6 +203,7 @@
                         </div>
                     </div>
                 </div>
+                <p id="validationErrorMessage">&nbsp;</p>
             </form>
         </div>
 

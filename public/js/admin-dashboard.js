@@ -3,7 +3,7 @@ $(document).ready(async function () {
     await $.ajax({
         url: '/getAllUsersData',
         type: "GET",
-        success: function(data) {
+        success: function (data) {
             data.forEach(userData => {
                 var x = `<tr class="tableRows" id="${userData._id}">`;
                 x += `<td>${userData.firstName}</td>`;
@@ -47,31 +47,49 @@ $(document).ready(async function () {
         document.body.style.overflow = 'hidden';
         $('#createUserBtn').off();
         $('#createUserBtn').click(() => {
-            $.ajax({
-                url: '/sign-up',
-                type: 'POST',
-                data: {
-                    firstname: $("#firstname").val(),
-                    lastname: $("#lastname").val(),
-                    username: $("#username").val(),
-                    phone: $("#phone").val(),
-                    email: $("#email").val(),
-                    userType: $("#userType").val(),
-                    password: $("#password").val(),
-                }, success: function (data) {
-                    if (data == "existingEmail") {
-                        document.getElementById("createUserErrorMessage").innerHTML = "A user with that email already exists";
-                    } else if (data == "existingPhone") {
-                        document.getElementById("createUserErrorMessage").innerHTML = "A user with that phone number already exists";
-                    } else if (data == "existingUsername") {
-                        document.getElementById("createUserErrorMessage").innerHTML = "A user with that username already exists";
-                    } else {
-                        alert('User successfully created.')
-                        location.reload();
+            var phoneLength = $("#phone").val();
+            if (phoneLength.length != 10) {
+                document.getElementById("createUserErrorMessage").innerHTML = "The phone number must be of length 10";
+            } else if (!isEmail($("#email").val())) {
+                document.getElementById("createUserErrorMessage").innerHTML = "Please follow this email pattern: example@gmail.com";
+            } else if (inputValidationCreate) {
+                document.getElementById("createUserErrorMessage").innerHTML = "There are empty fields.";
+            } else {
+                $.ajax({
+                    url: '/sign-up',
+                    type: 'POST',
+                    data: {
+                        firstname: $("#firstname").val().charAt(0).toUpperCase() + $("#firstname").val().substring(1),
+                        lastname: $("#lastname").val().charAt(0).toUpperCase() + $("#lastname").val().substring(1),
+                        username: $("#username").val().toLowerCase(),
+                        phone: $("#phone").val(),
+                        email: $("#email").val(),
+                        userType: $("#userType").val(),
+                        password: $("#password").val(),
+                    }, success: function (data) {
+                        if (data == "existingEmail") {
+                            document.getElementById("createUserErrorMessage").innerHTML = "A user with that email already exists";
+                        } else if (data == "existingPhone") {
+                            document.getElementById("createUserErrorMessage").innerHTML = "A user with that phone number already exists";
+                        } else if (data == "existingUsername") {
+                            document.getElementById("createUserErrorMessage").innerHTML = "A user with that username already exists";
+                        } else {
+                            alert('User successfully created.')
+                            location.reload();
+                        }
                     }
-                }
-            })
+                })
+            }
         });
+    }
+
+    function inputValidationCreate() {
+        const inpObjFirstName = document.getElementById("firstname");
+        const inpObjLastName = document.getElementById("lastname");
+        const inpObjUsername = document.getElementById("username");
+        if (!inpObjFirstName.checkValidity() || !inpObjLastName.checkValidity() || !inpObjUsername.checkValidity()) {
+            return true;
+        }
     }
 
     // Get all classnames to check which row was clicked to delete user
@@ -93,10 +111,10 @@ $(document).ready(async function () {
                 $.ajax({
                     url: '/deleteUser',
                     type: 'DELETE',
-                    data:{
+                    data: {
                         id: currentRow.id
                     },
-                    success: function(){
+                    success: function () {
                         alert('User successfuly deleted.')
                         currentRow.remove();
                         deleteUserModal.style.display = "none";
@@ -127,39 +145,56 @@ $(document).ready(async function () {
 
             $('#editUserBtn').off();
             $('#editUserBtn').click(() => {
-                console.log("button clicked")
-                $.ajax({
-                    url: '/editUser',
-                    type: 'PUT',
-                    data: {
-                        id: currentRow.id,
-                        firstname: $("#editFirstname").val(),
-                        lastname: $("#editLastname").val(),
-                        username: $("#editUsername").val(),
-                        email: $("#editEmail").val(),
-                        phone: $("#editPhone").val(),
-                        userType: $("#editUserType").val(),
-                        password: $("#editPassword").val()
-                    }, 
-                    success: function (data) {
-                        if(data == "existingEmail") {
-                            $("#editUserErrorMessage").html("A user with that email already exists");
-                        } else if (data == "existingPhone") {
-                            $("#editUserErrorMessage").html("A user with that phone number already exists");
-                        } else if (data == "existingUsername") {
-                            $("#editUserErrorMessage").html("A user with that username already exists");
-                        } else if(data == "updatedWithPassword") {
-                            $("#editUserErrorMessage").html("");
-                            alert('User successfully updated.')
-                            location.reload();
-                        } else {
-                            $("#editUserErrorMessage").html("");
-                            alert('User successfully updated. Except password.')
-                            location.reload();
+                var phoneLength = $("#editPhone").val();
+                if (phoneLength.length != 10) {
+                    document.getElementById("editUserErrorMessage").innerHTML = "The phone number must be of length 10";
+                } else if (!isEmail($("#editEmail").val())) {
+                    document.getElementById("editUserErrorMessage").innerHTML = "Please follow this email pattern: example@gmail.com";
+                } else if (inputValidationEdit) {
+                    document.getElementById("editUserErrorMessage").innerHTML = "There are empty fields.";
+                }else {
+                    $.ajax({
+                        url: '/editUser',
+                        type: 'PUT',
+                        data: {
+                            id: currentRow.id,
+                            firstname: $("#editFirstname").val().charAt(0).toUpperCase() + $("#editFirstname").val().substring(1),
+                            lastname: $("#editLastname").val().charAt(0).toUpperCase() + $("#editLastname").val().substring(1),
+                            username: $("#editUsername").val().toLowerCase(),
+                            email: $("#editEmail").val(),
+                            phone: $("#editPhone").val(),
+                            userType: $("#editUserType").val(),
+                            password: $("#editPassword").val()
+                        },
+                        success: function (data) {
+                            if (data == "existingEmail") {
+                                $("#editUserErrorMessage").html("A user with that email already exists");
+                            } else if (data == "existingPhone") {
+                                $("#editUserErrorMessage").html("A user with that phone number already exists");
+                            } else if (data == "existingUsername") {
+                                $("#editUserErrorMessage").html("A user with that username already exists");
+                            } else if (data == "updatedWithPassword") {
+                                $("#editUserErrorMessage").html("");
+                                alert('User successfully updated.')
+                                location.reload();
+                            } else {
+                                $("#editUserErrorMessage").html("");
+                                alert('User successfully updated. Except password.')
+                                location.reload();
+                            }
                         }
-                    }
-                })
+                    })
+                }
             });
+        }
+    }
+
+    function inputValidationEdit() {
+        const inpObjFirstName = document.getElementById("editFirstname");
+        const inpObjLastName = document.getElementById("editLastname");
+        const inpObjUsername = document.getElementById("editUsername");
+        if (!inpObjFirstName.checkValidity() || !inpObjLastName.checkValidity() || !inpObjUsername.checkValidity()) {
+            return true;
         }
     }
 
@@ -310,69 +345,11 @@ function sortTable() {
             sortColumn(index);
         });
     });
-
-    // $('#createUserBtn').click(() => {
-    //     $.ajax({
-    //         url: '/sign-up',
-    //         type: 'POST',
-    //         data: {
-    //             firstname: $("#firstname").val(),
-    //             lastname: $("#lastname").val(),
-    //             username: $("#username").val(),
-    //             phone: $("#phone").val(),
-    //             email: $("#email").val(),
-    //             userType: $("#userType").val(),
-    //             password: $("#password").val(),
-    //         }, success: function (data) {
-    //             if (data == "existingEmail") {
-    //                 document.getElementById("createUserErrorMessage").innerHTML = "A user with that email already exists";
-    //             } else if (data == "existingPhone") {
-    //                 document.getElementById("createUserErrorMessage").innerHTML = "A user with that phone number already exists";
-    //             } else if (data == "existingUsername") {
-    //                 document.getElementById("createUserErrorMessage").innerHTML = "A user with that username already exists";
-    //             } else {
-    //                 alert('User successfully created.')
-    //             }
-    //         }
-    //     })
-    // });
-
-
-    // $('#editUserBtn').click(() => {
-    //     $.ajax({
-    //         url: '/editUser',
-    //         type: 'PUT',
-    //         data: {
-    //             id: "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!",
-    //             firstname: $("#firstname").val(),
-    //             lastname: $("#lastname").val(),
-    //             email: $("#email").val(),
-    //             username: $("#username").val(),
-    //             phone: $("#phone").val(),
-    //             password: $("#password").val(),
-    //         }, 
-    //         success: function (data) {
-    //             console.log(data);
-    //             if(data == "existingEmail") {
-    //                 $("#emailErrorMessage").html("A user with that email already exists");
-    //             } else if (data == "existingPhone") {
-    //                 $("#phoneErrorMessage").html("A user with that phone number already exists");
-    //                 $("#emailErrorMessage").html("");
-    //             } else if (data == "existingUsername") {
-    //                 $("#usernameErrorMessage").html("A user with that username already exists");
-    //                 $("#emailErrorMessage").html("");
-    //                 $("#phoneErrorMessage").html("");
-    //             } else {
-    //                 alert('User successfully updated. Except password.')
-    //             }
-    //         }
-    //     })
-    // });
 }
 
 // Display therapy field options if usertype is a therapist
 function showTherapyOptions(selectObject) {
-    const value = selectObject.value;  
+    const value = selectObject.value;
     const therapyFieldOptions = document.querySelectorAll('.therapistOptions');
     if (value == 'therapist') {
         for (var i = 0; i < therapyFieldOptions.length; i++) {
@@ -383,4 +360,9 @@ function showTherapyOptions(selectObject) {
             therapyFieldOptions[i].style.display = 'none';
         }
     }
+}
+
+function isEmail(email) {
+    var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    return regex.test(email);
 }

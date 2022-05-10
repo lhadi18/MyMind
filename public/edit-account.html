@@ -129,7 +129,7 @@
                     <div class="form-group">
                         <label>First Name</label>
                         <input type="text" class="form-control" name="firstname" id="firstname"
-                            placeholder="First Name" value="Towa" required="required">
+                            placeholder="First Name" value="Towa" required="required" onkeydown="return /[a-z]/i.test(event.key)">
                     </div>
                 </div>
 
@@ -137,7 +137,7 @@
                     <div class="form-group">
                         <label>Last Name</label>
                         <input type="text" class="form-control" name="lastname" id="lastname"
-                            placeholder="Last Name" value="Quimbayo" required="required">
+                            placeholder="Last Name" value="Quimbayo" required="required" onkeydown="return /[a-z]/i.test(event.key)">
                     </div>
                 </div>
 
@@ -154,7 +154,7 @@
                     <div class="form-group">
                         <label>Phone</label>
                         <input type="tel" class="form-control" name="phone" id="phone" placeholder="phone"
-                            value="7785555555" required="required">
+                            value="7785555555" required="required" onkeyup="this.value=this.value.replace(/[^\d]/,'')">
                         <p id="phoneErrorMessage">&nbsp;</p>
                     </div>
                 </div>
