@@ -124,43 +124,60 @@
                 <h2>Order: <span id="orderNumber">MM0509123456</span></h2>
                 <button id="printInvoice" onclick="window.print();">Print Invoice</button>
             </div>
-            <table id="orderTable">
-                <thead>
-                    <tr>
-                        <th>Order Review</th>
-                        <th>Quantity</th>
-                        <th>Package Plan</th>
-                        <th>Cost</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>
-                            <div id="cartImg">
-                                <img src="./images/therapist1.jpg" alt="Therapist Image">
-                            </div>
-                            <div id="cartDesc">
-                                <h4 id="therapistName">Towa Quimbayo</h4>
-                                <p id="therapistDesc">15+ years of experience in the profession, and offers $90 per session</p>
-                            </div>
-                        </td>
-                        <td>
-                            <input type="number" name="cartQuantity" id="cartQuantity" value="1" step="1" min="1" />
-                        </td>
-                        <td>
-                            <select name="cartPlan" id="cartPlan">
-                                <option value="trialPlan">Trial (Free)</option>
-                                <option value="monthPlan">1 Month</option>
-                                <option value="threeMonthPlan">3 Months</option>
-                                <option value="yearPlan">1 Year</option>
-                            </select>
-                        </td>
-                        <td>
-                            <input type="number">
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+
+            <div id="orderTable">
+                <div id="tableHeader">
+                    <h3>Order Review</h3>
+                    <h3>Quantity</h3>
+                    <h3>Package Plan</h3>
+                    <h3>Cost</h3>
+                </div>
+                <div id="tableBody">
+                    <div id="orderReview">
+                        <div id="cartImg">
+                            <img src="./images/therapist1.jpg" alt="Therapist Image">
+                        </div>
+                        <div id="cartDesc">
+                            <h4 id="therapistName">Towa Quimbayo</h4>
+                            <p id="therapistDesc">15+ years of experience in the profession, and offers $90 per session</p>
+                            <button id="removeItem">Remove</button>
+                        </div>
+                    </div>
+                    <div id="quantitySec">
+                        <input type="number" id="cartQuantity" value="1" step="1" min="1" />
+                    </div>
+                    <div id="cartPlanSec">
+                        <select id="cartPlan">
+                            <option value="trialPlan">Trial (Free)</option>
+                            <option value="monthPlan">1 Month</option>
+                            <option value="threeMonthPlan">3 Months</option>
+                            <option value="yearPlan">1 Year</option>
+                        </select>
+                    </div>
+                    <div id="cartCostSec">
+                        <p>$<span id="cartCost">90.00</span></p>
+                    </div>
+                </div>
+            </div>
+
+            <hr/>
+
+            <div id="cartTotalSec">
+                <div id="subTotalSec">
+                    <p>Subtotal: </p>
+                    <span id="subTotal">$90.00</span>
+                </div>
+                <div id="taxSec">
+                    <p>Tax: </p>
+                    <span id="taxTotal">$5.00</span>
+                </div>
+                <div id="totalSec">
+                    <p>Total: </p>
+                    <span id="total">$95.00</span>
+                </div>
+            </div>
+
+            <button id="confirmOrder">Confirm Order</button>
         </div>
 
         <div id="footerPlaceHolder"></div>

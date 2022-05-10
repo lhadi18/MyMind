@@ -69,6 +69,7 @@
     }
     #wrapper #bannerHome {
         grid-row: 1 / span 1;
+        background-attachment: scroll;
         height: 100vh;
     }
     #wrapper #bannerHome #overlay {
@@ -647,6 +648,7 @@
     }
     #wrapper #bannerHome {
         grid-row: 1 / span 1;
+        background-attachment: scroll;
         height: 100vh;
     }
     #wrapper #bannerHome #overlay {
@@ -1185,6 +1187,7 @@
     }
     #wrapper #bannerHome {
         grid-row: 1 / span 1;
+        background-attachment: scroll;
         height: 100vh;
     }
     #wrapper #bannerHome #overlay {
