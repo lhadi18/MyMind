@@ -45,6 +45,7 @@ $(document).ready(async function () {
     document.getElementById('createUser').onclick = function () {
         createUserModal.style.display = "block";
         document.body.style.overflow = 'hidden';
+        showTherapyOptions($("#userType"));
         $('#createUserBtn').off();
         $('#createUserBtn').click(() => {
             var phoneLength = $("#phone").val();
@@ -157,7 +158,7 @@ $(document).ready(async function () {
             document.getElementById('editPhone').value = currentRow.children[4].innerHTML;
             document.getElementById("editUserType").value = currentRow.children[5].innerHTML.toLowerCase();
             document.getElementById("editPassword").value = "";
-
+            showTherapyOptions($("#editUserType"));
             $('#editUserBtn').off();
             $('#editUserBtn').click(() => {
                 var phoneLength = $("#editPhone").val();
@@ -378,7 +379,7 @@ function sortTable() {
 
 // Display therapy field options if usertype is a therapist
 function showTherapyOptions(selectObject) {
-    const value = selectObject.value;
+    const value = $(selectObject).find(':selected').attr('value');
     const therapyFieldOptions = document.querySelectorAll('.therapistOptions');
     if (value == 'therapist') {
         for (var i = 0; i < therapyFieldOptions.length; i++) {
