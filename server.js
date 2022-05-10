@@ -7,11 +7,18 @@ const multer = require("multer");
 const bcrypt = require('bcrypt');
 const port = 8000;
 const app = express();
-const io = require("socket.io")(3000, {
-    cors: {
-        origin: ['http://localhost:8000']
-    }
-});
+const http = require('http');
+const server = http.createServer(app);
+const { Server } = require("socket.io");
+const io = new Server(server);
+
+io.on('connection', (socket) => {
+    socket.on('chat message', msg => {
+      io.emit('chat message', msg);
+    });
+
+    console.log('Chat is connected.')
+  });
 
 app.set('view engine', 'text/html');
 
@@ -77,10 +84,6 @@ var profileStorage = multer.diskStorage({
 })
 
 var profileUpload = multer({ storage: profileStorage })
-
-io.on('connection', socket => {
-  console.log(socket.id);
-});
 
 app.post('/uploadProfile', profileUpload.single('profileFile'), (req, res) => {
     if (req.file) {
@@ -446,6 +449,7 @@ async function updateUserWithPassword(req, res) {
         })
 }
 
-app.listen(port, () => {
-    console.log(`Example app  listening on port ${port}`)
-})
+server.listen(8000, () => {
+    console.log('listening on port:8000');
+});
+
