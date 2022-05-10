@@ -5,7 +5,7 @@ const User = require("./models/BBY_31_users");
 const mongoose = require("mongoose");
 const multer = require("multer");
 const bcrypt = require('bcrypt');
-const port = process.env.port || 8000;
+const port = process.env.PORT|| 8000;
 const app = express();
 app.set('view engine', 'text/html');
 
