@@ -620,11 +620,14 @@
     #wrapper #bannerCheckout #overlay #checkoutHeader h2 {
         font-size: 2.5rem;
     }
+    #wrapper #noOrderSummary {
+        padding: 7rem 3rem 7rem;
+    }
+    #wrapper #noOrderSummary #noOrderMessage {
+        font-size: 1rem;
+    }
     #wrapper #orderSummary {
         padding: 7rem 2rem 7rem;
-    }
-    #wrapper #orderSummary #noOrderMessage {
-        font-size: 1rem;
     }
     #wrapper #orderSummary #orderNumSec {
         padding-bottom: 3rem;
@@ -1331,11 +1334,14 @@
     #wrapper #bannerCheckout #overlay #checkoutHeader h2 {
         font-size: 2.5rem;
     }
-    #wrapper #orderSummary {
+    #wrapper #noOrderSummary {
         padding: 7rem 3rem 7rem;
     }
-    #wrapper #orderSummary #noOrderMessage {
+    #wrapper #noOrderSummary #noOrderMessage {
         font-size: 1rem;
+    }
+    #wrapper #orderSummary {
+        padding: 7rem 3rem 7rem;
     }
     #wrapper #orderSummary #orderNumSec {
         padding-bottom: 3rem;
@@ -1911,6 +1917,9 @@
     #wrapper #bannerCheckout #overlay #checkoutHeader {
         padding: 5rem;
     }
+    #wrapper #noOrderSummary {
+        padding: 7rem 5rem 7rem;
+    }
     #wrapper #orderSummary {
         padding: 7rem 5rem 7rem;
     }
@@ -2191,6 +2200,9 @@
     }
     #wrapper #bannerCheckout #overlay #checkoutHeader {
         padding: 5rem;
+    }
+    #wrapper #noOrderSummary {
+        padding: 10rem 5rem 5rem;
     }
     #wrapper #orderSummary {
         padding: 10rem 5rem 5rem;
