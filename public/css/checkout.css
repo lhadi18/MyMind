@@ -1,0 +1,413 @@
+:root {
+    --primaryColor: #09C5A3;
+    --secondaryColor: #00A98B;
+}
+
+/* Checkout Page */
+#wrapper #bannerCheckout {
+    grid-column: 1 / span 4;
+    grid-row: 2 / span 1;
+    width: 100%;
+    height: 40vh;
+    background: url('../images/checkout.jpg');
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -ms-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    -webkit-background-repeat: no-repeat;
+    -moz-background-repeat: no-repeat;
+    -ms-background-repeat: no-repeat;
+    -o-background-repeat: no-repeat;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+}
+
+#wrapper #bannerCheckout #overlay {
+    position: relative;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    width: 100%;
+    height: 40vh;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+#wrapper #bannerCheckout #overlay #checkoutHeader {
+    padding: 5rem 7rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+}
+
+#wrapper #bannerCheckout #overlay #checkoutHeader h2 {
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: white;
+}
+
+#wrapper #orderSummary {
+    grid-column: 1 / span 4;
+    grid-row: 3 / span 1;
+    padding: 10rem 7rem 5rem;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+#wrapper #orderSummary #noOrderMessage {
+    display: none;
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: black;
+}
+
+#wrapper #orderSummary #noOrderMessage a {
+    font-weight: 700;
+    color: var(--primaryColor);
+    text-decoration: none;
+    border-bottom: 2px solid var(--primaryColor);
+    -webkit-transition: all ease-in-out 0.3s;
+    -moz-transition: all ease-in-out 0.3s;
+    -ms-transition: all ease-in-out 0.3s;
+    -o-transition: all ease-in-out 0.3s;
+    transition: all ease-in-out 0.3s;
+}
+
+#wrapper #orderSummary #noOrderMessage a:hover {
+    color: var(--secondaryColor);
+    border-bottom: 2px solid var(--secondaryColor);
+}
+
+#wrapper #orderSummary #orderNumSec {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    padding-bottom: 5rem;
+}
+
+#wrapper #orderSummary #orderNumSec h2 {
+    font-size: 1.7rem;
+    font-weight: 700;
+    color: black;
+}
+
+#wrapper #orderSummary #orderNumSec h2 #orderNumber {
+    font-weight: 500;
+    color: #858585;
+    padding-right: 3rem;
+    padding-left: 1rem;
+}
+
+#wrapper #orderSummary #orderNumSec #printInvoice {
+    font-family: 'Nunito', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    padding: 14px 45px;
+    margin: 0;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    cursor: pointer;
+    background-color: var(--primaryColor);
+    border: solid var(--primaryColor) 2px;
+    border-radius: 500px;
+    -webkit-transition: all ease-in-out 0.3s;
+    -moz-transition: all ease-in-out 0.3s;
+    -ms-transition: all ease-in-out 0.3s;
+    -o-transition: all ease-in-out 0.3s;
+    transition: all ease-in-out 0.3s;
+}
+
+#wrapper #orderSummary #orderNumSec #printInvoice:hover {
+    border: 2px solid var(--secondaryColor);
+    background-color: var(--secondaryColor);
+}
+
+#wrapper #orderSummary #orderTable {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+#wrapper #orderSummary #orderTable #tableHeader {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 1.5rem 1.5rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+#wrapper #orderSummary #orderTable #tableHeader h3 {
+    color: black;
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-align: left;
+    text-align: right;
+}
+
+#wrapper #orderSummary #orderTable #tableHeader h3:nth-child(1) {
+    text-align: left;
+    width: 60%;
+}
+
+#wrapper #orderSummary #orderTable #tableHeader h3:nth-child(2) {
+    width: 10%;
+}
+
+#wrapper #orderSummary #orderTable #tableHeader h3:nth-child(3) {
+    width: 20%;
+}
+
+#wrapper #orderSummary #orderTable #tableHeader h3:nth-child(4) {
+    width: 10%;
+}
+
+#wrapper #orderSummary #orderTable #tableBody {
+    display: flex;
+    justify-content: space-between;
+    padding: 5rem 1.5rem;
+}
+
+#wrapper #orderSummary #orderTable #tableBody #orderReview {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 60%;
+}
+
+#wrapper #orderSummary #orderTable #tableBody #orderReview #cartImg {
+    width: 40%;
+    height: 100%;
+}
+
+#wrapper #orderSummary #orderTable #tableBody #orderReview #cartDesc {
+    width: 60%;
+    height: 100%;
+    padding: 1rem;
+}
+
+#wrapper #orderSummary #orderTable #tableBody #orderReview #cartDesc {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#wrapper #orderSummary #orderTable #tableBody #orderReview #cartDesc h4 {
+    color: black;
+    font-size: 1.2rem;
+    font-weight: 700;
+    padding-bottom: 1rem;
+}
+
+#wrapper #orderSummary #orderTable #tableBody #orderReview #cartDesc p {
+    color: black;
+    font-size: 1rem;
+    font-weight: 500;
+    padding-bottom: 1.5rem;
+}
+
+#wrapper #orderSummary #orderTable #tableBody #orderReview #cartDesc #removeItem {
+    font-family: 'Nunito', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 12px 30px;
+    margin: 0;
+    width: 40%;
+    color: white;
+    cursor: pointer;
+    background-color: #DD1A00;
+    border: solid #DD1A00 2px;
+    border-radius: 500px;
+    -webkit-transition: all ease-in-out 0.3s;
+    -moz-transition: all ease-in-out 0.3s;
+    -ms-transition: all ease-in-out 0.3s;
+    -o-transition: all ease-in-out 0.3s;
+    transition: all ease-in-out 0.3s;
+}
+
+#wrapper #orderSummary #orderTable #tableBody #orderReview #cartDesc #removeItem:hover {
+    border: 2px solid #c41700;
+    background-color: #c41700;
+}
+
+#wrapper #orderSummary #orderTable #tableBody #orderReview #cartImg {
+    padding-right: 2rem;
+}
+
+#wrapper #orderSummary #orderTable #tableBody #orderReview #cartImg img {
+    border-radius: 15px;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+    box-shadow: 0px 0px 36px -5px rgba(0, 0, 0, 0.2);
+}
+
+#wrapper #orderSummary #orderTable #tableBody #quantitySec {
+    text-align: right;
+    align-self: center;
+    width: 10%;
+}
+
+#wrapper #orderSummary #orderTable #tableBody #quantitySec p {
+    display: none;
+    font-size: 1rem;
+    font-weight: 700;
+    color: black;
+    padding-right: 1.5rem;
+}
+
+#wrapper #orderSummary #orderTable #tableBody #quantitySec input {
+    font-family: 'Nunito', sans-serif;
+    width: 80%;
+    font-size: 1rem;
+    font-weight: 500;
+    color: black;
+    text-align: right;
+    margin: 0;
+    padding: 1rem;
+    border: 1px solid #858585;
+    border-radius: 10px;
+    outline: none;
+}
+
+#wrapper #orderSummary #orderTable #tableBody #quantitySec input[type=number]::-webkit-inner-spin-button,
+#wrapper #orderSummary #orderTable #tableBody #quantitySec input[type=number]::-webkit-outer-spin-button {
+    margin-left: 1rem;
+    height: 2rem;
+    width: 2rem;
+}
+
+#wrapper #orderSummary #orderTable #tableBody #cartPlanSec {
+    text-align: right;
+    align-self: center;
+    width: 20%;
+}
+
+#wrapper #orderSummary #orderTable #tableBody #cartPlanSec p {
+    display: none;
+    font-size: 1rem;
+    font-weight: 700;
+    color: black;
+    padding-right: 1.5rem;
+}
+
+#wrapper #orderSummary #orderTable #tableBody #cartPlanSec #cartPlan {
+    background: url("data:image/svg+xml,<svg height='10px' width='10px' viewBox='0 0 16 16' fill='%23000000' xmlns='http://www.w3.org/2000/svg'><path d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/></svg>") no-repeat;
+    background-position: calc(100% - 2rem) center !important;
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    -ms-appearance: none !important;
+    -o-appearance: none !important;
+    appearance: none !important;
+    width: 80%;
+    text-align: center;
+    font-family: 'Nunito', sans-serif;
+    color: black;
+    opacity: 1;
+    font-size: 1rem;
+    padding: 1rem 0;
+    font-weight: 500;
+    border: 1px solid #858585;
+    outline: none;
+    border-radius: 10px;
+    transition: all ease-in-out 0.3s;
+}
+
+#wrapper #orderSummary #orderTable #tableBody #cartPlanSec #cartPlan option {
+    font-size: 1rem;
+    text-align: center;
+    padding: 0;
+    font-weight: 500;
+}
+
+#wrapper #orderSummary #orderTable #tableBody #cartCostSec {
+    text-align: right;
+    align-self: center;
+    width: 10%;
+}
+
+#wrapper #orderSummary #orderTable #tableBody #cartCostSec p:first-child {
+    display: none;
+    font-size: 1rem;
+    font-weight: 700;
+    text-align: right;
+    color: black;
+    padding-right: 1.5rem;
+}
+
+#wrapper #orderSummary #orderTable #tableBody #cartCostSec p:nth-child(2) {
+    color: black;
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+#wrapper #orderSummary hr {
+    color: rgba(0, 0, 0, 0.3);
+}
+
+#wrapper #orderSummary #cartTotalSec {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 5rem 0;
+}
+
+#wrapper #orderSummary #cartTotalSec #subTotalSec,
+#wrapper #orderSummary #cartTotalSec #taxSec,
+#wrapper #orderSummary #cartTotalSec #totalSec {
+    display: flex;
+    justify-content: end;
+    align-self: end;
+    width: 100%;
+    padding: 1rem 1.5rem;
+}
+
+#wrapper #orderSummary #cartTotalSec #subTotalSec p,
+#wrapper #orderSummary #cartTotalSec #taxSec p,
+#wrapper #orderSummary #cartTotalSec #totalSec p {
+    font-size: 1.1rem;
+    font-weight: 500;
+    padding-right: 3rem;
+    color: #858585;
+    text-align: right;
+}
+
+#wrapper #orderSummary #cartTotalSec #subTotalSec span,
+#wrapper #orderSummary #cartTotalSec #taxSec span,
+#wrapper #orderSummary #cartTotalSec #totalSec span {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: black;
+    width: 10%;
+    text-align: right;
+}
+
+#wrapper #orderSummary #confirmOrder {
+    text-align: center;
+    font-family: 'Nunito', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 500;
+    padding: 14px;
+    width: 100%;
+    color: white;
+    background-color: var(--primaryColor);
+    border: solid var(--primaryColor) 2px;
+    border-radius: 500px;
+    cursor: pointer;
+    -webkit-transition: all ease-in-out 0.3s;
+    -moz-transition: all ease-in-out 0.3s;
+    -ms-transition: all ease-in-out 0.3s;
+    -o-transition: all ease-in-out 0.3s;
+    transition: all ease-in-out 0.3s;
+}
+
+#wrapper #orderSummary #confirmOrder:hover {
+    border: 2px solid var(--secondaryColor);
+    background-color: var(--secondaryColor);
+}
