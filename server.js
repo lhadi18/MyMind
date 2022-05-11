@@ -469,6 +469,8 @@ app.put('/editUser', isLoggedIn, isAdmin, isNotExistingAdmin, isNotLastAdminEdit
                 "sessionCost": req.body.sessionCost
             })
             .then((obj) => {
+                if (req.session.user._id == req.body.id && req.body.userType != req.session.user.userType)
+                    req.session.destroy();
                 return res.send("updatedWithoutPassword");
             })
             .catch((err) => {
@@ -490,6 +492,8 @@ app.put('/editUser', isLoggedIn, isAdmin, isNotExistingAdmin, isNotLastAdminEdit
                 "userType": req.body.userType
             })
             .then((obj) => {
+                if (req.session.user._id == req.body.id && req.body.userType != req.session.user.userType)
+                    req.session.destroy();
                 return res.send("updatedWithoutPassword");
             })
             .catch((err) => {
@@ -515,6 +519,8 @@ async function updateUserWithPassword(req, res) {
                 "password": hashedPassword
             })
             .then((obj) => {
+                if (req.session.user._id == req.body.id && req.body.userType != req.session.user.userType)
+                    req.session.destroy();
                 return res.send("updatedWithPassword");
             })
             .catch((err) => {
@@ -537,6 +543,8 @@ async function updateUserWithPassword(req, res) {
                 "password": hashedPassword
             })
             .then((obj) => {
+                if (req.session.user._id == req.body.id && req.body.userType != req.session.user.userType)
+                    req.session.destroy();
                 return res.send("updatedWithPassword");
             })
             .catch((err) => {
