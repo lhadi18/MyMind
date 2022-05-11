@@ -61,7 +61,7 @@ $(document).ready(async function () {
                 document.getElementById("createUserErrorMessage").innerHTML = "Password must be at least 5 or less than 20 characters long";
             } else {
                 $.ajax({
-                    url: '/sign-up',
+                    url: '/createUser',
                     type: 'POST',
                     data: {
                         firstname: $("#firstname").val().charAt(0).toUpperCase() + $("#firstname").val().substring(1),

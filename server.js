@@ -555,6 +555,62 @@ async function updateUserWithPassword(req, res) {
     }
 }
 
+app.post("/createUser", isLoggedIn, isAdmin, isNotRegistered, async (req, res) => {
+    if (req.body.userType == "therapist") {
+        try {
+            const hashedPassword = await bcrypt.hash(req.body.password, 10);
+            const new_user = new User({
+                firstName: req.body.firstname,
+                lastName: req.body.lastname,
+                username: req.body.username,
+                phoneNum: req.body.phone,
+                userType: req.body.userType,
+                yearsExperience: req.body.yearsExperience,
+                sessionCost: req.body.sessionCost,
+                email: req.body.email,
+                password: hashedPassword
+            });
+
+            new_user.save()
+                .then((result) => {
+                    console.log(result);
+                    res.json("login");
+                });
+        } catch (err) {
+            console.log("Error while checking if user was already registered. ", err);
+            res.redirect('/sign-up');
+        }
+    } else {
+        try {
+            const hashedPassword = await bcrypt.hash(req.body.password, 10);
+            const new_user = new User({
+                firstName: req.body.firstname,
+                lastName: req.body.lastname,
+                username: req.body.username,
+                phoneNum: req.body.phone,
+                userType: req.body.userType,
+                email: req.body.email,
+                password: hashedPassword
+            });
+            const existsAdmin = await User.exists({
+                isAdmin: true
+            });
+            if (!existsAdmin) {
+                new_user.isAdmin = true
+            }
+
+            new_user.save()
+                .then((result) => {
+                    console.log(result);
+                    res.json("login");
+                });
+        } catch (err) {
+            console.log("Error while checking if user was already registered. ", err);
+            res.redirect('/sign-up');
+        }
+    }
+})
+
 app.listen(port, () => {
     console.log(`Example app  listening on port ${port}`)
 })
