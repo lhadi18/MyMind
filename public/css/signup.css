@@ -278,7 +278,7 @@
 }
 
 @-moz-keyframes animateModal {
- from {
+    from {
         background: rgba(0, 0, 0, 0);
         -webkit-backdrop-filter: blur(0);
         -moz-backdrop-filter: blur(0);
