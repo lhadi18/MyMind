@@ -595,6 +595,161 @@
         padding-top: 40%;
         padding-bottom: 0;
     }
+    #wrapper #bannerCheckout {
+        grid-row: 1 / span 1;
+        height: 30vh;
+        background-attachment: scroll;
+    }
+    #wrapper #bannerCheckout #overlay {
+        height: 30vh;
+    }
+    #wrapper #bannerCheckout #overlay #checkoutHeader {
+        padding: 3rem;
+    }
+    #wrapper #bannerCheckout #overlay #checkoutHeader h2 {
+        font-size: 2.5rem;
+    }
+    #wrapper #orderSummary {
+        padding: 7rem 2rem 7rem;
+    }
+    #wrapper #orderSummary #noOrderMessage {
+        font-size: 1rem;
+    }
+    #wrapper #orderSummary #orderNumSec {
+        padding-bottom: 3rem;
+        flex-direction: column;
+    }
+    #wrapper #orderSummary #orderNumSec h2 {
+        font-size: 1.2rem;
+        padding-bottom: 3rem;
+    }
+    #wrapper #orderSummary #orderNumSec h2 span {
+        padding-right: 0;
+    }
+    #wrapper #orderSummary #orderNumSec #printInvoice {
+        font-size: 1rem;
+        padding: 14px 0;
+        width: 100%;
+    }
+    #wrapper #orderSummary #orderTable #tableHeader {
+        padding: 1.5rem 1rem;
+    }
+    #wrapper #orderSummary #orderTable #tableHeader h3 {
+        font-size: 1.5rem;
+    }
+    #wrapper #orderSummary #orderTable #tableHeader h3:nth-child(1) {
+        width: 100%;
+    }
+    #wrapper #orderSummary #orderTable #tableHeader h3:nth-child(2),
+    #wrapper #orderSummary #orderTable #tableHeader h3:nth-child(3),
+    #wrapper #orderSummary #orderTable #tableHeader h3:nth-child(4) {
+        display: none;
+    }
+    #wrapper #orderSummary #orderTable #tableBody {
+        flex-wrap: wrap;
+        padding: 3rem 1rem;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #orderReview {
+        width: 100%;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        margin-bottom: 5rem;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #orderReview #cartDesc {
+        padding: 0;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #orderReview #cartDesc h4 {
+        font-size: 1.2rem;
+        padding-top: 2.5rem;
+        padding-bottom: 1rem;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #orderReview #cartDesc p {
+        font-size: 1rem;
+        padding-bottom: 1.5rem;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #orderReview #cartDesc #removeItem {
+        width: 100%;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #orderReview #cartImg {
+        width: 100%;
+        height: 200px;
+        padding-right: 0;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #orderReview #cartDesc {
+        width: 100%;
+        height: 100%;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #quantitySec {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        width: 100%;
+        margin-bottom: 2rem;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #quantitySec p {
+        display: block;
+        text-align: left;
+        font-size: 1rem;
+        width: 50%;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #quantitySec input {
+        width: 50%;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #quantitySec input[type=number]::-webkit-inner-spin-button,
+    #wrapper #orderSummary #orderTable #tableBody #quantitySec input[type=number]::-webkit-outer-spin-button {
+        height: 1rem;
+        width: 1rem;
+        padding: 6px 2px;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #cartPlanSec {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        width: 100%;
+        margin-bottom: 2rem;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #cartPlanSec p {
+        display: block;
+        text-align: left;
+        font-size: 1rem;
+        width: 50%;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #cartPlanSec #cartPlan {
+        background-position: calc(100% - 1rem) center !important;
+        width: 50%;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #cartCostSec {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        width: 100%;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #cartCostSec p:first-child {
+        display: block;
+        text-align: left;
+        padding-right: 0;
+        width: 50%;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #cartCostSec p:nth-child(2) {
+        width: 50%;
+        padding: 1rem 0;
+    }
+    #wrapper #orderSummary #cartTotalSec {
+        padding: 3rem 0;
+    }
+    #wrapper #orderSummary #cartTotalSec #subTotalSec p, 
+    #wrapper #orderSummary #cartTotalSec #taxSec p, 
+    #wrapper #orderSummary #cartTotalSec #totalSec p {
+        width: 50%;
+        padding-right: 1.5rem;
+    }
+    #wrapper #orderSummary #cartTotalSec #subTotalSec span, 
+    #wrapper #orderSummary #cartTotalSec #taxSec span, 
+    #wrapper #orderSummary #cartTotalSec #totalSec span {
+        width: 50%;
+        text-align: left;
+        padding-left: 1.5rem;
+    }
 }
 
 @media (min-width: 576px) and (max-width: 767.98px) {
@@ -1140,6 +1295,141 @@
         padding-top: 40%;
         padding-bottom: 0;
     }
+    #wrapper #bannerCheckout {
+        grid-row: 1 / span 1;
+        height: 30vh;
+        background-attachment: scroll;
+    }
+    #wrapper #bannerCheckout #overlay {
+        height: 30vh;
+    }
+    #wrapper #bannerCheckout #overlay #checkoutHeader {
+        padding: 3rem;
+    }
+    #wrapper #bannerCheckout #overlay #checkoutHeader h2 {
+        font-size: 2.5rem;
+    }
+    #wrapper #orderSummary {
+        padding: 7rem 3rem 7rem;
+    }
+    #wrapper #orderSummary #noOrderMessage {
+        font-size: 1rem;
+    }
+    #wrapper #orderSummary #orderNumSec {
+        padding-bottom: 3rem;
+    }
+    #wrapper #orderSummary #orderNumSec h2 {
+        font-size: 1.3rem;
+    }
+    #wrapper #orderSummary #orderNumSec h2 span {
+        padding-right: 2rem;
+    }
+    #wrapper #orderSummary #orderNumSec #printInvoice {
+        font-size: 1rem;
+        padding: 14px 36px;
+    }
+    #wrapper #orderSummary #orderTable #tableHeader h3 {
+        font-size: 1.5rem;
+    }
+    #wrapper #orderSummary #orderTable #tableHeader h3:nth-child(1) {
+        width: 100%;
+    }
+    #wrapper #orderSummary #orderTable #tableHeader h3:nth-child(2),
+    #wrapper #orderSummary #orderTable #tableHeader h3:nth-child(3),
+    #wrapper #orderSummary #orderTable #tableHeader h3:nth-child(4) {
+        display: none;
+    }
+    #wrapper #orderSummary #orderTable #tableBody {
+        flex-wrap: wrap;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #orderReview {
+        width: 100%;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        margin-bottom: 3rem;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #orderReview #cartDesc {
+        padding: 0;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #orderReview #cartDesc h4 {
+        font-size: 1.2rem;
+        padding-top: 3rem;
+        padding-bottom: 1rem;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #orderReview #cartDesc p {
+        font-size: 1rem;
+        padding-bottom: 1.5rem;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #orderReview #cartDesc #removeItem {
+        width: 100%;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #orderReview #cartImg {
+        width: 100%;
+        height: 250px;
+        padding-right: 0;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #orderReview #cartDesc {
+        width: 100%;
+        height: 100%;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #quantitySec {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 25%;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #quantitySec p {
+        display: block;
+        text-align: left;
+        padding-bottom: 1.5rem;
+        width: 100%;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #quantitySec input {
+        width: 100%;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #quantitySec input[type=number]::-webkit-inner-spin-button,
+    #wrapper #orderSummary #orderTable #tableBody #quantitySec input[type=number]::-webkit-outer-spin-button {
+        height: 1rem;
+        width: 1rem;
+        padding: 6px 2px;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #cartPlanSec {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 40%;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #cartPlanSec p {
+        display: block;
+        text-align: left;
+        padding-bottom: 1.5rem;
+        width: 100%;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #cartPlanSec #cartPlan {
+        background-position: calc(100% - 1rem) center !important;
+        width: 100%;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #cartCostSec {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 20%;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #cartCostSec p:first-child {
+        display: block;
+        text-align: left;
+        padding-right: 0;
+        padding-bottom: 1.5rem;
+        width: 100%;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #cartCostSec p:nth-child(2) {
+        width: 100%;
+        text-align: left;
+        padding: 1rem 0;
+    }
+    #wrapper #orderSummary #cartTotalSec {
+        padding: 3rem 0;
+    }
 }
 
 @media (min-width: 768px) and (max-width: 991.98px) {
@@ -1341,6 +1631,7 @@
     }
     #wrapper #bannerTherapist {
         grid-row: 1 / span 1;
+        background-attachment: scroll;
     }
     #wrapper #bannerTherapist #overlay #therapistHeader {
         padding: 5rem;
@@ -1580,6 +1871,120 @@
             opacity: 1;
         }
     }
+    #wrapper #bannerCheckout {
+        grid-row: 1 / span 1;
+        background-attachment: scroll;
+    }
+    #wrapper #bannerCheckout #overlay #checkoutHeader {
+        padding: 5rem;
+    }
+    #wrapper #orderSummary {
+        padding: 7rem 5rem 7rem;
+    }
+    #wrapper #orderSummary #orderNumSec h2 {
+        font-size: 1.5rem;
+    }
+    #wrapper #orderSummary #orderNumSec #printInvoice {
+        font-size: 1rem;
+        padding: 14px 40px;
+    }
+    #wrapper #orderSummary #orderTable #tableHeader h3 {
+        font-size: 1.3rem;
+    }
+    #wrapper #orderSummary #orderTable #tableHeader h3:nth-child(1) {
+        width: 100%;
+    }
+    #wrapper #orderSummary #orderTable #tableHeader h3:nth-child(2),
+    #wrapper #orderSummary #orderTable #tableHeader h3:nth-child(3),
+    #wrapper #orderSummary #orderTable #tableHeader h3:nth-child(4) {
+        display: none;
+    }
+    #wrapper #orderSummary #orderTable #tableBody {
+        flex-wrap: wrap;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #orderReview {
+        width: 100%;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        margin-bottom: 3rem;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #orderReview #cartDesc {
+        padding: 0;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #orderReview #cartDesc h4 {
+        font-size: 1.2rem;
+        padding-bottom: 1rem;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #orderReview #cartDesc p {
+        font-size: 1rem;
+        padding-bottom: 1.5rem;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #orderReview #cartDesc #removeItem {
+        width: 100%;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #orderReview #cartImg {
+        width: 100%;
+        height: 250px;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #orderReview #cartDesc {
+        width: 100%;
+        height: 100%;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #quantitySec {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 20%;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #quantitySec p {
+        display: block;
+        text-align: left;
+        padding-bottom: 1.5rem;
+        width: 100%;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #quantitySec input {
+        width: 100%;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #quantitySec input[type=number]::-webkit-inner-spin-button,
+    #wrapper #orderSummary #orderTable #tableBody #quantitySec input[type=number]::-webkit-outer-spin-button {
+        height: 1rem;
+        width: 1rem;
+        padding: 6px 2px;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #cartPlanSec {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 40%;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #cartPlanSec p {
+        display: block;
+        text-align: left;
+        padding-bottom: 1.5rem;
+        width: 100%;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #cartPlanSec #cartPlan {
+        background-position: calc(100% - 1rem) center !important;
+        width: 100%;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #cartCostSec {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 20%;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #cartCostSec p:first-child {
+        display: block;
+        text-align: left;
+        padding-right: 0;
+        padding-bottom: 1.5rem;
+        width: 100%;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #cartCostSec p:nth-child(2) {
+        width: 100%;
+        text-align: left;
+        padding: 1rem 0;
+    }
 }
 
 @media (min-width: 992px) and (max-width: 1199.98px) {
@@ -1743,6 +2148,90 @@
     #editUserModal #modalContent,
     #deleteUserModal #modalContent {
         width: 80%;
+    }
+    #wrapper #bannerCheckout #overlay #checkoutHeader {
+        padding: 5rem;
+    }
+    #wrapper #orderSummary {
+        padding: 10rem 5rem 5rem;
+    }
+    #wrapper #orderSummary #orderNumSec h2 {
+        font-size: 1.5rem;
+    }
+    #wrapper #orderSummary #orderNumSec #printInvoice {
+        font-size: 1.1rem;
+        padding: 14px 50px;
+    }
+    #wrapper #orderSummary #orderTable #tableHeader h3 {
+        font-size: 1.3rem;
+    }
+    #wrapper #orderSummary #orderTable #tableHeader h3:nth-child(1) {
+        width: 100%;
+    }
+    #wrapper #orderSummary #orderTable #tableHeader h3:nth-child(2),
+    #wrapper #orderSummary #orderTable #tableHeader h3:nth-child(3),
+    #wrapper #orderSummary #orderTable #tableHeader h3:nth-child(4) {
+        display: none;
+    }
+    #wrapper #orderSummary #orderTable #tableBody {
+        flex-wrap: wrap;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #orderReview {
+        width: 100%;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        margin-bottom: 3rem;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #orderReview #cartImg {
+        width: 100%;
+        height: 250px;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #orderReview #cartDesc {
+        width: 100%;
+        height: 100%;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #quantitySec {
+        display: flex;
+        align-items: center;
+        width: 30%;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #quantitySec p {
+        display: block;
+        width: 50%;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #quantitySec input {
+        width: 50%;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #quantitySec input[type=number]::-webkit-inner-spin-button,
+    #wrapper #orderSummary #orderTable #tableBody #quantitySec input[type=number]::-webkit-outer-spin-button {
+        height: 1rem;
+        width: 1rem;
+        padding: 6px 3px;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #cartPlanSec {
+        display: flex;
+        align-items: center;
+        width: 45%;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #cartPlanSec p {
+        display: block;
+        width: 50%;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #cartPlanSec #cartPlan {
+        background-position: calc(100% - 1rem) center !important;
+        width: 50%;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #cartCostSec {
+        display: flex;
+        align-items: center;
+        width: 25%;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #cartCostSec p:first-child {
+        display: block;
+        width: 60%;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #cartCostSec p:nth-child(2) {
+        width: 40%;
     }
 }
 

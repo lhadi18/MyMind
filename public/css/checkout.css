@@ -145,7 +145,7 @@
 #wrapper #orderSummary #orderTable #tableHeader h3 {
     color: black;
     font-size: 1.1rem;
-    font-weight: 600;
+    font-weight: 700;
     text-align: left;
     text-align: right;
 }
@@ -254,7 +254,16 @@
     width: 10%;
 }
 
+#wrapper #orderSummary #orderTable #tableBody #quantitySec p {
+    display: none;
+    font-size: 1rem;
+    font-weight: 700;
+    color: black;
+    padding-right: 1.5rem;
+}
+
 #wrapper #orderSummary #orderTable #tableBody #quantitySec input {
+    font-family: 'Nunito', sans-serif;
     width: 80%;
     font-size: 1rem;
     font-weight: 500;
@@ -278,6 +287,14 @@
     text-align: right;
     align-self: center;
     width: 20%;
+}
+
+#wrapper #orderSummary #orderTable #tableBody #cartPlanSec p {
+    display: none;
+    font-size: 1rem;
+    font-weight: 700;
+    color: black;
+    padding-right: 1.5rem;
 }
 
 #wrapper #orderSummary #orderTable #tableBody #cartPlanSec #cartPlan {
@@ -315,7 +332,16 @@
     width: 10%;
 }
 
-#wrapper #orderSummary #orderTable #tableBody #cartCostSec p {
+#wrapper #orderSummary #orderTable #tableBody #cartCostSec p:first-child {
+    display: none;
+    font-size: 1rem;
+    font-weight: 700;
+    text-align: right;
+    color: black;
+    padding-right: 1.5rem;
+}
+
+#wrapper #orderSummary #orderTable #tableBody #cartCostSec p:nth-child(2) {
     color: black;
     font-size: 1.1rem;
     font-weight: 500;
@@ -347,6 +373,7 @@
 #wrapper #orderSummary #cartTotalSec #totalSec p {
     font-size: 1.1rem;
     font-weight: 500;
+    padding-right: 3rem;
     color: #858585;
     text-align: right;
 }
