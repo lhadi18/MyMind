@@ -9,11 +9,13 @@ const port = process.env.PORT|| 8000;
 const app = express();
 app.set('view engine', 'text/html');
 
-const uri = "mongodb+srv://DBUser:Admin123@cluster0.z9j9r.mongodb.net/BBY-31?retryWrites=true&w=majority";
-mongoose.connect(uri, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true
-    })
+if(process.env.NODE_ENV != 'production') {
+    require('dotenv').config()
+}
+mongoose.connect(process.env.DATABASE_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+})
     .then(() => console.log("connected to db"))
     .catch((err) => console.log(err));
 
