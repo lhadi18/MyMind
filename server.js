@@ -274,7 +274,7 @@ async function isNotExisting(req, res, next) {
 }
 
 app.post("/sign-up", isNotRegistered, async (req, res) => {
-    //let userType = (req.body.userType != 'patient' && req.body.userType != 'therapist') ? 'patient' : req.body.userType;
+    let userType = (req.body.userType != 'patient' && req.body.userType != 'therapist') ? 'patient' : req.body.userType;
     if (req.body.userType == "therapist") {
         try {
             const hashedPassword = await bcrypt.hash(req.body.password, 10);
@@ -283,7 +283,7 @@ app.post("/sign-up", isNotRegistered, async (req, res) => {
                 lastName: req.body.lastname,
                 username: req.body.username,
                 phoneNum: req.body.phone,
-                userType: req.body.userType,
+                userType: userType,
                 yearsExperience: req.body.yearsExperience,
                 sessionCost: req.body.sessionCost,
                 email: req.body.email,
@@ -307,7 +307,7 @@ app.post("/sign-up", isNotRegistered, async (req, res) => {
                 lastName: req.body.lastname,
                 username: req.body.username,
                 phoneNum: req.body.phone,
-                userType: req.body.userType,
+                userType: userType,
                 email: req.body.email,
                 password: hashedPassword
             });
