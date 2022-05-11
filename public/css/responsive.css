@@ -182,11 +182,15 @@
         height: 3.2rem;
     }
     #wrapper #profileSummary {
-        background: white;
+        background: url('../images/radial-bg.svg');
+        background-position: center center;
+        background-repeat: repeat-y;
+        background-size: cover;
         padding: 0 5rem 5rem;
         margin-top: -5vh;
         border-top-left-radius: 50px;
         border-top-right-radius: 50px;
+        height: 85vh;
         display: flex;
         flex-direction: row;
         justify-content: center;
@@ -234,6 +238,13 @@
     }
     #wrapper #profileSummary #profileDesc #joinedDateMob {
         display: block;
+    }
+    #wrapper #profileSummary #profileDesc #mobDeleteAccount {
+        display: inline-block;
+        padding: 16px 0;
+        width: 80%;
+        margin-top: 3rem;
+        margin-right: 0;
     }
     #wrapper #profileSummary #profileImageSec,
     #wrapper #profileSummary #profileDesc p,
@@ -907,11 +918,15 @@
         height: 3.7rem;
     }
     #wrapper #profileSummary {
-        background: white;
+        background: url('../images/radial-bg.svg');
+        background-position: center center;
+        background-repeat: repeat-y;
+        background-size: cover;
         padding: 0 5rem 5rem;
         margin-top: -5vh;
         border-top-left-radius: 50px;
         border-top-right-radius: 50px;
+        height: 80vh;
         display: flex;
         flex-direction: row;
         justify-content: center;
@@ -953,6 +968,13 @@
     }
     #wrapper #profileSummary #profileDesc #joinedDateMob {
         display: block;
+    }
+    #wrapper #profileSummary #profileDesc #mobDeleteAccount {
+        display: inline-block;
+        padding: 16px 0;
+        width: 80%;
+        margin-top: 3rem;
+        margin-right: 0;
     }
     #wrapper #profileSummary #profileImageSec,
     #wrapper #profileSummary #profileDesc p,
@@ -1572,11 +1594,15 @@
         height: 4rem;
     }
     #wrapper #profileSummary {
-        background: white;
+        background: url('../images/radial-bg.svg');
+        background-position: center center;
+        background-repeat: repeat-y;
+        background-size: cover;
         padding: 0 5rem 5rem;
         margin-top: -5vh;
         border-top-left-radius: 50px;
         border-top-right-radius: 50px;
+        height: 85vh;
         display: flex;
         flex-direction: row;
         justify-content: center;
@@ -1616,6 +1642,13 @@
     }
     #wrapper #profileSummary #profileDesc #joinedDateMob {
         display: block;
+    }
+    #wrapper #profileSummary #profileDesc #mobDeleteAccount {
+        display: inline-block;
+        padding: 16px 0;
+        width: 80%;
+        margin-top: 3rem;
+        margin-right: 0;
     }
     #wrapper #profileSummary #profileImageSec,
     #wrapper #profileSummary #profileDesc p,
@@ -2077,12 +2110,19 @@
         width: 40%;
     }
     #wrapper #profileSummary #profileDesc {
-        width: 60%
+        width: 60%;
+        padding-left: 3rem;
     }
     #wrapper #profileSummary #profileDesc p {
         font-size: 1rem;
     }
+    #wrapper #profileSummary #profileDesc #buttonSec #deleteAccount {
+        padding: 18px 0;
+        min-width: 12rem;
+        font-size: 1rem;
+    }
     #wrapper #profileSummary #profileDesc #buttonSec #saveChanges {
+        padding: 18px 0;
         min-width: 12rem;
         font-size: 1rem;
     }
