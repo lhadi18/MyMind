@@ -115,6 +115,7 @@ $(document).ready(async function () {
         deleteUserBtns[i].onclick = function (e) {
             deleteUserModal.style.display = "block";
             document.body.style.overflow = 'hidden';
+            $('#deleteUserErrorMessage').html('');
 
             // Store the closes table row that was clicked
             const currentRow = this.closest('tr');
@@ -133,9 +134,7 @@ $(document).ready(async function () {
                     },
                     success: function (data) {
                         if(data == 'lastAdmin'){
-                            deleteUserModal.style.display = "none";
-                            document.body.style.overflow = 'auto';
-                            alert('Deletion failed. Database needs to have at least 1 administrator.')
+                            $('#deleteUserErrorMessage').html('Deletion failed. Database needs to have at least 1 administrator.')
                             return;
                         } else {
                             document.getElementById('dashboardSuccessModal').style.display = 'flex';
@@ -158,6 +157,7 @@ $(document).ready(async function () {
             editUserModal.style.display = "block";
             document.body.style.overflow = 'hidden';
             const currentRow = this.closest('tr');
+            $("#editUserErrorMessage").html("");
             let previousUserType = currentRow.children[5].innerHTML.toLowerCase();
             document.getElementById('editFirstname').value = currentRow.children[0].innerHTML;
             document.getElementById('editLastname').value = currentRow.children[1].innerHTML;
@@ -211,9 +211,7 @@ $(document).ready(async function () {
                                     location.reload();
                                 }, 2500);
                             } else if (data == 'lastAdmin'){
-                                alert('Edit failed. Database needs to have at least 1 administrator.')
-                                editUserModal.style.display = "none";
-                                document.body.style.overflow = 'auto';
+                                $("#editUserErrorMessage").html("Edit failed. Database needs to have at least 1 administrator.");
                             } else {
                                 $("#editUserErrorMessage").html("");
                                 document.getElementById('dashboardSuccessModal').style.display = 'flex';
