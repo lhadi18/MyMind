@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="COMP 2800 - MyMind" />
 
-    <title>MyMind - Checkout</title>
+    <title>MyMind - Thank You</title>
 
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="../images/logo.svg" />
@@ -27,7 +27,7 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" type="text/css" href="../css/style.css" />
-    <link rel="stylesheet" type="text/css" href="../css/checkout.css" />
+    <link rel="stylesheet" type="text/css" href="../css/thank-you.css" />
     <link rel="stylesheet" type="text/css" href="../css/responsive.css" />
 </head>
 
@@ -110,82 +110,29 @@
             </nav>
         </header>
 
-        <div id="bannerCheckout">
-            <div id="overlay">
-                <div id="checkoutHeader">
-                    <h2>Checkout</h2>
-                </div>
-            </div>
-        </div>
-
-        <div id="noOrderSummary">
-            <p id="noOrderMessage">No orders have been placed. Please visit <a href="/therapists">Therapists</a> and
-                purchase a therapy package to start your journey!</p>
-        </div>
-
-        <div id="orderSummary">
-            <div id="orderNumSec">
-                <h2>Order: <span id="orderNumber">MM0509123456</span></h2>
-                <button id="printInvoice" onclick="window.print();">Print Invoice</button>
+        <div id="thankyouContainer">
+            <div class="col-6">
+                <img src="../images/thankyou.svg" alt="Thank You Graphic">
             </div>
 
-            <div id="orderTable">
-                <div id="tableHeader">
-                    <h3>Order Review</h3>
-                    <h3>Quantity</h3>
-                    <h3>Package Plan</h3>
-                    <h3>Cost</h3>
-                </div>
-                <div id="tableBody">
-                    <div id="orderReview">
-                        <div id="cartImg">
-                            <img src="./images/therapist1.jpg" alt="Therapist Image">
-                        </div>
-                        <div id="cartDesc">
-                            <h4 id="therapistName">Towa Quimbayo</h4>
-                            <p id="therapistDesc">15+ years of experience in the profession, and offers $90 per session
-                            </p>
-                            <button id="removeItem">Remove</button>
-                        </div>
+            <div class="col-6">
+                <div id="thankyouSec">
+                    <div id="thankyouHeader">
+                        <i class="bi bi-check-circle"></i>
+                        <h2>Order Successfully Placed</h2>
                     </div>
-                    <div id="quantitySec">
-                        <p>Quantity: </p>
-                        <input type="number" id="cartQuantity" value="1" step="1" min="1" />
-                    </div>
-                    <div id="cartPlanSec">
-                        <p>Package Plan: </p>
-                        <select id="cartPlan">
-                            <option value="trialPlan">Trial (Free)</option>
-                            <option value="monthPlan">1 Month</option>
-                            <option value="threeMonthPlan">3 Months</option>
-                            <option value="yearPlan">1 Year</option>
-                        </select>
-                    </div>
-                    <div id="cartCostSec">
-                        <p>Cost: </p>
-                        <p>$<span id="cartCost">90.00</span></p>
+
+                    <p>Your Order <span id="orderNumber">MM0509123456</span></p>
+                    <p>If you have any questions about your order, please contact us at
+                        <a href="mailto:info@mymind.com">info@mymind.com</a> or call us at
+                        <a href="tel:604.555.5012">(604) 555 - 5012</a>
+                    </p>
+
+                    <div id="startSession">
+                        <a href="/chat-session" >Start You Therapy Session</a>
                     </div>
                 </div>
             </div>
-
-            <hr />
-
-            <div id="cartTotalSec">
-                <div id="subTotalSec">
-                    <p>Subtotal: </p>
-                    <span id="subTotal">$90.00</span>
-                </div>
-                <div id="taxSec">
-                    <p>Tax: </p>
-                    <span id="taxTotal">$5.00</span>
-                </div>
-                <div id="totalSec">
-                    <p>Total: </p>
-                    <span id="total">$95.00</span>
-                </div>
-            </div>
-
-            <button id="confirmOrder">Confirm Order</button>
         </div>
 
         <div id="footerPlaceHolder"></div>

@@ -128,6 +128,10 @@ app.get('/checkout', function (req, res) {
     res.sendFile(path.resolve('public/checkout.html'));
 });
 
+app.get('/thank-you', function (req, res) {
+    res.sendFile(path.resolve('public/thank-you.html'));
+});
+
 app.get("/login", isLoggedOut, setHeaders, (req, res) => {
     res.sendFile(path.resolve('public/login.html'));
 });
