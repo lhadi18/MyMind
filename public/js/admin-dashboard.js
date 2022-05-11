@@ -24,7 +24,7 @@ $(document).ready(async function () {
                 x += `</tr>`
                 $("tbody").append(x);
             });
-            document.getElementById("resultsFound").innerHTML = data.length + " Users"
+            document.getElementById("resultsFound").innerHTML = data.length
         }
     });
 
@@ -61,7 +61,7 @@ $(document).ready(async function () {
                 document.getElementById("createUserErrorMessage").innerHTML = "Password must be at least 5 or less than 20 characters long";
             } else {
                 $.ajax({
-                    url: '/sign-up',
+                    url: '/createUser',
                     type: 'POST',
                     data: {
                         firstname: $("#firstname").val().charAt(0).toUpperCase() + $("#firstname").val().substring(1),
@@ -304,6 +304,7 @@ function searchTable() {
     const searchInput = document.getElementById("searchbar").value.toUpperCase();
     const table = document.getElementById("dashboardTable");
     const trs = table.tBodies[0].getElementsByTagName("tr");
+    let count = 0;
 
     // Loop through tbody's rows
     for (var i = 0; i < trs.length; i++) {
@@ -315,10 +316,12 @@ function searchTable() {
             // check if there's a match in the table
             if (tds[j].innerHTML.toUpperCase().indexOf(searchInput) > -1) {
                 trs[i].style.display = "";
-                continue;
+                count++;
+                break;
             }
         }
     }
+    $("#resultsFound").html(`${count}`);
 }
 
 // Sort table function when table headings is clicked
@@ -349,8 +352,8 @@ function sortTable() {
         const newRows = Array.from(rows);
 
         newRows.sort(function (rowA, rowB) {
-            const cellA = rowA.querySelectorAll('td')[index].innerHTML;
-            const cellB = rowB.querySelectorAll('td')[index].innerHTML;
+            const cellA = rowA.querySelectorAll('td')[index].innerHTML.toLowerCase();
+            const cellB = rowB.querySelectorAll('td')[index].innerHTML.toLowerCase();
 
             const a = transform(index, cellA);
             const b = transform(index, cellB);
