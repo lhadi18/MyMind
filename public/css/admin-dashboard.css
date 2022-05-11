@@ -702,7 +702,8 @@
 }
 
 #createUserModal #modalContent #formContainer #createUserForm #createUserErrorMessage,
-#editUserModal #modalContent #formContainer #editUserForm #editUserErrorMessage {
+#editUserModal #modalContent #formContainer #editUserForm #editUserErrorMessage,
+#deleteUserModal #modalContent #deleteUserErrorMessage {
     font-size: 1rem;
     font-weight: 500;
     padding-top: 1.5rem;

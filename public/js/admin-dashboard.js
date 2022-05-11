@@ -115,26 +115,31 @@ $(document).ready(async function () {
         deleteUserBtns[i].onclick = function (e) {
             deleteUserModal.style.display = "block";
             document.body.style.overflow = 'hidden';
+            $('#deleteUserErrorMessage').html('');
 
             // Store the closes table row that was clicked
             const currentRow = this.closest('tr');
 
             // Display username for the user's table row that was clicked
             document.getElementById('deleteUsername').innerHTML = "@" + this.closest('tr').children[2].innerHTML;
+            let userType = currentRow.children[5].innerHTML.toLowerCase();
             document.getElementById('deleteUserBtn').onclick = function () {
                 // Remove row and hide modal
                 $.ajax({
                     url: '/deleteUser',
                     type: 'DELETE',
                     data: {
-                        id: currentRow.id
+                        id: currentRow.id,
+                        previousUserType: userType
                     },
-                    success: function () {
-                        currentRow.remove();
-                        document.getElementById('dashboardSuccessModal').style.display = 'flex';
+                    success: function (data) {
+                        if(data == 'lastAdmin'){
+                            $('#deleteUserErrorMessage').html('Deletion failed. Database needs to have at least 1 administrator.')
+                            return;
+                        } else {
+                            document.getElementById('dashboardSuccessModal').style.display = 'flex';
+                        }
                         setTimeout(() => {
-                            deleteUserModal.style.display = "none";
-                            document.body.style.overflow = 'auto';
                             location.reload();
                         }, 2500);
                     }
@@ -152,7 +157,8 @@ $(document).ready(async function () {
             editUserModal.style.display = "block";
             document.body.style.overflow = 'hidden';
             const currentRow = this.closest('tr');
-
+            $("#editUserErrorMessage").html("");
+            let previousUserType = currentRow.children[5].innerHTML.toLowerCase();
             document.getElementById('editFirstname').value = currentRow.children[0].innerHTML;
             document.getElementById('editLastname').value = currentRow.children[1].innerHTML;
             document.getElementById('editUsername').value = currentRow.children[2].innerHTML;
@@ -180,6 +186,7 @@ $(document).ready(async function () {
                         type: 'PUT',
                         data: {
                             id: currentRow.id,
+                            previousUserType: previousUserType,
                             firstname: $("#editFirstname").val().charAt(0).toUpperCase() + $("#editFirstname").val().substring(1),
                             lastname: $("#editLastname").val().charAt(0).toUpperCase() + $("#editLastname").val().substring(1),
                             username: $("#editUsername").val().toLowerCase(),
@@ -203,6 +210,8 @@ $(document).ready(async function () {
                                 setTimeout(() => {
                                     location.reload();
                                 }, 2500);
+                            } else if (data == 'lastAdmin'){
+                                $("#editUserErrorMessage").html("Edit failed. Database needs to have at least 1 administrator.");
                             } else {
                                 $("#editUserErrorMessage").html("");
                                 document.getElementById('dashboardSuccessModal').style.display = 'flex';
