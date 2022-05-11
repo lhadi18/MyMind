@@ -91,7 +91,7 @@ $('#saveChanges').click(() => {
                 data: {
                     firstname: $("#firstname").val().charAt(0).toUpperCase() + $("#firstname").val().substring(1),
                     lastname: $("#lastname").val().charAt(0).toUpperCase() + $("#lastname").val().substring(1),
-                    email: $("#email").val(),
+                    email: $("#email").val().toLowerCase(),
                     username: $("#username").val().toLowerCase(),
                     phone: $("#phone").val(),
                     password: $("#password").val(),

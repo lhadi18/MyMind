@@ -18,7 +18,7 @@ $('#signupBtn').click(() => {
                 lastname: $("#lastname").val().charAt(0).toUpperCase() + $("#lastname").val().substring(1),
                 username: $("#username").val().toLowerCase(),
                 phone: $("#phone").val(),
-                email: $("#email").val(),
+                email: $("#email").val().toLowerCase(),
                 userType: $("#userType").val(),
                 password: $("#password").val(),
                 yearsExperience: $("#yearsExperience").val(),
