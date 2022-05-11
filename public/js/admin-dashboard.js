@@ -24,7 +24,7 @@ $(document).ready(async function () {
                 x += `</tr>`
                 $("tbody").append(x);
             });
-            document.getElementById("resultsFound").innerHTML = data.length + " Users"
+            document.getElementById("resultsFound").innerHTML = data.length
         }
     });
 
@@ -304,6 +304,7 @@ function searchTable() {
     const searchInput = document.getElementById("searchbar").value.toUpperCase();
     const table = document.getElementById("dashboardTable");
     const trs = table.tBodies[0].getElementsByTagName("tr");
+    let count = 0;
 
     // Loop through tbody's rows
     for (var i = 0; i < trs.length; i++) {
@@ -315,10 +316,12 @@ function searchTable() {
             // check if there's a match in the table
             if (tds[j].innerHTML.toUpperCase().indexOf(searchInput) > -1) {
                 trs[i].style.display = "";
-                continue;
+                count++;
+                break;
             }
         }
     }
+    $("#resultsFound").html(`${count}`);
 }
 
 // Sort table function when table headings is clicked
