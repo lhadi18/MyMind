@@ -188,6 +188,10 @@ body {
 #wrapper #headMobile .nav-container .nav-menu.show-menu {
     bottom: 0;
     background: rgba(255, 255, 255, 0.8);
+    -webkit-backdrop-filter: blur(5px);
+    -moz-backdrop-filter: blur(5px);
+    -ms-backdrop-filter: blur(5px);
+    -o-backdrop-filter: blur(5px);
     backdrop-filter: blur(5px);
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;

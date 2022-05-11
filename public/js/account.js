@@ -170,3 +170,26 @@ for (var i = 0; i < input.length; i++) {
         }
     });
 }
+
+// Variables for Delete User Modal 
+var deleteUserModal = document.getElementById("deleteAccountModal");
+
+document.getElementById('deleteAccount').onclick = function (e) {
+    deleteUserModal.style.display = "block";
+    document.body.style.overflow = 'hidden';
+    $('#deleteAccountErrorMessage').html('');
+}
+
+// If cancel button is clicked, hide modal for Delete User
+document.getElementById("closeDelete").onclick = function () {
+    deleteUserModal.style.display = "none";
+    document.body.style.overflow = 'auto';
+}
+
+ // If user clicks outside of the modal for both Create and Delete then hide modal
+ window.onclick = function (event) {
+    if (event.target == deleteUserModal) {
+        deleteUserModal.style.display = "none";
+        document.body.style.overflow = 'auto';
+    }
+}
