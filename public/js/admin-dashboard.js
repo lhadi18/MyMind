@@ -349,8 +349,8 @@ function sortTable() {
         const newRows = Array.from(rows);
 
         newRows.sort(function (rowA, rowB) {
-            const cellA = rowA.querySelectorAll('td')[index].innerHTML;
-            const cellB = rowB.querySelectorAll('td')[index].innerHTML;
+            const cellA = rowA.querySelectorAll('td')[index].innerHTML.toLowerCase();
+            const cellB = rowB.querySelectorAll('td')[index].innerHTML.toLowerCase();
 
             const a = transform(index, cellA);
             const b = transform(index, cellB);
