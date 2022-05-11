@@ -1,17 +1,1 @@
-$.ajax({
-    url: '/getTherapists',
-    type: "GET",
-    success: function (data) {
-        data.forEach(function(Therapist){
-                var x = '<div class="therapistCard">';
-                x += `<img src="${Therapist.profileImg}" alt="Therapist 1">`
-                x += '<div class="cardContent">'
-                x += `<h3>${Therapist.firstName} ${Therapist.lastName}</h3>`
-                x += `<p>${Therapist.yearsExperience} years of experience in the profession, and offers $${Therapist.sessionCost} per session</p>`
-                x += '<div><button class="therapistBtn">Purchase Session</button></div>'
-                x += '</div>'
-                x += '</div>'
-                document.getElementById("therapistList").innerHTML += x;
-        })
-    }
-})
+var _0x1f925a=_0x28f7;(function(_0x132905,_0x5945e9){var _0x397eaf=_0x28f7,_0x19e8cb=_0x132905();while(!![]){try{var _0xf2fce8=-parseInt(_0x397eaf(0x16a))/0x1*(-parseInt(_0x397eaf(0x174))/0x2)+-parseInt(_0x397eaf(0x17e))/0x3*(-parseInt(_0x397eaf(0x176))/0x4)+-parseInt(_0x397eaf(0x179))/0x5*(-parseInt(_0x397eaf(0x17c))/0x6)+parseInt(_0x397eaf(0x178))/0x7+parseInt(_0x397eaf(0x166))/0x8*(parseInt(_0x397eaf(0x16c))/0x9)+-parseInt(_0x397eaf(0x169))/0xa*(-parseInt(_0x397eaf(0x17d))/0xb)+-parseInt(_0x397eaf(0x17a))/0xc;if(_0xf2fce8===_0x5945e9)break;else _0x19e8cb['push'](_0x19e8cb['shift']());}catch(_0x219843){_0x19e8cb['push'](_0x19e8cb['shift']());}}}(_0x44d5,0x1e7d7),$[_0x1f925a(0x177)]({'url':_0x1f925a(0x167),'type':_0x1f925a(0x16b),'success':function(_0x559534){var _0x4e18ff=_0x1f925a;_0x559534[_0x4e18ff(0x164)](function(_0x100fbf){var _0xd9a14e=_0x4e18ff,_0x23ebe2='<div\x20class=\x22therapistCard\x22>';_0x23ebe2+=_0xd9a14e(0x168)+_0x100fbf[_0xd9a14e(0x163)]+_0xd9a14e(0x17f),_0x23ebe2+=_0xd9a14e(0x165),_0x23ebe2+='<h3>'+_0x100fbf[_0xd9a14e(0x173)]+'\x20'+_0x100fbf['lastName']+_0xd9a14e(0x175),_0x23ebe2+='<p>'+_0x100fbf['yearsExperience']+'\x20years\x20of\x20experience\x20in\x20the\x20profession,\x20and\x20offers\x20$'+_0x100fbf[_0xd9a14e(0x16d)]+_0xd9a14e(0x16f),_0x23ebe2+=_0xd9a14e(0x170),_0x23ebe2+='</div>',_0x23ebe2+=_0xd9a14e(0x16e),document[_0xd9a14e(0x17b)](_0xd9a14e(0x172))[_0xd9a14e(0x171)]+=_0x23ebe2;});}}));function _0x28f7(_0x5c307d,_0x329e0c){var _0x44d5c2=_0x44d5();return _0x28f7=function(_0x28f7cb,_0x54e5a5){_0x28f7cb=_0x28f7cb-0x163;var _0x474303=_0x44d5c2[_0x28f7cb];return _0x474303;},_0x28f7(_0x5c307d,_0x329e0c);}function _0x44d5(){var _0x2d404b=['innerHTML','therapistList','firstName','6apNtmE','</h3>','4gFjRpx','ajax','163429rIaeEX','35zjFLtB','8322720ogIObW','getElementById','103446JxiiqN','216271EOczGf','453207ZindAs','\x22\x20alt=\x22Therapist\x201\x22>','profileImg','forEach','<div\x20class=\x22cardContent\x22>','33224TceKIV','/getTherapists','<img\x20src=\x22','110SxlIKa','20682drhCrT','GET','531AMFLda','sessionCost','</div>','\x20per\x20session</p>','<div><button\x20class=\x22therapistBtn\x22>Purchase\x20Session</button></div>'];_0x44d5=function(){return _0x2d404b;};return _0x44d5();}
