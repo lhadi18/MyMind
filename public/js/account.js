@@ -30,6 +30,8 @@ $.ajax({
         $("#username").attr("value", `${data.username}`)
         $("#email").attr("value", `${data.email}`)
         $("#emailmobile").text(`${data.email}`)
+        $("#yearsExperience").attr("value", `${data.yearsExperience}`)
+        $("#sessionCost").attr("value", `${data.sessionCost}`)
         if (!data.phoneNum) {
             $("#phone").attr("value",)
             $("#phonemobile").text()
@@ -37,6 +39,12 @@ $.ajax({
             let phonenumber = data.phoneNum;
             $("#phone").attr("value", phonenumber)
             $("#phonemobile").text(phonenumber)
+        }
+        if(data.userType == "therapist") {
+            var displayTherapist = document.querySelectorAll(".therapistOptions");
+            for(var i = 0; i < displayTherapist.length; i++) {
+                displayTherapist[i].style.display = "flex";
+            }            
         }
     }
 });
@@ -76,6 +84,13 @@ $('#saveChanges').click(() => {
         document.getElementById("validationErrorMessage").style.display = 'block';
         window.scrollTo(0, document.body.scrollHeight);
         document.getElementById("validationErrorMessage").innerHTML = "There are empty fields";
+    } else if (negativeValidation()) {
+        window.scrollTo(0, document.body.scrollHeight);
+        document.getElementById("phoneErrorMessage").style.display = 'none';
+        document.getElementById("emailErrorMessage").style.display = 'none';
+        document.getElementById("usernameErrorMessage").style.display = 'none';
+        document.getElementById("validationErrorMessage").style.display = 'block';
+        document.getElementById("validationErrorMessage").innerHTML = "Experience or cost of session cannot be less than 0";
     } else {
         if ($("#password").val() != "" && passwordValidation()) {
             window.scrollTo(0, document.body.scrollHeight);
@@ -95,6 +110,8 @@ $('#saveChanges').click(() => {
                     username: $("#username").val().toLowerCase(),
                     phone: $("#phone").val(),
                     password: $("#password").val(),
+                    yearsExperience: $("#yearsExperience").val(),
+                    sessionCost: $("#sessionCost").val(),
                 }, success: function (data) {
                     console.log(data);
                     if (data == "existingEmail") {
@@ -159,6 +176,15 @@ function passwordValidation() {
         return true;
     }
 }
+
+function negativeValidation() {
+    const yearsExp = document.getElementById("yearsExperience").value;
+    const cost = document.getElementById("sessionCost").value;
+    if(yearsExp < 0 || cost < 0) {
+        return true;
+    }
+}
+
 
 // Trigger click function for enter key for all input fields
 const input = document.querySelectorAll(".form-control");

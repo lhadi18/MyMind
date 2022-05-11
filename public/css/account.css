@@ -921,3 +921,7 @@
     border: 2px solid #c41700;
     background-color: #c41700;
 }
+
+#wrapper #profileDetails #profileForm .form-row.therapistOptions {
+    display: none;
+}

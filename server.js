@@ -165,7 +165,7 @@ app.get('/getTherapists', (req, res) => {
 
 app.post('/login', async (req, res) => {
     User.findOne({
-        email: req.body.email,
+        email: req.body.email.toLowerCase()
     }, function (err, user) {
         if (err) {
             console.log(err);
@@ -234,7 +234,9 @@ app.post('/editProfile', isLoggedIn, isNotExisting, async (req, res) => {
             "username": req.body.username,
             "email": req.body.email,
             "phoneNum": req.body.phone,
-            "password": newpass
+            "password": newpass,
+            "yearsExperience": req.body.yearsExperience,
+            "sessionCost": req.body.sessionCost
         })
         .then((obj) => {
             return res.json("updated");

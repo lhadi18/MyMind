@@ -59,6 +59,8 @@ $(document).ready(async function () {
                 document.getElementById("createUserErrorMessage").innerHTML = "There are empty fields";
             } else if (passwordValidationCreate()) {
                 document.getElementById("createUserErrorMessage").innerHTML = "Password must be at least 5 or less than 20 characters long";
+            } else if (negativeValidationcreate()) {
+                document.getElementById("createUserErrorMessage").innerHTML = "Experience or cost of session cannot be less than 0";
             } else {
                 $.ajax({
                     url: '/createUser',
@@ -103,6 +105,14 @@ $(document).ready(async function () {
     function passwordValidationCreate() {
         const inpObjPassword = document.getElementById("password");
         if (!inpObjPassword.checkValidity()) {
+            return true;
+        }
+    }
+
+    function negativeValidationcreate() {
+        const yearsExp = document.getElementById("yearsExperience").value;
+        const cost = document.getElementById("sessionCost").value;
+        if(yearsExp < 0 || cost < 0) {
             return true;
         }
     }
@@ -180,6 +190,8 @@ $(document).ready(async function () {
                     document.getElementById("editUserErrorMessage").innerHTML = "There are empty fields.";
                 } else if (passwordValidationEdit()) {
                     document.getElementById("editUserErrorMessage").innerHTML = "Password must be at least 5 or less than 20 characters long";
+                } else if (negativeValidationEdit()) {
+                    document.getElementById("editUserErrorMessage").innerHTML = "Experience or cost of session cannot be less than 0";
                 } else {
                     $.ajax({
                         url: '/editUser',
@@ -237,6 +249,14 @@ $(document).ready(async function () {
     function passwordValidationEdit() {
         const inpObjPassword = document.getElementById("editPassword");
         if (!inpObjPassword.checkValidity()) {
+            return true;
+        }
+    }
+
+    function negativeValidationEdit() {
+        const yearsExp = document.getElementById("editYearsExperience").value;
+        const cost = document.getElementById("editSessionCost").value;
+        if(yearsExp < 0 || cost < 0) {
             return true;
         }
     }
