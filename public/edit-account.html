@@ -134,7 +134,7 @@
                     <div class="form-group">
                         <label>First Name</label>
                         <input type="text" class="form-control" name="firstname" id="firstname" 
-                            placeholder="First Name" required="required" onkeydown="return /[a-z]/i.test(event.key)">
+                            placeholder="First Name" maxlength="15" required="required" onkeydown="return /[a-z]/i.test(event.key)">
                     </div>
                 </div>
 
@@ -142,7 +142,7 @@
                     <div class="form-group">
                         <label>Last Name</label>
                         <input type="text" class="form-control" name="lastname" id="lastname" 
-                            placeholder="Last Name" required="required" onkeydown="return /[a-z]/i.test(event.key)">
+                            placeholder="Last Name" maxlength="30" required="required" onkeydown="return /[a-z]/i.test(event.key)">
                     </div>
                 </div>
 
@@ -150,7 +150,7 @@
                     <div class="form-group">
                         <label>Username</label>
                         <input type="text" class="form-control" name="username" id="username" placeholder="Username"
-                            value="tquimbayo" required="required">
+                            value="tquimbayo" maxlength="30" required="required">
                         <p id="usernameErrorMessage">&nbsp;</p>
                     </div>
                 </div>
@@ -168,7 +168,7 @@
                     <div class="form-group">
                         <label for="email">Email Address</label>
                         <input type="email" class="form-control" name="email" id="email" placeholder="Email"
-                            value="towacurtis@hotmail.com" required="required">
+                            value="towacurtis@hotmail.com" maxlength="30" required="required">
                         <p id="emailErrorMessage">&nbsp;</p>
                     </div>
                 </div>
