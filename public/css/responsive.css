@@ -143,6 +143,7 @@
     #wrapper #companySec {
         grid-row: 3 / span 1;
         flex-direction: column-reverse;
+        max-height: 100%;
         width: 100%;
     }
     #wrapper #companySec div {
@@ -159,6 +160,46 @@
     }
     #wrapper #companySec #companyDesc p:nth-child(3) {
         padding-bottom: 0;
+    }
+    #wrapper #contactSec {
+        grid-row: 4 / span 1;
+        padding: 3rem 2rem 10rem;
+    }
+    #wrapper #contactSec #contactContainer {
+        flex-direction: column;
+    }
+    #wrapper #contactSec #contactContainer #contactInfo,
+    #wrapper #contactSec #contactContainer #mapSec {
+        width: 100%;
+    }
+    #wrapper #contactSec #contactContainer #mapSec #map {
+        height: 250px;
+        border-top-right-radius: 0;
+        border-bottom-left-radius: 15px;
+    }
+    #wrapper #contactSec #contactContainer #contactInfo {
+        padding: 2rem 2.5rem 1rem;
+    }
+    #wrapper #contactSec #contactContainer #contactInfo h4 {
+        font-size: 0.8rem;
+        letter-spacing: 0.3rem;
+    }
+    #wrapper #contactSec #contactContainer #contactInfo h2 {
+        font-size: 2.2rem;
+    }
+    #wrapper #contactSec #contactContainer #contactInfo .contactDetails {
+        padding-bottom: 1.5rem;
+    }
+    #wrapper #contactSec #contactContainer #contactInfo .contactDetails .contactIcons {
+        width: 3rem;
+        height: 2.7rem;
+    }
+    #wrapper #contactSec #contactContainer #contactInfo .contactDetails .contactIcons i {
+        font-size: 1.3rem;
+    }
+    #wrapper #contactSec #contactContainer #contactInfo .contactDetails a {
+        font-size: 1.1rem;
+        padding-left: 1rem;
     }
     #wrapper #banner {
         grid-column: 1 / span 4;
@@ -924,6 +965,7 @@
     #wrapper #companySec {
         grid-row: 3 / span 1;
         flex-direction: column-reverse;
+        max-height: 100%;
         width: 100%;
     }
     #wrapper #companySec div {
@@ -931,6 +973,44 @@
     }
     #wrapper #companySec #companyDesc {
         padding: 5rem 3rem;
+    }
+    #wrapper #contactSec {
+        grid-row: 4 / span 1;
+        padding: 3rem 3rem 10rem;
+    }
+    #wrapper #contactSec #contactContainer {
+        flex-direction: column;
+    }
+    #wrapper #contactSec #contactContainer #contactInfo,
+    #wrapper #contactSec #contactContainer #mapSec {
+        width: 100%;
+    }
+    #wrapper #contactSec #contactContainer #mapSec #map {
+        height: 300px;
+        border-top-right-radius: 0;
+        border-bottom-left-radius: 15px;
+    }
+    #wrapper #contactSec #contactContainer #contactInfo {
+        padding: 3rem 3rem 2rem;
+    }
+    #wrapper #contactSec #contactContainer #contactInfo h4 {
+        font-size: 0.8rem;
+    }
+    #wrapper #contactSec #contactContainer #contactInfo h2 {
+        font-size: 2.5rem;
+    }
+    #wrapper #contactSec #contactContainer #contactInfo .contactDetails {
+        padding-bottom: 1.5rem;
+    }
+    #wrapper #contactSec #contactContainer #contactInfo .contactDetails .contactIcons {
+        width: 3rem;
+        height: 2.7rem;
+    }
+    #wrapper #contactSec #contactContainer #contactInfo .contactDetails .contactIcons i {
+        font-size: 1.3rem;
+    }
+    #wrapper #contactSec #contactContainer #contactInfo .contactDetails a {
+        font-size: 1.1rem;
     }
     #wrapper #banner {
         grid-column: 1 / span 4;
@@ -1636,6 +1716,7 @@
     #wrapper #companySec {
         grid-row: 3 / span 1;
         flex-direction: column-reverse;
+        max-height: 100%;
         width: 100%;
     }
     #wrapper #companySec div {
@@ -1643,6 +1724,31 @@
     }
     #wrapper #companySec #companyDesc {
         padding: 5rem;
+    }
+    #wrapper #contactSec {
+        grid-row: 4 / span 1;
+        padding: 3rem 5rem 10rem;
+    }
+    #wrapper #contactSec #contactContainer {
+        flex-direction: column;
+    }
+    #wrapper #contactSec #contactContainer #contactInfo,
+    #wrapper #contactSec #contactContainer #mapSec {
+        width: 100%;
+    }
+    #wrapper #contactSec #contactContainer #mapSec #map {
+        height: 300px;
+        border-top-right-radius: 0;
+        border-bottom-left-radius: 15px;
+    }
+    #wrapper #contactSec #contactContainer #contactInfo {
+        padding: 3rem 5rem 2rem;
+    }
+    #wrapper #contactSec #contactContainer #contactInfo h2 {
+        font-size: 3rem;
+    }
+    #wrapper #contactSec #contactContainer #contactInfo .contactDetails {
+        padding-bottom: 1rem;
     }
     #wrapper #banner {
         grid-column: 1 / span 4;
@@ -2188,8 +2294,29 @@
         font-size: 1rem;
         padding: 16px 0;
     }
+    #wrapper #companySec {
+        max-height: 100%;
+    }
     #wrapper #companySec #companyDesc {
         padding: 5rem;
+    }
+    #wrapper #contactSec {
+        padding: 3rem 5rem 7rem;
+    }
+    #wrapper #contactSec #contactContainer {
+        min-height: 300px;
+    }
+    #wrapper #contactSec #contactContainer #contactInfo {
+        padding: 3rem;
+    }
+    #wrapper #contactSec #contactContainer #contactInfo h4 {
+        font-size: 0.8rem;
+    }
+    #wrapper #contactSec #contactContainer #contactInfo h2 {
+        font-size: 3rem;
+    }
+    #wrapper #contactSec #contactContainer #contactInfo .contactDetails {
+        padding-bottom: 1rem;
     }
     #wrapper #signUp {
         padding: 5rem;

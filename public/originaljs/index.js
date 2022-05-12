@@ -31,3 +31,18 @@ $.ajax({
         document.getElementById("therapistCards").innerHTML += z;
     }
 })
+
+// Google Maps
+function initMap() {
+    const uluru = { lat: 49.2484615, lng: -123.0048777 };
+    const map = new google.maps.Map(document.getElementById("map"), {
+        zoom: 15,
+        center: uluru,
+    });
+    const marker = new google.maps.Marker({
+        position: uluru,
+        map: map,
+    });
+}
+
+window.initMap = initMap;

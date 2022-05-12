@@ -298,6 +298,10 @@
     width: 48%;
 }
 
+#wrapper #profileDetails #profileForm .form-row.therapistOptions {
+    display: none;
+}
+
 #wrapper #profileDetails #profileForm .form-row .form-group {
     width: 100%;
     display: flex;
@@ -920,8 +924,4 @@
 #deleteAccountModal #modalContent #deleteButtonsSec #deleteAccountBtn:hover {
     border: 2px solid #c41700;
     background-color: #c41700;
-}
-
-#wrapper #profileDetails #profileForm .form-row.therapistOptions {
-    display: none;
 }
