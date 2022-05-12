@@ -7,15 +7,19 @@ $('#loginBtn').click(() => {
             password: $("#password").val(),
         }, success: function (data) {
             if (data == "NoEmailExist") {
+                document.getElementById("loginErrorMessage").style.display = 'block';
                 document.getElementById("loginErrorMessage").innerHTML = "User with that email does not exist"
             } else if (data == "wrongPassword") {
+                document.getElementById("loginErrorMessage").style.display = 'block';
                 document.getElementById("loginErrorMessage").innerHTML = "Incorrect Password"
             } else if (data.isAdmin) {
+                document.getElementById("loginErrorMessage").style.display = 'none';
                 document.getElementById('loginSuccessModal').style.display = 'flex';
                 setTimeout(() => {
                     window.location = '/admin-dashboard'
                 }, 2500);
             } else {
+                document.getElementById("loginErrorMessage").style.display = 'none';
                 document.getElementById('loginSuccessModal').style.display = 'flex';
                 setTimeout(() => {
                     window.location = '/'

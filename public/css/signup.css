@@ -191,6 +191,7 @@
 }
 
 #wrapper #signUp #formContainer #signupForm #signUpErrorMessage {
+    display: none;
     font-size: 1rem;
     font-weight: 500;
     padding-top: 1.5rem;

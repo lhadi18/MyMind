@@ -329,6 +329,32 @@
     #wrapper #profileDetailsMob #profileForm .form-row .form-group label {
         font-size: 1rem;
     }
+    #deleteAccountModal {
+        padding-top: 40%;
+        padding-bottom: 0;
+    }
+    #deleteAccountModal #modalContent {
+        padding: 2rem 1.5rem;
+        width: 90%;
+    }
+    #deleteAccountModal #modalContent h2 {
+        font-size: 1.2rem;
+    }
+    #deleteAccountModal #modalContent #deleteButtonsSec {
+        flex-direction: row-reverse;
+        justify-content: center;
+    }
+    #deleteAccountModal #modalContent #deleteButtonsSec #closeDelete {
+        font-size: 1rem;
+        padding-left: 1rem;
+        padding-right: 1.5rem;
+    }
+    #deleteAccountModal #modalContent #deleteButtonsSec #deleteAccountBtn {
+        padding: 12px;
+        width: 50%;
+        font-size: 1rem;
+        margin-left: 0;
+    }
     #wrapper #bannerTherapist {
         grid-row: 1 / span 1;
         height: 30vh;
@@ -1128,6 +1154,24 @@
         padding: 10px;
         height: 3.7rem;
     }
+    #deleteAccountModal {
+        padding-top: 40%;
+        padding-bottom: 0;
+    }
+    #deleteAccountModal #modalContent {
+        width: 80%;
+    }
+    #deleteAccountModal #modalContent h2 {
+        font-size: 1.3rem;
+    }
+    #deleteAccountModal #modalContent #deleteButtonsSec #closeDelete {
+        font-size: 1rem;
+    }
+    #deleteAccountModal #modalContent #deleteButtonsSec #deleteAccountBtn {
+        padding: 12px;
+        width: 25%;
+        font-size: 1rem;
+    }
     #wrapper #bannerTherapist {
         grid-row: 1 / span 1;
         height: 30vh;
@@ -1844,6 +1888,24 @@
     #wrapper #profileSummaryMob #profileDesc #profileImageSec {
         padding: 0 30%;
     }
+    #deleteAccountModal {
+        padding-top: 30%;
+        padding-bottom: 0%;
+    }
+    #deleteAccountModal #modalContent {
+        width: 80%;
+    }
+    #deleteAccountModal #modalContent h2 {
+        font-size: 1.3rem;
+    }
+    #deleteAccountModal #modalContent #deleteButtonsSec #closeDelete {
+        font-size: 1rem;
+    }
+    #deleteAccountModal #modalContent #deleteButtonsSec #deleteAccountBtn {
+        padding: 12px;
+        width: 25%;
+        font-size: 1rem;
+    }
     #wrapper #bannerTherapist {
         grid-row: 1 / span 1;
         background-attachment: scroll;
@@ -2349,6 +2411,13 @@
         padding: 18px 0;
         min-width: 12rem;
         font-size: 1rem;
+    }
+    #deleteAccountModal {
+        padding-top: 25%;
+        padding-bottom: 0%;
+    }
+    #deleteAccountModal #modalContent {
+        width: 80%;
     }
     #wrapper #bannerTherapist #overlay #therapistHeader {
         padding: 5rem;

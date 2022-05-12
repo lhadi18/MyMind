@@ -52,14 +52,19 @@ $(document).ready(async function () {
         $('#createUserBtn').click(() => {
             var phoneLength = $("#phone").val();
             if (phoneLength.length != 10) {
+                document.getElementById("createUserErrorMessage").style.display = 'block';
                 document.getElementById("createUserErrorMessage").innerHTML = "The phone number must be of length 10";
             } else if (!isEmail($("#email").val())) {
+                document.getElementById("createUserErrorMessage").style.display = 'block';
                 document.getElementById("createUserErrorMessage").innerHTML = "Please follow this email pattern: example@email.com";
             } else if (inputValidationCreate()) {
+                document.getElementById("createUserErrorMessage").style.display = 'block';
                 document.getElementById("createUserErrorMessage").innerHTML = "There are empty fields";
             } else if (passwordValidationCreate()) {
+                document.getElementById("createUserErrorMessage").style.display = 'block';
                 document.getElementById("createUserErrorMessage").innerHTML = "Password must be at least 5 or less than 20 characters long";
             } else if (negativeValidationcreate()) {
+                document.getElementById("createUserErrorMessage").style.display = 'block';
                 document.getElementById("createUserErrorMessage").innerHTML = "Experience or cost of session cannot be less than 0";
             } else {
                 $.ajax({
@@ -77,10 +82,13 @@ $(document).ready(async function () {
                         password: $("#password").val(),
                     }, success: function (data) {
                         if (data == "existingEmail") {
+                            document.getElementById("createUserErrorMessage").style.display = 'block';
                             document.getElementById("createUserErrorMessage").innerHTML = "A user with that email already exists";
                         } else if (data == "existingPhone") {
+                            document.getElementById("createUserErrorMessage").style.display = 'block';
                             document.getElementById("createUserErrorMessage").innerHTML = "A user with that phone number already exists";
                         } else if (data == "existingUsername") {
+                            document.getElementById("createUserErrorMessage").style.display = 'block';
                             document.getElementById("createUserErrorMessage").innerHTML = "A user with that username already exists";
                         } else {
                             document.getElementById('dashboardSuccessModal').style.display = 'flex';
@@ -125,7 +133,7 @@ $(document).ready(async function () {
         deleteUserBtns[i].onclick = function (e) {
             deleteUserModal.style.display = "block";
             document.body.style.overflow = 'hidden';
-            $('#deleteUserErrorMessage').html('');
+            document.getElementById("deleteUserErrorMessage").style.display = 'none';
 
             // Store the closes table row that was clicked
             const currentRow = this.closest('tr');
@@ -144,9 +152,11 @@ $(document).ready(async function () {
                     },
                     success: function (data) {
                         if(data == 'lastAdmin'){
+                            document.getElementById("deleteUserErrorMessage").style.display = 'block';
                             $('#deleteUserErrorMessage').html('Deletion failed. Database needs to have at least 1 administrator.')
                             return;
                         } else {
+                            document.getElementById("deleteUserErrorMessage").style.display = 'none';
                             document.getElementById('dashboardSuccessModal').style.display = 'flex';
                         }
                         setTimeout(() => {
@@ -167,7 +177,7 @@ $(document).ready(async function () {
             editUserModal.style.display = "block";
             document.body.style.overflow = 'hidden';
             const currentRow = this.closest('tr');
-            $("#editUserErrorMessage").html("");
+            document.getElementById("editUserErrorMessage").style.display = 'none';
             let previousUserType = currentRow.children[5].innerHTML.toLowerCase();
             document.getElementById('editFirstname').value = currentRow.children[0].innerHTML;
             document.getElementById('editLastname').value = currentRow.children[1].innerHTML;
@@ -183,14 +193,19 @@ $(document).ready(async function () {
             $('#editUserBtn').click(() => {
                 var phoneLength = $("#editPhone").val();
                 if (phoneLength.length != 10) {
+                    document.getElementById("editUserErrorMessage").style.display = 'block';
                     document.getElementById("editUserErrorMessage").innerHTML = "The phone number must be of length 10";
                 } else if (!isEmail($("#editEmail").val())) {
+                    document.getElementById("editUserErrorMessage").style.display = 'block';
                     document.getElementById("editUserErrorMessage").innerHTML = "Please follow this email pattern: example@gmail.com";
                 } else if (inputValidationEdit()) {
+                    document.getElementById("editUserErrorMessage").style.display = 'block';
                     document.getElementById("editUserErrorMessage").innerHTML = "There are empty fields.";
                 } else if (passwordValidationEdit()) {
+                    document.getElementById("editUserErrorMessage").style.display = 'block';
                     document.getElementById("editUserErrorMessage").innerHTML = "Password must be at least 5 or less than 20 characters long";
                 } else if (negativeValidationEdit()) {
+                    document.getElementById("editUserErrorMessage").style.display = 'block';
                     document.getElementById("editUserErrorMessage").innerHTML = "Experience or cost of session cannot be less than 0";
                 } else {
                     $.ajax({
@@ -211,21 +226,25 @@ $(document).ready(async function () {
                         },
                         success: function (data) {
                             if (data == "existingEmail") {
+                                document.getElementById("editUserErrorMessage").style.display = 'block';
                                 $("#editUserErrorMessage").html("A user with that email already exists");
                             } else if (data == "existingPhone") {
+                                document.getElementById("editUserErrorMessage").style.display = 'block';
                                 $("#editUserErrorMessage").html("A user with that phone number already exists");
                             } else if (data == "existingUsername") {
+                                document.getElementById("editUserErrorMessage").style.display = 'block';
                                 $("#editUserErrorMessage").html("A user with that username already exists");
                             } else if (data == "updatedWithPassword") {
-                                $("#editUserErrorMessage").html("");
+                                document.getElementById("editUserErrorMessage").style.display = 'none';
                                 document.getElementById('dashboardSuccessModal').style.display = 'flex';
                                 setTimeout(() => {
                                     location.reload();
                                 }, 2500);
                             } else if (data == 'lastAdmin'){
+                                document.getElementById("editUserErrorMessage").style.display = 'block';
                                 $("#editUserErrorMessage").html("Edit failed. Database needs to have at least 1 administrator.");
                             } else {
-                                $("#editUserErrorMessage").html("");
+                                document.getElementById("editUserErrorMessage").style.display = 'none';
                                 document.getElementById('dashboardSuccessModal').style.display = 'flex';
                                 setTimeout(() => {
                                     location.reload();
@@ -282,12 +301,15 @@ $(document).ready(async function () {
     // If user clicks outside of the modal for both Create and Delete then hide modal
     window.onclick = function (event) {
         if (event.target == createUserModal) {
+            document.getElementById("createUserErrorMessage").style.display = 'none';
             createUserModal.style.display = "none";
             document.body.style.overflow = 'auto';
         } else if (event.target == editUserModal) {
+            document.getElementById("editUserErrorMessage").style.display = 'none';
             editUserModal.style.display = "none";
             document.body.style.overflow = 'auto';
         } else if (event.target == deleteUserModal) {
+            document.getElementById("deleteUserErrorMessage").style.display = 'none';
             deleteUserModal.style.display = "none";
             document.body.style.overflow = 'auto';
         }

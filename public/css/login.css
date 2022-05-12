@@ -161,6 +161,7 @@
 }
 
 #wrapper #loginContainer .col-6 #loginSec #formContainer #loginForm #loginErrorMessage {
+    display: none;
     font-size: 1rem;
     font-weight: 500;
     padding-top: 1.5rem;

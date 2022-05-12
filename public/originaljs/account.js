@@ -133,15 +133,27 @@ $('#saveChanges').click(() => {
                         document.getElementById("validationErrorMessage").style.display = 'none';
                         document.getElementById("usernameErrorMessage").innerHTML = "A user with that username already exists";
                     } else if (data == "passwordValidation") {
+                        document.getElementById("phoneErrorMessage").style.display = 'none';
+                        document.getElementById("emailErrorMessage").style.display = 'none';
+                        document.getElementById("usernameErrorMessage").style.display = 'none';
+                        document.getElementById("validationErrorMessage").style.display = 'block';
                         document.getElementById("validationErrorMessage").innerHTML = "Password must be at least 5 or less than 20 characters long";
                     } else if (data == "updated") {
                         if (emp == "") {
+                            document.getElementById("phoneErrorMessage").style.display = 'none';
+                            document.getElementById("emailErrorMessage").style.display = 'none';
+                            document.getElementById("usernameErrorMessage").style.display = 'none';
+                            document.getElementById("validationErrorMessage").style.display = 'none';
                             document.getElementById('profileSuccessModal').style.display = 'flex';
                             setTimeout(() => {
                                 window.location = '/userprofile'
                             }, 2500);
                         } else {
                             $.post("/logout");
+                            document.getElementById("phoneErrorMessage").style.display = 'none';
+                            document.getElementById("emailErrorMessage").style.display = 'none';
+                            document.getElementById("usernameErrorMessage").style.display = 'none';
+                            document.getElementById("validationErrorMessage").style.display = 'none';
                             document.getElementById('profileSuccessModal').style.display = 'flex';
                             setTimeout(() => {
                                 window.location = '/login'
@@ -204,11 +216,13 @@ if (window.location.pathname == '/userprofile') {
     document.getElementById('deleteAccount').onclick = function (e) {
         deleteUserModal.style.display = "block";
         document.body.style.overflow = 'hidden';
+        document.getElementById('deleteAccountErrorMessage').style.display = 'block';
         $('#deleteAccountErrorMessage').html('');
     }
     document.getElementById('mobDeleteAccount').onclick = function (e) {
         deleteUserModal.style.display = "block";
         document.body.style.overflow = 'hidden';
+        document.getElementById('deleteAccountErrorMessage').style.display = 'block';
         $('#deleteAccountErrorMessage').html('');
     }
 

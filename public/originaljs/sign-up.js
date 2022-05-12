@@ -1,15 +1,24 @@
 $('#signupBtn').click(() => {
     var phoneLength = $("#phone").val();
     if (phoneLength.length != 10) {
+        window.scrollTo(0, document.body.scrollHeight);
+        document.getElementById("signUpErrorMessage").style.display = 'block';
         document.getElementById("signUpErrorMessage").innerHTML = "Your phone number must be of length 10";
     } else if (!isEmail($("#email").val())) {
+        window.scrollTo(0, document.body.scrollHeight);
+        document.getElementById("signUpErrorMessage").style.display = 'block';
         document.getElementById("signUpErrorMessage").innerHTML = "Please follow this email pattern: example@email.com";
     } else if (inputValidation()) {
         window.scrollTo(0, document.body.scrollHeight);
+        document.getElementById("signUpErrorMessage").style.display = 'block';
         document.getElementById("signUpErrorMessage").innerHTML = "There are empty fields";
     } else if(passwordValidation()) {
+        window.scrollTo(0, document.body.scrollHeight);
+        document.getElementById("signUpErrorMessage").style.display = 'block';
         document.getElementById("signUpErrorMessage").innerHTML = "Password must be at least 5 or less than 20 characters long";
     } else if (negativeValidation()) {
+        window.scrollTo(0, document.body.scrollHeight);
+        document.getElementById("signUpErrorMessage").style.display = 'block';
         document.getElementById("signUpErrorMessage").innerHTML = "Experience or cost of session cannot be less than 0";
     } else {
         $.ajax({
@@ -22,18 +31,25 @@ $('#signupBtn').click(() => {
                 phone: $("#phone").val(),
                 email: $("#email").val().toLowerCase(),
                 userType: $("#userType").val(),
-                password: $("#password").val(),
                 yearsExperience: $("#yearsExperience").val(),
                 sessionCost: $("#sessionCost").val(),
+                password: $("#password").val(),
             }, success: function (data) {
                 console.log(data);
                 if (data == "existingEmail") {
+                    window.scrollTo(0, document.body.scrollHeight);
+                    document.getElementById("signUpErrorMessage").style.display = 'block';
                     document.getElementById("signUpErrorMessage").innerHTML = "A user with that email already exists";
                 } else if (data == "existingPhone") {
+                    window.scrollTo(0, document.body.scrollHeight);
+                    document.getElementById("signUpErrorMessage").style.display = 'block';
                     document.getElementById("signUpErrorMessage").innerHTML = "A user with that phone number already exists";
                 } else if (data == "existingUsername") {
+                    window.scrollTo(0, document.body.scrollHeight);
+                    document.getElementById("signUpErrorMessage").style.display = 'block';
                     document.getElementById("signUpErrorMessage").innerHTML = "A user with that username already exists";
                 } else if (data == "login") {
+                    document.getElementById("signUpErrorMessage").style.display = 'none';
                     document.getElementById('signupSuccessModal').style.display = 'flex';
                     setTimeout(() => {
                         window.location = '/login'
