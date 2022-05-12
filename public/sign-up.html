@@ -119,7 +119,7 @@
                         <div class="form-group">
                             <label>First Name</label>
                             <input type="text" class="form-control" name="firstname" id="firstname"
-                                placeholder="First Name" value="" required="required" minlength="1" onkeydown="return /[a-z]/i.test(event.key)">
+                                placeholder="First Name" maxlength="15" value="" required="required" minlength="1" onkeydown="return /[a-z]/i.test(event.key)">
                         </div>
                     </div>
 
@@ -127,7 +127,7 @@
                         <div class="form-group">
                             <label>Last Name</label>
                             <input type="text" class="form-control" name="lastname" id="lastname"
-                                placeholder="Last Name" value="" required="required" minlength="1" onkeydown="return /[a-z]/i.test(event.key)">
+                                placeholder="Last Name" maxlength="30" value="" required="required" minlength="1" onkeydown="return /[a-z]/i.test(event.key)">
                         </div>
                     </div>
 
@@ -135,7 +135,7 @@
                         <div class="form-group">
                             <label>Username</label>
                             <input type="text" class="form-control" name="username" id="username" placeholder="Username"
-                                value="" minlength="1" required="required">
+                                value="" minlength="1" maxlength="30" required="required">
                         </div>
                     </div>
 
