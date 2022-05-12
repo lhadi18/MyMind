@@ -72,6 +72,7 @@ function setHeaders(req, res, next) {
 }
 
 //Routes
+//user profile page multer to update/change/fetch profile images
 var profileStorage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, 'public/uploads')
