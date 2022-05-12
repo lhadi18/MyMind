@@ -168,10 +168,10 @@ $(document).ready(async function () {
         }
     }
 
-    // Get all classnames to check which row was clicked to delete user
+    // Get all classnames to check which row was clicked to edit user
     const editUserBtns = document.querySelectorAll('.editUser');
 
-    // Loop through each delete icon and set function to display modal
+    // Loop through each edit icon and set function to display modal
     for (var i = 0; i < editUserBtns.length; i++) {
         editUserBtns[i].onclick = function (e) {
             editUserModal.style.display = "block";
@@ -298,7 +298,7 @@ $(document).ready(async function () {
         document.body.style.overflow = 'auto';
     }
 
-    // If user clicks outside of the modal for both Create and Delete then hide modal
+    // If user clicks outside of the modal for both Create, Edit and Delete then hide modal
     window.onclick = function (event) {
         if (event.target == createUserModal) {
             document.getElementById("createUserErrorMessage").style.display = 'none';

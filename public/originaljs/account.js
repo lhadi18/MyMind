@@ -40,11 +40,11 @@ $.ajax({
             $("#phone").attr("value", phonenumber)
             $("#phonemobile").text(phonenumber)
         }
-        if(data.userType == "therapist") {
+        if (data.userType == "therapist") {
             var displayTherapist = document.querySelectorAll(".therapistOptions");
-            for(var i = 0; i < displayTherapist.length; i++) {
+            for (var i = 0; i < displayTherapist.length; i++) {
                 displayTherapist[i].style.display = "flex";
-            }            
+            }
         }
     }
 });
@@ -192,7 +192,7 @@ function passwordValidation() {
 function negativeValidation() {
     const yearsExp = document.getElementById("yearsExperience").value;
     const cost = document.getElementById("sessionCost").value;
-    if(yearsExp < 0 || cost < 0) {
+    if (yearsExp < 0 || cost < 0) {
         return true;
     }
 }
@@ -216,14 +216,36 @@ if (window.location.pathname == '/userprofile') {
     document.getElementById('deleteAccount').onclick = function (e) {
         deleteUserModal.style.display = "block";
         document.body.style.overflow = 'hidden';
-        document.getElementById('deleteAccountErrorMessage').style.display = 'block';
-        $('#deleteAccountErrorMessage').html('');
+
+        document.getElementById('deleteAccountBtn').onclick = function () {
+            document.getElementById("deleteAccountErrorMessage").style.display = 'none';
+            // $.ajax({
+            //     url: '/deleteUser',
+            //     type: 'DELETE',
+            //     data: {
+            //         id: data.id,
+            //         previousUserType: data.userType
+            //     },
+            //     success: function (data) {
+            //         console.log(data);
+            //         if (data == 'lastAdmin') {
+            //             document.getElementById("deleteAccountErrorMessage").style.display = 'block';
+            //             $('#deleteAccountErrorMessage').html('Deletion failed. Database needs to have at least 1 administrator.')
+            //             return;
+            //         } else {
+            //             document.getElementById("deleteAccountErrorMessage").style.display = 'none';
+            //             document.getElementById('profileSuccessModal').style.display = 'flex';
+            //         }
+            //         setTimeout(() => {
+            //             window.location = '/login'
+            //         }, 2500);
+            //     }
+            // })
+        }
     }
     document.getElementById('mobDeleteAccount').onclick = function (e) {
         deleteUserModal.style.display = "block";
         document.body.style.overflow = 'hidden';
-        document.getElementById('deleteAccountErrorMessage').style.display = 'block';
-        $('#deleteAccountErrorMessage').html('');
     }
 
     // If cancel button is clicked, hide modal for Delete User
