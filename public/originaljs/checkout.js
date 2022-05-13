@@ -43,9 +43,11 @@ function deleteCart() {
         type: 'DELETE',
         success: function (data) {
             console.log("Deleted successfully");
+            document.getElementById('signupSuccessModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
             setTimeout(() => {
                 location.reload();
-            }, 50);
+            }, 2500);
         }
     })
 }

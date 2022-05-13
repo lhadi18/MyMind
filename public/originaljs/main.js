@@ -25,6 +25,11 @@ $(document).ready(function () {
                     for (var x = 0; x < therapistEls.length; x++)
                         therapistEls[x].style.display = 'list-item';
 
+                        let therapyBtns = document.querySelectorAll('.therapistBtn');
+                        for (var i = 0; i < therapyBtns.length; i++) {
+                            therapyBtns[i].disabled = true;
+                        }
+
                     let loggedInEls = document.querySelectorAll(".isLoggedIn");
                     for (var x = 0; x < loggedInEls.length; x++)
                         loggedInEls[x].style.display = 'list-item';

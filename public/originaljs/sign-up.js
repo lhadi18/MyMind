@@ -51,6 +51,7 @@ $('#signupBtn').click(() => {
                 } else if (data == "login") {
                     document.getElementById("signUpErrorMessage").style.display = 'none';
                     document.getElementById('signupSuccessModal').style.display = 'flex';
+                    document.body.style.overflow = 'hidden';
                     setTimeout(() => {
                         window.location = '/login'
                     }, 2500);

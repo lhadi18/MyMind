@@ -145,6 +145,7 @@ $('#saveChanges').click(() => {
                             document.getElementById("usernameErrorMessage").style.display = 'none';
                             document.getElementById("validationErrorMessage").style.display = 'none';
                             document.getElementById('profileSuccessModal').style.display = 'flex';
+                            document.body.style.overflow = 'hidden';
                             setTimeout(() => {
                                 window.location = '/userprofile'
                             }, 2500);
@@ -155,6 +156,7 @@ $('#saveChanges').click(() => {
                             document.getElementById("usernameErrorMessage").style.display = 'none';
                             document.getElementById("validationErrorMessage").style.display = 'none';
                             document.getElementById('profileSuccessModal').style.display = 'flex';
+                            document.body.style.overflow = 'hidden';
                             setTimeout(() => {
                                 window.location = '/login'
                             }, 2500);
