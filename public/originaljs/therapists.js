@@ -19,7 +19,31 @@ $(document).ready(async function () {
         }
     })
 
-    var therapistBtns = document.querySelectorAll(".therapistBtn");
+    const therapistBtns = document.querySelectorAll(".therapistBtn");
+
+    // Disable buttons for admin, therapists, and logged out users
+    setTimeout(() => {
+        $.get('/isLoggedIn', function (user) {
+            if (user) {
+                if (user.userType == 'therapist') {
+                    for (var i = 0; i < therapistBtns.length; i++) {
+                        therapistBtns[i].disabled = true;
+                    }
+                } else if (user.userType == 'admin') {
+                    for (var i = 0; i < therapistBtns.length; i++) {
+                        therapistBtns[i].disabled = true;
+                    }
+                }
+            } else {
+                for (var i = 0; i < therapistBtns.length; i++) {
+                    therapistBtns[i].disabled = true;
+                    therapistBtns[i].innerHTML = 'Please Login';
+                }
+            }
+        })
+
+    }, 50);
+
     therapistBtns.forEach(function (btn) {
         $(btn).click(() => {
             $.ajax({
