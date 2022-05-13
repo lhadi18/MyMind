@@ -15,7 +15,3 @@ Milestone 2: Both Admin User and Regular User - 100% Completed
 Milestone 3: Admin Dashbaord - 100% Completed
 Milestone 4: Shopping Cart Component - 50% Completed
 Milestone 5: Online Chat - 10% Completed
-
-Admin Login Credentials:
-email: arronf@gmail.com
-password: 12345
