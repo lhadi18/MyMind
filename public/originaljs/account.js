@@ -219,28 +219,24 @@ if (window.location.pathname == '/userprofile') {
 
         document.getElementById('deleteAccountBtn').onclick = function () {
             document.getElementById("deleteAccountErrorMessage").style.display = 'none';
-            // $.ajax({
-            //     url: '/deleteUser',
-            //     type: 'DELETE',
-            //     data: {
-            //         id: data.id,
-            //         previousUserType: data.userType
-            //     },
-            //     success: function (data) {
-            //         console.log(data);
-            //         if (data == 'lastAdmin') {
-            //             document.getElementById("deleteAccountErrorMessage").style.display = 'block';
-            //             $('#deleteAccountErrorMessage').html('Deletion failed. Database needs to have at least 1 administrator.')
-            //             return;
-            //         } else {
-            //             document.getElementById("deleteAccountErrorMessage").style.display = 'none';
-            //             document.getElementById('profileSuccessModal').style.display = 'flex';
-            //         }
-            //         setTimeout(() => {
-            //             window.location = '/login'
-            //         }, 2500);
-            //     }
-            // })
+            $.ajax({
+                url: '/deleteUserProfile',
+                type: 'DELETE',
+                success: function (data) {
+                    console.log(data);
+                    if (data == 'lastAdmin') {
+                        document.getElementById("deleteAccountErrorMessage").style.display = 'block';
+                        $('#deleteAccountErrorMessage').html('Deletion failed. Database needs to have at least 1 administrator.')
+                        return;
+                    } else {
+                        document.getElementById("deleteAccountErrorMessage").style.display = 'none';
+                        document.getElementById('profileSuccessModal').style.display = 'flex';
+                    }
+                    setTimeout(() => {
+                        window.location = '/login'
+                    }, 2500);
+                }
+            })
         }
     }
     document.getElementById('mobDeleteAccount').onclick = function (e) {

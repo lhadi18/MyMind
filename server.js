@@ -422,15 +422,16 @@ app.delete('/deleteUser', isLoggedIn, isAdmin, isNotLastAdminDelete, async (req,
         });
 })
 
-app.delete('/deleteCart', isLoggedIn, async (req, res) => {
-    Cart.deleteOne({
-        userId: req.session.user._id
-    }).then(function () {
-        console.log("deleted");
-        res.send()
-    }).catch(function (error) {
-        console.log(error);
+app.delete('/deleteUserProfile', isLoggedIn, isNotLastAdminDelete, async (req, res) => {
+    User.deleteOne({
+        _id: req.session.user._id
     })
+        .then(function () {
+            req.session.destroy();
+            res.send();
+        }).catch(function (error) {
+            console.log(error); // Failure
+        });
 })
 
 async function isNotExistingAdmin(req, res, next) {
@@ -681,6 +682,20 @@ app.post('/getTherapistInfo', (req, res) => {
             }
             res.json(therapistInfo);
         }
+    })
+})
+
+app.delete('/deleteCart', isLoggedIn, async (req, res) => {
+    Cart.updateOne({
+        userId: req.session.user._id,
+        status: "active"
+    }, {
+        status: "deleted"
+    }).then((obj) => {
+        console.log("deleted");
+        res.send()
+    }).catch(function (error) {
+        console.log(error);
     })
 })
 

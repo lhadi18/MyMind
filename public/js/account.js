@@ -1,1 +1,281 @@
-const _0x2e8d9a=_0x5021;(function(_0x355456,_0x5aad0){const _0x2bcc72=_0x5021,_0x208d17=_0x355456();while(!![]){try{const _0x1be2b1=-parseInt(_0x2bcc72(0x160))/0x1*(parseInt(_0x2bcc72(0x169))/0x2)+-parseInt(_0x2bcc72(0x196))/0x3*(-parseInt(_0x2bcc72(0x198))/0x4)+-parseInt(_0x2bcc72(0x184))/0x5*(parseInt(_0x2bcc72(0x13a))/0x6)+-parseInt(_0x2bcc72(0x13c))/0x7*(-parseInt(_0x2bcc72(0x18a))/0x8)+parseInt(_0x2bcc72(0x17e))/0x9*(-parseInt(_0x2bcc72(0x16e))/0xa)+parseInt(_0x2bcc72(0x132))/0xb+-parseInt(_0x2bcc72(0x19f))/0xc;if(_0x1be2b1===_0x5aad0)break;else _0x208d17['push'](_0x208d17['shift']());}catch(_0x3d8cc3){_0x208d17['push'](_0x208d17['shift']());}}}(_0x5d8b,0x77cf2));function _0x5d8b(){const _0x37b18b=['saveChanges','#displayUsername','length','auto','overflow','8uMCqeY','existingPhone','phoneErrorMessage','pathname','firstName','updated','#emailmobile','profileSuccessModal','readAsDataURL','#profileImageMob','click','toLowerCase','731661SSstKz','block','12QGnAoT','.therapistOptions','deleteAccountModal','toUpperCase','A\x20user\x20with\x20that\x20username\x20already\x20exists','/userprofile','phoneNum','14437836AxQTEh','change','load','checkValidity','9804366zHqQNz','hidden','charAt','post','username','firstname','profileImg','#phone','24BBWFOV','Please\x20follow\x20this\x20email\x20pattern:\x20example@email.com','3743726mAfCcE','mobDeleteAccount','body','emailErrorMessage','createdAt','/editProfile','#password','#displayFullname','profileFile','val','location','files','#phonemobile','therapist','#lastname','keypress','style','#saveChanges','text','existingUsername','getElementById','Experience\x20or\x20cost\x20of\x20session\x20cannot\x20be\x20less\x20than\x200','/login','attr','src','usernameErrorMessage','/getProfilePicture','lastName','#username','logout','userType','target','#email','toDateString','deleteAccount','password','73qWJPop','.form-control','flex','There\x20are\x20empty\x20fields','querySelectorAll','existingEmail','#yearsExperience','#profileImage','log','1046odmeyB','onclick','validationErrorMessage','profileImage','key','10gMngQz','innerHTML','Password\x20must\x20be\x20at\x20least\x205\x20or\x20less\x20than\x2020\x20characters\x20long','test','A\x20user\x20with\x20that\x20phone\x20number\x20already\x20exists','addEventListener','deleteAccountErrorMessage','display','Enter','#firstname','/logout','#sessionCost','scrollTo','scrollHeight','ajax','yearsExperience','243783DoZRku','none','value','email','closeDelete','substring','498285Fhqbty'];_0x5d8b=function(){return _0x37b18b;};return _0x5d8b();}var profileImgBtn=document[_0x2e8d9a(0x150)](_0x2e8d9a(0x16c)),profileFile=document[_0x2e8d9a(0x150)](_0x2e8d9a(0x144));profileImgBtn['addEventListener'](_0x2e8d9a(0x194),function(){profileFile['click']();}),profileFile['addEventListener'](_0x2e8d9a(0x1a0),function(){const _0x477f5b=_0x2e8d9a,_0x1a1d8c=this[_0x477f5b(0x147)][0x0];if(_0x1a1d8c){const _0x2129ed=new FileReader();_0x2129ed[_0x477f5b(0x173)](_0x477f5b(0x1a1),function(){const _0x1cac13=_0x477f5b;profileImgBtn['setAttribute'](_0x1cac13(0x154),_0x2129ed['result']);}),_0x2129ed[_0x477f5b(0x192)](_0x1a1d8c);}}),$[_0x2e8d9a(0x17c)]({'url':'/getUserInfo','type':'GET','success':function(_0x22f72e){const _0x5bc64e=_0x2e8d9a;$(_0x5bc64e(0x143))[_0x5bc64e(0x14e)](_0x22f72e[_0x5bc64e(0x18e)]+'\x20\x20'+_0x22f72e[_0x5bc64e(0x157)]),$(_0x5bc64e(0x186))['text']('@'+_0x22f72e['username']),$('#joinedDate')[_0x5bc64e(0x14e)](''+new Date(_0x22f72e[_0x5bc64e(0x140)])['toDateString']()),$('#joinedDateMob')[_0x5bc64e(0x14e)]('Joined:\x20'+new Date(_0x22f72e['createdAt'])[_0x5bc64e(0x15d)]()),$('#firstname')[_0x5bc64e(0x153)](_0x5bc64e(0x180),''+_0x22f72e[_0x5bc64e(0x18e)]),$('#lastname')[_0x5bc64e(0x153)](_0x5bc64e(0x180),''+_0x22f72e[_0x5bc64e(0x157)]),$('#username')[_0x5bc64e(0x153)]('value',''+_0x22f72e['username']),$(_0x5bc64e(0x15c))[_0x5bc64e(0x153)](_0x5bc64e(0x180),''+_0x22f72e[_0x5bc64e(0x181)]),$(_0x5bc64e(0x190))['text'](''+_0x22f72e['email']),$(_0x5bc64e(0x166))[_0x5bc64e(0x153)](_0x5bc64e(0x180),''+_0x22f72e[_0x5bc64e(0x17d)]),$(_0x5bc64e(0x179))[_0x5bc64e(0x153)](_0x5bc64e(0x180),''+_0x22f72e['sessionCost']);if(!_0x22f72e[_0x5bc64e(0x19e)])$('#phone')['attr'](_0x5bc64e(0x180)),$(_0x5bc64e(0x148))[_0x5bc64e(0x14e)]();else{let _0x42f801=_0x22f72e[_0x5bc64e(0x19e)];$(_0x5bc64e(0x139))['attr'](_0x5bc64e(0x180),_0x42f801),$(_0x5bc64e(0x148))[_0x5bc64e(0x14e)](_0x42f801);}if(_0x22f72e[_0x5bc64e(0x15a)]==_0x5bc64e(0x149)){var _0x5c432e=document[_0x5bc64e(0x164)](_0x5bc64e(0x199));for(var _0x386bae=0x0;_0x386bae<_0x5c432e[_0x5bc64e(0x187)];_0x386bae++){_0x5c432e[_0x386bae][_0x5bc64e(0x14c)][_0x5bc64e(0x175)]='flex';}}}}),setTimeout(()=>{const _0x465166=_0x2e8d9a;$[_0x465166(0x17c)]({'url':_0x465166(0x156),'type':'GET','success':function(_0x4aa76c){const _0xa24853=_0x465166;$(_0xa24853(0x167))[_0xa24853(0x153)](_0xa24853(0x154),_0x4aa76c[_0xa24853(0x138)]),$(_0xa24853(0x193))[_0xa24853(0x153)](_0xa24853(0x154),_0x4aa76c['profileImg']);}});},0x32),$(_0x2e8d9a(0x14d))['click'](()=>{const _0x57b8f4=_0x2e8d9a;var _0x3f8c6a=document['getElementById']('password')['value'],_0x85e96f=$('#phone')[_0x57b8f4(0x145)]();if(_0x85e96f[_0x57b8f4(0x187)]!=0xa)document['getElementById'](_0x57b8f4(0x18c))['style'][_0x57b8f4(0x175)]=_0x57b8f4(0x197),document[_0x57b8f4(0x150)](_0x57b8f4(0x13f))['style'][_0x57b8f4(0x175)]=_0x57b8f4(0x17f),document['getElementById'](_0x57b8f4(0x155))[_0x57b8f4(0x14c)][_0x57b8f4(0x175)]=_0x57b8f4(0x17f),document['getElementById'](_0x57b8f4(0x16b))[_0x57b8f4(0x14c)][_0x57b8f4(0x175)]=_0x57b8f4(0x17f),document['getElementById'](_0x57b8f4(0x18c))['innerHTML']='Your\x20phone\x20number\x20must\x20be\x20of\x20length\x2010';else{if(!isEmail($(_0x57b8f4(0x15c))[_0x57b8f4(0x145)]()))document['getElementById']('phoneErrorMessage')[_0x57b8f4(0x14c)][_0x57b8f4(0x175)]=_0x57b8f4(0x17f),document['getElementById'](_0x57b8f4(0x13f))[_0x57b8f4(0x14c)][_0x57b8f4(0x175)]=_0x57b8f4(0x197),document['getElementById'](_0x57b8f4(0x155))[_0x57b8f4(0x14c)][_0x57b8f4(0x175)]=_0x57b8f4(0x17f),document[_0x57b8f4(0x150)](_0x57b8f4(0x16b))[_0x57b8f4(0x14c)][_0x57b8f4(0x175)]='none',document[_0x57b8f4(0x150)](_0x57b8f4(0x13f))[_0x57b8f4(0x16f)]=_0x57b8f4(0x13b);else{if(inputValidation())window[_0x57b8f4(0x17a)](0x0,document[_0x57b8f4(0x13e)][_0x57b8f4(0x17b)]),document[_0x57b8f4(0x150)]('phoneErrorMessage')[_0x57b8f4(0x14c)][_0x57b8f4(0x175)]=_0x57b8f4(0x17f),document[_0x57b8f4(0x150)](_0x57b8f4(0x13f))[_0x57b8f4(0x14c)]['display']='none',document[_0x57b8f4(0x150)](_0x57b8f4(0x155))[_0x57b8f4(0x14c)][_0x57b8f4(0x175)]=_0x57b8f4(0x17f),document[_0x57b8f4(0x150)](_0x57b8f4(0x16b))[_0x57b8f4(0x14c)][_0x57b8f4(0x175)]=_0x57b8f4(0x197),window['scrollTo'](0x0,document[_0x57b8f4(0x13e)][_0x57b8f4(0x17b)]),document['getElementById'](_0x57b8f4(0x16b))[_0x57b8f4(0x16f)]=_0x57b8f4(0x163);else negativeValidation()?(window['scrollTo'](0x0,document[_0x57b8f4(0x13e)][_0x57b8f4(0x17b)]),document['getElementById'](_0x57b8f4(0x18c))[_0x57b8f4(0x14c)][_0x57b8f4(0x175)]='none',document[_0x57b8f4(0x150)](_0x57b8f4(0x13f))[_0x57b8f4(0x14c)]['display']=_0x57b8f4(0x17f),document['getElementById'](_0x57b8f4(0x155))[_0x57b8f4(0x14c)][_0x57b8f4(0x175)]=_0x57b8f4(0x17f),document[_0x57b8f4(0x150)](_0x57b8f4(0x16b))[_0x57b8f4(0x14c)][_0x57b8f4(0x175)]=_0x57b8f4(0x197),document[_0x57b8f4(0x150)](_0x57b8f4(0x16b))[_0x57b8f4(0x16f)]=_0x57b8f4(0x151)):$(_0x57b8f4(0x142))['val']()!=''&&passwordValidation()?(window[_0x57b8f4(0x17a)](0x0,document[_0x57b8f4(0x13e)]['scrollHeight']),document[_0x57b8f4(0x150)](_0x57b8f4(0x18c))[_0x57b8f4(0x14c)][_0x57b8f4(0x175)]='none',document[_0x57b8f4(0x150)](_0x57b8f4(0x13f))['style'][_0x57b8f4(0x175)]=_0x57b8f4(0x17f),document[_0x57b8f4(0x150)](_0x57b8f4(0x155))[_0x57b8f4(0x14c)][_0x57b8f4(0x175)]='none',document[_0x57b8f4(0x150)](_0x57b8f4(0x16b))[_0x57b8f4(0x14c)]['display']=_0x57b8f4(0x197),document[_0x57b8f4(0x150)](_0x57b8f4(0x16b))['innerHTML']=_0x57b8f4(0x170)):$[_0x57b8f4(0x17c)]({'url':_0x57b8f4(0x141),'type':'POST','data':{'firstname':$(_0x57b8f4(0x177))[_0x57b8f4(0x145)]()[_0x57b8f4(0x134)](0x0)[_0x57b8f4(0x19b)]()+$(_0x57b8f4(0x177))['val']()[_0x57b8f4(0x183)](0x1),'lastname':$(_0x57b8f4(0x14a))[_0x57b8f4(0x145)]()[_0x57b8f4(0x134)](0x0)[_0x57b8f4(0x19b)]()+$(_0x57b8f4(0x14a))[_0x57b8f4(0x145)]()[_0x57b8f4(0x183)](0x1),'email':$(_0x57b8f4(0x15c))[_0x57b8f4(0x145)]()[_0x57b8f4(0x195)](),'username':$(_0x57b8f4(0x158))[_0x57b8f4(0x145)]()[_0x57b8f4(0x195)](),'phone':$(_0x57b8f4(0x139))[_0x57b8f4(0x145)](),'password':$(_0x57b8f4(0x142))['val'](),'yearsExperience':$(_0x57b8f4(0x166))[_0x57b8f4(0x145)](),'sessionCost':$(_0x57b8f4(0x179))[_0x57b8f4(0x145)]()},'success':function(_0x1053c6){const _0x1549c6=_0x57b8f4;console[_0x1549c6(0x168)](_0x1053c6);if(_0x1053c6==_0x1549c6(0x165))document[_0x1549c6(0x150)](_0x1549c6(0x18c))[_0x1549c6(0x14c)][_0x1549c6(0x175)]='none',document[_0x1549c6(0x150)](_0x1549c6(0x13f))[_0x1549c6(0x14c)][_0x1549c6(0x175)]='block',document[_0x1549c6(0x150)]('usernameErrorMessage')[_0x1549c6(0x14c)][_0x1549c6(0x175)]=_0x1549c6(0x17f),document[_0x1549c6(0x150)](_0x1549c6(0x16b))[_0x1549c6(0x14c)][_0x1549c6(0x175)]=_0x1549c6(0x17f),document[_0x1549c6(0x150)](_0x1549c6(0x13f))[_0x1549c6(0x16f)]='A\x20user\x20with\x20that\x20email\x20already\x20exists';else{if(_0x1053c6==_0x1549c6(0x18b))document[_0x1549c6(0x150)](_0x1549c6(0x18c))[_0x1549c6(0x14c)][_0x1549c6(0x175)]=_0x1549c6(0x197),document[_0x1549c6(0x150)](_0x1549c6(0x13f))[_0x1549c6(0x14c)][_0x1549c6(0x175)]='none',document[_0x1549c6(0x150)](_0x1549c6(0x155))[_0x1549c6(0x14c)]['display']=_0x1549c6(0x17f),document[_0x1549c6(0x150)](_0x1549c6(0x16b))[_0x1549c6(0x14c)][_0x1549c6(0x175)]=_0x1549c6(0x17f),document[_0x1549c6(0x150)](_0x1549c6(0x18c))[_0x1549c6(0x16f)]=_0x1549c6(0x172);else{if(_0x1053c6==_0x1549c6(0x14f))document[_0x1549c6(0x150)](_0x1549c6(0x18c))[_0x1549c6(0x14c)][_0x1549c6(0x175)]=_0x1549c6(0x17f),document[_0x1549c6(0x150)](_0x1549c6(0x13f))[_0x1549c6(0x14c)][_0x1549c6(0x175)]=_0x1549c6(0x17f),document[_0x1549c6(0x150)](_0x1549c6(0x155))[_0x1549c6(0x14c)]['display']=_0x1549c6(0x197),document['getElementById'](_0x1549c6(0x16b))[_0x1549c6(0x14c)]['display']=_0x1549c6(0x17f),document['getElementById']('usernameErrorMessage')['innerHTML']=_0x1549c6(0x19c);else{if(_0x1053c6=='passwordValidation')document['getElementById']('phoneErrorMessage')[_0x1549c6(0x14c)]['display']=_0x1549c6(0x17f),document[_0x1549c6(0x150)](_0x1549c6(0x13f))[_0x1549c6(0x14c)]['display']=_0x1549c6(0x17f),document[_0x1549c6(0x150)](_0x1549c6(0x155))[_0x1549c6(0x14c)]['display']=_0x1549c6(0x17f),document[_0x1549c6(0x150)](_0x1549c6(0x16b))[_0x1549c6(0x14c)]['display']=_0x1549c6(0x197),document['getElementById'](_0x1549c6(0x16b))[_0x1549c6(0x16f)]=_0x1549c6(0x170);else{if(_0x1053c6==_0x1549c6(0x18f))_0x3f8c6a==''?(document[_0x1549c6(0x150)](_0x1549c6(0x18c))[_0x1549c6(0x14c)]['display']=_0x1549c6(0x17f),document[_0x1549c6(0x150)](_0x1549c6(0x13f))[_0x1549c6(0x14c)][_0x1549c6(0x175)]=_0x1549c6(0x17f),document[_0x1549c6(0x150)](_0x1549c6(0x155))[_0x1549c6(0x14c)][_0x1549c6(0x175)]=_0x1549c6(0x17f),document[_0x1549c6(0x150)](_0x1549c6(0x16b))['style'][_0x1549c6(0x175)]=_0x1549c6(0x17f),document['getElementById']('profileSuccessModal')[_0x1549c6(0x14c)]['display']=_0x1549c6(0x162),setTimeout(()=>{const _0x2ab2c5=_0x1549c6;window['location']=_0x2ab2c5(0x19d);},0x9c4)):($[_0x1549c6(0x135)](_0x1549c6(0x178)),document[_0x1549c6(0x150)](_0x1549c6(0x18c))[_0x1549c6(0x14c)][_0x1549c6(0x175)]=_0x1549c6(0x17f),document[_0x1549c6(0x150)](_0x1549c6(0x13f))[_0x1549c6(0x14c)][_0x1549c6(0x175)]=_0x1549c6(0x17f),document['getElementById'](_0x1549c6(0x155))['style'][_0x1549c6(0x175)]=_0x1549c6(0x17f),document[_0x1549c6(0x150)](_0x1549c6(0x16b))[_0x1549c6(0x14c)][_0x1549c6(0x175)]=_0x1549c6(0x17f),document[_0x1549c6(0x150)](_0x1549c6(0x191))['style'][_0x1549c6(0x175)]=_0x1549c6(0x162),setTimeout(()=>{const _0x594a3a=_0x1549c6;window[_0x594a3a(0x146)]='/login';},0x9c4));else _0x1053c6==_0x1549c6(0x159)&&(window[_0x1549c6(0x146)]=_0x1549c6(0x152));}}}}}});}}});function isEmail(_0xc80420){const _0x1a8923=_0x2e8d9a;var _0x8f586=/^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;return _0x8f586[_0x1a8923(0x171)](_0xc80420);}function inputValidation(){const _0x5cc581=_0x2e8d9a,_0x407612=document[_0x5cc581(0x150)](_0x5cc581(0x137)),_0x80445e=document[_0x5cc581(0x150)]('lastname'),_0x2d538e=document[_0x5cc581(0x150)](_0x5cc581(0x136));if(!_0x407612[_0x5cc581(0x1a2)]()||!_0x80445e[_0x5cc581(0x1a2)]()||!_0x2d538e[_0x5cc581(0x1a2)]())return!![];}function passwordValidation(){const _0x55e8b7=_0x2e8d9a,_0x5a3e5b=document[_0x55e8b7(0x150)](_0x55e8b7(0x15f));if(!_0x5a3e5b[_0x55e8b7(0x1a2)]())return!![];}function negativeValidation(){const _0x468cdc=_0x2e8d9a,_0x18687f=document[_0x468cdc(0x150)](_0x468cdc(0x17d))[_0x468cdc(0x180)],_0x3e6f44=document[_0x468cdc(0x150)]('sessionCost')['value'];if(_0x18687f<0x0||_0x3e6f44<0x0)return!![];}const input=document[_0x2e8d9a(0x164)](_0x2e8d9a(0x161));function _0x5021(_0x55736c,_0x1cef88){const _0x5d8b2a=_0x5d8b();return _0x5021=function(_0x5021b8,_0x4df60c){_0x5021b8=_0x5021b8-0x132;let _0x1936f8=_0x5d8b2a[_0x5021b8];return _0x1936f8;},_0x5021(_0x55736c,_0x1cef88);}for(var i=0x0;i<input[_0x2e8d9a(0x187)];i++){input[i][_0x2e8d9a(0x173)](_0x2e8d9a(0x14b),function(_0x31b10f){const _0x78c96f=_0x2e8d9a;_0x31b10f[_0x78c96f(0x16d)]===_0x78c96f(0x176)&&(_0x31b10f['preventDefault'](),document[_0x78c96f(0x150)](_0x78c96f(0x185))[_0x78c96f(0x194)]());});}var deleteUserModal=document[_0x2e8d9a(0x150)](_0x2e8d9a(0x19a));window[_0x2e8d9a(0x146)][_0x2e8d9a(0x18d)]==_0x2e8d9a(0x19d)&&(document[_0x2e8d9a(0x150)](_0x2e8d9a(0x15e))['onclick']=function(_0x3d2548){const _0x395171=_0x2e8d9a;deleteUserModal['style'][_0x395171(0x175)]=_0x395171(0x197),document['body']['style']['overflow']=_0x395171(0x133),document[_0x395171(0x150)]('deleteAccountBtn')[_0x395171(0x16a)]=function(){const _0x1b17b1=_0x395171;document[_0x1b17b1(0x150)](_0x1b17b1(0x174))[_0x1b17b1(0x14c)]['display']='none';};},document[_0x2e8d9a(0x150)](_0x2e8d9a(0x13d))['onclick']=function(_0x4a6072){const _0x4d5b5f=_0x2e8d9a;deleteUserModal[_0x4d5b5f(0x14c)][_0x4d5b5f(0x175)]=_0x4d5b5f(0x197),document['body']['style'][_0x4d5b5f(0x189)]=_0x4d5b5f(0x133);},document['getElementById'](_0x2e8d9a(0x182))[_0x2e8d9a(0x16a)]=function(){const _0x43133e=_0x2e8d9a;deleteUserModal[_0x43133e(0x14c)]['display']='none',document[_0x43133e(0x13e)][_0x43133e(0x14c)][_0x43133e(0x189)]='auto';},window['onclick']=function(_0x4605d2){const _0x3e37a0=_0x2e8d9a;_0x4605d2[_0x3e37a0(0x15b)]==deleteUserModal&&(deleteUserModal[_0x3e37a0(0x14c)][_0x3e37a0(0x175)]=_0x3e37a0(0x17f),document['body'][_0x3e37a0(0x14c)]['overflow']=_0x3e37a0(0x188));});
+var profileImgBtn = document.getElementById('profileImage');
+var profileFile = document.getElementById('profileFile');
+
+profileImgBtn.addEventListener('click', function () {
+    profileFile.click();
+});
+
+profileFile.addEventListener('change', function () {
+    const choosedFile = this.files[0];
+
+    if (choosedFile) {
+        const reader = new FileReader();
+        reader.addEventListener('load', function () {
+            profileImgBtn.setAttribute('src', reader.result);
+        });
+        reader.readAsDataURL(choosedFile);
+    }
+});
+
+$.ajax({
+    url: '/getUserInfo',
+    type: "GET",
+    success: function (data) {
+        $("#displayFullname").text(`${data.firstName}  ${data.lastName}`)
+        $("#displayUsername").text(`@${data.username}`)
+        $("#joinedDate").text(`${new Date(data.createdAt).toDateString()}`)
+        $("#joinedDateMob").text(`Joined: ${new Date(data.createdAt).toDateString()}`)
+        $("#firstname").attr("value", `${data.firstName}`)
+        $("#lastname").attr("value", `${data.lastName}`)
+        $("#username").attr("value", `${data.username}`)
+        $("#email").attr("value", `${data.email}`)
+        $("#emailmobile").text(`${data.email}`)
+        $("#yearsExperience").attr("value", `${data.yearsExperience}`)
+        $("#sessionCost").attr("value", `${data.sessionCost}`)
+        if (!data.phoneNum) {
+            $("#phone").attr("value",)
+            $("#phonemobile").text()
+        } else {
+            let phonenumber = data.phoneNum;
+            $("#phone").attr("value", phonenumber)
+            $("#phonemobile").text(phonenumber)
+        }
+        if (data.userType == "therapist") {
+            var displayTherapist = document.querySelectorAll(".therapistOptions");
+            for (var i = 0; i < displayTherapist.length; i++) {
+                displayTherapist[i].style.display = "flex";
+            }
+        }
+    }
+});
+
+//admin dashboard backpage to userprofile fix
+setTimeout(() => {
+    $.ajax({
+        url: '/getProfilePicture',
+        type: 'GET',
+        success: function (data) {
+            $("#profileImage").attr('src', data.profileImg)
+            $("#profileImageMob").attr('src', data.profileImg)
+        }
+    })
+}, 50);
+
+$('#saveChanges').click(() => {
+    var emp = document.getElementById("password").value;
+    var phoneLength = $("#phone").val();
+    if (phoneLength.length != 10) {
+        document.getElementById("phoneErrorMessage").style.display = 'block';
+        document.getElementById("emailErrorMessage").style.display = 'none';
+        document.getElementById("usernameErrorMessage").style.display = 'none';
+        document.getElementById("validationErrorMessage").style.display = 'none';
+        document.getElementById("phoneErrorMessage").innerHTML = "Your phone number must be of length 10";
+    } else if (!isEmail($("#email").val())) {
+        document.getElementById("phoneErrorMessage").style.display = 'none';
+        document.getElementById("emailErrorMessage").style.display = 'block';
+        document.getElementById("usernameErrorMessage").style.display = 'none';
+        document.getElementById("validationErrorMessage").style.display = 'none';
+        document.getElementById("emailErrorMessage").innerHTML = "Please follow this email pattern: example@email.com";
+    } else if (inputValidation()) {
+        window.scrollTo(0, document.body.scrollHeight);
+        document.getElementById("phoneErrorMessage").style.display = 'none';
+        document.getElementById("emailErrorMessage").style.display = 'none';
+        document.getElementById("usernameErrorMessage").style.display = 'none';
+        document.getElementById("validationErrorMessage").style.display = 'block';
+        window.scrollTo(0, document.body.scrollHeight);
+        document.getElementById("validationErrorMessage").innerHTML = "There are empty fields";
+    } else if (negativeValidation()) {
+        window.scrollTo(0, document.body.scrollHeight);
+        document.getElementById("phoneErrorMessage").style.display = 'none';
+        document.getElementById("emailErrorMessage").style.display = 'none';
+        document.getElementById("usernameErrorMessage").style.display = 'none';
+        document.getElementById("validationErrorMessage").style.display = 'block';
+        document.getElementById("validationErrorMessage").innerHTML = "Experience or cost of session cannot be less than 0";
+    } else {
+        if ($("#password").val() != "" && passwordValidation()) {
+            window.scrollTo(0, document.body.scrollHeight);
+            document.getElementById("phoneErrorMessage").style.display = 'none';
+            document.getElementById("emailErrorMessage").style.display = 'none';
+            document.getElementById("usernameErrorMessage").style.display = 'none';
+            document.getElementById("validationErrorMessage").style.display = 'block';
+            document.getElementById("validationErrorMessage").innerHTML = "Password must be at least 5 or less than 20 characters long";
+        } else {
+            $.ajax({
+                url: '/editProfile',
+                type: 'POST',
+                data: {
+                    firstname: $("#firstname").val().charAt(0).toUpperCase() + $("#firstname").val().substring(1),
+                    lastname: $("#lastname").val().charAt(0).toUpperCase() + $("#lastname").val().substring(1),
+                    email: $("#email").val().toLowerCase(),
+                    username: $("#username").val().toLowerCase(),
+                    phone: $("#phone").val(),
+                    password: $("#password").val(),
+                    yearsExperience: $("#yearsExperience").val(),
+                    sessionCost: $("#sessionCost").val(),
+                }, success: function (data) {
+                    console.log(data);
+                    if (data == "existingEmail") {
+                        document.getElementById("phoneErrorMessage").style.display = 'none';
+                        document.getElementById("emailErrorMessage").style.display = 'block';
+                        document.getElementById("usernameErrorMessage").style.display = 'none';
+                        document.getElementById("validationErrorMessage").style.display = 'none';
+                        document.getElementById("emailErrorMessage").innerHTML = "A user with that email already exists";
+                    } else if (data == "existingPhone") {
+                        document.getElementById("phoneErrorMessage").style.display = 'block';
+                        document.getElementById("emailErrorMessage").style.display = 'none';
+                        document.getElementById("usernameErrorMessage").style.display = 'none';
+                        document.getElementById("validationErrorMessage").style.display = 'none';
+                        document.getElementById("phoneErrorMessage").innerHTML = "A user with that phone number already exists";
+                    } else if (data == "existingUsername") {
+                        document.getElementById("phoneErrorMessage").style.display = 'none';
+                        document.getElementById("emailErrorMessage").style.display = 'none';
+                        document.getElementById("usernameErrorMessage").style.display = 'block';
+                        document.getElementById("validationErrorMessage").style.display = 'none';
+                        document.getElementById("usernameErrorMessage").innerHTML = "A user with that username already exists";
+                    } else if (data == "passwordValidation") {
+                        document.getElementById("phoneErrorMessage").style.display = 'none';
+                        document.getElementById("emailErrorMessage").style.display = 'none';
+                        document.getElementById("usernameErrorMessage").style.display = 'none';
+                        document.getElementById("validationErrorMessage").style.display = 'block';
+                        document.getElementById("validationErrorMessage").innerHTML = "Password must be at least 5 or less than 20 characters long";
+                    } else if (data == "updated") {
+                        if (emp == "") {
+                            document.getElementById("phoneErrorMessage").style.display = 'none';
+                            document.getElementById("emailErrorMessage").style.display = 'none';
+                            document.getElementById("usernameErrorMessage").style.display = 'none';
+                            document.getElementById("validationErrorMessage").style.display = 'none';
+                            document.getElementById('profileSuccessModal').style.display = 'flex';
+                            setTimeout(() => {
+                                window.location = '/userprofile'
+                            }, 2500);
+                        } else {
+                            $.post("/logout");
+                            document.getElementById("phoneErrorMessage").style.display = 'none';
+                            document.getElementById("emailErrorMessage").style.display = 'none';
+                            document.getElementById("usernameErrorMessage").style.display = 'none';
+                            document.getElementById("validationErrorMessage").style.display = 'none';
+                            document.getElementById('profileSuccessModal').style.display = 'flex';
+                            setTimeout(() => {
+                                window.location = '/login'
+                            }, 2500);
+                        }
+                    } else if (data == "logout") {
+                        window.location = '/login'
+                    }
+                }
+            })
+        }
+    }
+});
+
+function isEmail(email) {
+    var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    return regex.test(email);
+}
+
+function inputValidation() {
+    const inpObjFirstName = document.getElementById("firstname");
+    const inpObjLastName = document.getElementById("lastname");
+    const inpObjUsername = document.getElementById("username");
+    if (!inpObjFirstName.checkValidity() || !inpObjLastName.checkValidity() || !inpObjUsername.checkValidity()) {
+        return true;
+    }
+}
+
+function passwordValidation() {
+    const inpObjPassword = document.getElementById("password");
+    if (!inpObjPassword.checkValidity()) {
+        return true;
+    }
+}
+
+function negativeValidation() {
+    const yearsExp = document.getElementById("yearsExperience").value;
+    const cost = document.getElementById("sessionCost").value;
+    if (yearsExp < 0 || cost < 0) {
+        return true;
+    }
+}
+
+
+// Trigger click function for enter key for all input fields
+const input = document.querySelectorAll(".form-control");
+for (var i = 0; i < input.length; i++) {
+    input[i].addEventListener("keypress", function (e) {
+        if (e.key === "Enter") {
+            e.preventDefault();
+            document.getElementById("saveChanges").click();
+        }
+    });
+}
+
+// Variables for Delete User Modal 
+var deleteUserModal = document.getElementById("deleteAccountModal");
+
+if (window.location.pathname == '/userprofile') {
+    document.getElementById('deleteAccount').onclick = function (e) {
+        deleteUserModal.style.display = "block";
+        document.body.style.overflow = 'hidden';
+
+        document.getElementById('deleteAccountBtn').onclick = function () {
+            document.getElementById("deleteAccountErrorMessage").style.display = 'none';
+            $.ajax({
+                url: '/deleteUserProfile',
+                type: 'DELETE',
+                success: function (data) {
+                    console.log(data);
+                    if (data == 'lastAdmin') {
+                        document.getElementById("deleteAccountErrorMessage").style.display = 'block';
+                        $('#deleteAccountErrorMessage').html('Deletion failed. Database needs to have at least 1 administrator.')
+                        return;
+                    } else {
+                        document.getElementById("deleteAccountErrorMessage").style.display = 'none';
+                        document.getElementById('profileSuccessModal').style.display = 'flex';
+                    }
+                    setTimeout(() => {
+                        window.location = '/login'
+                    }, 2500);
+                }
+            })
+        }
+    }
+    document.getElementById('mobDeleteAccount').onclick = function (e) {
+        deleteUserModal.style.display = "block";
+        document.body.style.overflow = 'hidden';
+        document.getElementById('deleteAccountBtn').onclick = function () {
+            document.getElementById("deleteAccountErrorMessage").style.display = 'none';
+            $.ajax({
+                url: '/deleteUserProfile',
+                type: 'DELETE',
+                success: function (data) {
+                    console.log(data);
+                    if (data == 'lastAdmin') {
+                        document.getElementById("deleteAccountErrorMessage").style.display = 'block';
+                        $('#deleteAccountErrorMessage').html('Deletion failed. Database needs to have at least 1 administrator.')
+                        return;
+                    } else {
+                        document.getElementById("deleteAccountErrorMessage").style.display = 'none';
+                        document.getElementById('profileSuccessModal').style.display = 'flex';
+                    }
+                    setTimeout(() => {
+                        window.location = '/login'
+                    }, 2500);
+                }
+            })
+        }
+    }
+
+    // If cancel button is clicked, hide modal for Delete User
+    document.getElementById("closeDelete").onclick = function () {
+        deleteUserModal.style.display = "none";
+        document.body.style.overflow = 'auto';
+    }
+
+    // If user clicks outside of the modal for both Create and Delete then hide modal
+    window.onclick = function (event) {
+        if (event.target == deleteUserModal) {
+            deleteUserModal.style.display = "none";
+            document.body.style.overflow = 'auto';
+        }
+    }
+} 
