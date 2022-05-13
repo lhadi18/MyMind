@@ -36,3 +36,16 @@ function getTherapist(therapistId) {
         }
     })
 }
+
+function deleteCart() {
+    $.ajax({
+        url: '/deleteCart',
+        type: 'DELETE',
+        success: function (data) {
+            console.log("Deleted successfully");
+            setTimeout(() => {
+                location.reload();
+            }, 50);
+        }
+    })
+}
