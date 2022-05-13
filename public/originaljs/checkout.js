@@ -61,10 +61,6 @@ document.getElementById('removeItem').onclick = function (e) {
     }
 }
 
-document.getElementById('removeOrderBtn').onclick = function () {
-    window.location = '/thank-you'
-}
-
 // If cancel button is clicked, hide modal for Delete User
 document.getElementById("cancelRemove").onclick = function () {
     removeOrderModal.style.display = "none";
@@ -84,7 +80,11 @@ document.getElementById('confirmOrder').onclick = function () {
         url: "/confirmCart",
         method: "POST",
         success: function(data) {
-            window.location = "/thank-you"
+            document.getElementById('signupSuccessModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+            setTimeout(() => {
+                window.location = "/thank-you"
+            }, 2500);
         }
     })
 }
