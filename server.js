@@ -2,6 +2,7 @@ const express = require("express");
 const path = require('path');
 const session = require('express-session');
 const User = require("./models/BBY_31_users");
+const Chat = require("./models/BBY_31_messages");
 const mongoose = require("mongoose");
 const multer = require("multer");
 const bcrypt = require('bcrypt');
@@ -13,12 +14,31 @@ const { Server } = require("socket.io");
 const io = new Server(server);
 
 io.on('connection', (socket) => {
-    socket.on('chat message', msg => {
-      io.emit('chat message', msg);
+    socket.on('chat message', (msg) => {
+        io.emit('chat message', msg);
     });
 
     console.log('Chat is connected.')
-  });
+
+    socket.on("chat message", function (msg) {
+        console.log("message: " + msg);
+
+        //broadcast message to everyone in port:5000 except yourself.
+        socket.broadcast.emit("received", { message: msg });
+
+        //save chat to the database
+        let connect = mongoose.connect(uri, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true
+        })
+        connect.then(db => {
+            console.log("connected correctly to the server");
+            let chatMessage = new Chat({ message: msg, sender: "Anonymous" });
+
+            chatMessage.save();
+        });
+    });
+});
 
 app.set('view engine', 'text/html');
 

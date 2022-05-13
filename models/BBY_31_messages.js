@@ -5,28 +5,8 @@ const messageSchema = new Schema({
     message: {
         type: String,
         required: true
-    },
-    patientId: {
-        type: String,
-        required: true
-    },
-    therapistId: {
-        type: String,
-        required: true
-    },
-    tSessionId: {
-        type: String,
-        required: true
-    },
-    userType: {
-        type: String,
-        required: true
-    },
-    profileImg: {
-        type: String,
-        default: "../uploads/placeholder-profile.jpg"
     }
-}, { timestamps: true});
+}, { timestamps: true });
 
-const message = mongoose.model('message', userSchema);
-module.exports = User;
+const Chat = mongoose.model('dms', messageSchema);
+module.exports = Chat;
