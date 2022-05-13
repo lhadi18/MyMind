@@ -835,6 +835,22 @@
         text-align: left;
         padding-left: 1.5rem;
     }
+    #wrapper #cartExistModal {
+        padding-top: 50%;
+    }
+    #wrapper #cartExistModal #modalContent {
+        width: 90%;
+        padding: 2rem 1.5rem;
+    }
+    #wrapper #cartExistModal #modalContent #closeCart {
+        font-size: 1.7rem;
+    }
+    #wrapper #cartExistModal #modalContent h2 {
+        font-size: 1.8rem;
+    }
+    #wrapper #cartExistModal #modalContent p {
+        font-size: 1rem;
+    }
     #wrapper #thankyouContainer {
         grid-row: 2 / span 1;
         flex-direction: column-reverse;
@@ -1619,6 +1635,15 @@
     #wrapper #orderSummary #cartTotalSec {
         padding: 3rem 0;
     }
+    #wrapper #cartExistModal {
+        padding-top: 40%;
+    }
+    #wrapper #cartExistModal #modalContent {
+        width: 80%;
+    }
+    #wrapper #cartExistModal #modalContent #closeCart {
+        font-size: 1.7rem;
+    }
     #wrapper #thankyouContainer {
         grid-row: 2 / span 1;
         flex-direction: column-reverse;
@@ -2265,6 +2290,12 @@
         text-align: left;
         padding: 1rem 0;
     }
+    #wrapper #cartExistModal {
+        padding-top: 30%;
+    }
+    #wrapper #cartExistModal #modalContent {
+        width: 80%;
+    }
     #wrapper #thankyouContainer {
         grid-row: 2 / span 1;
         flex-direction: column-reverse;
@@ -2568,6 +2599,12 @@
     }
     #wrapper #orderSummary #orderTable #tableBody #cartCostSec p:nth-child(2) {
         width: 40%;
+    }
+    #wrapper #cartExistModal {
+        padding-top: 20%;
+    }
+    #wrapper #cartExistModal #modalContent {
+        width: 80%;
     }
     #wrapper #thankyouContainer {
         padding: 5rem;

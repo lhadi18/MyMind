@@ -1,3 +1,5 @@
+const cartExistModal = document.getElementById('cartExistModal');
+
 $(document).ready(async function () {
     await $.ajax({
         url: '/getTherapists',
@@ -18,24 +20,37 @@ $(document).ready(async function () {
     })
 
     var therapistBtns = document.querySelectorAll(".therapistBtn");
-    therapistBtns.forEach(function(btn){
-        $(btn).click(()=>{
+    therapistBtns.forEach(function (btn) {
+        $(btn).click(() => {
             $.ajax({
                 url: "/addToCart",
                 type: "POST",
                 data: {
                     therapist: btn.id
                 },
-                success: function(data){
-                    if (data=='cartExists'){
-                        console.log('cart exists baby')
-                    } else{
+                success: function (data) {
+                    if (data == 'cartExists') {
+                        cartExistModal.style.display = 'block';
+                        document.body.style.overflow = 'hidden';
+                    } else {
                         window.location = "/checkout"
                     }
                 }
             })
         })
     })
-
-
 })
+
+ // If cancel button is clicked, hide modal for Cart Exist 
+ document.getElementById("closeCart").onclick = function () {
+    cartExistModal.style.display = "none";
+    document.body.style.overflow = 'auto';
+}
+
+// If user clicks outside of the modal for Cart Exist Modal then hide modal
+window.onclick = function (event) {
+    if (event.target == cartExistModal) {
+        cartExistModal.style.display = "none";
+        document.body.style.overflow = 'auto';
+    }
+}
