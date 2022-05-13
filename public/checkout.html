@@ -145,12 +145,12 @@
                             <h4 id="therapistName">Towa Quimbayo</h4>
                             <p id="therapistDesc">15+ years of experience in the profession, and offers $90 per session
                             </p>
-                            <button type="submit" onclick="deleteCart()" id="removeItem">Remove</button>
+                            <button type="submit" id="removeItem">Remove</button>
                         </div>
                     </div>
-                    <div id="quantitySec">
-                        <p>Quantity: </p>
-                        <input type="number" id="cartQuantity" value="1" step="1" min="1" />
+                    <div id="timeSec">
+                        <p>Time: </p>
+                        <p id="cartTime">3 Mins</p>
                     </div>
                     <div id="cartPlanSec">
                         <p>Package Plan: </p>
@@ -193,8 +193,21 @@
             <div id="signupSuccessContainer">
                 <div id="signupSuccessBg">
                     <svg viewBox="0 0 65 51" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M7 25L27.3077 44L58.5 7" stroke="white" stroke-width="13" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M7 25L27.3077 44L58.5 7" stroke="white" stroke-width="13" stroke-linecap="round"
+                            stroke-linejoin="round" />
                     </svg>
+                </div>
+            </div>
+        </div>
+
+        <!-- Remove Order Modal -->
+        <div id="removeOrderModal">
+            <div id="modalContent">
+                <h2>You're about to remove your order!</h2>
+                <p>The therapist is about to be removed from your cart, click confirm to empty the cart.</p>
+                <div id="removeButtonsSec">
+                    <button id="cancelRemove">Cancel</button>
+                    <button id="removeOrderBtn">Confirm</button>
                 </div>
             </div>
         </div>

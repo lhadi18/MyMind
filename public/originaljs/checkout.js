@@ -37,17 +37,40 @@ function getTherapist(therapistId) {
     })
 }
 
-function deleteCart() {
-    $.ajax({
-        url: '/deleteCart',
-        type: 'DELETE',
-        success: function (data) {
-            console.log("Deleted successfully");
-            document.getElementById('signupSuccessModal').style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-            setTimeout(() => {
-                location.reload();
-            }, 2500);
-        }
-    })
+// Variables for Delete User Modal 
+var removeOrderModal = document.getElementById("removeOrderModal");
+
+document.getElementById('removeItem').onclick = function (e) {
+    removeOrderModal.style.display = "block";
+    document.body.style.overflow = 'hidden';
+
+    document.getElementById('removeOrderBtn').onclick = function () {
+        $.ajax({
+            url: '/deleteCart',
+            type: 'DELETE',
+            success: function (data) {
+                console.log("Deleted successfully");
+                removeOrderModal.style.display = "none";
+                document.getElementById('signupSuccessModal').style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+                setTimeout(() => {
+                    location.reload();
+                }, 2500);
+            }
+        })
+    }
+}
+
+// If cancel button is clicked, hide modal for Delete User
+document.getElementById("cancelRemove").onclick = function () {
+    removeOrderModal.style.display = "none";
+    document.body.style.overflow = 'auto';
+}
+
+// If user clicks outside of the modal for both Create and Delete then hide modal
+window.onclick = function (event) {
+    if (event.target == removeOrderModal) {
+        removeOrderModal.style.display = "none";
+        document.body.style.overflow = 'auto';
+    }
 }
