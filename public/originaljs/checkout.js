@@ -61,6 +61,10 @@ document.getElementById('removeItem').onclick = function (e) {
     }
 }
 
+document.getElementById('removeOrderBtn').onclick = function () {
+    window.location = '/thank-you'
+}
+
 // If cancel button is clicked, hide modal for Delete User
 document.getElementById("cancelRemove").onclick = function () {
     removeOrderModal.style.display = "none";
@@ -73,4 +77,14 @@ window.onclick = function (event) {
         removeOrderModal.style.display = "none";
         document.body.style.overflow = 'auto';
     }
+}
+
+document.getElementById('confirmOrder').onclick = function () {
+    $.ajax({
+        url: "/confirmCart",
+        method: "POST",
+        success: function(data) {
+            window.location = "/thank-you"
+        }
+    })
 }
