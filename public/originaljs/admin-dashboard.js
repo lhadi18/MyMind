@@ -92,6 +92,7 @@ $(document).ready(async function () {
                             document.getElementById("createUserErrorMessage").innerHTML = "A user with that username already exists";
                         } else {
                             document.getElementById('dashboardSuccessModal').style.display = 'flex';
+                            document.body.style.overflow = 'hidden';
                             setTimeout(() => {
                                 location.reload();
                             }, 2500);
@@ -158,6 +159,7 @@ $(document).ready(async function () {
                         } else {
                             document.getElementById("deleteUserErrorMessage").style.display = 'none';
                             document.getElementById('dashboardSuccessModal').style.display = 'flex';
+                            document.body.style.overflow = 'hidden';
                         }
                         setTimeout(() => {
                             location.reload();
@@ -237,6 +239,7 @@ $(document).ready(async function () {
                             } else if (data == "updatedWithPassword") {
                                 document.getElementById("editUserErrorMessage").style.display = 'none';
                                 document.getElementById('dashboardSuccessModal').style.display = 'flex';
+                                document.body.style.overflow = 'hidden';
                                 setTimeout(() => {
                                     location.reload();
                                 }, 2500);
@@ -246,6 +249,7 @@ $(document).ready(async function () {
                             } else {
                                 document.getElementById("editUserErrorMessage").style.display = 'none';
                                 document.getElementById('dashboardSuccessModal').style.display = 'flex';
+                                document.body.style.overflow = 'hidden';
                                 setTimeout(() => {
                                     location.reload();
                                 }, 2500);

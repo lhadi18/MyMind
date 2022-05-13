@@ -6,11 +6,11 @@ const Cart = require("./models/BBY_31_shoppingCarts");
 const mongoose = require("mongoose");
 const multer = require("multer");
 const bcrypt = require('bcrypt');
-const port = process.env.PORT|| 8000;
+const port = process.env.PORT || 8000;
 const app = express();
 app.set('view engine', 'text/html');
 
-if(process.env.NODE_ENV != 'production') {
+if (process.env.NODE_ENV != 'production') {
     require('dotenv').config()
 }
 mongoose.connect(process.env.DATABASE_URL, {
@@ -229,17 +229,17 @@ app.post('/editProfile', isLoggedIn, isNotExisting, async (req, res) => {
     }
 
     User.updateOne({
-            "_id": req.session.user._id
-        }, {
-            "firstName": req.body.firstname,
-            "lastName": req.body.lastname,
-            "username": req.body.username,
-            "email": req.body.email,
-            "phoneNum": req.body.phone,
-            "password": newpass,
-            "yearsExperience": req.body.yearsExperience,
-            "sessionCost": req.body.sessionCost
-        })
+        "_id": req.session.user._id
+    }, {
+        "firstName": req.body.firstname,
+        "lastName": req.body.lastname,
+        "username": req.body.username,
+        "email": req.body.email,
+        "phoneNum": req.body.phone,
+        "password": newpass,
+        "yearsExperience": req.body.yearsExperience,
+        "sessionCost": req.body.sessionCost
+    })
         .then((obj) => {
             return res.json("updated");
         })
@@ -370,7 +370,7 @@ function isNotLastAdminDelete(req, res, next) {
                 return res.send('lastAdmin');
             }
         })
-    } else{
+    } else {
         return next();
     }
 }
@@ -388,7 +388,7 @@ function isNotLastAdminEdit(req, res, next) {
                 return res.send('lastAdmin');
             }
         })
-    } else{
+    } else {
         return next();
     }
 }
@@ -409,13 +409,25 @@ app.get('/getAllUsersData', isLoggedIn, isAdmin, setHeaders, (req, res) => {
 
 app.delete('/deleteUser', isLoggedIn, isAdmin, isNotLastAdminDelete, async (req, res) => {
     User.deleteOne({
-            _id: req.body.id
-        })
+        _id: req.body.id
+    })
         .then(function () {
             //if user is deleting themselves, delete session data
-            if(req.body.id == req.session.user._id){
+            if (req.body.id == req.session.user._id) {
                 req.session.destroy();
             }
+            res.send();
+        }).catch(function (error) {
+            console.log(error); // Failure
+        });
+})
+
+app.delete('/deleteUserProfile', isLoggedIn, isNotLastAdminDelete, async (req, res) => {
+    User.deleteOne({
+        _id: req.session.user._id
+    })
+        .then(function () {
+            req.session.destroy();
             res.send();
         }).catch(function (error) {
             console.log(error); // Failure
@@ -460,17 +472,17 @@ app.put('/editUser', isLoggedIn, isAdmin, isNotExistingAdmin, isNotLastAdminEdit
     }
     if (req.body.userType == "therapist") {
         User.updateOne({
-                "_id": req.body.id
-            }, {
-                "firstName": req.body.firstname,
-                "lastName": req.body.lastname,
-                "username": req.body.username,
-                "email": req.body.email,
-                "phoneNum": req.body.phone,
-                "userType": req.body.userType,
-                "yearsExperience": req.body.yearsExperience,
-                "sessionCost": req.body.sessionCost
-            })
+            "_id": req.body.id
+        }, {
+            "firstName": req.body.firstname,
+            "lastName": req.body.lastname,
+            "username": req.body.username,
+            "email": req.body.email,
+            "phoneNum": req.body.phone,
+            "userType": req.body.userType,
+            "yearsExperience": req.body.yearsExperience,
+            "sessionCost": req.body.sessionCost
+        })
             .then((obj) => {
                 if (req.session.user._id == req.body.id && req.body.userType != req.session.user.userType)
                     req.session.destroy();
@@ -481,19 +493,19 @@ app.put('/editUser', isLoggedIn, isAdmin, isNotExistingAdmin, isNotLastAdminEdit
             })
     } else {
         User.updateOne({
-                "_id": req.body.id
-            }, {
-                $unset: {
-                    "yearsExperience": "",
-                    "sessionCost": ""
-                },
-                "firstName": req.body.firstname,
-                "lastName": req.body.lastname,
-                "username": req.body.username,
-                "email": req.body.email,
-                "phoneNum": req.body.phone,
-                "userType": req.body.userType
-            })
+            "_id": req.body.id
+        }, {
+            $unset: {
+                "yearsExperience": "",
+                "sessionCost": ""
+            },
+            "firstName": req.body.firstname,
+            "lastName": req.body.lastname,
+            "username": req.body.username,
+            "email": req.body.email,
+            "phoneNum": req.body.phone,
+            "userType": req.body.userType
+        })
             .then((obj) => {
                 if (req.session.user._id == req.body.id && req.body.userType != req.session.user.userType)
                     req.session.destroy();
@@ -509,18 +521,18 @@ async function updateUserWithPassword(req, res) {
     var hashedPassword = await bcrypt.hash(req.body.password, 10);
     if (req.body.userType == "therapist") {
         User.updateOne({
-                "_id": req.body.id
-            }, {
-                "firstName": req.body.firstname,
-                "lastName": req.body.lastname,
-                "username": req.body.username,
-                "email": req.body.email,
-                "phoneNum": req.body.phone,
-                "userType": req.body.userType,
-                "yearsExperience": req.body.yearsExperience,
-                "sessionCost": req.body.sessionCost,
-                "password": hashedPassword
-            })
+            "_id": req.body.id
+        }, {
+            "firstName": req.body.firstname,
+            "lastName": req.body.lastname,
+            "username": req.body.username,
+            "email": req.body.email,
+            "phoneNum": req.body.phone,
+            "userType": req.body.userType,
+            "yearsExperience": req.body.yearsExperience,
+            "sessionCost": req.body.sessionCost,
+            "password": hashedPassword
+        })
             .then((obj) => {
                 if (req.session.user._id == req.body.id && req.body.userType != req.session.user.userType)
                     req.session.destroy();
@@ -531,20 +543,20 @@ async function updateUserWithPassword(req, res) {
             })
     } else {
         User.updateOne({
-                "_id": req.body.id
-            }, {
-                $unset: {
-                    "yearsExperience": "",
-                    "sessionCost": ""
-                },
-                "firstName": req.body.firstname,
-                "lastName": req.body.lastname,
-                "username": req.body.username,
-                "email": req.body.email,
-                "phoneNum": req.body.phone,
-                "userType": req.body.userType,
-                "password": hashedPassword
-            })
+            "_id": req.body.id
+        }, {
+            $unset: {
+                "yearsExperience": "",
+                "sessionCost": ""
+            },
+            "firstName": req.body.firstname,
+            "lastName": req.body.lastname,
+            "username": req.body.username,
+            "email": req.body.email,
+            "phoneNum": req.body.phone,
+            "userType": req.body.userType,
+            "password": hashedPassword
+        })
             .then((obj) => {
                 if (req.session.user._id == req.body.id && req.body.userType != req.session.user.userType)
                     req.session.destroy();
@@ -614,10 +626,10 @@ app.post('/addToCart', isLoggedIn, async (req, res) => {
         status: "active"
     })
 
-    if(cartExists){
+    if (cartExists) {
         return res.send("cartExists");
     }
-        
+
     const new_cart = new Cart({
         orderId: "MM" + Math.floor((Math.random() * 1500000000) + 1000000000),
         therapist: req.body.therapist,
@@ -629,7 +641,7 @@ app.post('/addToCart', isLoggedIn, async (req, res) => {
         .then((result) => {
             console.log(result);
         });
-    
+
     res.send();
 
 })
@@ -656,7 +668,7 @@ app.post('/getTherapistInfo', (req, res) => {
         _id: req.body.therapistId
     }, function (err, user) {
         if (err) console.log(err)
-        
+
         if (!user) {
             return res.redirect('/')
         }
@@ -670,6 +682,20 @@ app.post('/getTherapistInfo', (req, res) => {
             }
             res.json(therapistInfo);
         }
+    })
+})
+
+app.delete('/deleteCart', isLoggedIn, async (req, res) => {
+    Cart.updateOne({
+        userId: req.session.user._id,
+        status: "active"
+    }, {
+        status: "deleted"
+    }).then((obj) => {
+        console.log("deleted");
+        res.send()
+    }).catch(function (error) {
+        console.log(error);
     })
 })
 

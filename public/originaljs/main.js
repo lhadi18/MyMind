@@ -25,6 +25,11 @@ $(document).ready(function () {
                     for (var x = 0; x < therapistEls.length; x++)
                         therapistEls[x].style.display = 'list-item';
 
+                    let therapyBtns = document.querySelectorAll('.therapistBtn');
+                    for (var i = 0; i < therapyBtns.length; i++) {
+                        therapyBtns[i].disabled = true;
+                    }
+
                     let loggedInEls = document.querySelectorAll(".isLoggedIn");
                     for (var x = 0; x < loggedInEls.length; x++)
                         loggedInEls[x].style.display = 'list-item';
@@ -52,6 +57,12 @@ $(document).ready(function () {
                 let loggedOutEls = document.querySelectorAll(".isLoggedOut")
                 for (var x = 0; x < loggedOutEls.length; x++)
                     loggedOutEls[x].style.display = 'list-item';
+
+                let therapyBtns = document.querySelectorAll('.therapistBtn');
+                therapyBtns.innerText = 'Please Login';
+                for (var i = 0; i < therapyBtns.length; i++) {
+                    therapyBtns[i].disabled = true;
+                }
             }
         })
 
