@@ -699,6 +699,30 @@ app.delete('/deleteCart', isLoggedIn, async (req, res) => {
     })
 })
 
+app.post('/confirmCart', isLoggedIn, async (req, res) => {
+    Cart.updateOne({
+        userId: req.session.user._id,
+        status: "active"
+    }, {
+        status: "completed"
+    }).then((obj) => {
+        console.log("Completed");
+        res.send()
+    }).catch(function (error) {
+        console.log(error);
+    })
+
+    // Cart.findOne({
+    //     userId: req.session.user._id,
+    //     status: "completed"
+    // }, function (err, cart) {
+    //     if(err) console.log(err);
+    //     if(cart) {
+    //         console.log(cart);
+    //     }
+    // })
+})
+
 app.listen(port, () => {
     console.log(`Example app  listening on port ${port}`)
 })

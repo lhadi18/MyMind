@@ -74,3 +74,17 @@ window.onclick = function (event) {
         document.body.style.overflow = 'auto';
     }
 }
+
+document.getElementById('confirmOrder').onclick = function () {
+    $.ajax({
+        url: "/confirmCart",
+        method: "POST",
+        success: function(data) {
+            document.getElementById('signupSuccessModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+            setTimeout(() => {
+                window.location = "/thank-you"
+            }, 2500);
+        }
+    })
+}
