@@ -15,12 +15,14 @@ $('#loginBtn').click(() => {
             } else if (data.isAdmin) {
                 document.getElementById("loginErrorMessage").style.display = 'none';
                 document.getElementById('loginSuccessModal').style.display = 'flex';
+                document.body.style.overflow = 'hidden';
                 setTimeout(() => {
                     window.location = '/admin-dashboard'
                 }, 2500);
             } else {
                 document.getElementById("loginErrorMessage").style.display = 'none';
                 document.getElementById('loginSuccessModal').style.display = 'flex';
+                document.body.style.overflow = 'hidden';
                 setTimeout(() => {
                     window.location = '/'
                 }, 2500);
