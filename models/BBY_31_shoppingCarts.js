@@ -1,15 +1,22 @@
 const mongoose = require("mongoose");
-const User = require('./BBY_31_users')
 
 const cartSchema = new mongoose.Schema({
-    therapist: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'user',
+    orderId:{
+        type: String,
         required: true
     },
-    numOfSessions: {
-        type: Number,
+    therapist: {
+        type: String,
         required: true
+    },
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true
+    },
+    timeLenght: {
+        type: String,
+        required: true,
+        default: "Free"
     },
     status:{
         type: String,
@@ -22,9 +29,3 @@ const cartSchema = new mongoose.Schema({
 const Cart = mongoose.model('shoppingCart', cartSchema);
 module.exports = Cart;
 
-// On the user Schema, add field:
-
-// shoppingCarts: [{
-//     type: mongoose.Schema.Types.ObjectId,
-//     ref: "shoppingCart"
-// }]

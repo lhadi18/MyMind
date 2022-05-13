@@ -2,6 +2,7 @@ const express = require("express");
 const path = require('path');
 const session = require('express-session');
 const User = require("./models/BBY_31_users");
+const Cart = require("./models/BBY_31_shoppingCarts");
 const mongoose = require("mongoose");
 const multer = require("multer");
 const bcrypt = require('bcrypt');
@@ -317,12 +318,6 @@ app.post("/sign-up", isNotRegistered, async (req, res) => {
                 email: req.body.email,
                 password: hashedPassword
             });
-            const existsAdmin = await User.exists({
-                isAdmin: true
-            });
-            if (!existsAdmin) {
-                new_user.isAdmin = true
-            }
 
             new_user.save()
                 .then((result) => {
@@ -403,7 +398,6 @@ app.get('/getAllUsersData', isLoggedIn, isAdmin, setHeaders, (req, res) => {
     User.find({}, function (err, user) {
         if (err) {
             console.log('Error searching user.', err);
-            s
         }
         if (!user) {
             console.log('Database is empty.');
@@ -598,12 +592,6 @@ app.post("/createUser", isLoggedIn, isAdmin, isNotRegistered, async (req, res) =
                 email: req.body.email,
                 password: hashedPassword
             });
-            const existsAdmin = await User.exists({
-                isAdmin: true
-            });
-            if (!existsAdmin) {
-                new_user.isAdmin = true
-            }
 
             new_user.save()
                 .then((result) => {
@@ -615,6 +603,73 @@ app.post("/createUser", isLoggedIn, isAdmin, isNotRegistered, async (req, res) =
             res.redirect('/sign-up');
         }
     }
+})
+
+//Checkout
+
+app.post('/addToCart', isLoggedIn, async (req, res) => {
+    var cartExists = await Cart.exists({
+        userId: req.session.user._id,
+        status: "active"
+    })
+
+    if(cartExists){
+        return res.send("cartExists");
+    }
+        
+    const new_cart = new Cart({
+        orderId: "MM" + Math.floor((Math.random() * 1500000000) + 1000000000),
+        therapist: req.body.therapist,
+        userId: req.session.user._id,
+        status: "active"
+    });
+
+    new_cart.save()
+        .then((result) => {
+            console.log(result);
+        });
+    
+    res.send();
+
+})
+
+app.get('/checkStatus', (req, res) => {
+    Cart.findOne({
+        userId: req.session.user._id,
+        status: "active"
+    }, function (err, cart) {
+        if (err) {
+            console.log('Error searching cart.', err);
+        }
+        if (!cart) {
+            res.send();
+        } else {
+            res.json(cart);
+        }
+    });
+})
+
+app.post('/getTherapistInfo', (req, res) => {
+    var therapistInfo;
+    User.findById({
+        _id: req.body.therapistId
+    }, function (err, user) {
+        if (err) console.log(err)
+        
+        if (!user) {
+            return res.redirect('/')
+        }
+        else {
+            therapistInfo = {
+                firstName: user.firstName,
+                lastName: user.lastName,
+                yearsExperience: user.yearsExperience,
+                sessionCost: user.sessionCost,
+                profileImg: user.profileImg
+            }
+            res.json(therapistInfo);
+        }
+    })
 })
 
 app.listen(port, () => {
