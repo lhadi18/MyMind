@@ -764,6 +764,22 @@ app.get('/recentPurchase', (req, res) => {
         }
         if (carts) {
             const sortedCart = carts.sort((a, b) => b.createdAt - a.createdAt)
+            let userId = sortedCart[0].userId;
+            let therapistId = sortedCart[0].therapist;
+            User.updateOne({
+                "_id": userId
+            }, {
+                assigned: therapistId
+            }).then((obj) => {
+                console.log('Updated - ' + obj);
+            })
+            User.updateOne({
+                "_id": therapistId
+            }, {
+                assigned: userId
+            }).then((obj) => {
+                console.log('Updated - ' + obj);
+            })
             return res.json(sortedCart[0])
         }
     });

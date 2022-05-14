@@ -40,6 +40,9 @@ const userSchema = new Schema({
     sessionCost: {
         type: String
     },
+    assigned: {
+        type: String,
+    },
     profileImg: {
         type: String,
         default: "../uploads/placeholder-profile.jpg"
