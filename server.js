@@ -28,7 +28,7 @@ app.use(session({
     secret: "password",
     resave: false,
     saveUninitialized: true,
-    cookie:{
+    cookie: {
         maxAge: 10800000
     }
 }));
@@ -702,19 +702,18 @@ app.delete('/deleteCart', isLoggedIn, async (req, res) => {
     })
 })
 
-//check later
-app.post('/confirmCart', isLoggedIn, async (req, res) => {
-    Cart.findOne({
-        userId: req.session.user._id,
-        status: "completed",
-        timeLength: "freePlan",
-    }, function (err, exists) {
-        if (err) console.log(err);
-        if (exists) {
-            return res.json("usedTrial");
-        }
-    })
 
+app.post('/confirmCart', isLoggedIn, async (req, res) => {
+    if (req.body.cartPlan == "freePlan") {
+        var cartExists = await Cart.exists({
+            userId: req.session.user._id,
+            status: "completed",
+            timeLength: "freePlan",
+        })
+    }
+    if (cartExists) {
+        return res.send("usedTrial");
+    }
     Cart.updateOne({
         userId: req.session.user._id,
         status: "active"
@@ -722,7 +721,7 @@ app.post('/confirmCart', isLoggedIn, async (req, res) => {
         status: "completed"
     }).then((obj) => {
         console.log("Completed");
-        return res.json(obj);
+        return res.send(obj);
     }).catch(function (error) {
         console.log(error);
     })

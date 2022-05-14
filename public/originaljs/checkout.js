@@ -109,6 +109,9 @@ document.getElementById('confirmOrder').onclick = function () {
     $.ajax({
         url: "/confirmCart",
         method: "POST",
+        data: {
+            cartPlan: $('#cartPlan').val(),
+        },
         success: function (data) {
             if (data == "usedTrial") {
                 checkoutErrorMsg.style.display = 'block';
