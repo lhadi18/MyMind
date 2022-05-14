@@ -42,6 +42,7 @@ const userSchema = new Schema({
     },
     assigned: {
         type: String,
+        default: null
     },
     profileImg: {
         type: String,

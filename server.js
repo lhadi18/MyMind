@@ -633,6 +633,15 @@ app.post('/addToCart', isLoggedIn, async (req, res) => {
         return res.send("cartExists");
     }
 
+    var orderExists = await Cart.exists({
+        userId: req.session.user._id,
+        status: "completed"
+    })
+
+    if (orderExists) {
+        return res.send("orderExists");
+    }
+
     const new_cart = new Cart({
         orderId: "MM" + Math.floor((Math.random() * 1500000000) + 1000000000),
         therapist: req.body.therapist,
@@ -649,7 +658,7 @@ app.post('/addToCart', isLoggedIn, async (req, res) => {
 
 })
 
-app.get('/checkStatus', (req, res) => {
+app.get('/checkStatus', isLoggedIn, (req, res) => {
     Cart.findOne({
         userId: req.session.user._id,
         status: "active"
@@ -665,7 +674,7 @@ app.get('/checkStatus', (req, res) => {
     });
 })
 
-app.post('/getTherapistInfo', (req, res) => {
+app.post('/getTherapistInfo', isLoggedIn, (req, res) => {
     var therapistInfo;
     User.findById({
         _id: req.body.therapistId
@@ -740,7 +749,7 @@ app.put('/updateCart', isLoggedIn, async (req, res) => {
     })
 })
 
-app.get('/getPreviousPurchases', (req, res) => {
+app.get('/getPreviousPurchases', isLoggedIn, (req, res) => {
     Cart.find({
         userId: req.session.user._id,
         status: "completed"
@@ -754,7 +763,7 @@ app.get('/getPreviousPurchases', (req, res) => {
     });
 })
 
-app.get('/recentPurchase', (req, res) => {
+app.get('/recentPurchase', isLoggedIn, (req, res) => {
     Cart.find({
         userId: req.session.user._id,
         status: "completed"

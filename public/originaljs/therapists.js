@@ -56,7 +56,10 @@ $(document).ready(async function () {
                     if (data == 'cartExists') {
                         cartExistModal.style.display = 'block';
                         document.body.style.overflow = 'hidden';
-                    } else {
+                    } else if(data == "orderExists") {
+                        //display error message pop up for when user already has a therapist.
+                        console.log("EXISTING THERAPIST TO USER");
+                    }else {
                         window.location = "/checkout"
                     }
                 }
