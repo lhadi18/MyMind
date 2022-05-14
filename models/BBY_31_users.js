@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
+
 const userSchema = new Schema({
     firstName: {
         type: String,
@@ -29,13 +30,15 @@ const userSchema = new Schema({
         required: true,
         unique: true
     },
-    isAdmin: {
-        type: Boolean,
-        default: false
-    },
     userType: {
         type: String,
         required: true
+    },
+    yearsExperience: {
+        type: String
+    },
+    sessionCost: {
+        type: String
     },
     profileImg: {
         type: String,
