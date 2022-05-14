@@ -699,7 +699,19 @@ app.delete('/deleteCart', isLoggedIn, async (req, res) => {
     })
 })
 
+//check later
 app.post('/confirmCart', isLoggedIn, async (req, res) => {
+    Cart.findOne({
+        userId: req.session.user._id,
+        status: "completed",
+        timeLength: "freePlan",
+    }, function (err, exists) {
+        if (err) console.log(err);
+        if (exists) {
+            return res.json("usedTrial");
+        }
+    })
+
     Cart.updateOne({
         userId: req.session.user._id,
         status: "active"
@@ -707,11 +719,12 @@ app.post('/confirmCart', isLoggedIn, async (req, res) => {
         status: "completed"
     }).then((obj) => {
         console.log("Completed");
-        res.send()
+        return res.json(obj);
     }).catch(function (error) {
         console.log(error);
     })
 })
+
 
 app.put('/updateCart', isLoggedIn, async (req, res) => {
     Cart.updateOne({

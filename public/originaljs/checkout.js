@@ -10,7 +10,7 @@ $(document).ready(async function () {
                 getTherapist(cart.therapist);
                 $('#cartPlan').val(`${cart.timeLength}`)
                 updateCart();
-            } 
+            }
         }
     })
 })
@@ -35,7 +35,7 @@ function getTherapist(therapistId) {
 }
 
 
-function updateCart(){
+function updateCart() {
     $('#cartPlan').change(() => {
         console.log($('#cartPlan').val())
         $.ajax({
@@ -44,8 +44,7 @@ function updateCart(){
             data: {
                 timeLength: $('#cartPlan').val()
             },
-            success: function(){
-                console.log('updated Baby');
+            success: function () {
             }
         })
     })
@@ -57,10 +56,10 @@ function updateCart(){
 //         type: "GET",
 //         success: function (data) {
 //             data.forEach(userData => {
-                
+
 //                 var x = `<tr class="tableRows" id="${userData._id}">`;
 //                 x += `<td>${userData.firstName}</td>`;
-                
+
 //                 $("tbody").append(x);
 //             });
 //         }
@@ -109,12 +108,16 @@ document.getElementById('confirmOrder').onclick = function () {
     $.ajax({
         url: "/confirmCart",
         method: "POST",
-        success: function(data) {
-            document.getElementById('signupSuccessModal').style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-            setTimeout(() => {
-                window.location = "/thank-you"
-            }, 2500);
+        success: function (data) {
+            if (data == "usedTrial") {
+                document.getElementById("checkoutErrorMessage").innerHTML = "You have already used your free trial.";
+            } else {
+                document.getElementById('signupSuccessModal').style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+                setTimeout(() => {
+                    window.location = "/thank-you"
+                }, 2500);
+            }
         }
     })
 }

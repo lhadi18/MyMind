@@ -16,7 +16,7 @@ const cartSchema = new mongoose.Schema({
     timeLength: {
         type: String,
         required: true,
-        default: "Free"
+        default: "freePlan"
     },
     status:{
         type: String,
