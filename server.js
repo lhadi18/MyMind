@@ -133,7 +133,11 @@ app.get('/checkout', isLoggedIn, function (req, res) {
     res.sendFile(path.resolve('public/checkout.html'));
 });
 
-app.get('/thank-you', function (req, res) {
+app.get('/order-history', isLoggedIn, function (req, res) {
+    res.sendFile(path.resolve('public/order-history.html'));
+});
+
+app.get('/thank-you', isLoggedIn, function (req, res) {
     res.sendFile(path.resolve('public/thank-you.html'));
 });
 
