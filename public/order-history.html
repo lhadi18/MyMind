@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="COMP 2800 - MyMind" />
 
-    <title>MyMind - Therapists</title>
+    <title>MyMind - Order History</title>
 
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="../images/logo.svg" />
@@ -27,7 +27,7 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" type="text/css" href="../css/style.css" />
-    <link rel="stylesheet" type="text/css" href="../css/therapists.css" />
+    <link rel="stylesheet" type="text/css" href="../css/order-history.css" />
     <link rel="stylesheet" type="text/css" href="../css/responsive.css" />
 </head>
 
@@ -115,30 +115,60 @@
             </nav>
         </header>
 
-        <div id="bannerTherapist">
+        <div id="orderHistoryHeroContainer">
             <div id="overlay">
-                <div id="therapistHeader">
-                    <h2>Therapy Sessions</h2>
+                <div id="orderHistoryHero">
+                    <h2>Order History</h2>
                 </div>
             </div>
         </div>
 
-        <div id="therapistListSec">
-            <h2>Available Therapists</h2>
-            <h4>Choose a therapy session to get started!</h4>
-            <div id="therapistList"></div>
+        <div id="orderToolbar">
+            <p>Results Found: <span id="boldResults"><span id="resultsFound"></span> Order(s)</span></p>
+            <form id="searchForm">
+                <input type="text" id="searchbar" onkeypress="return event.keyCode != 13;" onkeyup="searchTable()" placeholder="Search..." />
+            </form>
         </div>
 
-        <!-- Cart Exist Modal -->
-        <div id="cartExistModal">
-            <div id="modalContent">
-                <i class="fa-solid fa-xmark" id="closeCart"></i>
-                <div id="alertIcon">
-                    <i class="bi bi-exclamation-triangle-fill"></i>
-                </div>
-                <h2>Hold on there!</h2>
-                <p>You already have a therapist added to your cart, empty your cart at <a href="/checkout">Checkout</a> to proceed.</p>
-            </div>
+        <div id="orderTableContainer">
+            <table id="orderTable">
+                <thead>
+                    <tr id="tableHeader">
+                        <th class="tHead">Date<i id="0"></i></th>
+                        <th class="tHead">Therapist<i id="1"></i></th>
+                        <th class="tHead">Plan<i id="2"></i></th>
+                        <th class="tHead">Price<i id="3"></i></th>
+                        <th class="tHead">Status<i id="4"></i></th>
+                        <th class="tHead">Order #<i id="5"></i></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="tableRows">
+                        <td>2022-05-14</td>
+                        <td>Towa Quimbayo</td>
+                        <td>3 Months</td>
+                        <td>$56.00</td>
+                        <td>Active</td>
+                        <td>MM0514123456</td>
+                    </tr>
+                    <tr class="tableRows">
+                        <td>2022-05-12</td>
+                        <td>Dwayne Johnson</td>
+                        <td>1 Month</td>
+                        <td>$90.00</td>
+                        <td>Completed</td>
+                        <td>MM0512123456</td>
+                    </tr>
+                    <tr class="tableRows">
+                        <td>2021-03-22</td>
+                        <td>Jacky Chan</td>
+                        <td>Trial</td>
+                        <td>$0.00</td>
+                        <td>Completed</td>
+                        <td>MM0322123456</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
 
         <div id="footerPlaceHolder"></div>
@@ -147,7 +177,7 @@
     <!-- jQuery CDN -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="../js/main.js"></script>
-    <script src="../js/therapists.js"></script>
+    <script src="../js/order-history.js"></script>
 </body>
 
 </html>
