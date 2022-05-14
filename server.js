@@ -27,7 +27,10 @@ app.use(express.static(__dirname + '/public'));
 app.use(session({
     secret: "password",
     resave: false,
-    saveUninitialized: true
+    saveUninitialized: true,
+    cookie:{
+        maxAge: 10800000
+    }
 }));
 
 //Custom middleware functions

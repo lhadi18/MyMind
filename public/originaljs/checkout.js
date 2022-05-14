@@ -37,7 +37,6 @@ function getTherapist(therapistId) {
 
 function updateCart() {
     $('#cartPlan').change(() => {
-        console.log($('#cartPlan').val())
         $.ajax({
             url: '/updateCart',
             type: 'PUT',
