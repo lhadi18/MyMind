@@ -624,21 +624,26 @@ app.post("/createUser", isLoggedIn, isAdmin, isNotRegistered, async (req, res) =
 //Checkout
 
 app.post('/addToCart', isLoggedIn, async (req, res) => {
+    //Check if there is already something in cart
     var cartExists = await Cart.exists({
         userId: req.session.user._id,
         status: "active"
     })
-
     if (cartExists) {
         return res.send("cartExists");
     }
 
+    //Check if user has a current valid session with another therapist
+    var currentTime = new Date();
     var orderExists = await Cart.exists({
         userId: req.session.user._id,
-        status: "completed"
+        status: "completed",
+        expiringTime: {
+             $gt: currentTime
+            }
     })
-
     if (orderExists) {
+        console.log("Something exists")
         return res.send("orderExists");
     }
 
@@ -714,23 +719,38 @@ app.delete('/deleteCart', isLoggedIn, async (req, res) => {
 
 app.post('/confirmCart', isLoggedIn, async (req, res) => {
     if (req.body.cartPlan == "freePlan") {
-        var cartExists = await Cart.exists({
-            userId: req.session.user._id,
-            status: "completed",
-            timeLength: "freePlan",
+        var trialStatus = await User.exists({
+            _id: req.session.user._id,
+            usedTrial: true
         })
     }
-    if (cartExists) {
+    if (trialStatus) {
         return res.send("usedTrial");
     }
+
+    const currentDate = Date.now();
     Cart.updateOne({
         userId: req.session.user._id,
         status: "active"
     }, {
-        status: "completed"
+        status: "completed",
+        $set: {
+            purchased: currentDate,
+            expiringTime: req.body.timeLengthforUse,
+            cost: req.body.totalPrice
+        }
     }).then((obj) => {
         console.log("Completed");
         return res.send(obj);
+    }).catch(function (error) {
+        console.log(error);
+    })
+    User.updateOne({
+        _id: req.session.user._id
+    }, {
+        usedTrial: true
+    }).then((obj)=> {
+        console.log("User used their free trial!");
     }).catch(function (error) {
         console.log(error);
     })
@@ -772,7 +792,7 @@ app.get('/recentPurchase', isLoggedIn, (req, res) => {
             console.log('Error searching cart.', err);
         }
         if (carts) {
-            const sortedCart = carts.sort((a, b) => b.createdAt - a.createdAt)
+            const sortedCart = carts.sort((a, b) => b.purchased - a.purchased)
             let userId = sortedCart[0].userId;
             let therapistId = sortedCart[0].therapist;
             User.updateOne({
@@ -780,14 +800,14 @@ app.get('/recentPurchase', isLoggedIn, (req, res) => {
             }, {
                 assigned: therapistId
             }).then((obj) => {
-                console.log('Updated - ' + obj);
+                console.log('Assigned therapist to user - ' + obj);
             })
             User.updateOne({
                 "_id": therapistId
             }, {
                 assigned: userId
             }).then((obj) => {
-                console.log('Updated - ' + obj);
+                console.log('Assigned user to therapist - ' + obj);
             })
             return res.json(sortedCart[0])
         }

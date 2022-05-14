@@ -41,8 +41,11 @@ const userSchema = new Schema({
         type: String
     },
     assigned: {
-        type: String,
-        default: null
+        type: String
+    },
+    usedTrial: {
+        type: Boolean,
+        default:false
     },
     profileImg: {
         type: String,
