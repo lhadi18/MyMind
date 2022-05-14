@@ -104,14 +104,18 @@ window.onclick = function (event) {
     }
 }
 
+const checkoutErrorMsg = document.getElementById("checkoutErrorMessage");
+
 document.getElementById('confirmOrder').onclick = function () {
     $.ajax({
         url: "/confirmCart",
         method: "POST",
         success: function (data) {
             if (data == "usedTrial") {
-                document.getElementById("checkoutErrorMessage").innerHTML = "You have already used your free trial.";
+                checkoutErrorMsg.style.display = 'block';
+                checkoutErrorMsg.innerHTML = "You have already used your free trial.";
             } else {
+                checkoutErrorMsg.style.display = 'none';
                 document.getElementById('signupSuccessModal').style.display = 'flex';
                 document.body.style.overflow = 'hidden';
                 setTimeout(() => {
