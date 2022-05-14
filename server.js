@@ -721,11 +721,17 @@ app.post('/confirmCart', isLoggedIn, async (req, res) => {
         status: "completed"
     }).then((obj) => {
         console.log("Completed");
+        lastPurchase(obj.orderId);
         return res.send(obj);
     }).catch(function (error) {
         console.log(error);
     })
 })
+
+function lastPurchase(orderID) {
+    var purchase = orderID;
+    return purchase;
+}
 
 
 app.put('/updateCart', isLoggedIn, async (req, res) => {
@@ -751,6 +757,21 @@ app.get('/getPreviousPurchases', (req, res) => {
         }
         if (carts) {
             res.json(carts);
+        }
+    });
+})
+
+app.get('/recentPurchase', (req, res) => {
+    Cart.find({
+        userId: req.session.user._id,
+        status: "completed"
+    }, function (err, carts) {
+        if (err) {
+            console.log('Error searching cart.', err);
+        }
+        if (carts) {
+            const sortedCart = carts.sort((a, b) => b.createdAt - a.createdAt)
+            return res.json(sortedCart[0])
         }
     });
 })
