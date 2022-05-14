@@ -8,11 +8,9 @@ $(document).ready(async function () {
                 $("#noOrderSummary").hide();
                 $("#orderSummary").show();
                 getTherapist(cart.therapist);
-            } else {
-                $("#noOrderSummary").show();
-                $("#orderSummary").hide();
-            }
-
+                $('#cartPlan').val(`${cart.timeLength}`)
+                updateCart();
+            } 
         }
     })
 })
@@ -25,7 +23,6 @@ function getTherapist(therapistId) {
             therapistId: therapistId
         },
         success: function (therapist) {
-            console.log(therapist);
             $('#therapistName').text(`${therapist.firstName} ${therapist.lastName}`)
             $('#therapistDesc').text(`${therapist.yearsExperience} years of experience in the profession, and offers $${therapist.sessionCost} per session`)
             $('#therapistImg').attr('src', `${therapist.profileImg}`)
@@ -34,6 +31,23 @@ function getTherapist(therapistId) {
             $("#taxTotal").html(`$${parseFloat(therapist.sessionCost * 0.12).toFixed(2)}`)
             $("#total").html(`$${parseFloat(therapist.sessionCost * 1.12).toFixed(2)}`)
         }
+    })
+}
+
+
+function updateCart(){
+    $('#cartPlan').change(() => {
+        console.log($('#cartPlan').val())
+        $.ajax({
+            url: '/updateCart',
+            type: 'PUT',
+            data: {
+                timeLength: $('#cartPlan').val()
+            },
+            success: function(){
+                console.log('updated Baby');
+            }
+        })
     })
 }
 

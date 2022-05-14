@@ -13,7 +13,7 @@ const cartSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         required: true
     },
-    timeLenght: {
+    timeLength: {
         type: String,
         required: true,
         default: "Free"
