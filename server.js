@@ -721,18 +721,11 @@ app.post('/confirmCart', isLoggedIn, async (req, res) => {
         status: "completed"
     }).then((obj) => {
         console.log("Completed");
-        lastPurchase(obj.orderId);
         return res.send(obj);
     }).catch(function (error) {
         console.log(error);
     })
 })
-
-function lastPurchase(orderID) {
-    var purchase = orderID;
-    return purchase;
-}
-
 
 app.put('/updateCart', isLoggedIn, async (req, res) => {
     Cart.updateOne({
@@ -741,7 +734,7 @@ app.put('/updateCart', isLoggedIn, async (req, res) => {
     }, {
         timeLength: req.body.timeLength
     }).then((obj) => {
-        res.send()
+        res.send(obj)
     }).catch(function (error) {
         console.log(error);
     })
