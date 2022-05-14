@@ -8,11 +8,9 @@ $(document).ready(async function () {
                 $("#noOrderSummary").hide();
                 $("#orderSummary").show();
                 getTherapist(cart.therapist);
-            } else {
-                $("#noOrderSummary").show();
-                $("#orderSummary").hide();
-            }
-
+                $('#cartPlan').val(`${cart.timeLength}`)
+                updateCart();
+            } 
         }
     })
 })
@@ -25,7 +23,6 @@ function getTherapist(therapistId) {
             therapistId: therapistId
         },
         success: function (therapist) {
-            console.log(therapist);
             $('#therapistName').text(`${therapist.firstName} ${therapist.lastName}`)
             $('#therapistDesc').text(`${therapist.yearsExperience} years of experience in the profession, and offers $${therapist.sessionCost} per session`)
             $('#therapistImg').attr('src', `${therapist.profileImg}`)
@@ -36,6 +33,39 @@ function getTherapist(therapistId) {
         }
     })
 }
+
+
+function updateCart(){
+    $('#cartPlan').change(() => {
+        console.log($('#cartPlan').val())
+        $.ajax({
+            url: '/updateCart',
+            type: 'PUT',
+            data: {
+                timeLength: $('#cartPlan').val()
+            },
+            success: function(){
+                console.log('updated Baby');
+            }
+        })
+    })
+}
+
+// function getPreviousPurchases(){
+//     $.ajax({
+//         url: '/getPreviousPurchases',
+//         type: "GET",
+//         success: function (data) {
+//             data.forEach(userData => {
+                
+//                 var x = `<tr class="tableRows" id="${userData._id}">`;
+//                 x += `<td>${userData.firstName}</td>`;
+                
+//                 $("tbody").append(x);
+//             });
+//         }
+//     });
+// }
 
 // Variables for Delete User Modal 
 var removeOrderModal = document.getElementById("removeOrderModal");

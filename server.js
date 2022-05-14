@@ -126,7 +126,7 @@ app.get('/therapists', function (req, res) {
     res.sendFile(path.resolve('public/therapists.html'));
 });
 
-app.get('/checkout', function (req, res) {
+app.get('/checkout', isLoggedIn, function (req, res) {
     res.sendFile(path.resolve('public/checkout.html'));
 });
 
@@ -711,16 +711,33 @@ app.post('/confirmCart', isLoggedIn, async (req, res) => {
     }).catch(function (error) {
         console.log(error);
     })
+})
 
-    // Cart.findOne({
-    //     userId: req.session.user._id,
-    //     status: "completed"
-    // }, function (err, cart) {
-    //     if(err) console.log(err);
-    //     if(cart) {
-    //         console.log(cart);
-    //     }
-    // })
+app.put('/updateCart', isLoggedIn, async (req, res) => {
+    Cart.updateOne({
+        userId: req.session.user._id,
+        status: "active"
+    }, {
+        timeLength: req.body.timeLength
+    }).then((obj) => {
+        res.send()
+    }).catch(function (error) {
+        console.log(error);
+    })
+})
+
+app.get('/getPreviousPurchases', (req, res) => {
+    Cart.find({
+        userId: req.session.user._id,
+        status: "completed"
+    }, function (err, carts) {
+        if (err) {
+            console.log('Error searching cart.', err);
+        }
+        if (carts) {
+            res.json(carts);
+        }
+    });
 })
 
 app.listen(port, () => {
