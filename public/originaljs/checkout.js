@@ -51,6 +51,22 @@ function updateCart(){
     })
 }
 
+// function getPreviousPurchases(){
+//     $.ajax({
+//         url: '/getPreviousPurchases',
+//         type: "GET",
+//         success: function (data) {
+//             data.forEach(userData => {
+                
+//                 var x = `<tr class="tableRows" id="${userData._id}">`;
+//                 x += `<td>${userData.firstName}</td>`;
+                
+//                 $("tbody").append(x);
+//             });
+//         }
+//     });
+// }
+
 // Variables for Delete User Modal 
 var removeOrderModal = document.getElementById("removeOrderModal");
 

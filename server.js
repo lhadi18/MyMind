@@ -726,6 +726,20 @@ app.put('/updateCart', isLoggedIn, async (req, res) => {
     })
 })
 
+app.get('/getPreviousPurchases', (req, res) => {
+    Cart.find({
+        userId: req.session.user._id,
+        status: "completed"
+    }, function (err, carts) {
+        if (err) {
+            console.log('Error searching cart.', err);
+        }
+        if (carts) {
+            res.json(carts);
+        }
+    });
+})
+
 app.listen(port, () => {
     console.log(`Example app  listening on port ${port}`)
 })
