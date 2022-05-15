@@ -1,32 +1,55 @@
 $(document).ready(async function () {
+    await $.ajax({
+        url: '/getPreviousPurchases',
+        type: "GET",
+        success: function (data) {
+            if (data) {
+                $("#noOrderHistorySummary").hide();
+                document.getElementById('orderToolbar').style.display = 'flex';
+                $("#orderTableContainer").css('display', 'flex');
 
-    // await $.ajax({
-    //     url: '/getAllUsersData',
-    //     type: "GET",
-    //     success: function (data) {
-    //         data.forEach(userData => {
-    //             var x = `<tr class="tableRows" id="${userData._id}">`;
-    //             x += `<td>${userData.firstName}</td>`;
-    //             x += `<td>${userData.lastName}</td>`
-    //             x += `<td>${userData.username}</td>`
-    //             x += `<td>${userData.email}</td>`
-    //             x += `<td>${userData.phoneNum}</td>`
-    //             x += `<td>${userData.userType.charAt(0).toUpperCase() + userData.userType.substring(1)}</td>`
-    //             x += `<td class="hiddenRow">${userData.yearsExperience}</td>`
-    //             x += `<td class="hiddenRow">${userData.sessionCost}</td>`
-    //             x += `<td>`
-    //             x += `<div class="dashSettings inactive">`
-    //             x += `<i class="bi bi-gear-fill"></i>`
-    //             x += `<i class="bi bi-pencil-fill settingIcon editUser"></i>`
-    //             x += `<i class="bi bi-trash-fill settingIcon deleteUser"></i>`
-    //             x += `</div>`
-    //             x += `</td>`
-    //             x += `</tr>`
-    //             $("tbody").append(x);
-    //         });
-    //         document.getElementById("resultsFound").innerHTML = data.length
-    //     }
-    // });
+                data.forEach(cartData => {
+                    getTherapist(cartData.therapist, therapistInfo => {
+                        let multiplier;
+                        var x = `<tr class="tableRows">`;
+                        x += `<td>${new Date(cartData.purchased).toISOString().substring(0, 10)}</td>`;
+
+                        x += `<td>${therapistInfo.fullName}</td>`
+
+
+                        if (cartData.timeLength == 'freePlan') {
+                            x += `<td>Trial</td>`
+                            multiplier = 0;
+                        } else if (cartData.timeLength == 'monthPlan') {
+                            x += `<td>1 Month</td>`
+                            multiplier = 1;
+                        } else if (cartData.timeLength == 'threeMonthPlan') {
+                            x += `<td>3 Months</td>`
+                            multiplier = 3;
+                        } else {
+                            x += `<td>1 Year</td>`
+                            multiplier = 12;
+                        }
+
+                        x += `<td>$${parseFloat(therapistInfo.sessionCost * multiplier *  1.12).toFixed(2)}</td>`
+
+                        if (new Date(cartData.expiringTime) > new Date()) {
+                            x += `<td>Active</td>`
+                        } else {
+                            x += `<td>Expired</td>`
+                        }
+
+                        x += `<td>${cartData.orderId}</td>`
+                        x += `</tr>`
+                        $("tbody").append(x);
+                    })
+
+                });
+                document.getElementById("resultsFound").innerHTML = data.length
+
+            }
+        }
+    });
 
     // Set the caret icons faced down by default
     document.getElementById('0').setAttribute("class", "bi bi-caret-down-fill");
@@ -39,6 +62,24 @@ $(document).ready(async function () {
     // Call sort table fucntion when user clicks table headings
     sortTable();
 });
+
+function getTherapist(therapistId, callback) {
+    let therapistInfo;
+    $.ajax({
+        url: '/getTherapistInfo',
+        method: "POST",
+        data: {
+            therapistId: therapistId
+        },
+        success: function (therapist) {
+            therapistInfo = {
+                fullName: `${therapist.firstName} ${therapist.lastName}`,
+                sessionCost: therapist.sessionCost
+            }
+            callback(therapistInfo)
+        }
+    })
+}
 
 // Live search function for table search 
 function searchTable() {
@@ -85,7 +126,10 @@ function sortTable() {
     };
 
     const tableBody = table.querySelector('tbody');
-    const rows = tableBody.querySelectorAll('tr');
+    console.log(tableBody)
+    const rows = tableBody.querySelectorAll('.tableRows');
+    console.log(rows)
+
 
     const sortColumn = function (index) {
         const direction = directions[index] || 'asc';

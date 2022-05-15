@@ -89,7 +89,7 @@
 #wrapper #orderToolbar {
     grid-column: 1 / span 4;
     grid-row: 4 / span 1;
-    display: flex;
+    display: none;
     flex-direction: row;
     justify-content: space-between;
     width: 100%;
@@ -132,6 +132,7 @@
     grid-row: 5 / span 1;
     width: 100%;
     padding: 0 7rem 5rem;
+    display: none;
     border-collapse: collapse;
 }
 
