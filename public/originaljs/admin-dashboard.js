@@ -435,6 +435,17 @@ function sortTable() {
     [].forEach.call(headers, function (header, index) {
         header.addEventListener('click', function () {
             sortColumn(index);
+            for (var i = 0; i < headers.length; i++) {
+                if (i == index) {
+                    if (directions[index] === 'asc') {
+                        document.getElementById(i).parentElement.style.color = '#000';
+                    } else {
+                        document.getElementById(i).parentElement.style.color = '#09C5A3';
+                    }
+                } else {
+                    document.getElementById(i).parentElement.style.color = '#000';
+                }
+            }
         });
     });
 }
