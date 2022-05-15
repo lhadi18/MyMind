@@ -643,8 +643,8 @@ app.post('/addToCart', isLoggedIn, async (req, res) => {
         userId: req.session.user._id,
         status: "completed",
         expiringTime: {
-             $gt: currentTime
-            }
+            $gt: currentTime
+        }
     })
     if (orderExists) {
         console.log("Something exists")
@@ -753,7 +753,7 @@ app.post('/confirmCart', isLoggedIn, async (req, res) => {
         _id: req.session.user._id
     }, {
         usedTrial: true
-    }).then((obj)=> {
+    }).then((obj) => {
         console.log("User used their free trial!");
     }).catch(function (error) {
         console.log(error);
@@ -816,6 +816,36 @@ app.get('/recentPurchase', isLoggedIn, (req, res) => {
             return res.json(sortedCart[0])
         }
     });
+})
+
+app.get('/activeSession', isLoggedIn, (req, res) => {
+    Cart.find({
+        userId: req.session.user._id,
+        status: "completed"
+    }, function (err, carts) {
+        if (err) {
+            console.log('Error searching cart.', err);
+        }
+        if (carts) {
+            const sortedCart = carts.sort((a, b) => b.purchased - a.purchased);
+            var therapistName;
+            var errorMessageVariables
+            User.findOne({
+                _id: sortedCart[0].therapist
+            }, function (err, user) {
+                if (err) console.log(err)
+                if (user) {
+                    therapistName = user.firstName + " " + user.lastName
+                    errorMessageVariables = {
+                        cost: sortedCart[0].cost,
+                        purchased: sortedCart[0].expiringTime,
+                        therapistName: therapistName
+                    };
+                    return res.json(errorMessageVariables)
+                }
+            })
+        }
+    })
 })
 
 app.listen(port, () => {

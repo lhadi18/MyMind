@@ -57,11 +57,23 @@ $(document).ready(async function () {
                     if (data == 'cartExists') {
                         cartExistModal.style.display = 'block';
                         document.body.style.overflow = 'hidden';
-                    } else if(data == "orderExists") {
+                    } else if (data == "orderExists") {
                         //display error message pop up for when user already has a therapist.
-                        therapistExistModal.style.display = 'block';
-                        document.body.style.overflow = 'hidden';
-                    }else {
+                        setTimeout(() => {
+                            $.get('/activeSession', function (data) {
+                                console.log(data)
+                                $("#therapistName").text(`${data.therapistName}.`);
+                                $("#expireDate").text(`${new Date(data.purchased).toLocaleString('en-CA', {
+                                    month: 'short',
+                                    day: 'numeric',
+                                    year: 'numeric'
+                                })}`)
+                                $("#expireTime").text(`${new Date(data.purchased).toLocaleString('en-CA', { hour: 'numeric', minute: 'numeric', hour12: true })}`)
+                            })
+                            therapistExistModal.style.display = 'block';
+                            document.body.style.overflow = 'hidden';
+                        }, 50);
+                    } else {
                         window.location = "/checkout"
                     }
                 }
@@ -70,8 +82,8 @@ $(document).ready(async function () {
     })
 })
 
- // If cancel button is clicked, hide modal for Cart Exist 
- document.getElementById("closeCart").onclick = function () {
+// If cancel button is clicked, hide modal for Cart Exist 
+document.getElementById("closeCart").onclick = function () {
     cartExistModal.style.display = "none";
     therapistExistModal.style.display = "none";
     document.body.style.overflow = 'auto';
