@@ -15,6 +15,7 @@ const cartSchema = new mongoose.Schema({
     },
     timeLength: {
         type: String,
+        enum: ["freePlan", "monthPlan", "threeMonthPlan", "yearPlan"],
         required: true,
         default: "freePlan"
     },
