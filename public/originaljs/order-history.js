@@ -4,10 +4,11 @@ $(document).ready(async function () {
         url: '/getPreviousPurchases',
         type: "GET",
         success: function (data) {
-            if (data) {
-                $("#noOrderHistorySummary").hide();
+            if (data.length > 0) {
+                console.log(data);
+                document.getElementById('noOrderHistorySummary').style.display = 'none';
                 document.getElementById('orderToolbar').style.display = 'flex';
-                $("#orderTableContainer").css('display', 'flex');
+                document.getElementById('orderTableContainer').style.display = 'flex';
 
                 data.forEach(cartData => {
                     getTherapist(cartData.therapist, therapistInfo => {
@@ -111,6 +112,7 @@ function sortTable() {
         const type = headers[index].getAttribute('data-type');
         switch (type) {
             case 'number':
+                content = content.substring(1);
                 return parseFloat(content);
             case 'string':
             default:
