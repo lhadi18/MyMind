@@ -1,46 +1,53 @@
 $(document).ready(async function () {
-
     await $.ajax({
         url: '/getPreviousPurchases',
         type: "GET",
         success: function (data) {
-            data.forEach(cartData => {
-                getTherapist(cartData.therapist, therapistInfo => {
-                    let multiplier;
-                    var x = `<tr class="tableRows">`;
-                    x += `<td>${new Date(cartData.purchased).toISOString().substring(0, 10)}</td>`;
+            if (data) {
+                $("#noOrderHistorySummary").hide();
+                document.getElementById('orderToolbar').style.display = 'flex';
+                $("#orderTableContainer").css('display', 'flex');
 
-                    x += `<td>${therapistInfo.fullName}</td>`
+                data.forEach(cartData => {
+                    getTherapist(cartData.therapist, therapistInfo => {
+                        let multiplier;
+                        var x = `<tr class="tableRows">`;
+                        x += `<td>${new Date(cartData.purchased).toISOString().substring(0, 10)}</td>`;
+
+                        x += `<td>${therapistInfo.fullName}</td>`
 
 
-                    if (cartData.timeLength == 'freePlan') {
-                        x += `<td>Trial</td>`
-                        multiplier = 0;
-                    } else if (cartData.timeLength == 'monthPlan') {
-                        x += `<td>1 Month</td>`
-                        multiplier = 1;
-                    } else if (cartData.timeLength == 'threeMonthPlan') {
-                        x += `<td>3 Months</td>`
-                        multiplier = 3;
-                    } else {
-                        x += `<td>1 Year</td>`
-                        multiplier = 12;
-                    }
+                        if (cartData.timeLength == 'freePlan') {
+                            x += `<td>Trial</td>`
+                            multiplier = 0;
+                        } else if (cartData.timeLength == 'monthPlan') {
+                            x += `<td>1 Month</td>`
+                            multiplier = 1;
+                        } else if (cartData.timeLength == 'threeMonthPlan') {
+                            x += `<td>3 Months</td>`
+                            multiplier = 3;
+                        } else {
+                            x += `<td>1 Year</td>`
+                            multiplier = 12;
+                        }
 
-                    x += `<td>$${parseFloat(therapistInfo.sessionCost * multiplier *  1.12).toFixed(2)}</td>`
+                        x += `<td>$${parseFloat(therapistInfo.sessionCost * multiplier *  1.12).toFixed(2)}</td>`
 
-                    if (new Date(cartData.expiringTime) > new Date()) {
-                        x += `<td>Active</td>`
-                    } else {
-                        x += `<td>Expired</td>`
-                    }
+                        if (new Date(cartData.expiringTime) > new Date()) {
+                            x += `<td>Active</td>`
+                        } else {
+                            x += `<td>Expired</td>`
+                        }
 
-                    x += `<td>${cartData.orderId}</td>`
-                    x += `</tr>`
-                    $("tbody").append(x);
-                })
+                        x += `<td>${cartData.orderId}</td>`
+                        x += `</tr>`
+                        $("tbody").append(x);
+                    })
 
-            });
+                });
+                document.getElementById("resultsFound").innerHTML = data.length
+
+            }
         }
     });
 
@@ -119,7 +126,10 @@ function sortTable() {
     };
 
     const tableBody = table.querySelector('tbody');
-    const rows = tableBody.querySelectorAll('tr');
+    console.log(tableBody)
+    const rows = tableBody.querySelectorAll('.tableRows');
+    console.log(rows)
+
 
     const sortColumn = function (index) {
         const direction = directions[index] || 'asc';
