@@ -95,7 +95,15 @@ async function hasRecentlyPurchased(req, res, next){
     }
 }
 
+function isPatient(req, res, next){
+    if (req.session.user.userType == 'patient'){
+        return next();
+    }
+    return res.redirect('/');
+}
+
 //Routes
+
 //user profile page multer to update/change/fetch profile images
 var profileStorage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -149,11 +157,11 @@ app.get('/therapists', function (req, res) {
     res.sendFile(path.resolve('public/therapists.html'));
 });
 
-app.get('/checkout', isLoggedIn, function (req, res) {
+app.get('/checkout', isLoggedIn, isPatient, function (req, res) {
     res.sendFile(path.resolve('public/checkout.html'));
 });
 
-app.get('/order-history', isLoggedIn, function (req, res) {
+app.get('/order-history', isLoggedIn, isPatient, function (req, res) {
     res.sendFile(path.resolve('public/order-history.html'));
 });
 
