@@ -13,7 +13,13 @@ $(document).ready(async function () {
                     getTherapist(cartData.therapist, therapistInfo => {
                         let multiplier;
                         var x = `<tr class="tableRows">`;
-                        x += `<td>${new Date(cartData.purchased).toISOString().substring(0, 10)}</td>`;
+                        
+                        let purchasedDate = new Date(cartData.purchased);
+                        let offSet = purchasedDate.getTimezoneOffset() * 60 * 1000;
+                        let tLocalISO = new Date(purchasedDate - offSet).toISOString().slice(0, 10);
+                        x += `<td>${tLocalISO}</td>`;
+
+
                         x += `<td>${therapistInfo.fullName}</td>`
                         if (cartData.timeLength == 'freePlan') {
                             x += `<td>Trial</td>`
