@@ -179,7 +179,8 @@ document.getElementById('confirmOrder').onclick = function () {
         data: {
             cartPlan: $('#cartPlan').val(),
             timeLengthforUse: timeLengthforUse,
-            totalPrice: totalPrice
+            totalPrice: totalPrice,
+            therapistID: therapistInformation._id
         },
         success: function (data) {
             if (data == "usedTrial") {

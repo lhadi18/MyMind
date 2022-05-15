@@ -742,6 +742,8 @@ app.delete('/deleteCart', isLoggedIn, async (req, res) => {
 
 
 app.post('/confirmCart', isLoggedIn, async (req, res) => {
+    let userId = req.session.user._id;
+    let therapistId = req.body.therapistID;
     if (req.body.cartPlan == "freePlan") {
         var trialStatus = await User.exists({
             _id: req.session.user._id,
@@ -777,6 +779,21 @@ app.post('/confirmCart', isLoggedIn, async (req, res) => {
         console.log("User used their free trial!");
     }).catch(function (error) {
         console.log(error);
+    })
+    
+    User.updateOne({
+        "_id": userId
+    }, {
+        assigned: therapistId
+    }).then((obj) => {
+        console.log('Assigned therapist to user - ' + obj);
+    })
+    User.updateOne({
+        "_id": therapistId
+    }, {
+        assigned: userId
+    }).then((obj) => {
+        console.log('Assigned user to therapist - ' + obj);
     })
 })
 
@@ -817,22 +834,6 @@ app.get('/recentPurchase', isLoggedIn, (req, res) => {
         }
         if (carts) {
             const sortedCart = carts.sort((a, b) => b.purchased - a.purchased)
-            let userId = sortedCart[0].userId;
-            let therapistId = sortedCart[0].therapist;
-            User.updateOne({
-                "_id": userId
-            }, {
-                assigned: therapistId
-            }).then((obj) => {
-                console.log('Assigned therapist to user - ' + obj);
-            })
-            User.updateOne({
-                "_id": therapistId
-            }, {
-                assigned: userId
-            }).then((obj) => {
-                console.log('Assigned user to therapist - ' + obj);
-            })
             return res.json(sortedCart[0])
         }
     });
