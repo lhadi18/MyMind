@@ -127,9 +127,7 @@ function sortTable() {
 
     const tableBody = table.querySelector('tbody');
     console.log(tableBody)
-    const rows = tableBody.querySelectorAll('.tableRows');
-    console.log(rows)
-
+    const rows = tableBody.getElementsByClassName('tableRows');
 
     const sortColumn = function (index) {
         const direction = directions[index] || 'asc';
