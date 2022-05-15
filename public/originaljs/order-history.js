@@ -5,7 +5,6 @@ $(document).ready(async function () {
         type: "GET",
         success: function (data) {
             if (data.length > 0) {
-                console.log(data);
                 document.getElementById('noOrderHistorySummary').style.display = 'none';
                 document.getElementById('orderToolbar').style.display = 'flex';
                 document.getElementById('orderTableContainer').style.display = 'flex';
@@ -29,7 +28,7 @@ $(document).ready(async function () {
                             x += `<td>1 Year</td>`
                             multiplier = 12;
                         }
-                        x += `<td>$${parseFloat(therapistInfo.sessionCost * multiplier *  1.12).toFixed(2)}</td>`
+                        x += `<td>$${parseFloat(therapistInfo.sessionCost * multiplier * 1.12).toFixed(2)}</td>`
                         if (new Date(cartData.expiringTime) > new Date()) {
                             x += `<td>Active</td>`
                         } else {
@@ -110,11 +109,16 @@ function sortTable() {
 
     const transform = function (index, content) {
         const type = headers[index].getAttribute('data-type');
+        // console.log(content);
+        var sort = {};
         switch (type) {
             case 'number':
                 content = content.substring(1);
                 return parseFloat(content);
             case 'string':
+            case 'plan':
+                content = content.substring(2);
+                return content;
             default:
                 return content;
         }
