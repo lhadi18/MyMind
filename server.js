@@ -75,6 +75,26 @@ function setHeaders(req, res, next) {
     return next();
 }
 
+async function hasRecentlyPurchased(req, res, next){
+    //If a purchase was made in the last 3 mins, render thank-you page
+    var currentTime = new Date();
+    var nowMinus3Mins = new Date(currentTime.getTime() - 3 * 60000);
+
+    var recentOrderExists = await Cart.exists({
+        userId: req.session.user._id,
+        status: "completed",
+        purchased: {
+            $gt: nowMinus3Mins
+        }
+    })
+
+    if (recentOrderExists){
+        return next();
+    } else {
+        return res.redirect('/');
+    }
+}
+
 //Routes
 //user profile page multer to update/change/fetch profile images
 var profileStorage = multer.diskStorage({
@@ -137,7 +157,7 @@ app.get('/order-history', isLoggedIn, function (req, res) {
     res.sendFile(path.resolve('public/order-history.html'));
 });
 
-app.get('/thank-you', isLoggedIn, function (req, res) {
+app.get('/thank-you', isLoggedIn, hasRecentlyPurchased, function (req, res) {
     res.sendFile(path.resolve('public/thank-you.html'));
 });
 
