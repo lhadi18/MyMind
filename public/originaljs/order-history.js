@@ -119,7 +119,7 @@ function sortTable() {
     };
 
     const tableBody = table.querySelector('tbody');
-    const rows = tableBody.querySelectorAll('tr');
+    const rows = tableBody.getElementsByClassName('tableRows');
 
     const sortColumn = function (index) {
         const direction = directions[index] || 'asc';
