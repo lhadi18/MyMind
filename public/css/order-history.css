@@ -53,14 +53,47 @@
     color: white;
 }
 
-#wrapper #orderToolbar {
+#wrapper #noOrderHistorySummary {
     grid-column: 1 / span 4;
     grid-row: 3 / span 1;
+    padding: 10rem 7rem 5rem;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+#wrapper #noOrderHistorySummary #noOrderMessage {
+    font-size: 1.2rem;
+    font-weight: 500;
+    line-height: 2rem;
+    color: black;
+}
+
+#wrapper #noOrderHistorySummary #noOrderMessage a {
+    font-weight: 700;
+    color: var(--primaryColor);
+    text-decoration: none;
+    border-bottom: 2px solid var(--primaryColor);
+    -webkit-transition: all ease-in-out 0.3s;
+    -moz-transition: all ease-in-out 0.3s;
+    -ms-transition: all ease-in-out 0.3s;
+    -o-transition: all ease-in-out 0.3s;
+    transition: all ease-in-out 0.3s;
+}
+
+#wrapper #noOrderHistorySummary #noOrderMessage a:hover {
+    color: var(--secondaryColor);
+    border-bottom: 2px solid var(--secondaryColor);
+}
+
+#wrapper #orderToolbar {
+    grid-column: 1 / span 4;
+    grid-row: 4 / span 1;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     width: 100%;
-    padding: 5rem 7rem;
+    padding: 10rem 7rem 5rem;
     align-items: center;
 }
 
@@ -96,7 +129,7 @@
 
 #wrapper #orderTableContainer {
     grid-column: 1 / span 4;
-    grid-row: 4 / span 1;
+    grid-row: 5 / span 1;
     width: 100%;
     padding: 0 7rem 5rem;
     border-collapse: collapse;
@@ -144,9 +177,12 @@
 #wrapper #orderTableContainer #orderTable tbody .tableRows td:first-child {
     border-top-left-radius: 15px;
     border-bottom-left-radius: 15px;
+    padding-left: 2rem;
 }
 
 #wrapper #orderTableContainer #orderTable tbody .tableRows td:last-child {
     border-top-right-radius: 15px;
     border-bottom-right-radius: 15px;
+    padding-right: 2rem;
+    width: 10%;
 }

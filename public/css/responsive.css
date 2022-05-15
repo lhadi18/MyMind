@@ -814,20 +814,25 @@
         text-align: left;
         padding-left: 1.5rem;
     }
-    #wrapper #cartExistModal {
+    #wrapper #cartExistModal,
+    #wrapper #therapySessionExistModal {
         padding-top: 50%;
     }
-    #wrapper #cartExistModal #modalContent {
+    #wrapper #cartExistModal #modalContent,
+    #wrapper #therapySessionExistModal #modalContent {
         width: 90%;
         padding: 2rem 1.5rem;
     }
-    #wrapper #cartExistModal #modalContent #closeCart {
+    #wrapper #cartExistModal #modalContent #closeCart,
+    #wrapper #therapySessionExistModal #modalContent #closeCart {
         font-size: 1.7rem;
     }
-    #wrapper #cartExistModal #modalContent h2 {
+    #wrapper #cartExistModal #modalContent h2,
+    #wrapper #therapySessionExistModal #modalContent h2 {
         font-size: 1.8rem;
     }
-    #wrapper #cartExistModal #modalContent p {
+    #wrapper #cartExistModal #modalContent p,
+    #wrapper #therapySessionExistModal #modalContent p {
         font-size: 1rem;
     }
     #removeOrderModal {
@@ -896,8 +901,15 @@
     #wrapper #orderHistoryHeroContainer #overlay #orderHistoryHero h2 {
         font-size: 2.5rem;
     }
-    #wrapper #orderToolbar {
+    #wrapper #noOrderHistorySummary {
         grid-row: 2 / span 1;
+        padding: 7rem 3rem 7rem;
+    }
+    #wrapper #noOrderHistorySummary #noOrderMessage {
+        font-size: 1rem;
+    }
+    #wrapper #orderToolbar {
+        grid-row: 3 / span 1;
         padding: 5rem 3rem 2rem;
         flex-wrap: wrap;
     }
@@ -914,7 +926,7 @@
         padding: 1.5rem 2rem;
     }
     #wrapper #orderTableContainer {
-        grid-row: 3 / span 1;
+        grid-row: 4 / span 1;
         padding: 0 3rem 7rem;
     }
     #wrapper #orderTableContainer #orderTable thead {
@@ -932,6 +944,13 @@
         width: 100%;
         padding: 2rem 1rem;
         margin-bottom: 1.5rem;
+    }
+    #wrapper #orderTableContainer #orderTable tbody .tableRows td:first-child {
+        padding: 0.5rem;
+    }
+    #wrapper #orderTableContainer #orderTable tbody .tableRows td:last-child {
+        width: auto;
+        padding: 0.5rem;
     }
     #wrapper #orderTableContainer #orderTable tbody td {
         font-size: 1rem;
@@ -1704,13 +1723,16 @@
     #wrapper #orderSummary #cartTotalSec {
         padding: 3rem 0;
     }
-    #wrapper #cartExistModal {
+    #wrapper #cartExistModal,
+    #wrapper #therapySessionExistModal {
         padding-top: 40%;
     }
-    #wrapper #cartExistModal #modalContent {
+    #wrapper #cartExistModal #modalContent,
+    #wrapper #therapySessionExistModal #modalContent {
         width: 80%;
     }
-    #wrapper #cartExistModal #modalContent #closeCart {
+    #wrapper #cartExistModal #modalContent #closeCart,
+    #wrapper #therapySessionExistModal #modalContent #closeCart {
         font-size: 1.7rem;
     }
     #removeOrderModal {
@@ -1775,8 +1797,15 @@
     #wrapper #orderHistoryHeroContainer #overlay #orderHistoryHero h2 {
         font-size: 2.5rem;
     }
-    #wrapper #orderToolbar {
+    #wrapper #noOrderHistorySummary {
         grid-row: 2 / span 1;
+        padding: 7rem 3rem 7rem;
+    }
+    #wrapper #noOrderHistorySummary #noOrderMessage {
+        font-size: 1rem;
+    }
+    #wrapper #orderToolbar {
+        grid-row: 3 / span 1;
         padding: 5rem 3rem 2rem;
         flex-wrap: wrap;
     }
@@ -1790,7 +1819,7 @@
         margin: 2rem 0 0;
     }
     #wrapper #orderTableContainer {
-        grid-row: 3 / span 1;
+        grid-row: 4 / span 1;
         padding: 0 3rem 7rem;
     }
     #wrapper #orderTableContainer #orderTable thead {
@@ -1808,6 +1837,13 @@
         width: 47%;
         padding: 2rem 1rem;
         margin-bottom: 1.5rem;
+    }
+    #wrapper #orderTableContainer #orderTable tbody .tableRows td:first-child {
+        padding: 0.5rem;
+    }
+    #wrapper #orderTableContainer #orderTable tbody .tableRows td:last-child {
+        width: auto;
+        padding: 0.5rem;
     }
     #wrapper #orderTableContainer #orderTable tbody td {
         font-size: 1rem;
@@ -2444,10 +2480,12 @@
         text-align: left;
         padding: 1rem 0;
     }
-    #wrapper #cartExistModal {
+    #wrapper #cartExistModal,
+    #wrapper #therapySessionExistModal {
         padding-top: 30%;
     }
-    #wrapper #cartExistModal #modalContent {
+    #wrapper #cartExistModal #modalContent,
+    #wrapper #therapySessionExistModal #modalContent {
         width: 80%;
     }
     #removeOrderModal {
@@ -2504,8 +2542,12 @@
     #wrapper #orderHistoryHeroContainer #overlay #orderHistoryHero h2 {
         font-size: 3rem;
     }
-    #wrapper #orderToolbar {
+    #wrapper #noOrderHistorySummary {
         grid-row: 2 / span 1;
+        padding: 7rem 5rem 7rem;
+    }
+    #wrapper #orderToolbar {
+        grid-row: 3 / span 1;
         padding: 5rem 3rem 2rem;
         flex-wrap: wrap;
     }
@@ -2517,7 +2559,7 @@
         margin: 2rem 0 0;
     }
     #wrapper #orderTableContainer {
-        grid-row: 3 / span 1;
+        grid-row: 4 / span 1;
         padding: 0 2.5rem 7rem;
     }
     #wrapper #orderTableContainer #orderTable thead #tableHeader th i {
@@ -2794,10 +2836,12 @@
         width: 40%;
         text-align: left;
     }
-    #wrapper #cartExistModal {
+    #wrapper #cartExistModal,
+    #wrapper #therapySessionExistModal {
         padding-top: 20%;
     }
-    #wrapper #cartExistModal #modalContent {
+    #wrapper #cartExistModal #modalContent,
+    #wrapper #therapySessionExistModal #modalContent {
         width: 80%;
     }
     #removeOrderModal {
@@ -2822,6 +2866,9 @@
     #wrapper #thankyouContainer .col-6 #thankyouSec #startSession a {
         font-size: 1.1rem;
         width: 80%;
+    }
+    #wrapper #noOrderHistorySummary {
+        padding: 10rem 5rem 5rem;
     }
     #wrapper #orderHistoryHeroContainer #overlay #orderHistoryHero {
         padding: 5rem;
