@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="COMP 2800 - MyMind" />
 
-    <title>MyMind - Checkout</title>
+    <title>MyMind - Order History</title>
 
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="../images/logo.svg" />
@@ -27,7 +27,7 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" type="text/css" href="../css/style.css" />
-    <link rel="stylesheet" type="text/css" href="../css/checkout.css" />
+    <link rel="stylesheet" type="text/css" href="../css/order-history.css" />
     <link rel="stylesheet" type="text/css" href="../css/responsive.css" />
 </head>
 
@@ -115,102 +115,40 @@
             </nav>
         </header>
 
-        <div id="bannerCheckout">
+        <div id="orderHistoryHeroContainer">
             <div id="overlay">
-                <div id="checkoutHeader">
-                    <h2>Checkout</h2>
+                <div id="orderHistoryHero">
+                    <h2>Order History</h2>
                 </div>
             </div>
         </div>
 
-        <div id="noOrderSummary">
+        <div id="noOrderHistorySummary">
             <p id="noOrderMessage">No orders have been placed. Please visit <a href="/therapists">Therapists</a> and
                 purchase a therapy package to start your journey!</p>
         </div>
 
-        <div id="orderSummary">
-            <div id="orderNumSec">
-                <h2>Order: <span id="orderNumber">MM0509123456</span></h2>
-                <button id="printInvoice" onclick="printInvoice();">Print Invoice</button>
-            </div>
-
-            <div id="orderTable">
-                <div id="tableHeader">
-                    <h3>Order Review</h3>
-                    <h3>Package Plan</h3>
-                    <h3>Cost</h3>
-                </div>
-                <div id="tableBody">
-                    <div id="orderReview">
-                        <div id="cartImg">
-                            <img id="therapistImg" src="./images/therapist1.jpg" alt="Therapist Image">
-                        </div>
-                        <div id="cartDesc">
-                            <h4 id="therapistName">Towa Quimbayo</h4>
-                            <p id="therapistDesc">15+ years of experience in the profession, and offers $90 per session
-                            </p>
-                            <button type="submit" id="removeItem">Remove</button>
-                        </div>
-                    </div>
-                    <div id="cartPlanSec">
-                        <p>Package Plan: </p>
-                        <select id="cartPlan">
-                            <option value="freePlan" selected>Trial (1 Week)</option>
-                            <option value="monthPlan">1 Month</option>
-                            <option value="threeMonthPlan">3 Months</option>
-                            <option value="yearPlan">1 Year</option>
-                        </select>
-                    </div>
-                    <div id="cartCostSec">
-                        <p>Cost: </p>
-                        <p>$<span id="cartCost"></span></p>
-                    </div>
-                </div>
-            </div>
-
-            <hr />
-
-            <div id="cartTotalSec">
-                <div id="subTotalSec">
-                    <p>Subtotal: </p>
-                    <span id="subTotal"></span>
-                </div>
-                <div id="taxSec">
-                    <p>Tax: </p>
-                    <span id="taxTotal"></span>
-                </div>
-                <div id="totalSec">
-                    <p>Total: </p>
-                    <span id="total"></span>
-                </div>
-            </div>
-
-            <button id="confirmOrder">Confirm Order</button>
-            <p id="checkoutErrorMessage">&nbsp;</p>
+        <div id="orderToolbar">
+            <p>Results Found: <span id="boldResults"><span id="resultsFound"></span> Order(s)</span></p>
+            <form id="searchForm">
+                <input type="text" id="searchbar" onkeypress="return event.keyCode != 13;" onkeyup="searchTable()" placeholder="Search..." />
+            </form>
         </div>
 
-        <!-- Signup Success Modal -->
-        <div id="signupSuccessModal">
-            <div id="signupSuccessContainer">
-                <div id="signupSuccessBg">
-                    <svg viewBox="0 0 65 51" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M7 25L27.3077 44L58.5 7" stroke="white" stroke-width="13" stroke-linecap="round"
-                            stroke-linejoin="round" />
-                    </svg>
-                </div>
-            </div>
-        </div>
-
-        <!-- Remove Order Modal -->
-        <div id="removeOrderModal">
-            <div id="modalContent">
-                <h2>You're about to remove your order!</h2>
-                <p>The therapist is about to be removed from your cart, click confirm to empty the cart.</p>
-                <div id="removeButtonsSec">
-                    <button id="cancelRemove">Cancel</button>
-                    <button id="removeOrderBtn">Confirm</button>
-                </div>
-            </div>
+        <div id="orderTableContainer">
+            <table id="orderTable">
+                <thead>
+                    <tr id="tableHeader">
+                        <th data-type="number" class="tHead">Date<i id="0"></i></th>
+                        <th class="tHead">Therapist<i id="1"></i></th>
+                        <th data-type="plan" class="tHead">Plan<i id="2"></i></th>
+                        <th data-type="number" class="tHead">Price<i id="3"></i></th>
+                        <th class="tHead">Status<i id="4"></i></th>
+                        <th class="tHead">Order #<i id="5"></i></th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
         </div>
 
         <div id="footerPlaceHolder"></div>
@@ -219,8 +157,7 @@
     <!-- jQuery CDN -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="../js/main.js"></script>
-    <script src="../js/checkout.js"></script>
-
+    <script src="../js/order-history.js"></script>
 </body>
 
 </html>

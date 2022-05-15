@@ -27,7 +27,10 @@ app.use(express.static(__dirname + '/public'));
 app.use(session({
     secret: "password",
     resave: false,
-    saveUninitialized: true
+    saveUninitialized: true,
+    cookie: {
+        maxAge: 10800000
+    }
 }));
 
 //Custom middleware functions
@@ -70,6 +73,26 @@ function setHeaders(req, res, next) {
     res.setHeader("Pragma", "no-cache"); // HTTP 1.0.
     res.setHeader("Expires", "0"); // Proxies.
     return next();
+}
+
+async function hasRecentlyPurchased(req, res, next){
+    //If a purchase was made in the last 3 mins, render thank-you page
+    var currentTime = new Date();
+    var nowMinus3Mins = new Date(currentTime.getTime() - 3 * 60000);
+
+    var recentOrderExists = await Cart.exists({
+        userId: req.session.user._id,
+        status: "completed",
+        purchased: {
+            $gt: nowMinus3Mins
+        }
+    })
+
+    if (recentOrderExists){
+        return next();
+    } else {
+        return res.redirect('/');
+    }
 }
 
 //Routes
@@ -130,7 +153,11 @@ app.get('/checkout', isLoggedIn, function (req, res) {
     res.sendFile(path.resolve('public/checkout.html'));
 });
 
-app.get('/thank-you', function (req, res) {
+app.get('/order-history', isLoggedIn, function (req, res) {
+    res.sendFile(path.resolve('public/order-history.html'));
+});
+
+app.get('/thank-you', isLoggedIn, hasRecentlyPurchased, function (req, res) {
     res.sendFile(path.resolve('public/thank-you.html'));
 });
 
@@ -621,13 +648,27 @@ app.post("/createUser", isLoggedIn, isAdmin, isNotRegistered, async (req, res) =
 //Checkout
 
 app.post('/addToCart', isLoggedIn, async (req, res) => {
+    //Check if there is already something in cart
     var cartExists = await Cart.exists({
         userId: req.session.user._id,
         status: "active"
     })
-
     if (cartExists) {
         return res.send("cartExists");
+    }
+
+    //Check if user has a current valid session with another therapist
+    var currentTime = new Date();
+    var orderExists = await Cart.exists({
+        userId: req.session.user._id,
+        status: "completed",
+        expiringTime: {
+            $gt: currentTime
+        }
+    })
+    if (orderExists) {
+        console.log("Something exists")
+        return res.send("orderExists");
     }
 
     const new_cart = new Cart({
@@ -646,7 +687,7 @@ app.post('/addToCart', isLoggedIn, async (req, res) => {
 
 })
 
-app.get('/checkStatus', (req, res) => {
+app.get('/checkStatus', isLoggedIn, (req, res) => {
     Cart.findOne({
         userId: req.session.user._id,
         status: "active"
@@ -662,7 +703,7 @@ app.get('/checkStatus', (req, res) => {
     });
 })
 
-app.post('/getTherapistInfo', (req, res) => {
+app.post('/getTherapistInfo', isLoggedIn, (req, res) => {
     var therapistInfo;
     User.findById({
         _id: req.body.therapistId
@@ -699,17 +740,60 @@ app.delete('/deleteCart', isLoggedIn, async (req, res) => {
     })
 })
 
+
 app.post('/confirmCart', isLoggedIn, async (req, res) => {
+    let userId = req.session.user._id;
+    let therapistId = req.body.therapistID;
+    if (req.body.cartPlan == "freePlan") {
+        var trialStatus = await User.exists({
+            _id: req.session.user._id,
+            usedTrial: true
+        })
+    }
+    if (trialStatus) {
+        return res.send("usedTrial");
+    }
+
+    const currentDate = Date.now();
     Cart.updateOne({
         userId: req.session.user._id,
         status: "active"
     }, {
-        status: "completed"
+        status: "completed",
+        $set: {
+            purchased: currentDate,
+            expiringTime: req.body.timeLengthforUse,
+            cost: req.body.totalPrice
+        }
     }).then((obj) => {
         console.log("Completed");
-        res.send()
+        return res.send(obj);
     }).catch(function (error) {
         console.log(error);
+    })
+    User.updateOne({
+        _id: req.session.user._id
+    }, {
+        usedTrial: true
+    }).then((obj) => {
+        console.log("User used their free trial!");
+    }).catch(function (error) {
+        console.log(error);
+    })
+    
+    User.updateOne({
+        "_id": userId
+    }, {
+        assigned: therapistId
+    }).then((obj) => {
+        console.log('Assigned therapist to user - ' + obj);
+    })
+    User.updateOne({
+        "_id": therapistId
+    }, {
+        assigned: userId
+    }).then((obj) => {
+        console.log('Assigned user to therapist - ' + obj);
     })
 })
 
@@ -720,13 +804,13 @@ app.put('/updateCart', isLoggedIn, async (req, res) => {
     }, {
         timeLength: req.body.timeLength
     }).then((obj) => {
-        res.send()
+        res.send(obj)
     }).catch(function (error) {
         console.log(error);
     })
 })
 
-app.get('/getPreviousPurchases', (req, res) => {
+app.get('/getPreviousPurchases', isLoggedIn, (req, res) => {
     Cart.find({
         userId: req.session.user._id,
         status: "completed"
@@ -738,6 +822,51 @@ app.get('/getPreviousPurchases', (req, res) => {
             res.json(carts);
         }
     });
+})
+
+app.get('/recentPurchase', isLoggedIn, (req, res) => {
+    Cart.find({
+        userId: req.session.user._id,
+        status: "completed"
+    }, function (err, carts) {
+        if (err) {
+            console.log('Error searching cart.', err);
+        }
+        if (carts) {
+            const sortedCart = carts.sort((a, b) => b.purchased - a.purchased)
+            return res.json(sortedCart[0])
+        }
+    });
+})
+
+app.get('/activeSession', isLoggedIn, (req, res) => {
+    Cart.find({
+        userId: req.session.user._id,
+        status: "completed"
+    }, function (err, carts) {
+        if (err) {
+            console.log('Error searching cart.', err);
+        }
+        if (carts) {
+            const sortedCart = carts.sort((a, b) => b.purchased - a.purchased);
+            var therapistName;
+            var errorMessageVariables
+            User.findOne({
+                _id: sortedCart[0].therapist
+            }, function (err, user) {
+                if (err) console.log(err)
+                if (user) {
+                    therapistName = user.firstName + " " + user.lastName
+                    errorMessageVariables = {
+                        cost: sortedCart[0].cost,
+                        purchased: sortedCart[0].expiringTime,
+                        therapistName: therapistName
+                    };
+                    return res.json(errorMessageVariables)
+                }
+            })
+        }
+    })
 })
 
 app.listen(port, () => {

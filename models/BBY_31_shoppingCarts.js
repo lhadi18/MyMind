@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const cartSchema = new mongoose.Schema({
-    orderId:{
+    orderId: {
         type: String,
         required: true
     },
@@ -15,16 +15,25 @@ const cartSchema = new mongoose.Schema({
     },
     timeLength: {
         type: String,
+        enum: ["freePlan", "monthPlan", "threeMonthPlan", "yearPlan"],
         required: true,
-        default: "Free"
+        default: "freePlan"
     },
-    status:{
+    status: {
         type: String,
         enum: ["completed", "active", "deleted"],
         required: true
+    },
+    cost: {
+        type: String
+    },
+    expiringTime: {
+        type: Date
+    },
+    purchased: {
+        type: Date
     }
-    
-}, { timestamps: true, versionKey: false });
+}, { versionKey: false });
 
 const Cart = mongoose.model('shoppingCart', cartSchema);
 module.exports = Cart;

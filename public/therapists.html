@@ -64,6 +64,11 @@
                                 <i class="bi bi-bag-check nav-icon"></i>Checkout
                             </a>
                         </li>
+                        <li class="nav-item isPatient">
+                            <a href="/order-history" class="nav-link">
+                                <i class="bi bi-clock-history nav-icon"></i>Order History
+                            </a>
+                        </li>
                         <li class="nav-item isAdmin">
                             <a href="/admin-dashboard" class="nav-link">
                                 <i class="fa-solid fa-users-gear nav-icon"></i>Admin Dashboard
@@ -129,10 +134,23 @@
             <div id="modalContent">
                 <i class="fa-solid fa-xmark" id="closeCart"></i>
                 <div id="alertIcon">
+                    <i class="bi bi-bag-check-fill"></i>
+                </div>
+                <h2>Cart is full!</h2>
+                <p>You already have a therapist added to your cart, empty your cart at <a href="/checkout">Checkout</a> to proceed.</p>
+            </div>
+        </div>
+
+        <!-- Active Therapy Session Exist Modal -->
+        <div id="therapySessionExistModal">
+            <div id="modalContent">
+                <i class="fa-solid fa-xmark" id="closeSession"></i>
+                <div id="alertIcon">
                     <i class="bi bi-exclamation-triangle-fill"></i>
                 </div>
                 <h2>Hold on there!</h2>
-                <p>You already have a therapist added to your cart, empty your cart at <a href="/checkout">Checkout</a> to proceed.</p>
+                <p>You currently have an active session with your therapist, <span id="therapistName"></span> 
+                    Your session expires on <span id="expireDate"></span> at <span id="expireTime"></span></p>
             </div>
         </div>
 
