@@ -85,6 +85,10 @@ $(document).ready(async function () {
 // If cancel button is clicked, hide modal for Cart Exist 
 document.getElementById("closeCart").onclick = function () {
     cartExistModal.style.display = "none";
+    document.body.style.overflow = 'auto';
+}
+
+document.getElementById("closeSession").onclick = function () {
     therapistExistModal.style.display = "none";
     document.body.style.overflow = 'auto';
 }
@@ -93,6 +97,8 @@ document.getElementById("closeCart").onclick = function () {
 window.onclick = function (event) {
     if (event.target == cartExistModal) {
         cartExistModal.style.display = "none";
+        document.body.style.overflow = 'auto';
+    } else if (event.target == therapistExistModal) {
         therapistExistModal.style.display = "none";
         document.body.style.overflow = 'auto';
     }
