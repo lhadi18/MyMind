@@ -130,9 +130,9 @@
 #wrapper #orderTableContainer {
     grid-column: 1 / span 4;
     grid-row: 5 / span 1;
+    display: none;
     width: 100%;
     padding: 0 7rem 5rem;
-    display: none;
     border-collapse: collapse;
 }
 

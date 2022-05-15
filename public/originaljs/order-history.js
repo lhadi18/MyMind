@@ -1,22 +1,20 @@
 $(document).ready(async function () {
+
     await $.ajax({
         url: '/getPreviousPurchases',
         type: "GET",
         success: function (data) {
-            if (data) {
-                $("#noOrderHistorySummary").hide();
+            if (data.length > 0) {
+                document.getElementById('noOrderHistorySummary').style.display = 'none';
                 document.getElementById('orderToolbar').style.display = 'flex';
-                $("#orderTableContainer").css('display', 'flex');
+                document.getElementById('orderTableContainer').style.display = 'flex';
 
                 data.forEach(cartData => {
                     getTherapist(cartData.therapist, therapistInfo => {
                         let multiplier;
                         var x = `<tr class="tableRows">`;
                         x += `<td>${new Date(cartData.purchased).toISOString().substring(0, 10)}</td>`;
-
                         x += `<td>${therapistInfo.fullName}</td>`
-
-
                         if (cartData.timeLength == 'freePlan') {
                             x += `<td>Trial</td>`
                             multiplier = 0;
@@ -30,23 +28,18 @@ $(document).ready(async function () {
                             x += `<td>1 Year</td>`
                             multiplier = 12;
                         }
-
-                        x += `<td>$${parseFloat(therapistInfo.sessionCost * multiplier *  1.12).toFixed(2)}</td>`
-
+                        x += `<td>$${parseFloat(therapistInfo.sessionCost * multiplier * 1.12).toFixed(2)}</td>`
                         if (new Date(cartData.expiringTime) > new Date()) {
                             x += `<td>Active</td>`
                         } else {
                             x += `<td>Expired</td>`
                         }
-
                         x += `<td>${cartData.orderId}</td>`
                         x += `</tr>`
                         $("tbody").append(x);
-                    })
-
+                    });
                 });
-                document.getElementById("resultsFound").innerHTML = data.length
-
+                document.getElementById("resultsFound").innerHTML = data.length;
             }
         }
     });
@@ -76,7 +69,7 @@ function getTherapist(therapistId, callback) {
                 fullName: `${therapist.firstName} ${therapist.lastName}`,
                 sessionCost: therapist.sessionCost
             }
-            callback(therapistInfo)
+            callback(therapistInfo);
         }
     })
 }
@@ -116,17 +109,22 @@ function sortTable() {
 
     const transform = function (index, content) {
         const type = headers[index].getAttribute('data-type');
+        // console.log(content);
+        var sort = {};
         switch (type) {
             case 'number':
+                content = content.substring(1);
                 return parseFloat(content);
             case 'string':
+            case 'plan':
+                content = content.substring(2);
+                return content;
             default:
                 return content;
         }
     };
 
     const tableBody = table.querySelector('tbody');
-    console.log(tableBody)
     const rows = tableBody.getElementsByClassName('tableRows');
 
     const sortColumn = function (index) {
