@@ -132,7 +132,7 @@ element.click(openElement);
 function openElement() {
     var messages = element.find('#chatMessages');
     var textInput = element.find('#chatbox');
-     var userInput = $('#chatbox');
+    var userInput = $('#chatbox');
     element.find('>i').hide();
     element.addClass('expand');
     element.find('.chatContainer').addClass('enter');
@@ -151,13 +151,16 @@ function openElement() {
     userInput.focus(function () {
         if ($(this).val() === "Message ...") {
             $(this).val("").focus();
+            this.setAttribute("style", `${this.scrollHeight + 2}px`);
         }
     });
     userInput.blur(function () {
         if ($(this).val() === "") {
             $(this).val("Message ...");
+            this.setAttribute("style", `${this.scrollHeight + 2}px`);
         }
     });
+
     userInput.blur();
 }
 

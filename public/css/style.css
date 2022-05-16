@@ -392,9 +392,9 @@ body::-webkit-scrollbar-thumb {
 }
 
 #wrapper #therapistChat.expand {
-    width: 25%;
+    width: 25vw;
     max-height: 60%;
-    height: 60%;
+    height: 60vh;
     border-radius: 15px;
     cursor: auto;
     opacity: 1;
@@ -533,6 +533,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 #wrapper #therapistChat .chatContainer #chatMessages::-webkit-scrollbar-track {
+    margin-bottom: 5rem;
     background-color: rgba(211, 211, 211, 0.5);
 }
 
@@ -556,16 +557,6 @@ body::-webkit-scrollbar-thumb {
     background-color: var(--primaryColor);
 }
 
-/* #therapistChat .chatContainer #chatMessages li:before {
-    position: absolute;
-    top: 0;
-    width: 25px;
-    height: 25px;
-    border-radius: 25px;
-    content: '';
-    background-size: cover;
-} */
-
 #wrapper #therapistChat .chatContainer #chatMessages li:after {
     position: absolute;
     content: '';
@@ -585,14 +576,6 @@ body::-webkit-scrollbar-thumb {
     animation: show-chat-odd 0.15s 1 ease-in-out;
 }
 
-/* #therapistChat .chatContainer #chatMessages li.other:before {
-    left: 0;
-    background-image: url('../images/therapist1.jpg');
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-size: cover;
-} */
-
 #wrapper #therapistChat .chatContainer #chatMessages li.other:after {
     border-top: 15px solid #F2F2F2;
     border-left: 10px solid transparent;
@@ -610,11 +593,6 @@ body::-webkit-scrollbar-thumb {
     -o-animation: show-chat-even 0.15s 1 ease-in-out;
     animation: show-chat-even 0.15s 1 ease-in-out;
 }
-
-/* #therapistChat .chatContainer #chatMessages li.self:before {
-    left: -45px;
-    background-image: url('../images/therapist2.jpg');
-} */
 
 #wrapper #therapistChat .chatContainer #chatMessages li.self:after {
     border-top: 15px solid var(--primaryColor);
@@ -636,6 +614,8 @@ body::-webkit-scrollbar-thumb {
     right: 0;
     padding: 0.8rem 1rem;
     background: white;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
 }
 
 #wrapper #therapistChat .chatContainer #sendMessageContainer #chatbox {
