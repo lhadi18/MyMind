@@ -835,6 +835,23 @@
     #wrapper #therapySessionExistModal #modalContent p {
         font-size: 1rem;
     }
+    #wrapper #notAuthorizedModal {
+        margin-top: 3%;
+    }
+    #wrapper #notAuthorizedModal #modalContent {
+        width: 90%;
+        padding: 1rem;
+    }
+    #wrapper #notAuthorizedModal #modalContent #authorizedModalMessage {
+        max-width: 90%;
+    }
+    #wrapper #notAuthorizedModal #modalContent #authorizedModalMessage h2,
+    #wrapper #notAuthorizedModal #modalContent #authorizedModalMessage p {
+        font-size: 14px;
+    }
+    #wrapper #notAuthorizedModal #modalContent #closeAuthorized {
+        right: 1.5rem;
+    }
     #removeOrderModal {
         padding-top: 70%;
         padding-bottom: 0%;
@@ -1735,6 +1752,20 @@
     #wrapper #therapySessionExistModal #modalContent #closeSession {
         font-size: 1.7rem;
     }
+    #wrapper #notAuthorizedModal {
+        margin-top: 3%;
+    }
+    #wrapper #notAuthorizedModal #modalContent {
+        width: 90%;
+        padding: 1rem 1.5rem;
+    }
+    #wrapper #notAuthorizedModal #modalContent #authorizedModalMessage h2,
+    #wrapper #notAuthorizedModal #modalContent #authorizedModalMessage p {
+        font-size: 14px;
+    }
+    #wrapper #notAuthorizedModal #modalContent #closeAuthorized {
+        right: 1.5rem;
+    }
     #removeOrderModal {
         padding-top: 30%;
         padding-bottom: 0%;
@@ -2487,6 +2518,15 @@
     #wrapper #cartExistModal #modalContent,
     #wrapper #therapySessionExistModal #modalContent {
         width: 80%;
+    }
+    #wrapper #notAuthorizedModal {
+        margin-top: 3%;
+    }
+    #wrapper #notAuthorizedModal #modalContent {
+        width: 90%;
+    }
+    #wrapper #notAuthorizedModal #modalContent #closeAuthorized {
+        right: 2rem;
     }
     #removeOrderModal {
         padding-top: 30%;
