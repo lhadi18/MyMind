@@ -3,8 +3,8 @@ $.ajax({
     type: "GET",
     success: function (data) {
         var firstCard = data[1];
-        var mainCard = data[2];
-        var thirdCard = data[0];
+        var mainCard = data[0];
+        var thirdCard = data[2];
         var x = '<div class="therapyCard">';
         x += `<h2>$${firstCard.sessionCost}<span> / session</span></h2>`
         x += '<h4>Therapist Details</h4>'

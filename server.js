@@ -197,6 +197,8 @@ app.get('/getTherapists', (req, res) => {
         if (user) {
             res.json(user);
         }
+    }).sort({
+        numSessions: 'desc'
     })
 })
 
@@ -786,7 +788,34 @@ app.post('/confirmCart', isLoggedIn, async (req, res) => {
     }).catch(function (error) {
         console.log(error);
     })
+    incrementTherapistSessionNum(req.session.user._id);
 })
+
+function incrementTherapistSessionNum(userID) {
+    Cart.find({
+        userId: userID,
+        status: "completed"
+    }, function (err, carts) {
+        if (err) {
+            console.log('Error searching cart.', err);
+        }
+        if (carts) {
+            const sortedCart = carts.sort((a, b) => b.purchased - a.purchased)
+            var therapistID = sortedCart[0].therapist
+            User.updateOne({
+                _id: therapistID
+            }, {
+                $inc: {
+                    numSessions: 1
+                }
+            }).then((obj) => {
+                console.log(obj)
+            }).catch(function (error) {
+                console.log(error);
+            })
+        }
+    });
+}
 
 app.put('/updateCart', isLoggedIn, async (req, res) => {
     Cart.updateOne({

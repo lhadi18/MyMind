@@ -44,6 +44,9 @@ const userSchema = new Schema({
         type: Boolean,
         default:false
     },
+    numSessions: {
+        type: Number
+    },
     profileImg: {
         type: String,
         default: "../uploads/placeholder-profile.jpg"
