@@ -788,21 +788,6 @@ app.post('/confirmCart', isLoggedIn, async (req, res) => {
     }).catch(function (error) {
         console.log(error);
     })
-    
-    User.updateOne({
-        "_id": userId
-    }, {
-        assigned: therapistId
-    }).then((obj) => {
-        console.log('Assigned therapist to user - ' + obj);
-    })
-    User.updateOne({
-        "_id": therapistId
-    }, {
-        assigned: userId
-    }).then((obj) => {
-        console.log('Assigned user to therapist - ' + obj);
-    })
 })
 
 app.put('/updateCart', isLoggedIn, async (req, res) => {
