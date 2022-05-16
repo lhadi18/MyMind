@@ -13,7 +13,7 @@ $(document).ready(async function () {
                     getTherapist(cartData.therapist, therapistInfo => {
                         let multiplier;
                         var x = `<tr class="tableRows">`;
-                        
+
                         let purchasedDate = new Date(cartData.purchased);
                         let offSet = purchasedDate.getTimezoneOffset() * 60 * 1000;
                         let tLocalISO = new Date(purchasedDate - offSet).toISOString().slice(0, 10);
