@@ -118,17 +118,10 @@ function linkAction() {
 navLink.forEach(n => n.addEventListener('click', linkAction));
 
 
-
-
-
-
-
-
-
 // Chat Box
 var element = $('#therapistChat');
-var myStorage = localStorage;
 
+// var myStorage = localStorage;
 // if (!myStorage.getItem('chatID')) {
 //     myStorage.setItem('chatID', createUUID());
 // }
@@ -136,40 +129,46 @@ var myStorage = localStorage;
 element.addClass('enter');
 element.click(openElement);
 
-
 function openElement() {
     var messages = element.find('#chatMessages');
     var textInput = element.find('#chatbox');
+     var userInput = $('#chatbox');
     element.find('>i').hide();
     element.addClass('expand');
     element.find('.chatContainer').addClass('enter');
-    var strLength = textInput.val().length * 2;
     textInput.keydown(onMetaAndEnter).prop("disabled", false).focus();
     element.off('click', openElement);
     element.find('#closeChat').click(closeElement);
     element.find('#sendMessage').click(sendNewMessage);
     messages.scrollTop(messages.prop("scrollHeight"));
-    textInput.focus(function() {
-      if ($(this).text() === "Type here..."){
-          $(this).text("").focus();
-      }
+    
+    userInput.each(function () {
+        this.setAttribute("style", `${this.scrollHeight + 2}px`);
+    }).on("input", function () {
+        this.style.height = (this.scrollHeight + 2) + "px";
     });
-    textInput.blur(function() {
-        if ($(this).text() === ""){
-            $(this).text("Type here...");
+    
+    userInput.focus(function () {
+        if ($(this).val() === "Message ...") {
+            $(this).val("").focus();
         }
     });
-  textInput.blur();
+    userInput.blur(function () {
+        if ($(this).val() === "") {
+            $(this).val("Message ...");
+        }
+    });
+    userInput.blur();
 }
 
 function closeElement() {
     element.find('.chatContainer').removeClass('enter').hide();
-    element.find('>i').show();
+    element.find('#chatMsgIcon').show();
     element.removeClass('expand');
     element.find('#closeChat').off('click', closeElement);
     element.find('#sendMessage').off('click', sendNewMessage);
     element.find('#chatbox').off('keydown', onMetaAndEnter).prop("disabled", true).blur();
-    setTimeout(function() {
+    setTimeout(function () {
         element.find('.chatContainer').removeClass('enter').show()
         element.click(openElement);
     }, 500);
@@ -192,9 +191,13 @@ function closeElement() {
 
 function sendNewMessage() {
     var userInput = $('#chatbox');
-    var newMessage = userInput.html().replace(/\<div\>|\<br.*?\>/ig, '\n').replace(/\<\/div\>/g, '').trim().replace(/\n/g, '<br>');
+    var newMessage = userInput.val().replace(/\<div\>|\<br.*?\>/ig, '\n').replace(/\<\/div\>/g, '').trim().replace(/\n/g, '<br>');
 
-    if (!newMessage) return;
+    if (!newMessage) {
+        return;
+    } else if (newMessage === 'Message ...') {
+        return null;
+    }
 
     var messagesContainer = $('#chatMessages');
 
@@ -204,18 +207,20 @@ function sendNewMessage() {
         '</li>'
     ].join(''));
 
-    // clean out old message
-    userInput.html('');
-    // focus on input
+    userInput.val('');
     userInput.focus();
+
+    $('#chatbox').each(function () {
+        this.setAttribute("style", `${this.scrollHeight + 5}px`);
+    });
 
     messagesContainer.finish().animate({
         scrollTop: messagesContainer.prop("scrollHeight")
-    }, 250);
+    }, 500);
 }
 
-function onMetaAndEnter(event) {
-    if ((event.metaKey || event.ctrlKey) && event.keyCode == 13) {
+function onMetaAndEnter(e) {
+    if (e.ctrlKey && e.keyCode == 13) {
         sendNewMessage();
     }
 }
