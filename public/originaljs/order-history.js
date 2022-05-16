@@ -1,3 +1,5 @@
+const orderRefundModal = document.getElementById('orderRefundModal');
+
 $(document).ready(async function () {
 
     await $.ajax({
@@ -19,8 +21,8 @@ $(document).ready(async function () {
                         let tLocalISO = new Date(purchasedDate - offSet).toISOString().slice(0, 10);
                         x += `<td>${tLocalISO}</td>`;
 
-
                         x += `<td>${therapistInfo.fullName}</td>`
+
                         if (cartData.timeLength == 'freePlan') {
                             x += `<td>Trial</td>`
                             multiplier = 0;
@@ -34,13 +36,18 @@ $(document).ready(async function () {
                             x += `<td>1 Year</td>`
                             multiplier = 12;
                         }
+
                         x += `<td>$${parseFloat(therapistInfo.sessionCost * multiplier * 1.12).toFixed(2)}</td>`
+                        x += `<td>${cartData.orderId}</td>`
+
                         if (new Date(cartData.expiringTime) > new Date()) {
                             x += `<td>Active</td>`
                         } else {
                             x += `<td>Expired</td>`
                         }
-                        x += `<td>${cartData.orderId}</td>`
+
+                        x += `<td>${new Date(cartData.purchased).toLocaleString('en-CA', { hour: 'numeric', minute: 'numeric', hour12: true })}</td>`
+
                         x += `</tr>`
                         $("tbody").append(x);
                     });
@@ -57,9 +64,51 @@ $(document).ready(async function () {
     document.getElementById('3').setAttribute("class", "bi bi-caret-down-fill");
     document.getElementById('4').setAttribute("class", "bi bi-caret-down-fill");
     document.getElementById('5').setAttribute("class", "bi bi-caret-down-fill");
+    document.getElementById('6').setAttribute("class", "bi bi-caret-down-fill");
 
     // Call sort table fucntion when user clicks table headings
     sortTable();
+
+    // If create button is clicked, display modal (form)
+    document.getElementById('refundBtn').onclick = function () {
+        orderRefundModal.style.display = "block";
+        document.body.style.overflow = 'hidden';
+        $('#orderRefundBtn').off();
+        $('#orderRefundBtn').click(() => {
+            // $.ajax({
+            //     url: '/createUser',
+            //     type: 'POST',
+            //     data: {
+            //         firstname: $("#firstname").val().charAt(0).toUpperCase() + $("#firstname").val().substring(1),
+            //         lastname: $("#lastname").val().charAt(0).toUpperCase() + $("#lastname").val().substring(1),
+            //         username: $("#username").val().toLowerCase(),
+            //         phone: $("#phone").val(),
+            //         email: $("#email").val().toLowerCase(),
+            //         userType: $("#userType").val(),
+            //         yearsExperience: $("#yearsExperience").val(),
+            //         sessionCost: $("#sessionCost").val(),
+            //         password: $("#password").val(),
+            //     }, success: function (data) {
+            //         if (data == "existingEmail") {
+            //             document.getElementById("createUserErrorMessage").style.display = 'block';
+            //             document.getElementById("createUserErrorMessage").innerHTML = "A user with that email already exists";
+            //         } else if (data == "existingPhone") {
+            //             document.getElementById("createUserErrorMessage").style.display = 'block';
+            //             document.getElementById("createUserErrorMessage").innerHTML = "A user with that phone number already exists";
+            //         } else if (data == "existingUsername") {
+            //             document.getElementById("createUserErrorMessage").style.display = 'block';
+            //             document.getElementById("createUserErrorMessage").innerHTML = "A user with that username already exists";
+            //         } else {
+            //             document.getElementById('dashboardSuccessModal').style.display = 'flex';
+            //             document.body.style.overflow = 'hidden';
+            //             setTimeout(() => {
+            //                 location.reload();
+            //             }, 2500);
+            //         }
+            //     }
+            // })
+        });
+    }
 });
 
 function getTherapist(therapistId, callback) {
@@ -72,7 +121,7 @@ function getTherapist(therapistId, callback) {
         },
         success: function (therapist) {
             therapistInfo = {
-                fullName: `${therapist.firstName} ${therapist.lastName}`,
+                fullName: `${therapist.firstName.charAt(0)}. ${therapist.lastName}`,
                 sessionCost: therapist.sessionCost
             }
             callback(therapistInfo);
@@ -189,4 +238,19 @@ function sortTable() {
             }
         });
     });
+}
+
+// If cancel button is clicked, hide modal for Delete User
+document.getElementById("closeRefund").onclick = function () {
+    orderRefundModal.style.display = "none";
+    document.body.style.overflow = 'auto';
+}
+
+// If user clicks outside of the modal for both Create, Edit and Delete then hide modal
+window.onclick = function (event) {
+    if (event.target == orderRefundModal) {
+        document.getElementById("refundErrorMessage").style.display = 'none';
+        orderRefundModal.style.display = "none";
+        document.body.style.overflow = 'auto';
+    }
 }

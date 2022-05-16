@@ -937,10 +937,41 @@
     }
     #wrapper #orderToolbar #searchForm {
         width: 100%;
+        order: 3;
         margin: 2rem 0 0;
     }
     #wrapper #orderToolbar #searchForm #searchbar {
         padding: 1.5rem 2rem;
+    }
+    #wrapper #orderToolbar #refundBtn {
+        width: 100%;
+        order: 2;
+    }
+    #orderRefundModal {
+        padding-top: 40%;
+        padding-bottom: 0;
+    }
+    #orderRefundModal #modalContent {
+        padding: 2rem 1.5rem;
+        width: 90%;
+    }
+    #orderRefundModal #modalContent h2 {
+        font-size: 1.2rem;
+    }
+    #orderRefundModal #modalContent #refundButtonsSec {
+        flex-direction: row-reverse;
+        justify-content: center;
+    }
+    #orderRefundModal #modalContent #refundButtonsSec #closeRefund {
+        font-size: 1rem;
+        padding-left: 1rem;
+        padding-right: 1.5rem;
+    }
+    #orderRefundModal #modalContent #refundButtonsSec #orderRefundBtn {
+        padding: 12px;
+        width: 50%;
+        font-size: 1rem;
+        margin-left: 0;
     }
     #wrapper #orderTableContainer {
         grid-row: 4 / span 1;
@@ -994,12 +1025,17 @@
         font-weight: 700;
     }
     #wrapper #orderTableContainer #orderTable tbody td:nth-child(5):before {
-        content: 'Status: ';
+        content: 'Order #: ';
         font-size: 1rem;
         font-weight: 700;
     }
     #wrapper #orderTableContainer #orderTable tbody td:nth-child(6):before {
-        content: 'Order #: ';
+        content: 'Status: ';
+        font-size: 1rem;
+        font-weight: 700;
+    }
+    #wrapper #orderTableContainer #orderTable tbody td:nth-child(7):before {
+        content: 'Expired: ';
         font-size: 1rem;
         font-weight: 700;
     }
@@ -1841,13 +1877,34 @@
         flex-wrap: wrap;
     }
     #wrapper #orderToolbar p {
-        width: 100%;
-        padding-bottom: 2rem;
-        text-align: center;
+        width: 50%;
     }
     #wrapper #orderToolbar #searchForm {
         width: 100%;
+        order: 3;
         margin: 2rem 0 0;
+    }
+    #wrapper #orderToolbar #refundBtn {
+        width: 50%;
+        order: 2;
+    }
+    #orderRefundModal {
+        padding-top: 40%;
+        padding-bottom: 0;
+    }
+    #orderRefundModal #modalContent {
+        width: 80%;
+    }
+    #orderRefundModal #modalContent h2 {
+        font-size: 1.3rem;
+    }
+    #orderRefundModal #modalContent #refundButtonsSec #closeRefund {
+        font-size: 1rem;
+    }
+    #orderRefundModal #modalContent #refundButtonsSec #orderRefundBtn {
+        padding: 12px;
+        width: 25%;
+        font-size: 1rem;
     }
     #wrapper #orderTableContainer {
         grid-row: 4 / span 1;
@@ -1901,12 +1958,17 @@
         font-weight: 700;
     }
     #wrapper #orderTableContainer #orderTable tbody td:nth-child(5):before {
-        content: 'Status: ';
+        content: 'Order #: ';
         font-size: 1rem;
         font-weight: 700;
     }
     #wrapper #orderTableContainer #orderTable tbody td:nth-child(6):before {
-        content: 'Order #: ';
+        content: 'Status: ';
+        font-size: 1rem;
+        font-weight: 700;
+    }
+    #wrapper #orderTableContainer #orderTable tbody td:nth-child(7):before {
+        content: 'Expired: ';
         font-size: 1rem;
         font-weight: 700;
     }
@@ -2592,11 +2654,34 @@
         flex-wrap: wrap;
     }
     #wrapper #orderToolbar p {
-        width: 100%;
+        width: 50%;
     }
     #wrapper #orderToolbar #searchForm {
         width: 100%;
+        order: 3;
         margin: 2rem 0 0;
+    }
+    #wrapper #orderToolbar #refundBtn {
+        width: 50%;
+        order: 2;
+    }
+    #orderRefundModal {
+        padding-top: 25%;
+        padding-bottom: 0%;
+    }
+    #orderRefundModal #modalContent {
+        width: 80%;
+    }
+    #orderRefundModal #modalContent h2 {
+        font-size: 1.3rem;
+    }
+    #orderRefundModal #modalContent #refundButtonsSec #closeRefund {
+        font-size: 1rem;
+    }
+    #orderRefundModal #modalContent #refundButtonsSec #orderRefundBtn {
+        padding: 12px;
+        width: 25%;
+        font-size: 1rem;
     }
     #wrapper #orderTableContainer {
         grid-row: 4 / span 1;
@@ -2607,7 +2692,7 @@
     }
     #wrapper #orderTableContainer #orderTable thead th,
     #wrapper #orderTableContainer #orderTable tbody td {
-        font-size: 14px;
+        font-size: 12px;
         padding: 1.5rem 0.5rem;
     }
 }
@@ -2923,7 +3008,10 @@
         width: 25%;
     }
     #wrapper #orderToolbar #searchForm {
-        width: 75%;
+        width: 55%;
+    }
+    #wrapper #orderToolbar #refundBtn {
+        width: 20%;
     }
     #wrapper #orderTableContainer {
         padding: 0 5rem 5rem;
@@ -2934,6 +3022,13 @@
     #wrapper #orderTableContainer #orderTable thead th,
     #wrapper #orderTableContainer #orderTable tbody td {
         font-size: 14px;
+    }
+    #orderRefundModal {
+        padding-top: 25%;
+        padding-bottom: 0%;
+    }
+    #orderRefundModal #modalContent {
+        width: 80%;
     }
 }
 
