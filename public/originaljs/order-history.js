@@ -21,6 +21,8 @@ $(document).ready(async function () {
                         let tLocalISO = new Date(purchasedDate - offSet).toISOString().slice(0, 10);
                         x += `<td>${tLocalISO}</td>`;
 
+                        x += `<td>${new Date(cartData.expiringTime).toLocaleString('en-CA', { hour: 'numeric', minute: 'numeric', hour12: true })}</td>`
+
                         x += `<td>${therapistInfo.fullName}</td>`
 
                         if (cartData.timeLength == 'freePlan') {
@@ -34,20 +36,19 @@ $(document).ready(async function () {
                             multiplier = 3;
                         } else {
                             x += `<td>1 Year</td>`
-                            multiplier = 12;
+                            multiplier = 6;
                         }
 
                         x += `<td>$${parseFloat(therapistInfo.sessionCost * multiplier * 1.12).toFixed(2)}</td>`
                         x += `<td>${cartData.orderId}</td>`
 
-                        if (new Date(cartData.expiringTime) > new Date()) {
+                        if(cartData.status == "refunded") {
+                            x += `<td>Refunded</td>`
+                        } else if (new Date(cartData.expiringTime) > new Date()) {
                             x += `<td>Active</td>`
                         } else {
                             x += `<td>Expired</td>`
                         }
-
-                        x += `<td>${new Date(cartData.purchased).toLocaleString('en-CA', { hour: 'numeric', minute: 'numeric', hour12: true })}</td>`
-
                         x += `</tr>`
                         $("tbody").append(x);
                     });
@@ -71,42 +72,27 @@ $(document).ready(async function () {
 
     // If create button is clicked, display modal (form)
     document.getElementById('refundBtn').onclick = function () {
-        orderRefundModal.style.display = "block";
-        document.body.style.overflow = 'hidden';
+        setTimeout(() => {
+            $.get('/activeSession', function (data) {
+                if(data == "NoActiveSession") {
+                    document.getElementById("headerRefund").innerHTML = "No active orders found"
+                    document.getElementById("msgRefund").innerHTML = "You have no active session at this time. Please place an order from our <a href='/therapists'>Therapists</a> page"
+                } else {
+                    console.log(data);
+                $("#refundTherapist").text(`${data.therapistName}.`);
+                $("#refundPrice").text(`$${data.cost}`)
+                }
+            })
+            orderRefundModal.style.display = "block";
+            document.body.style.overflow = 'hidden';
+        }, 50);
         $('#orderRefundBtn').off();
         $('#orderRefundBtn').click(() => {
-            // $.ajax({
-            //     url: '/createUser',
-            //     type: 'POST',
-            //     data: {
-            //         firstname: $("#firstname").val().charAt(0).toUpperCase() + $("#firstname").val().substring(1),
-            //         lastname: $("#lastname").val().charAt(0).toUpperCase() + $("#lastname").val().substring(1),
-            //         username: $("#username").val().toLowerCase(),
-            //         phone: $("#phone").val(),
-            //         email: $("#email").val().toLowerCase(),
-            //         userType: $("#userType").val(),
-            //         yearsExperience: $("#yearsExperience").val(),
-            //         sessionCost: $("#sessionCost").val(),
-            //         password: $("#password").val(),
-            //     }, success: function (data) {
-            //         if (data == "existingEmail") {
-            //             document.getElementById("createUserErrorMessage").style.display = 'block';
-            //             document.getElementById("createUserErrorMessage").innerHTML = "A user with that email already exists";
-            //         } else if (data == "existingPhone") {
-            //             document.getElementById("createUserErrorMessage").style.display = 'block';
-            //             document.getElementById("createUserErrorMessage").innerHTML = "A user with that phone number already exists";
-            //         } else if (data == "existingUsername") {
-            //             document.getElementById("createUserErrorMessage").style.display = 'block';
-            //             document.getElementById("createUserErrorMessage").innerHTML = "A user with that username already exists";
-            //         } else {
-            //             document.getElementById('dashboardSuccessModal').style.display = 'flex';
-            //             document.body.style.overflow = 'hidden';
-            //             setTimeout(() => {
-            //                 location.reload();
-            //             }, 2500);
-            //         }
-            //     }
-            // })
+            setTimeout(() => {
+                $.post('/refundOrder', function () {
+                    location.reload();
+                })
+            }, 50);
         });
     }
 });

@@ -750,8 +750,6 @@ app.delete('/deleteCart', isLoggedIn, async (req, res) => {
 
 
 app.post('/confirmCart', isLoggedIn, async (req, res) => {
-    let userId = req.session.user._id;
-    let therapistId = req.body.therapistID;
     if (req.body.cartPlan == "freePlan") {
         var trialStatus = await User.exists({
             _id: req.session.user._id,
@@ -806,7 +804,11 @@ app.put('/updateCart', isLoggedIn, async (req, res) => {
 app.get('/getPreviousPurchases', isLoggedIn, (req, res) => {
     Cart.find({
         userId: req.session.user._id,
-        status: "completed"
+        $or: [{
+            status: "completed",
+        }, {
+            status: "refunded",
+        }]
     }, function (err, carts) {
         if (err) {
             console.log('Error searching cart.', err);
@@ -833,17 +835,22 @@ app.get('/recentPurchase', isLoggedIn, (req, res) => {
 })
 
 app.get('/activeSession', isLoggedIn, (req, res) => {
+    var currentTime = new Date();
     Cart.find({
         userId: req.session.user._id,
-        status: "completed"
+        status: "completed",
+        expiringTime: {
+            $gt: currentTime
+        }
     }, function (err, carts) {
         if (err) {
             console.log('Error searching cart.', err);
         }
-        if (carts) {
+        if (carts.length > 0) {
+            console.log(carts)
             const sortedCart = carts.sort((a, b) => b.purchased - a.purchased);
             var therapistName;
-            var errorMessageVariables
+            var errorMessageVariables;
             User.findOne({
                 _id: sortedCart[0].therapist
             }, function (err, user) {
@@ -858,7 +865,27 @@ app.get('/activeSession', isLoggedIn, (req, res) => {
                     return res.json(errorMessageVariables)
                 }
             })
+        } else {
+            return res.json("NoActiveSession");
         }
+    })
+})
+
+app.post('/refundOrder', isLoggedIn, (req, res) => {
+    var currentTime = new Date();
+    Cart.updateOne({
+        userId: req.session.user._id,
+        status: "completed",
+        expiringTime: {
+            $gt: currentTime
+        }
+    }, {
+        expiringTime: currentTime,
+        status: "refunded"
+    }).then((obj) => {
+        res.send(obj)
+    }).catch(function (error) {
+        console.log(error);
     })
 })
 
