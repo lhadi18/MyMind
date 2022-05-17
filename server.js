@@ -13,17 +13,16 @@ const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server);
 
+
+//Creates connection between server and client
 io.on('connection', (socket) => {
     socket.on('chat message', (msg) => {
         io.emit('chat message', msg);
     });
 
-    console.log('Chat is connected.')
-
     socket.on("chat message", function (msg) {
-        console.log("message: " + msg);
 
-        //broadcast message to everyone in port:5000 except yourself.
+        //broadcast message to everyone in port:8000 except yourself.
         socket.broadcast.emit("received", { message: msg });
 
         //save chat to the database
@@ -32,8 +31,10 @@ io.on('connection', (socket) => {
             useUnifiedTopology: true
         })
         connect.then(db => {
-            console.log("connected correctly to the server");
-            let chatMessage = new Chat({ message: msg, sender: "Anonymous" });
+            let chatMessage = new Chat({
+                message: msg,
+                sender: "Anonymous"
+            });
 
             chatMessage.save();
         });
