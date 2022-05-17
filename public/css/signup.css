@@ -634,7 +634,7 @@
 
 #wrapper #batmanEasterEgg #batmanContainer #batmanImg {
     width: 70%;
-    margin-bottom: -150vh;
+    margin-bottom: -200vh;
 }
 
 #wrapper #batmanEasterEgg #batmanContainer #batmanImg.startAnimation {
@@ -647,7 +647,7 @@
 
 @-webkit-keyframes easterEggAnimate {
     0% {
-        margin-bottom: -150vh;
+        margin-bottom: -200vh;
     }
 
     25% {
@@ -659,13 +659,13 @@
     }
 
     100% {
-        margin-bottom: -150vh;
+        margin-bottom: -200vh;
     }
 }
 
 @-moz-keyframes easterEggAnimate {
     0% {
-        margin-bottom: -150vh;
+        margin-bottom: -200vh;
     }
 
     25% {
@@ -677,13 +677,13 @@
     }
 
     100% {
-        margin-bottom: -150vh;
+        margin-bottom: -200vh;
     }
 }
 
 @-ms-keyframes easterEggAnimate {
     0% {
-        margin-bottom: -150vh;
+        margin-bottom: -200vh;
     }
 
     25% {
@@ -695,13 +695,13 @@
     }
 
     100% {
-        margin-bottom: -150vh;
+        margin-bottom: -200vh;
     }
 }
 
 @-o-keyframes easterEggAnimate {
     0% {
-        margin-bottom: -150vh;
+        margin-bottom: -200vh;
     }
 
     25% {
@@ -713,13 +713,13 @@
     }
 
     100% {
-        margin-bottom: -150vh;
+        margin-bottom: -200vh;
     }
 }
 
 @keyframes easterEggAnimate {
     0% {
-        margin-bottom: -150vh;
+        margin-bottom: -200vh;
     }
 
     25% {
@@ -731,6 +731,6 @@
     }
 
     100% {
-        margin-bottom: -150vh;
+        margin-bottom: -200vh;
     }
 }
