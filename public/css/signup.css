@@ -614,116 +614,123 @@
 }
 
 #wrapper #batmanEasterEgg {
-    height: 105vh;
+    grid-column: 1 / span 4;
+    grid-row: 3 / span 1;
     width: 100%;
-    overflow: hidden;
+    height: 0;
+    padding: 0;
     text-align: center;
     position: absolute;
     bottom: 0;
 }
 
-#wrapper #batmanEasterEgg .startAnimation {
-    -webkit-animation: easterEggAnimate 15s forwards 1 ease-in-out;
-    -moz-animation: easterEggAnimate 15s forwards 1 ease-in-out;
-    -ms-animation: easterEggAnimate 15s forwards 1 ease-in-out;
-    -o-animation: easterEggAnimate 15s forwards 1 ease-in-out;
-    animation: easterEggAnimate 15s forwards 1 ease-in-out;
-}
-
 #wrapper #batmanEasterEgg #batmanContainer {
-    margin-top: 100%;
+    width: 100%;
+    overflow: hidden;
+    position: absolute;
+    bottom: 0;
+    left: 0;
 }
 
-#wrapper #batmanEasterEgg #batmanContainer img {
-    width: 80%;
+#wrapper #batmanEasterEgg #batmanContainer #batmanImg {
+    width: 70%;
+    margin-bottom: -120vh;
+}
+
+#wrapper #batmanEasterEgg #batmanContainer #batmanImg.startAnimation {
+    -webkit-animation: easterEggAnimate 12s forwards 1 ease-in-out;
+    -moz-animation: easterEggAnimate 12s forwards 1 ease-in-out;
+    -ms-animation: easterEggAnimate 12s forwards 1 ease-in-out;
+    -o-animation: easterEggAnimate 12s forwards 1 ease-in-out;
+    animation: easterEggAnimate 12s forwards 1 ease-in-out;
 }
 
 @-webkit-keyframes easterEggAnimate {
     0% {
-        margin-top: 100%;
+        margin-bottom: -120vh;
     }
 
     25% {
-        margin-top: 0%;
+        margin-bottom: 0vh;
     }
 
     75% {
-        margin-top: 0%;
+        margin-bottom: 0vh;
     }
 
     100% {
-        margin-top: 100%;
+        margin-bottom: -120vh;
     }
 }
 
 @-moz-keyframes easterEggAnimate {
     0% {
-        margin-top: 100%;
+        margin-bottom: -120vh;
     }
 
     25% {
-        margin-top: 0%;
+        margin-bottom: 0vh;
     }
 
     75% {
-        margin-top: 0%;
+        margin-bottom: 0vh;
     }
 
     100% {
-        margin-top: 100%;
+        margin-bottom: -120vh;
     }
 }
 
 @-ms-keyframes easterEggAnimate {
     0% {
-        margin-top: 100%;
+        margin-bottom: -120vh;
     }
 
     25% {
-        margin-top: 0%;
+        margin-bottom: 0vh;
     }
 
     75% {
-        margin-top: 0%;
+        margin-bottom: 0vh;
     }
 
     100% {
-        margin-top: 100%;
+        margin-bottom: -120vh;
     }
 }
 
 @-o-keyframes easterEggAnimate {
     0% {
-        margin-top: 100%;
+        margin-bottom: -120vh;
     }
 
     25% {
-        margin-top: 0%;
+        margin-bottom: 0vh;
     }
 
     75% {
-        margin-top: 0%;
+        margin-bottom: 0vh;
     }
 
     100% {
-        margin-top: 100%;
+        margin-bottom: -120vh;
     }
 }
 
 @keyframes easterEggAnimate {
     0% {
-        margin-top: 100%;
+        margin-bottom: -120vh;
     }
 
     25% {
-        margin-top: 0%;
+        margin-bottom: 0vh;
     }
 
     75% {
-        margin-top: 0%;
+        margin-bottom: 0vh;
     }
 
     100% {
-        margin-top: 100%;
+        margin-bottom: -120vh;
     }
 }

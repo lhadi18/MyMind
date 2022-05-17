@@ -1,6 +1,5 @@
-const batmanAnimation = document.getElementById('batmanContainer');
-const batmanSec = document.getElementById('batmanEasterEgg');
-batmanSec.style.height = '0';
+const batmanAnimation = document.getElementById('batmanImg');
+const batmanSec = document.getElementById('batmanImg');
 
 $('#signupBtn').click(() => {
     var phoneLength = $("#phone").val();
@@ -66,21 +65,22 @@ $('#signupBtn').click(() => {
 });
 
 // Set for every second
-// setInterval(eastereEgg, 1000);
+setInterval(eastereEgg, 1000);
 
 // Easter egg function
-// function eastereEgg() {
-//     $('#username').keyup(function() {
-//         if($(this).val() === 'batman'){
-//             batmanSec.style.height = '105vh';
-//             batmanAnimation.classList.add('startAnimation');
-//             document.getElementById("audio").play();
-//         }
-//         setTimeout(() => {
-//             batmanSec.style.height = '0';
-//         }, 15000);
-//     });
-// }
+var doOnce = false;
+function eastereEgg() {
+    $('#username').keyup(function() {
+        var userField = $(this).val().toLowerCase();
+        if(userField.includes('batman') && doOnce == false){
+            window.scrollTo(0, document.body.scrollHeight);
+            batmanAnimation.classList.add('startAnimation');
+            document.getElementById("audio").play();
+            document.getElementById("audio").volume = 1;
+            doOnce = true;
+        }
+    });
+}
 
 function isEmail(email) {
     var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
