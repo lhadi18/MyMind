@@ -1,3 +1,7 @@
+const batmanAnimation = document.getElementById('batmanContainer');
+const batmanSec = document.getElementById('batmanEasterEgg');
+batmanSec.style.height = '0';
+
 $('#signupBtn').click(() => {
     var phoneLength = $("#phone").val();
     if (phoneLength.length != 10) {
@@ -12,7 +16,7 @@ $('#signupBtn').click(() => {
         window.scrollTo(0, document.body.scrollHeight);
         document.getElementById("signUpErrorMessage").style.display = 'block';
         document.getElementById("signUpErrorMessage").innerHTML = "There are empty fields";
-    } else if(passwordValidation()) {
+    } else if (passwordValidation()) {
         window.scrollTo(0, document.body.scrollHeight);
         document.getElementById("signUpErrorMessage").style.display = 'block';
         document.getElementById("signUpErrorMessage").innerHTML = "Password must be at least 5 or less than 20 characters long";
@@ -61,6 +65,23 @@ $('#signupBtn').click(() => {
     }
 });
 
+// Set for every second
+// setInterval(eastereEgg, 1000);
+
+// Easter egg function
+// function eastereEgg() {
+//     $('#username').keyup(function() {
+//         if($(this).val() === 'batman'){
+//             batmanSec.style.height = '105vh';
+//             batmanAnimation.classList.add('startAnimation');
+//             document.getElementById("audio").play();
+//         }
+//         setTimeout(() => {
+//             batmanSec.style.height = '0';
+//         }, 15000);
+//     });
+// }
+
 function isEmail(email) {
     var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
     return regex.test(email);
@@ -85,7 +106,7 @@ function passwordValidation() {
 function negativeValidation() {
     const yearsExp = document.getElementById("yearsExperience").value;
     const cost = document.getElementById("sessionCost").value;
-    if(yearsExp < 0 || cost < 0) {
+    if (yearsExp < 0 || cost < 0) {
         return true;
     }
 }

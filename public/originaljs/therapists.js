@@ -2,13 +2,20 @@ const cartExistModal = document.getElementById('cartExistModal');
 const therapistExistModal = document.getElementById('therapySessionExistModal');
 const notAuthorizedModal = document.getElementById('notAuthorizedModal');
 
+var currentURL = window.location.href;
+if (currentURL !=  window.location.origin + '/therapists') {
+    setTimeout("window.location=currentURL", 200);
+}
+
 $(document).ready(async function () {
     await $.ajax({
         url: '/getTherapists',
         type: "GET",
         success: function (data) {
+            var i = 1;
+
             data.forEach(function (Therapist) {
-                var x = `<div class="therapistCard">`;
+                var x = `<div class="therapistCard" id="${i}">`;
                 x += `<img src="${Therapist.profileImg}" alt="Therapist 1">`
                 x += '<div class="cardContent">'
                 x += `<h3>${Therapist.firstName} ${Therapist.lastName}</h3>`
@@ -17,6 +24,7 @@ $(document).ready(async function () {
                 x += '</div>'
                 x += '</div>'
                 document.getElementById("therapistList").innerHTML += x;
+                i++;
             })
         }
     })
