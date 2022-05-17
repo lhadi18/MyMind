@@ -61,6 +61,10 @@
         width: 80%;
         padding-bottom: 3rem;
     }
+    #wrapper #loginContainer .col-6 #loginSec h2 {
+        font-size: 2rem;
+        text-align: center;
+    }
     #wrapper #loginContainer .col-6 #loginSec #formContainer {
         padding: 4rem 2rem 2.5rem 2rem;
     }
@@ -69,6 +73,7 @@
     }
     #wrapper #bannerHome {
         grid-row: 1 / span 1;
+        background-attachment: scroll;
         height: 100vh;
     }
     #wrapper #bannerHome #overlay {
@@ -138,6 +143,7 @@
     #wrapper #companySec {
         grid-row: 3 / span 1;
         flex-direction: column-reverse;
+        max-height: 100%;
         width: 100%;
     }
     #wrapper #companySec div {
@@ -154,6 +160,46 @@
     }
     #wrapper #companySec #companyDesc p:nth-child(3) {
         padding-bottom: 0;
+    }
+    #wrapper #contactSec {
+        grid-row: 4 / span 1;
+        padding: 3rem 2rem 10rem;
+    }
+    #wrapper #contactSec #contactContainer {
+        flex-direction: column;
+    }
+    #wrapper #contactSec #contactContainer #contactInfo,
+    #wrapper #contactSec #contactContainer #mapSec {
+        width: 100%;
+    }
+    #wrapper #contactSec #contactContainer #mapSec #map {
+        height: 250px;
+        border-top-right-radius: 0;
+        border-bottom-left-radius: 15px;
+    }
+    #wrapper #contactSec #contactContainer #contactInfo {
+        padding: 2rem 2.5rem 1rem;
+    }
+    #wrapper #contactSec #contactContainer #contactInfo h4 {
+        font-size: 0.8rem;
+        letter-spacing: 0.3rem;
+    }
+    #wrapper #contactSec #contactContainer #contactInfo h2 {
+        font-size: 2.2rem;
+    }
+    #wrapper #contactSec #contactContainer #contactInfo .contactDetails {
+        padding-bottom: 1.5rem;
+    }
+    #wrapper #contactSec #contactContainer #contactInfo .contactDetails .contactIcons {
+        width: 3rem;
+        height: 2.7rem;
+    }
+    #wrapper #contactSec #contactContainer #contactInfo .contactDetails .contactIcons i {
+        font-size: 1.3rem;
+    }
+    #wrapper #contactSec #contactContainer #contactInfo .contactDetails a {
+        font-size: 1.1rem;
+        padding-left: 1rem;
     }
     #wrapper #banner {
         grid-column: 1 / span 4;
@@ -181,11 +227,15 @@
         height: 3.2rem;
     }
     #wrapper #profileSummary {
-        background: white;
+        background: url('../images/radial-bg.svg');
+        background-position: center center;
+        background-repeat: repeat-y;
+        background-size: cover;
         padding: 0 5rem 5rem;
         margin-top: -5vh;
         border-top-left-radius: 50px;
         border-top-right-radius: 50px;
+        height: 85vh;
         display: flex;
         flex-direction: row;
         justify-content: center;
@@ -234,6 +284,13 @@
     #wrapper #profileSummary #profileDesc #joinedDateMob {
         display: block;
     }
+    #wrapper #profileSummary #profileDesc #mobDeleteAccount {
+        display: inline-block;
+        padding: 16px 0;
+        width: 80%;
+        margin-top: 3rem;
+        margin-right: 0;
+    }
     #wrapper #profileSummary #profileImageSec,
     #wrapper #profileSummary #profileDesc p,
     #wrapper #profileSummary #profileDesc #buttonSec,
@@ -267,10 +324,36 @@
         border: 7px solid white;
     } 
     #wrapper #profileDetailsMob {
-        padding: 5rem 3rem;
+        padding: 5rem 3rem 7rem;
     }
     #wrapper #profileDetailsMob #profileForm .form-row .form-group label {
         font-size: 1rem;
+    }
+    #deleteAccountModal {
+        padding-top: 40%;
+        padding-bottom: 0;
+    }
+    #deleteAccountModal #modalContent {
+        padding: 2rem 1.5rem;
+        width: 90%;
+    }
+    #deleteAccountModal #modalContent h2 {
+        font-size: 1.2rem;
+    }
+    #deleteAccountModal #modalContent #deleteButtonsSec {
+        flex-direction: row-reverse;
+        justify-content: center;
+    }
+    #deleteAccountModal #modalContent #deleteButtonsSec #closeDelete {
+        font-size: 1rem;
+        padding-left: 1rem;
+        padding-right: 1.5rem;
+    }
+    #deleteAccountModal #modalContent #deleteButtonsSec #deleteAccountBtn {
+        padding: 12px;
+        width: 50%;
+        font-size: 1rem;
+        margin-left: 0;
     }
     #wrapper #bannerTherapist {
         grid-row: 1 / span 1;
@@ -324,7 +407,7 @@
     #wrapper #therapistListSec #therapistList .therapistCard .cardContent h3 {
         font-size: 1.3rem;
     }
-    #wrapper #therapistListSec #therapistList .therapistCard .cardContent div a {
+    #wrapper #therapistListSec #therapistList .therapistCard .cardContent div .therapistBtn {
         padding: 18px 0;
         font-size: 1rem;
     }
@@ -594,6 +677,368 @@
         padding-top: 40%;
         padding-bottom: 0;
     }
+    #wrapper #bannerCheckout {
+        grid-row: 1 / span 1;
+        height: 30vh;
+        background-attachment: scroll;
+    }
+    #wrapper #bannerCheckout #overlay {
+        height: 30vh;
+    }
+    #wrapper #bannerCheckout #overlay #checkoutHeader {
+        padding: 3rem;
+    }
+    #wrapper #bannerCheckout #overlay #checkoutHeader h2 {
+        font-size: 2.5rem;
+    }
+    #wrapper #noOrderSummary {
+        padding: 7rem 3rem 7rem;
+    }
+    #wrapper #noOrderSummary #noOrderMessage {
+        font-size: 1rem;
+    }
+    #wrapper #orderSummary {
+        padding: 7rem 2rem 7rem;
+    }
+    #wrapper #orderSummary #orderNumSec {
+        padding-bottom: 3rem;
+        flex-direction: column;
+    }
+    #wrapper #orderSummary #orderNumSec h2 {
+        font-size: 1.2rem;
+        padding-bottom: 3rem;
+    }
+    #wrapper #orderSummary #orderNumSec h2 span {
+        padding-right: 0;
+    }
+    #wrapper #orderSummary #orderNumSec #printInvoice {
+        font-size: 1rem;
+        padding: 14px 0;
+        width: 100%;
+    }
+    #wrapper #orderSummary #orderTable #tableHeader {
+        padding: 1.5rem 1rem;
+    }
+    #wrapper #orderSummary #orderTable #tableHeader h3 {
+        font-size: 1.5rem;
+    }
+    #wrapper #orderSummary #orderTable #tableHeader h3:nth-child(1) {
+        width: 100%;
+    }
+    #wrapper #orderSummary #orderTable #tableHeader h3:nth-child(2),
+    #wrapper #orderSummary #orderTable #tableHeader h3:nth-child(3) {
+        display: none;
+    }
+    #wrapper #orderSummary #orderTable #tableBody {
+        flex-wrap: wrap;
+        padding: 3rem 1rem;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #orderReview {
+        width: 100%;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        margin-bottom: 5rem;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #orderReview #cartDesc {
+        padding: 0;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #orderReview #cartDesc h4 {
+        font-size: 1.5rem;
+        padding-top: 2.5rem;
+        padding-bottom: 1rem;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #orderReview #cartDesc p {
+        font-size: 1rem;
+        padding-bottom: 1.5rem;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #orderReview #cartDesc #removeItem {
+        width: 100%;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #orderReview #cartImg {
+        width: 100%;
+        height: 100%;
+        padding-right: 0;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #orderReview #cartImg img {
+        height: 100%;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #orderReview #cartDesc {
+        width: 100%;
+        height: 100%;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #cartPlanSec {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        width: 100%;
+        margin-bottom: 2rem;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #cartPlanSec p {
+        display: block;
+        text-align: left;
+        width: 50%;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #cartPlanSec #cartPlan {
+        background-position: calc(100% - 1rem) center !important;
+        width: 50%;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #cartCostSec {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        width: 100%;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #cartCostSec p:first-child {
+        display: block;
+        text-align: left;
+        padding-right: 0;
+        width: 50%;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #cartCostSec p:nth-child(2) {
+        width: 50%;
+        padding: 1rem 0;
+    }
+    #wrapper #orderSummary #cartTotalSec {
+        padding: 3rem 0;
+    }
+    #wrapper #orderSummary #cartTotalSec #subTotalSec p, 
+    #wrapper #orderSummary #cartTotalSec #taxSec p, 
+    #wrapper #orderSummary #cartTotalSec #totalSec p {
+        width: 50%;
+        padding-right: 1.5rem;
+    }
+    #wrapper #orderSummary #cartTotalSec #subTotalSec span, 
+    #wrapper #orderSummary #cartTotalSec #taxSec span, 
+    #wrapper #orderSummary #cartTotalSec #totalSec span {
+        width: 50%;
+        text-align: left;
+        padding-left: 1.5rem;
+    }
+    #wrapper #cartExistModal,
+    #wrapper #therapySessionExistModal {
+        padding-top: 50%;
+    }
+    #wrapper #cartExistModal #modalContent,
+    #wrapper #therapySessionExistModal #modalContent {
+        width: 90%;
+        padding: 2rem 1.5rem;
+    }
+    #wrapper #cartExistModal #modalContent #closeCart,
+    #wrapper #therapySessionExistModal #modalContent #closeSession {
+        font-size: 1.7rem;
+    }
+    #wrapper #cartExistModal #modalContent h2,
+    #wrapper #therapySessionExistModal #modalContent h2 {
+        font-size: 1.8rem;
+    }
+    #wrapper #cartExistModal #modalContent p,
+    #wrapper #therapySessionExistModal #modalContent p {
+        font-size: 1rem;
+    }
+    #wrapper #notAuthorizedModal {
+        margin-top: 3%;
+    }
+    #wrapper #notAuthorizedModal #modalContent {
+        width: 90%;
+        padding: 1rem;
+    }
+    #wrapper #notAuthorizedModal #modalContent #authorizedModalMessage {
+        max-width: 90%;
+    }
+    #wrapper #notAuthorizedModal #modalContent #authorizedModalMessage h2,
+    #wrapper #notAuthorizedModal #modalContent #authorizedModalMessage p {
+        font-size: 14px;
+    }
+    #wrapper #notAuthorizedModal #modalContent #closeAuthorized {
+        right: 1.5rem;
+    }
+    #removeOrderModal {
+        padding-top: 70%;
+        padding-bottom: 0%;
+    }
+    #removeOrderModal #modalContent {
+        padding: 2rem 1.5rem;
+        width: 90%;
+    }
+    #removeOrderModal #modalContent h2 {
+        font-size: 1.2rem;
+    }
+    #removeOrderModal #modalContent #removeButtonsSec #removeOrderBtn {
+        padding: 12px;
+        width: 50%;
+        font-size: 1rem;
+        margin-left: 0;
+    }
+    #removeOrderModal #modalContent #removeButtonsSec #cancelRemove {
+        font-size: 1rem;
+        padding-left: 1rem;
+        padding-right: 1.5rem;
+    }
+    #wrapper #thankyouContainer {
+        grid-row: 2 / span 1;
+        flex-direction: column-reverse;
+        padding: 5rem 3rem;
+    }
+    #wrapper #thankyouContainer .col-6 {
+        width: 100%;
+        text-align: center;
+    }
+    #wrapper #thankyouContainer .col-6 img {
+        padding-top: 5rem;
+        padding-bottom: 3rem;
+        width: 100%;
+    }
+    #wrapper #thankyouContainer .col-6 #thankyouSec #thankyouHeader {
+        flex-direction: column;
+        margin-bottom: 2rem;
+    }
+    #wrapper #thankyouContainer .col-6 #thankyouSec #thankyouHeader h2 {
+        font-size: 1.5rem;
+        padding-top: 1rem;
+        padding-left: 0;
+    }
+    #wrapper #thankyouContainer .col-6 #thankyouSec p {
+        font-size: 1.1rem;
+    }
+    #wrapper #thankyouContainer .col-6 #thankyouSec #startSession a {
+        font-size: 1rem;
+        width: 100%;
+    }
+    #wrapper #orderHistoryHeroContainer {
+        grid-row: 1 / span 1;
+        height: 30vh;
+        background-attachment: scroll;
+    }
+    #wrapper #orderHistoryHeroContainer #overlay {
+        height: 30vh;
+    }
+    #wrapper #orderHistoryHeroContainer #overlay #orderHistoryHero {
+        padding: 3rem;
+    }
+    #wrapper #orderHistoryHeroContainer #overlay #orderHistoryHero h2 {
+        font-size: 2.5rem;
+    }
+    #wrapper #noOrderHistorySummary {
+        grid-row: 2 / span 1;
+        padding: 7rem 3rem 7rem;
+    }
+    #wrapper #noOrderHistorySummary #noOrderMessage {
+        font-size: 1rem;
+    }
+    #wrapper #orderToolbar {
+        grid-row: 3 / span 1;
+        padding: 5rem 3rem 2rem;
+        flex-wrap: wrap;
+    }
+    #wrapper #orderToolbar p {
+        width: 100%;
+        padding-bottom: 2rem;
+        text-align: center;
+    }
+    #wrapper #orderToolbar #searchForm {
+        width: 100%;
+        order: 3;
+        margin: 2rem 0 0;
+    }
+    #wrapper #orderToolbar #searchForm #searchbar {
+        padding: 1.5rem 2rem;
+    }
+    #wrapper #orderToolbar #refundBtn {
+        width: 100%;
+        order: 2;
+    }
+    #orderRefundModal {
+        padding-top: 40%;
+        padding-bottom: 0;
+    }
+    #orderRefundModal #modalContent {
+        padding: 2rem 1.5rem;
+        width: 90%;
+    }
+    #orderRefundModal #modalContent h2 {
+        font-size: 1.2rem;
+    }
+    #orderRefundModal #modalContent #refundButtonsSec {
+        flex-direction: row-reverse;
+        justify-content: center;
+    }
+    #orderRefundModal #modalContent #refundButtonsSec #closeRefund {
+        font-size: 1rem;
+        padding-left: 1rem;
+        padding-right: 1.5rem;
+    }
+    #orderRefundModal #modalContent #refundButtonsSec #orderRefundBtn {
+        padding: 12px;
+        width: 50%;
+        font-size: 1rem;
+        margin-left: 0;
+    }
+    #wrapper #orderTableContainer {
+        grid-row: 4 / span 1;
+        padding: 0 3rem 7rem;
+    }
+    #wrapper #orderTableContainer #orderTable thead {
+        display: none;
+    }
+    #wrapper #orderTableContainer #orderTable tbody {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+    #wrapper #orderTableContainer #orderTable tbody .tableRows {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        padding: 2rem 1rem;
+        margin-bottom: 1.5rem;
+    }
+    #wrapper #orderTableContainer #orderTable tbody .tableRows td:first-child {
+        padding: 0.5rem;
+    }
+    #wrapper #orderTableContainer #orderTable tbody .tableRows td:last-child {
+        width: auto;
+        padding: 0.5rem;
+    }
+    #wrapper #orderTableContainer #orderTable tbody td {
+        font-size: 1rem;
+        padding: 0.5rem;
+    }
+    #wrapper #orderTableContainer #orderTable tbody td:nth-child(1):before {
+        content: 'Date: ';
+        font-size: 1rem;
+        font-weight: 700;
+    }
+    #wrapper #orderTableContainer #orderTable tbody td:nth-child(2):before {
+        content: 'Therapist: ';
+        font-size: 1rem;
+        font-weight: 700;
+    }
+    #wrapper #orderTableContainer #orderTable tbody td:nth-child(3):before {
+        content: 'Plan: ';
+        font-size: 1rem;
+        font-weight: 700;
+    }
+    #wrapper #orderTableContainer #orderTable tbody td:nth-child(4):before {
+        content: 'Price: ';
+        font-size: 1rem;
+        font-weight: 700;
+    }
+    #wrapper #orderTableContainer #orderTable tbody td:nth-child(5):before {
+        content: 'Order #: ';
+        font-size: 1rem;
+        font-weight: 700;
+    }
+    #wrapper #orderTableContainer #orderTable tbody td:nth-child(6):before {
+        content: 'Status: ';
+        font-size: 1rem;
+        font-weight: 700;
+    }
+    #wrapper #orderTableContainer #orderTable tbody td:nth-child(7):before {
+        content: 'Expired: ';
+        font-size: 1rem;
+        font-weight: 700;
+    }
 }
 
 @media (min-width: 576px) and (max-width: 767.98px) {
@@ -639,6 +1084,9 @@
         width: 50%;
         padding-bottom: 3rem;
     }
+    #wrapper #loginContainer .col-6 #loginSec h2 {
+        text-align: center;
+    }
     #wrapper #loginContainer .col-6 #loginSec #formContainer {
         padding: 4rem 3rem 2.5rem 3rem;
     }
@@ -647,6 +1095,7 @@
     }
     #wrapper #bannerHome {
         grid-row: 1 / span 1;
+        background-attachment: scroll;
         height: 100vh;
     }
     #wrapper #bannerHome #overlay {
@@ -716,6 +1165,7 @@
     #wrapper #companySec {
         grid-row: 3 / span 1;
         flex-direction: column-reverse;
+        max-height: 100%;
         width: 100%;
     }
     #wrapper #companySec div {
@@ -723,6 +1173,44 @@
     }
     #wrapper #companySec #companyDesc {
         padding: 5rem 3rem;
+    }
+    #wrapper #contactSec {
+        grid-row: 4 / span 1;
+        padding: 3rem 3rem 10rem;
+    }
+    #wrapper #contactSec #contactContainer {
+        flex-direction: column;
+    }
+    #wrapper #contactSec #contactContainer #contactInfo,
+    #wrapper #contactSec #contactContainer #mapSec {
+        width: 100%;
+    }
+    #wrapper #contactSec #contactContainer #mapSec #map {
+        height: 300px;
+        border-top-right-radius: 0;
+        border-bottom-left-radius: 15px;
+    }
+    #wrapper #contactSec #contactContainer #contactInfo {
+        padding: 3rem 3rem 2rem;
+    }
+    #wrapper #contactSec #contactContainer #contactInfo h4 {
+        font-size: 0.8rem;
+    }
+    #wrapper #contactSec #contactContainer #contactInfo h2 {
+        font-size: 2.5rem;
+    }
+    #wrapper #contactSec #contactContainer #contactInfo .contactDetails {
+        padding-bottom: 1.5rem;
+    }
+    #wrapper #contactSec #contactContainer #contactInfo .contactDetails .contactIcons {
+        width: 3rem;
+        height: 2.7rem;
+    }
+    #wrapper #contactSec #contactContainer #contactInfo .contactDetails .contactIcons i {
+        font-size: 1.3rem;
+    }
+    #wrapper #contactSec #contactContainer #contactInfo .contactDetails a {
+        font-size: 1.1rem;
     }
     #wrapper #banner {
         grid-column: 1 / span 4;
@@ -750,11 +1238,15 @@
         height: 3.7rem;
     }
     #wrapper #profileSummary {
-        background: white;
+        background: url('../images/radial-bg.svg');
+        background-position: center center;
+        background-repeat: repeat-y;
+        background-size: cover;
         padding: 0 5rem 5rem;
         margin-top: -5vh;
         border-top-left-radius: 50px;
         border-top-right-radius: 50px;
+        height: 80vh;
         display: flex;
         flex-direction: row;
         justify-content: center;
@@ -797,6 +1289,13 @@
     #wrapper #profileSummary #profileDesc #joinedDateMob {
         display: block;
     }
+    #wrapper #profileSummary #profileDesc #mobDeleteAccount {
+        display: inline-block;
+        padding: 16px 0;
+        width: 80%;
+        margin-top: 3rem;
+        margin-right: 0;
+    }
     #wrapper #profileSummary #profileImageSec,
     #wrapper #profileSummary #profileDesc p,
     #wrapper #profileSummary #profileDesc #buttonSec,
@@ -819,7 +1318,7 @@
         padding: 0 30%;
     }
     #wrapper #profileDetailsMob {
-        padding: 5rem 3rem;
+        padding: 5rem 3rem 7rem;
     }
     #wrapper #profileSummaryMob #saveChanges {
         top: 3rem;
@@ -828,6 +1327,24 @@
         min-width: 12rem;
         padding: 10px;
         height: 3.7rem;
+    }
+    #deleteAccountModal {
+        padding-top: 40%;
+        padding-bottom: 0;
+    }
+    #deleteAccountModal #modalContent {
+        width: 80%;
+    }
+    #deleteAccountModal #modalContent h2 {
+        font-size: 1.3rem;
+    }
+    #deleteAccountModal #modalContent #deleteButtonsSec #closeDelete {
+        font-size: 1rem;
+    }
+    #deleteAccountModal #modalContent #deleteButtonsSec #deleteAccountBtn {
+        padding: 12px;
+        width: 25%;
+        font-size: 1rem;
     }
     #wrapper #bannerTherapist {
         grid-row: 1 / span 1;
@@ -881,7 +1398,7 @@
     #wrapper #therapistListSec #therapistList .therapistCard .cardContent h3 {
         font-size: 1.7rem;
     }
-    #wrapper #therapistListSec #therapistList .therapistCard .cardContent div a {
+    #wrapper #therapistListSec #therapistList .therapistCard .cardContent div .therapistBtn {
         padding: 18px 0;
         font-size: 1.1rem;
     }
@@ -1138,6 +1655,323 @@
         padding-top: 40%;
         padding-bottom: 0;
     }
+    #wrapper #bannerCheckout {
+        grid-row: 1 / span 1;
+        height: 30vh;
+        background-attachment: scroll;
+    }
+    #wrapper #bannerCheckout #overlay {
+        height: 30vh;
+    }
+    #wrapper #bannerCheckout #overlay #checkoutHeader {
+        padding: 3rem;
+    }
+    #wrapper #bannerCheckout #overlay #checkoutHeader h2 {
+        font-size: 2.5rem;
+    }
+    #wrapper #noOrderSummary {
+        padding: 7rem 3rem 7rem;
+    }
+    #wrapper #noOrderSummary #noOrderMessage {
+        font-size: 1rem;
+    }
+    #wrapper #orderSummary {
+        padding: 7rem 3rem 7rem;
+    }
+    #wrapper #orderSummary #orderNumSec {
+        padding-bottom: 3rem;
+    }
+    #wrapper #orderSummary #orderNumSec h2 {
+        font-size: 1.3rem;
+    }
+    #wrapper #orderSummary #orderNumSec h2 span {
+        padding-right: 2rem;
+    }
+    #wrapper #orderSummary #orderNumSec #printInvoice {
+        font-size: 1rem;
+        padding: 14px 36px;
+    }
+    #wrapper #orderSummary #orderTable #tableHeader h3 {
+        font-size: 1.5rem;
+    }
+    #wrapper #orderSummary #orderTable #tableHeader h3:nth-child(1) {
+        width: 100%;
+    }
+    #wrapper #orderSummary #orderTable #tableHeader h3:nth-child(2),
+    #wrapper #orderSummary #orderTable #tableHeader h3:nth-child(3) {
+        display: none;
+    }
+    #wrapper #orderSummary #orderTable #tableBody {
+        flex-wrap: wrap;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #orderReview {
+        width: 100%;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        margin-bottom: 3rem;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #orderReview #cartDesc {
+        padding: 0;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #orderReview #cartDesc h4 {
+        font-size: 1.5rem;
+        padding-top: 3rem;
+        padding-bottom: 1rem;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #orderReview #cartDesc p {
+        font-size: 1rem;
+        padding-bottom: 1.5rem;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #orderReview #cartDesc #removeItem {
+        width: 100%;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #orderReview #cartImg {
+        width: 100%;
+        height: 100%;
+        padding-right: 0;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #orderReview #cartImg img {
+        height: 100%;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #orderReview #cartDesc {
+        width: 100%;
+        height: 100%;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #cartPlanSec {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 50%;
+        padding-right: 1rem;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #cartPlanSec p {
+        display: block;
+        text-align: left;
+        padding-bottom: 1.5rem;
+        width: 100%;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #cartPlanSec #cartPlan {
+        background-position: calc(100% - 1rem) center !important;
+        width: 100%;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #cartCostSec {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 50%;
+        padding-left: 1rem;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #cartCostSec p:first-child {
+        display: block;
+        text-align: left;
+        padding-right: 0;
+        padding-bottom: 1.5rem;
+        width: 100%;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #cartCostSec p:nth-child(2) {
+        width: 100%;
+        text-align: left;
+        padding: 1rem 0;
+    }
+    #wrapper #orderSummary #cartTotalSec {
+        padding: 3rem 0;
+    }
+    #wrapper #cartExistModal,
+    #wrapper #therapySessionExistModal {
+        padding-top: 40%;
+    }
+    #wrapper #cartExistModal #modalContent,
+    #wrapper #therapySessionExistModal #modalContent {
+        width: 80%;
+    }
+    #wrapper #cartExistModal #modalContent #closeCart,
+    #wrapper #therapySessionExistModal #modalContent #closeSession {
+        font-size: 1.7rem;
+    }
+    #wrapper #notAuthorizedModal {
+        margin-top: 3%;
+    }
+    #wrapper #notAuthorizedModal #modalContent {
+        width: 90%;
+        padding: 1rem 1.5rem;
+    }
+    #wrapper #notAuthorizedModal #modalContent #authorizedModalMessage h2,
+    #wrapper #notAuthorizedModal #modalContent #authorizedModalMessage p {
+        font-size: 14px;
+    }
+    #wrapper #notAuthorizedModal #modalContent #closeAuthorized {
+        right: 1.5rem;
+    }
+    #removeOrderModal {
+        padding-top: 30%;
+        padding-bottom: 0%;
+    }
+    #removeOrderModal #modalContent {
+        width: 80%;
+    }
+    #removeOrderModal #modalContent h2 {
+        font-size: 1.3rem;
+    }
+    #removeOrderModal #modalContent #removeButtonsSec #removeOrderBtn {
+        padding: 12px;
+        width: 25%;
+        font-size: 1rem;
+    }
+    #removeOrderModal #modalContent #removeButtonsSec #cancelRemove {
+        font-size: 1rem;
+    }
+    #wrapper #thankyouContainer {
+        grid-row: 2 / span 1;
+        flex-direction: column-reverse;
+        padding: 5rem 3rem;
+    }
+    #wrapper #thankyouContainer .col-6 {
+        width: 100%;
+        text-align: center;
+    }
+    #wrapper #thankyouContainer .col-6 img {
+        padding-top: 5rem;
+        padding-bottom: 3rem;
+        width: 70%;
+    }
+    #wrapper #thankyouContainer .col-6 #thankyouSec #thankyouHeader {
+        flex-direction: column;
+        margin-bottom: 2rem;
+    }
+    #wrapper #thankyouContainer .col-6 #thankyouSec #thankyouHeader h2 {
+        font-size: 1.8rem;
+        padding-top: 1rem;
+        padding-left: 0;
+    }
+    #wrapper #thankyouContainer .col-6 #thankyouSec p {
+        font-size: 1.1rem;
+    }
+    #wrapper #thankyouContainer .col-6 #thankyouSec #startSession a {
+        font-size: 1rem;
+        width: 60%;
+    }
+    #wrapper #orderHistoryHeroContainer {
+        grid-row: 1 / span 1;
+        height: 30vh;
+        background-attachment: scroll;
+    }
+    #wrapper #orderHistoryHeroContainer #overlay {
+        height: 30vh;
+    }
+    #wrapper #orderHistoryHeroContainer #overlay #orderHistoryHero {
+        padding: 3rem;
+    }
+    #wrapper #orderHistoryHeroContainer #overlay #orderHistoryHero h2 {
+        font-size: 2.5rem;
+    }
+    #wrapper #noOrderHistorySummary {
+        grid-row: 2 / span 1;
+        padding: 7rem 3rem 7rem;
+    }
+    #wrapper #noOrderHistorySummary #noOrderMessage {
+        font-size: 1rem;
+    }
+    #wrapper #orderToolbar {
+        grid-row: 3 / span 1;
+        padding: 5rem 3rem 2rem;
+        flex-wrap: wrap;
+    }
+    #wrapper #orderToolbar p {
+        width: 50%;
+    }
+    #wrapper #orderToolbar #searchForm {
+        width: 100%;
+        order: 3;
+        margin: 2rem 0 0;
+    }
+    #wrapper #orderToolbar #refundBtn {
+        width: 50%;
+        order: 2;
+    }
+    #orderRefundModal {
+        padding-top: 40%;
+        padding-bottom: 0;
+    }
+    #orderRefundModal #modalContent {
+        width: 80%;
+    }
+    #orderRefundModal #modalContent h2 {
+        font-size: 1.3rem;
+    }
+    #orderRefundModal #modalContent #refundButtonsSec #closeRefund {
+        font-size: 1rem;
+    }
+    #orderRefundModal #modalContent #refundButtonsSec #orderRefundBtn {
+        padding: 12px;
+        width: 25%;
+        font-size: 1rem;
+    }
+    #wrapper #orderTableContainer {
+        grid-row: 4 / span 1;
+        padding: 0 3rem 7rem;
+    }
+    #wrapper #orderTableContainer #orderTable thead {
+        display: none;
+    }
+    #wrapper #orderTableContainer #orderTable tbody {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+    #wrapper #orderTableContainer #orderTable tbody .tableRows {
+        display: flex;
+        flex-direction: column;
+        width: 47%;
+        padding: 2rem 1rem;
+        margin-bottom: 1.5rem;
+    }
+    #wrapper #orderTableContainer #orderTable tbody .tableRows td:first-child {
+        padding: 0.5rem;
+    }
+    #wrapper #orderTableContainer #orderTable tbody .tableRows td:last-child {
+        width: auto;
+        padding: 0.5rem;
+    }
+    #wrapper #orderTableContainer #orderTable tbody td {
+        font-size: 1rem;
+        padding: 0.5rem;
+    }
+    #wrapper #orderTableContainer #orderTable tbody td:nth-child(1):before {
+        content: 'Date: ';
+        font-size: 1rem;
+        font-weight: 700;
+    }
+    #wrapper #orderTableContainer #orderTable tbody td:nth-child(2):before {
+        content: 'Therapist: ';
+        font-size: 1rem;
+        font-weight: 700;
+    }
+    #wrapper #orderTableContainer #orderTable tbody td:nth-child(3):before {
+        content: 'Plan: ';
+        font-size: 1rem;
+        font-weight: 700;
+    }
+    #wrapper #orderTableContainer #orderTable tbody td:nth-child(4):before {
+        content: 'Price: ';
+        font-size: 1rem;
+        font-weight: 700;
+    }
+    #wrapper #orderTableContainer #orderTable tbody td:nth-child(5):before {
+        content: 'Order #: ';
+        font-size: 1rem;
+        font-weight: 700;
+    }
+    #wrapper #orderTableContainer #orderTable tbody td:nth-child(6):before {
+        content: 'Status: ';
+        font-size: 1rem;
+        font-weight: 700;
+    }
+    #wrapper #orderTableContainer #orderTable tbody td:nth-child(7):before {
+        content: 'Expired: ';
+        font-size: 1rem;
+        font-weight: 700;
+    }
 }
 
 @media (min-width: 768px) and (max-width: 991.98px) {
@@ -1174,8 +2008,11 @@
     }
     #wrapper #loginContainer .col-6 img {
         padding-top: 5rem;
-        width: 50%;
+        width: 70%;
         padding-bottom: 3rem;
+    }
+    #wrapper #loginContainer .col-6 #loginSec h2 {
+        text-align: center;
     }
     #wrapper #loginContainer .col-6 #loginSec #formContainer {
         padding: 4rem 4rem 2.5rem 4rem;
@@ -1185,6 +2022,7 @@
     }
     #wrapper #bannerHome {
         grid-row: 1 / span 1;
+        background-attachment: scroll;
         height: 100vh;
     }
     #wrapper #bannerHome #overlay {
@@ -1245,6 +2083,7 @@
     #wrapper #companySec {
         grid-row: 3 / span 1;
         flex-direction: column-reverse;
+        max-height: 100%;
         width: 100%;
     }
     #wrapper #companySec div {
@@ -1252,6 +2091,31 @@
     }
     #wrapper #companySec #companyDesc {
         padding: 5rem;
+    }
+    #wrapper #contactSec {
+        grid-row: 4 / span 1;
+        padding: 3rem 5rem 10rem;
+    }
+    #wrapper #contactSec #contactContainer {
+        flex-direction: column;
+    }
+    #wrapper #contactSec #contactContainer #contactInfo,
+    #wrapper #contactSec #contactContainer #mapSec {
+        width: 100%;
+    }
+    #wrapper #contactSec #contactContainer #mapSec #map {
+        height: 300px;
+        border-top-right-radius: 0;
+        border-bottom-left-radius: 15px;
+    }
+    #wrapper #contactSec #contactContainer #contactInfo {
+        padding: 3rem 5rem 2rem;
+    }
+    #wrapper #contactSec #contactContainer #contactInfo h2 {
+        font-size: 3rem;
+    }
+    #wrapper #contactSec #contactContainer #contactInfo .contactDetails {
+        padding-bottom: 1rem;
     }
     #wrapper #banner {
         grid-column: 1 / span 4;
@@ -1279,11 +2143,15 @@
         height: 4rem;
     }
     #wrapper #profileSummary {
-        background: white;
+        background: url('../images/radial-bg.svg');
+        background-position: center center;
+        background-repeat: repeat-y;
+        background-size: cover;
         padding: 0 5rem 5rem;
         margin-top: -5vh;
         border-top-left-radius: 50px;
         border-top-right-radius: 50px;
+        height: 85vh;
         display: flex;
         flex-direction: row;
         justify-content: center;
@@ -1324,6 +2192,13 @@
     #wrapper #profileSummary #profileDesc #joinedDateMob {
         display: block;
     }
+    #wrapper #profileSummary #profileDesc #mobDeleteAccount {
+        display: inline-block;
+        padding: 16px 0;
+        width: 80%;
+        margin-top: 3rem;
+        margin-right: 0;
+    }
     #wrapper #profileSummary #profileImageSec,
     #wrapper #profileSummary #profileDesc p,
     #wrapper #profileSummary #profileDesc #buttonSec,
@@ -1336,8 +2211,27 @@
     #wrapper #profileSummaryMob #profileDesc #profileImageSec {
         padding: 0 30%;
     }
+    #deleteAccountModal {
+        padding-top: 30%;
+        padding-bottom: 0%;
+    }
+    #deleteAccountModal #modalContent {
+        width: 80%;
+    }
+    #deleteAccountModal #modalContent h2 {
+        font-size: 1.3rem;
+    }
+    #deleteAccountModal #modalContent #deleteButtonsSec #closeDelete {
+        font-size: 1rem;
+    }
+    #deleteAccountModal #modalContent #deleteButtonsSec #deleteAccountBtn {
+        padding: 12px;
+        width: 25%;
+        font-size: 1rem;
+    }
     #wrapper #bannerTherapist {
         grid-row: 1 / span 1;
+        background-attachment: scroll;
     }
     #wrapper #bannerTherapist #overlay #therapistHeader {
         padding: 5rem;
@@ -1369,7 +2263,7 @@
     #wrapper #therapistListSec #therapistList .therapistCard .cardContent h3 {
         font-size: 1.2rem;
     }
-    #wrapper #therapistListSec #therapistList .therapistCard .cardContent div a {
+    #wrapper #therapistListSec #therapistList .therapistCard .cardContent div .therapistBtn {
         padding: 16px 0;
     }
     #wrapper #dashboardHeroContainer {
@@ -1577,6 +2471,230 @@
             opacity: 1;
         }
     }
+    #wrapper #bannerCheckout {
+        grid-row: 1 / span 1;
+        background-attachment: scroll;
+    }
+    #wrapper #bannerCheckout #overlay #checkoutHeader {
+        padding: 5rem;
+    }
+    #wrapper #noOrderSummary {
+        padding: 7rem 5rem 7rem;
+    }
+    #wrapper #orderSummary {
+        padding: 7rem 5rem 7rem;
+    }
+    #wrapper #orderSummary #orderNumSec h2 {
+        font-size: 1.5rem;
+    }
+    #wrapper #orderSummary #orderNumSec #printInvoice {
+        font-size: 1rem;
+        padding: 14px 40px;
+    }
+    #wrapper #orderSummary #orderTable #tableHeader h3 {
+        font-size: 1.3rem;
+    }
+    #wrapper #orderSummary #orderTable #tableHeader h3:nth-child(1) {
+        width: 100%;
+    }
+    #wrapper #orderSummary #orderTable #tableHeader h3:nth-child(2),
+    #wrapper #orderSummary #orderTable #tableHeader h3:nth-child(3) {
+        display: none;
+    }
+    #wrapper #orderSummary #orderTable #tableBody {
+        flex-wrap: wrap;
+        padding: 5rem 1rem;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #orderReview {
+        width: 100%;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        margin-bottom: 3rem;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #orderReview #cartDesc {
+        padding: 0;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #orderReview #cartDesc h4 {
+        font-size: 1.5rem;
+        padding-bottom: 1rem;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #orderReview #cartDesc p {
+        font-size: 1rem;
+        padding-bottom: 1.5rem;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #orderReview #cartDesc #removeItem {
+        width: 100%;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #orderReview #cartImg {
+        width: 100%;
+        height: 250px;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #orderReview #cartDesc {
+        width: 100%;
+        height: 100%;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #cartPlanSec {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 50%;
+        padding-right: 1rem;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #cartPlanSec p {
+        display: block;
+        font-size: 1.1rem;
+        text-align: left;
+        padding-bottom: 1.5rem;
+        width: 100%;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #cartPlanSec #cartPlan {
+        background-position: calc(100% - 1rem) center !important;
+        font-size: 1rem;
+        width: 100%;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #cartCostSec {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 50%;
+        padding-left: 1rem;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #cartCostSec p:first-child {
+        display: block;
+        font-size: 1.1rem;
+        text-align: left;
+        padding-right: 0;
+        padding-bottom: 1.5rem;
+        width: 100%;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #cartCostSec p:nth-child(2) {
+        width: 100%;
+        font-size: 1.1rem;
+        text-align: left;
+        padding: 1rem 0;
+    }
+    #wrapper #cartExistModal,
+    #wrapper #therapySessionExistModal {
+        padding-top: 30%;
+    }
+    #wrapper #cartExistModal #modalContent,
+    #wrapper #therapySessionExistModal #modalContent {
+        width: 80%;
+    }
+    #wrapper #notAuthorizedModal {
+        margin-top: 3%;
+    }
+    #wrapper #notAuthorizedModal #modalContent {
+        width: 90%;
+    }
+    #wrapper #notAuthorizedModal #modalContent #closeAuthorized {
+        right: 2rem;
+    }
+    #removeOrderModal {
+        padding-top: 30%;
+        padding-bottom: 0%;
+    }
+    #removeOrderModal #modalContent {
+        width: 80%;
+    }
+    #removeOrderModal #modalContent h2 {
+        font-size: 1.3rem;
+    }
+    #removeOrderModal #modalContent #removeButtonsSec #removeOrderBtn {
+        padding: 12px;
+        width: 25%;
+        font-size: 1rem;
+    }
+    #removeOrderModal #modalContent #removeButtonsSec #cancelRemove {
+        font-size: 1rem;
+    }
+    #wrapper #thankyouContainer {
+        grid-row: 2 / span 1;
+        flex-direction: column-reverse;
+        padding: 5rem;
+    }
+    #wrapper #thankyouContainer .col-6 {
+        width: 100%;
+        text-align: center;
+    }
+    #wrapper #thankyouContainer .col-6 img {
+        padding-top: 5rem;
+        padding-bottom: 3rem;
+        width: 70%;
+    }
+    #wrapper #thankyouContainer .col-6 #thankyouSec #thankyouHeader {
+        flex-direction: column;
+        margin-bottom: 2rem;
+    }
+    #wrapper #thankyouContainer .col-6 #thankyouSec #thankyouHeader h2 {
+        font-size: 1.8rem;
+        padding-top: 1rem;
+        padding-left: 0;
+    }
+    #wrapper #thankyouContainer .col-6 #thankyouSec #startSession a {
+        font-size: 1.1rem;
+        width: 60%;
+    }
+    #wrapper #orderHistoryHeroContainer {
+        grid-row: 1 / span 1;
+    }
+    #wrapper #orderHistoryHeroContainer #overlay #orderHistoryHero {
+        padding: 5rem;
+    }
+    #wrapper #orderHistoryHeroContainer #overlay #orderHistoryHero h2 {
+        font-size: 3rem;
+    }
+    #wrapper #noOrderHistorySummary {
+        grid-row: 2 / span 1;
+        padding: 7rem 5rem 7rem;
+    }
+    #wrapper #orderToolbar {
+        grid-row: 3 / span 1;
+        padding: 5rem 3rem 2rem;
+        flex-wrap: wrap;
+    }
+    #wrapper #orderToolbar p {
+        width: 50%;
+    }
+    #wrapper #orderToolbar #searchForm {
+        width: 100%;
+        order: 3;
+        margin: 2rem 0 0;
+    }
+    #wrapper #orderToolbar #refundBtn {
+        width: 50%;
+        order: 2;
+    }
+    #orderRefundModal {
+        padding-top: 25%;
+        padding-bottom: 0%;
+    }
+    #orderRefundModal #modalContent {
+        width: 80%;
+    }
+    #orderRefundModal #modalContent h2 {
+        font-size: 1.3rem;
+    }
+    #orderRefundModal #modalContent #refundButtonsSec #closeRefund {
+        font-size: 1rem;
+    }
+    #orderRefundModal #modalContent #refundButtonsSec #orderRefundBtn {
+        padding: 12px;
+        width: 25%;
+        font-size: 1rem;
+    }
+    #wrapper #orderTableContainer {
+        grid-row: 4 / span 1;
+        padding: 0 2.5rem 7rem;
+    }
+    #wrapper #orderTableContainer #orderTable thead #tableHeader th i {
+        padding-left: 0.5rem;
+    }
+    #wrapper #orderTableContainer #orderTable thead th,
+    #wrapper #orderTableContainer #orderTable tbody td {
+        font-size: 12px;
+        padding: 1.5rem 0.5rem;
+    }
 }
 
 @media (min-width: 992px) and (max-width: 1199.98px) {
@@ -1589,11 +2707,18 @@
     #wrapper #navPlaceHolder #headContainer #logo h2 {
         font-size: 2.5rem;
     }
+    #wrapper #navPlaceHolder #headContainer #navbar #navMenu .navLinks {
+        padding-left: 1rem;
+        min-width: fit-content;
+    }
     #wrapper #navPlaceHolder #headContainer #navbar #navMenu .navLinks a {
         font-size: 14px;
     }
     #wrapper #navPlaceHolder #headContainer #navbar #navMenu .navLinks:not(:last-child) {
-        padding-right: 1.5rem;
+        padding-right: 1rem;
+    }
+    #wrapper #navPlaceHolder #headContainer #navbar #navMenu .navLinks a.loginNav {
+        padding: 12px 36px;
     }
     #wrapper #navPlaceHolder #headContainer #navbar #navMenu .navLinks a.loginNav, 
     #wrapper #navPlaceHolder #headContainer #navbar #navMenu .navLinks input {
@@ -1641,8 +2766,29 @@
         font-size: 1rem;
         padding: 16px 0;
     }
+    #wrapper #companySec {
+        max-height: 100%;
+    }
     #wrapper #companySec #companyDesc {
         padding: 5rem;
+    }
+    #wrapper #contactSec {
+        padding: 3rem 5rem 7rem;
+    }
+    #wrapper #contactSec #contactContainer {
+        min-height: 300px;
+    }
+    #wrapper #contactSec #contactContainer #contactInfo {
+        padding: 3rem;
+    }
+    #wrapper #contactSec #contactContainer #contactInfo h4 {
+        font-size: 0.8rem;
+    }
+    #wrapper #contactSec #contactContainer #contactInfo h2 {
+        font-size: 3rem;
+    }
+    #wrapper #contactSec #contactContainer #contactInfo .contactDetails {
+        padding-bottom: 1rem;
     }
     #wrapper #signUp {
         padding: 5rem;
@@ -1652,15 +2798,6 @@
     }
     #wrapper #loginContainer {
         padding: 5rem;
-        flex-direction: column-reverse;
-    }
-    #wrapper #loginContainer .col-6 {
-        width: 100%;
-        text-align: center;
-    }
-    #wrapper #loginContainer .col-6 img {
-        padding-top: 5rem;
-        width: 50%;
     }
     #wrapper #loginContainer .col-6 #loginSec #formContainer #loginForm .form-row .form-group label {
         text-align: left;
@@ -1669,14 +2806,28 @@
         width: 40%;
     }
     #wrapper #profileSummary #profileDesc {
-        width: 60%
+        width: 60%;
+        padding-left: 3rem;
     }
     #wrapper #profileSummary #profileDesc p {
         font-size: 1rem;
     }
-    #wrapper #profileSummary #profileDesc #buttonSec #saveChanges {
+    #wrapper #profileSummary #profileDesc #buttonSec #deleteAccount {
+        padding: 18px 0;
         min-width: 12rem;
         font-size: 1rem;
+    }
+    #wrapper #profileSummary #profileDesc #buttonSec #saveChanges {
+        padding: 18px 0;
+        min-width: 12rem;
+        font-size: 1rem;
+    }
+    #deleteAccountModal {
+        padding-top: 25%;
+        padding-bottom: 0%;
+    }
+    #deleteAccountModal #modalContent {
+        width: 80%;
     }
     #wrapper #bannerTherapist #overlay #therapistHeader {
         padding: 5rem;
@@ -1694,7 +2845,7 @@
     #wrapper #therapistListSec #therapistList .therapistCard .cardContent h3 {
         font-size: 1.2rem;
     }
-    #wrapper #therapistListSec #therapistList .therapistCard .cardContent div a {
+    #wrapper #therapistListSec #therapistList .therapistCard .cardContent div .therapistBtn {
         padding: 16px 0;
     }
     #wrapper #dashboardHeroContainer #overlay #dashboardHero {
@@ -1739,6 +2890,144 @@
     #createUserModal #modalContent,
     #editUserModal #modalContent,
     #deleteUserModal #modalContent {
+        width: 80%;
+    }
+    #wrapper #bannerCheckout #overlay #checkoutHeader {
+        padding: 5rem;
+    }
+    #wrapper #noOrderSummary {
+        padding: 10rem 5rem 5rem;
+    }
+    #wrapper #orderSummary {
+        padding: 10rem 5rem 5rem;
+    }
+    #wrapper #orderSummary #orderNumSec h2 {
+        font-size: 1.5rem;
+    }
+    #wrapper #orderSummary #orderNumSec #printInvoice {
+        font-size: 1.1rem;
+        padding: 14px 50px;
+    }
+    #wrapper #orderSummary #orderTable #tableHeader h3 {
+        font-size: 1.3rem;
+    }
+    #wrapper #orderSummary #orderTable #tableHeader h3:nth-child(1) {
+        width: 100%;
+    }
+    #wrapper #orderSummary #orderTable #tableHeader h3:nth-child(2),
+    #wrapper #orderSummary #orderTable #tableHeader h3:nth-child(3) {
+        display: none;
+    }
+    #wrapper #orderSummary #orderTable #tableBody {
+        flex-wrap: wrap;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #orderReview {
+        width: 100%;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        margin-bottom: 5rem;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #orderReview #cartImg {
+        width: 100%;
+        height: 250px;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #orderReview #cartDesc {
+        width: 100%;
+        height: 100%;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #cartPlanSec {
+        display: flex;
+        align-items: center;
+        width: 50%;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #cartPlanSec p {
+        display: block;
+        width: 50%;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #cartPlanSec #cartPlan {
+        background-position: calc(100% - 1rem) center !important;
+        width: 50%;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #cartCostSec {
+        display: flex;
+        align-items: center;
+        width: 50%;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #cartCostSec p:first-child {
+        display: block;
+        width: 60%;
+    }
+    #wrapper #orderSummary #orderTable #tableBody #cartCostSec p:nth-child(2) {
+        width: 40%;
+        text-align: left;
+    }
+    #wrapper #cartExistModal,
+    #wrapper #therapySessionExistModal {
+        padding-top: 20%;
+    }
+    #wrapper #cartExistModal #modalContent,
+    #wrapper #therapySessionExistModal #modalContent {
+        width: 80%;
+    }
+    #removeOrderModal {
+        padding-top: 25%;
+        padding-bottom: 0%;
+    }
+    #removeOrderModal #modalContent {
+        width: 80%;
+    }
+    #wrapper #thankyouContainer {
+        padding: 5rem;
+    }
+    #wrapper #thankyouContainer .col-6 #thankyouSec #thankyouHeader {
+        flex-direction: column;
+        margin-bottom: 2rem;
+    }
+    #wrapper #thankyouContainer .col-6 #thankyouSec #thankyouHeader h2 {
+        font-size: 1.8rem;
+        padding-top: 1rem;
+        padding-left: 0;
+    }
+    #wrapper #thankyouContainer .col-6 #thankyouSec #startSession a {
+        font-size: 1.1rem;
+        width: 80%;
+    }
+    #wrapper #noOrderHistorySummary {
+        padding: 10rem 5rem 5rem;
+    }
+    #wrapper #orderHistoryHeroContainer #overlay #orderHistoryHero {
+        padding: 5rem;
+    }  
+    #wrapper #orderHistoryHeroContainer #overlay #orderHistoryHero h2 {
+        font-size: 3rem;
+    }
+    #wrapper #orderToolbar {
+        padding: 5rem;
+    }
+    #wrapper #orderToolbar p {
+        width: 25%;
+    }
+    #wrapper #orderToolbar #searchForm {
+        width: 55%;
+    }
+    #wrapper #orderToolbar #refundBtn {
+        width: 20%;
+    }
+    #wrapper #orderTableContainer {
+        padding: 0 5rem 5rem;
+    }
+    #wrapper #orderTableContainer #orderTable thead #tableHeader th i {
+        padding-left: 0.5rem;
+    }
+    #wrapper #orderTableContainer #orderTable thead th,
+    #wrapper #orderTableContainer #orderTable tbody td {
+        font-size: 14px;
+    }
+    #orderRefundModal {
+        padding-top: 25%;
+        padding-bottom: 0%;
+    }
+    #orderRefundModal #modalContent {
         width: 80%;
     }
 }

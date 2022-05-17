@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="COMP 2800 - MyMind" />
 
-    <title>MyMind - Login</title>
+    <title>MyMind - Therapists</title>
 
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="../images/logo.svg" />
@@ -56,12 +56,22 @@
                         </li>
                         <li class="nav-item">
                             <a href="/therapists" class="nav-link">
-                                <img src="../images/heart-pulse.svg" class="nav-icon" alt="therapists">Therapists
+                                <i class="fa-solid fa-heart-pulse nav-icon"></i>Therapists
                             </a>
                         </li>
                         <li class="nav-item isPatient">
                             <a href="/checkout" class="nav-link">
                                 <i class="bi bi-bag-check nav-icon"></i>Checkout
+                            </a>
+                        </li>
+                        <li class="nav-item isPatient">
+                            <a href="/order-history" class="nav-link">
+                                <i class="bi bi-clock-history nav-icon"></i>Order History
+                            </a>
+                        </li>
+                        <li class="nav-item isAdmin">
+                            <a href="/admin-dashboard" class="nav-link">
+                                <i class="fa-solid fa-users-gear nav-icon"></i>Admin Dashboard
                             </a>
                         </li>
                         <li class="nav-item isPatient">
@@ -80,7 +90,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="/contact" class="nav-link">
+                            <a href="/#contactSec" class="nav-link">
                                 <i class="bi bi-info-circle nav-icon"></i>Contact
                             </a>
                         </li>
@@ -116,7 +126,42 @@
         <div id="therapistListSec">
             <h2>Available Therapists</h2>
             <h4>Choose a therapy session to get started!</h4>
-            <div id="therapistList">
+            <div id="therapistList"></div>
+        </div>
+
+        <!-- Cart Exist Modal -->
+        <div id="cartExistModal">
+            <div id="modalContent">
+                <i class="fa-solid fa-xmark" id="closeCart"></i>
+                <div id="alertIcon">
+                    <i class="bi bi-bag-check-fill"></i>
+                </div>
+                <h2>Cart is full!</h2>
+                <p>You already have a therapist added to your cart, empty your cart at <a href="/checkout">Checkout</a> to proceed.</p>
+            </div>
+        </div>
+
+        <!-- Active Therapy Session Exist Modal -->
+        <div id="therapySessionExistModal">
+            <div id="modalContent">
+                <i class="fa-solid fa-xmark" id="closeSession"></i>
+                <div id="alertIcon">
+                    <i class="bi bi-exclamation-triangle-fill"></i>
+                </div>
+                <h2>Hold on there!</h2>
+                <p>You currently have an active session with your therapist, <span id="therapistName"></span> 
+                    Your session expires on <span id="expireDate"></span> at <span id="expireTime"></span></p>
+            </div>
+        </div>
+
+        <!-- Not Authorized to Purchase Modal -->
+        <div id="notAuthorizedModal">
+            <div id="modalContent">
+                <div id="authorizedModalMessage">
+                    <h2>Not authorized to purchase!</h2>
+                    <p>To purchase a therapist, please <a href="/login">Login</a> or <a href="/sign-up">Sign Up</a> as a patient.</p>
+                </div>
+                <i class="fa-solid fa-xmark" id="closeAuthorized"></i>
             </div>
         </div>
 

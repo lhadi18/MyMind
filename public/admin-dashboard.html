@@ -56,41 +56,51 @@
                         </li>
                         <li class="nav-item">
                             <a href="/therapists" class="nav-link">
-                                <img src="../images/heart-pulse.svg" class="nav-icon" alt="therapists">Therapists
+                                <i class="fa-solid fa-heart-pulse nav-icon"></i>Therapists
                             </a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item isPatient">
                             <a href="/checkout" class="nav-link">
                                 <i class="bi bi-bag-check nav-icon"></i>Checkout
                             </a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item isPatient">
+                            <a href="/order-history" class="nav-link">
+                                <i class="bi bi-clock-history nav-icon"></i>Order History
+                            </a>
+                        </li>
+                        <li class="nav-item isAdmin">
+                            <a href="/admin-dashboard" class="nav-link">
+                                <i class="fa-solid fa-users-gear nav-icon"></i>Admin Dashboard
+                            </a>
+                        </li>
+                        <li class="nav-item isPatient">
                             <a href="/chat-session" class="nav-link">
                                 <i class="bi bi-chat-left-dots nav-icon"></i>Chat Session
                             </a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item isTherapist">
                             <a href="/my-patients" class="nav-link">
                                 <i class="bi bi-people nav-icon"></i>My Patients
                             </a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item isLoggedIn">
                             <a href="/userprofile" class="nav-link">
                                 <i class="bi bi-person-circle nav-icon"></i>Account
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="/contact" class="nav-link">
+                            <a href="/#contactSec" class="nav-link">
                                 <i class="bi bi-info-circle nav-icon"></i>Contact
                             </a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item isLoggedOut">
                             <a href="/login" class="nav-link">
                                 <i class="bi bi-box-arrow-in-right nav-icon"></i>Login
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a href="/logout" class="nav-link">
+                        <li class="nav-item isLoggedIn">
+                            <a href="#" class="nav-link logout-link">
                                 <i class="bi bi-box-arrow-left nav-icon"></i>Logout
                             </a>
                         </li>
@@ -126,7 +136,7 @@
                             <div class="form-group">
                                 <label>First Name</label>
                                 <input type="text" class="form-control" name="firstname" id="firstname"
-                                    placeholder="First Name" required="required" onkeydown="return /[a-z]/i.test(event.key)">
+                                    placeholder="First Name" maxlength="15" required="required" onkeydown="return /[a-z]/i.test(event.key)">
                             </div>
                         </div>
 
@@ -134,7 +144,7 @@
                             <div class="form-group">
                                 <label>Last Name</label>
                                 <input type="text" class="form-control" name="lastname" id="lastname"
-                                    placeholder="Last Name" required="required" onkeydown="return /[a-z]/i.test(event.key)">
+                                    placeholder="Last Name" maxlength="30" required="required" onkeydown="return /[a-z]/i.test(event.key)">
                             </div>
                         </div>
 
@@ -142,7 +152,7 @@
                             <div class="form-group">
                                 <label>Username</label>
                                 <input type="text" class="form-control" name="username" id="username"
-                                    placeholder="Username" required="required">
+                                    placeholder="Username" maxlength="30" required="required">
                             </div>
                         </div>
 
@@ -158,18 +168,34 @@
                             <div class="form-group">
                                 <label for="email">Email Address</label>
                                 <input type="email" class="form-control" name="email" id="email" placeholder="Email"
-                                    required="required">
+                                    maxlength="30" required="required">
                             </div>
                         </div>
 
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="userType">User Type</label>
-                                <select name="userType" id="userType">
+                                <select name="userType" id="userType" onchange="showTherapyOptions(this)">
                                     <option value="patient">Patient</option>
                                     <option value="therapist">Therapist</option>
                                     <option value="admin">Admin</option>
                                 </select>
+                            </div>
+                        </div>
+    
+                        <div class="form-row col-6 therapistOptions">
+                            <div class="form-group">
+                                <label for="yearsExperience">Years Of Experience</label>
+                                <input type="number" class="form-control" name="yearsExperience" id="yearsExperience" placeholder="5"
+                                    value="5" min="1" step="1" required="required">
+                            </div>
+                        </div>
+    
+                        <div class="form-row col-6 therapistOptions">
+                            <div class="form-group">
+                                <label for="sessionCost">Session Cost</label>
+                                <input type="number" class="form-control" name="sessionCost" id="sessionCost" placeholder="90"
+                                    value="90" min="0.01" step="0.01" required="required">
                             </div>
                         </div>
 
@@ -178,7 +204,7 @@
                                 <label for="password">Password</label>
                                 <div class="input-group" id="show-hide-password">
                                     <input type="password" name="password" class="form-control" id="password"
-                                        required="required">
+                                        required="required" minlength="5" maxlength="20">
                                     <div class="input-group-addon">
                                         <a href=""><i class="fa fa-eye-slash" aria-hidden="true"></i></a>
                                     </div>
@@ -206,7 +232,7 @@
                             <div class="form-group">
                                 <label>First Name</label>
                                 <input type="text" class="form-control" name="firstname" id="editFirstname"
-                                    placeholder="First Name" required="required" onkeydown="return /[a-z]/i.test(event.key)">
+                                    placeholder="First Name" maxlength="15" required="required" onkeydown="return /[a-z]/i.test(event.key)">
                             </div>
                         </div>
 
@@ -214,7 +240,7 @@
                             <div class="form-group">
                                 <label>Last Name</label>
                                 <input type="text" class="form-control" name="lastname" id="editLastname"
-                                    placeholder="Last Name" required="required" onkeydown="return /[a-z]/i.test(event.key)">
+                                    placeholder="Last Name" maxlength="30" required="required" onkeydown="return /[a-z]/i.test(event.key)">
                             </div>
                         </div>
 
@@ -222,7 +248,7 @@
                             <div class="form-group">
                                 <label>Username</label>
                                 <input type="text" class="form-control" name="username" id="editUsername"
-                                    placeholder="Username" required="required">
+                                    placeholder="Username" maxlength="30" required="required">
                             </div>
                         </div>
 
@@ -238,18 +264,34 @@
                             <div class="form-group">
                                 <label for="email">Email Address</label>
                                 <input type="email" class="form-control" name="email" id="editEmail" placeholder="Email"
-                                    required="required">
+                                    maxlength="30" required="required">
                             </div>
                         </div>
 
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="userType">User Type</label>
-                                <select name="userType" id="editUserType">
+                                <select name="userType" id="editUserType" onchange="showTherapyOptions(this)">
                                     <option value="patient">Patient</option>
                                     <option value="therapist">Therapist</option>
                                     <option value="admin">Admin</option>
                                 </select>
+                            </div>
+                        </div>
+    
+                        <div class="form-row col-6 therapistOptions">
+                            <div class="form-group">
+                                <label for="yearsExperience">Years Of Experience</label>
+                                <input type="number" class="form-control" name="yearsExperience" id="editYearsExperience" placeholder="5"
+                                    value="5" min="1" step="1" required="required">
+                            </div>
+                        </div>
+    
+                        <div class="form-row col-6 therapistOptions">
+                            <div class="form-group">
+                                <label for="sessionCost">Session Cost</label>
+                                <input type="number" class="form-control" name="sessionCost" id="editSessionCost" placeholder="90"
+                                    value="90" min="0.01" step="0.01" required="required">
                             </div>
                         </div>
 
@@ -257,7 +299,7 @@
                             <div class="form-group">
                                 <label for="password">Change Password</label>
                                 <div class="input-group" id="show-hide-password">
-                                    <input type="password" name="password" class="form-control" id="editPassword">
+                                    <input type="password" name="password" class="form-control" id="editPassword" minlength="5" maxlength="20">
                                     <div class="input-group-addon">
                                         <a href=""><i class="fa fa-eye-slash" aria-hidden="true"></i></a>
                                     </div>
@@ -282,13 +324,14 @@
                     <button id="closeDelete">Cancel</button>
                     <button id="deleteUserBtn">Delete</button>
                 </div>
+                <p id="deleteUserErrorMessage">&nbsp;</p>
             </div>
         </div>
 
         <div id="dashboardToolbar">
-            <p>Results Found: <span id="resultsFound">12 Users</span></p>
+            <p>Results Found: <span id="boldResults"><span id="resultsFound"></span> User(s)</span></p>
             <form id="searchForm">
-                <input type="text" id="searchbar" onkeyup="searchTable()" placeholder="Search..." />
+                <input type="text" id="searchbar" onkeypress="return event.keyCode != 13;" onkeyup="searchTable()" placeholder="Search..." />
             </form>
             <button id="createUser">Create User</button>
         </div>
@@ -306,24 +349,19 @@
                         <th>Action</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <!-- <tr class="tableRows">
-                        <td>Towa</td>
-                        <td>Ddd</td>
-                        <td>tquimbayo</td>
-                        <td>tquimbayo@hotmail.com</td>
-                        <td>6041234567</td>
-                        <td>Patient</td>
-                        <td>
-                            <div class="dashSettings inactive">
-                                <i class="bi bi-gear-fill" id="setIcon1"></i>
-                                <i class="bi bi-pencil-fill settingIcon editUser"></i>
-                                <i class="bi bi-trash-fill settingIcon deleteUser"></i>
-                            </div>
-                        </td>
-                    </tr> -->
-                </tbody>
+                <tbody></tbody>
             </table>
+        </div>
+
+         <!-- Admin Dashboard Update Success Modal -->
+         <div id="dashboardSuccessModal">
+            <div id="dashboardSuccessContainer">
+                <div id="dashboardSuccessBg">
+                    <svg viewBox="0 0 65 51" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M7 25L27.3077 44L58.5 7" stroke="white" stroke-width="13" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </div>
+            </div>
         </div>
 
         <div id="footerPlaceHolder"></div>

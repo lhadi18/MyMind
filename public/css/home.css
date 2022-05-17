@@ -233,6 +233,7 @@
     padding-bottom: 3rem;
     display: flex;
     flex-direction: row;
+    max-height: 500px;
     width: 100%;
 }
 
@@ -269,4 +270,120 @@
     width: 100%;
     line-height: 1.5rem;
     padding-bottom: 1.5rem;
+}
+
+#wrapper #contactSec {
+    grid-column: 1 / span 4;
+    grid-row: 5 / span 1;
+    padding: 3rem 10rem 7rem;
+    width: 100%;
+}
+
+#wrapper #contactSec #contactContainer {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    min-height: 350px;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0px 0px 25px -2px rgba(0, 0, 0, 0.1);
+}
+
+#wrapper #contactSec #contactContainer #contactInfo,
+#wrapper #contactSec #contactContainer #mapSec {
+    width: 50%;
+}
+
+#wrapper #contactSec #contactContainer #mapSec #map {
+    height: 100%;
+    width: 100%;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+}
+
+#wrapper #contactSec #contactContainer #contactInfo {
+    display: flex;
+    flex-direction: column;
+    padding: 3rem 5rem;
+}
+
+#wrapper #contactSec #contactContainer #contactInfo h4 {
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.5rem;
+    text-transform: uppercase;
+    color: black;
+    padding-bottom: 1rem;
+}
+
+#wrapper #contactSec #contactContainer #contactInfo h2 {
+    font-size: 3.2rem;
+    font-weight: 700;
+    color: black;
+    padding-bottom: 2rem;
+}
+
+#wrapper #contactSec #contactContainer #contactInfo p {
+    font-size: 1rem;
+    font-weight: 500;
+    color: black;
+    padding-bottom: 2rem;
+}
+
+#wrapper #contactSec #contactContainer #contactInfo .contactDetails {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    padding-bottom: 1.5rem;
+}
+
+#wrapper #contactSec #contactContainer #contactInfo .contactDetails .contactIcons {
+    width: 3.5rem;
+    height: 3.2rem;
+}
+
+#wrapper #contactSec #contactContainer #contactInfo .contactDetails .contactIcons i {
+    font-size: 1.5rem;
+    width: 100%;
+    color: black;
+    background: white;
+    height: 100%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 50%;
+    box-shadow: 0px 0px 25px -2px rgba(0, 0, 0, 0.1);
+    transform: translateY(0);
+    -webkit-transition: all ease-in-out 0.3s;
+    -moz-transition: all ease-in-out 0.3s;
+    -ms-transition: all ease-in-out 0.3s;
+    -o-transition: all ease-in-out 0.3s;
+    transition: all ease-out 0.3s;
+}
+
+#wrapper #contactSec #contactContainer #contactInfo .contactDetails .contactIcons i:hover {
+    color: white;
+    background: var(--primaryColor);
+    transform: translateY(5px);
+}
+
+#wrapper #contactSec #contactContainer #contactInfo .contactDetails a {
+    font-size: 1.2rem;
+    font-weight: 600;
+    width: 100%;
+    color: var(--primaryColor);
+    text-decoration: none;
+    padding-left: 2rem;
+    -webkit-transition: all ease-in-out 0.3s;
+    -moz-transition: all ease-in-out 0.3s;
+    -ms-transition: all ease-in-out 0.3s;
+    -o-transition: all ease-in-out 0.3s;
+    transition: all ease-out 0.3s;
+}
+
+#wrapper #contactSec #contactContainer #contactInfo .contactDetails a:hover {
+    color: var(--secondaryColor);
 }

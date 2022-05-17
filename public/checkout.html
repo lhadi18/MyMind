@@ -7,10 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="COMP 2800 - MyMind" />
 
-    <title>MyMind</title>
+    <title>MyMind - Checkout</title>
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="./images/logo.svg" />
+    <link rel="icon" type="image/x-icon" href="../images/logo.svg" />
 
     <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/410249dbdb.js" crossorigin="anonymous"></script>
@@ -26,9 +26,9 @@
         rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" type="text/css" href="./css/style.css" />
-    <link rel="stylesheet" type="text/css" href="./css/home.css" />
-    <link rel="stylesheet" type="text/css" href="./css/responsive.css" />
+    <link rel="stylesheet" type="text/css" href="../css/style.css" />
+    <link rel="stylesheet" type="text/css" href="../css/checkout.css" />
+    <link rel="stylesheet" type="text/css" href="../css/responsive.css" />
 </head>
 
 <body>
@@ -115,55 +115,100 @@
             </nav>
         </header>
 
-        <div id="bannerHome">
+        <div id="bannerCheckout">
             <div id="overlay">
-                <div id="homeHeader">
-                    <h2>Our legacy speaks through our healed clients</h2>
-                    <div><a href="/therapists">View Therapists</a></div>
+                <div id="checkoutHeader">
+                    <h2>Checkout</h2>
                 </div>
             </div>
         </div>
 
-        <div id="therapySec">
-            <h2>Popular Therapy Sessions</h2>
-            <div id="therapistCards">
-            </div>
+        <div id="noOrderSummary">
+            <p id="noOrderMessage">Your cart is empty. Please visit <a href="/therapists">Therapists</a> and
+                purchase a therapy package to start your journey!</p>
         </div>
 
-        <div id="companySec">
-            <div>
-                <img src="./images/home.jpg" alt="Company Info">
+        <div id="orderSummary">
+            <div id="orderNumSec">
+                <h2>Order: <span id="orderNumber">MM0509123456</span></h2>
+                <button id="printInvoice" onclick="printInvoice();">Print Invoice</button>
             </div>
-            <div id="companyDesc">
-                <h2>MyMind Can Help You</h2>
-                <p>MyMind can help anyone that struggles with mental health problems with guided therapy sessions.</p>
-                <p>Although therapy in Canada is available, it is not cheap and fees can range from $50-$240 per
-                    session. Many people with mental health problems require 12-16 sessions on average and only 50
-                    percent of patients recover as indicated by self-reported symptom measures.</p>
-            </div>
-        </div>
 
-        <div id="contactSec">
-            <div id="contactContainer">
-                <div id="contactInfo">
-                    <h4>Contact Details</h4>
-                    <h2>Burnaby</h2>
-                    <p>3700 Willingdon Ave, Burnaby, BC V5G 3H2</p>
-                    <div class="contactDetails">
-                        <div class="contactIcons">
-                            <i class="bi bi-envelope"></i>
+            <div id="orderTable">
+                <div id="tableHeader">
+                    <h3>Order Review</h3>
+                    <h3>Package Plan</h3>
+                    <h3>Cost</h3>
+                </div>
+                <div id="tableBody">
+                    <div id="orderReview">
+                        <div id="cartImg">
+                            <img id="therapistImg" src="./images/therapist1.jpg" alt="Therapist Image">
                         </div>
-                        <a href="mailto:info@mymind.com">info@mymind.com</a>
+                        <div id="cartDesc">
+                            <h4 id="therapistName">Towa Quimbayo</h4>
+                            <p id="therapistDesc">15+ years of experience in the profession, and offers $90 per session
+                            </p>
+                            <button type="submit" id="removeItem">Remove</button>
+                        </div>
                     </div>
-                    <div class="contactDetails">
-                        <div class="contactIcons">
-                            <i class="bi bi-telephone"></i>
-                        </div>
-                        <a href="tel:604.555.5012">(604) 555 - 5012</a>
+                    <div id="cartPlanSec">
+                        <p>Package Plan: </p>
+                        <select id="cartPlan">
+                            <option value="freePlan" selected>Trial (1 Week)</option>
+                            <option value="monthPlan">1 Month</option>
+                            <option value="threeMonthPlan">3 Months</option>
+                            <option value="yearPlan">1 Year</option>
+                        </select>
+                    </div>
+                    <div id="cartCostSec">
+                        <p>Cost: </p>
+                        <p>$<span id="cartCost"></span></p>
                     </div>
                 </div>
-                <div id="mapSec">
-                    <div id="map"></div>
+            </div>
+
+            <hr />
+
+            <div id="cartTotalSec">
+                <div id="subTotalSec">
+                    <p>Subtotal: </p>
+                    <span id="subTotal"></span>
+                </div>
+                <div id="taxSec">
+                    <p>Tax: </p>
+                    <span id="taxTotal"></span>
+                </div>
+                <div id="totalSec">
+                    <p>Total: </p>
+                    <span id="total"></span>
+                </div>
+            </div>
+
+            <button id="confirmOrder">Confirm Order</button>
+            <p id="checkoutErrorMessage">&nbsp;</p>
+        </div>
+
+        <!-- Signup Success Modal -->
+        <div id="signupSuccessModal">
+            <div id="signupSuccessContainer">
+                <div id="signupSuccessBg">
+                    <svg viewBox="0 0 65 51" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M7 25L27.3077 44L58.5 7" stroke="white" stroke-width="13" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <!-- Remove Order Modal -->
+        <div id="removeOrderModal">
+            <div id="modalContent">
+                <h2>You're about to remove your order!</h2>
+                <p>The therapist is about to be removed from your cart, click confirm to empty the cart.</p>
+                <div id="removeButtonsSec">
+                    <button id="cancelRemove">Cancel</button>
+                    <button id="removeOrderBtn">Confirm</button>
                 </div>
             </div>
         </div>
@@ -173,10 +218,9 @@
 
     <!-- jQuery CDN -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="./js/main.js"></script>
-    <script src="./js/index.js"></script>
-    <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDOLlNwRr6b8WcubKfzxCbEA97HWdcyQsc&callback=initMap">
-    </script>
+    <script src="../js/main.js"></script>
+    <script src="../js/checkout.js"></script>
+
 </body>
 
 </html>

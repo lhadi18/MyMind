@@ -7,10 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="COMP 2800 - MyMind" />
 
-    <title>MyMind</title>
+    <title>MyMind - Order History</title>
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="./images/logo.svg" />
+    <link rel="icon" type="image/x-icon" href="../images/logo.svg" />
 
     <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/410249dbdb.js" crossorigin="anonymous"></script>
@@ -26,9 +26,9 @@
         rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" type="text/css" href="./css/style.css" />
-    <link rel="stylesheet" type="text/css" href="./css/home.css" />
-    <link rel="stylesheet" type="text/css" href="./css/responsive.css" />
+    <link rel="stylesheet" type="text/css" href="../css/style.css" />
+    <link rel="stylesheet" type="text/css" href="../css/order-history.css" />
+    <link rel="stylesheet" type="text/css" href="../css/responsive.css" />
 </head>
 
 <body>
@@ -115,55 +115,52 @@
             </nav>
         </header>
 
-        <div id="bannerHome">
+        <div id="orderHistoryHeroContainer">
             <div id="overlay">
-                <div id="homeHeader">
-                    <h2>Our legacy speaks through our healed clients</h2>
-                    <div><a href="/therapists">View Therapists</a></div>
+                <div id="orderHistoryHero">
+                    <h2>Order History</h2>
                 </div>
             </div>
         </div>
 
-        <div id="therapySec">
-            <h2>Popular Therapy Sessions</h2>
-            <div id="therapistCards">
-            </div>
+        <div id="noOrderHistorySummary">
+            <p id="noOrderMessage">No orders have been placed. Please visit <a href="/therapists">Therapists</a> and
+                purchase a therapy package to start your journey!</p>
         </div>
 
-        <div id="companySec">
-            <div>
-                <img src="./images/home.jpg" alt="Company Info">
-            </div>
-            <div id="companyDesc">
-                <h2>MyMind Can Help You</h2>
-                <p>MyMind can help anyone that struggles with mental health problems with guided therapy sessions.</p>
-                <p>Although therapy in Canada is available, it is not cheap and fees can range from $50-$240 per
-                    session. Many people with mental health problems require 12-16 sessions on average and only 50
-                    percent of patients recover as indicated by self-reported symptom measures.</p>
-            </div>
+        <div id="orderToolbar">
+            <p>Results Found: <span id="boldResults"><span id="resultsFound"></span> Order(s)</span></p>
+            <form id="searchForm">
+                <input type="text" id="searchbar" onkeypress="return event.keyCode != 13;" onkeyup="searchTable()" placeholder="Search..." />
+            </form>
+            <button id="refundBtn">Refund</button>
         </div>
 
-        <div id="contactSec">
-            <div id="contactContainer">
-                <div id="contactInfo">
-                    <h4>Contact Details</h4>
-                    <h2>Burnaby</h2>
-                    <p>3700 Willingdon Ave, Burnaby, BC V5G 3H2</p>
-                    <div class="contactDetails">
-                        <div class="contactIcons">
-                            <i class="bi bi-envelope"></i>
-                        </div>
-                        <a href="mailto:info@mymind.com">info@mymind.com</a>
-                    </div>
-                    <div class="contactDetails">
-                        <div class="contactIcons">
-                            <i class="bi bi-telephone"></i>
-                        </div>
-                        <a href="tel:604.555.5012">(604) 555 - 5012</a>
-                    </div>
-                </div>
-                <div id="mapSec">
-                    <div id="map"></div>
+        <div id="orderTableContainer">
+            <table id="orderTable">
+                <thead>
+                    <tr id="tableHeader">
+                        <th data-type="string" class="tHead">Date<i id="0"></i></th>
+                        <th class="tHead">Time<i id="1"></i></th>
+                        <th class="tHead">Therapist<i id="2"></i></th>
+                        <th data-type="plan" class="tHead">Plan<i id="3"></i></th>
+                        <th data-type="number" class="tHead">Price<i id="4"></i></th>
+                        <th class="tHead">Order #<i id="5"></i></th>
+                        <th class="tHead">Status<i id="6"></i></th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        <!-- Order Refund Modal -->
+        <div id="orderRefundModal">
+            <div id="modalContent">
+                <h2 id="headerRefund">Want to refund?</h2>
+                <p id="msgRefund">You're about to refund your session order for the user <span id="refundTherapist"></span> and will be refunded <span id="refundPrice"></span> This action is irreversible and cannot be undone. Are you sure?</p>
+                <div id="refundButtonsSec">
+                    <button id="closeRefund">Cancel</button>
+                    <button type="submit" id="orderRefundBtn">Refund</button>
                 </div>
             </div>
         </div>
@@ -173,10 +170,8 @@
 
     <!-- jQuery CDN -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="./js/main.js"></script>
-    <script src="./js/index.js"></script>
-    <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDOLlNwRr6b8WcubKfzxCbEA97HWdcyQsc&callback=initMap">
-    </script>
+    <script src="../js/main.js"></script>
+    <script src="../js/order-history.js"></script>
 </body>
 
 </html>
