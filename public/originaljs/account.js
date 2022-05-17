@@ -179,7 +179,10 @@ function inputValidation() {
     const inpObjFirstName = document.getElementById("firstname");
     const inpObjLastName = document.getElementById("lastname");
     const inpObjUsername = document.getElementById("username");
-    if (!inpObjFirstName.checkValidity() || !inpObjLastName.checkValidity() || !inpObjUsername.checkValidity()) {
+    const inpObjExperience = document.getElementById("yearsExperience");
+    const inpObjSession = document.getElementById("sessionCost");
+    if (!inpObjFirstName.checkValidity() || !inpObjLastName.checkValidity() || !inpObjUsername.checkValidity()
+        || !inpObjExperience.checkValidity() || !inpObjSession.checkValidity()) {
         return true;
     }
 }
