@@ -1036,6 +1036,7 @@
     }
     #wrapper #orderTableContainer #orderTable tbody td:nth-child(7):before {
         content: 'Status: ';
+        color: black;
         font-size: 1rem;
         font-weight: 700;
     }
@@ -1975,6 +1976,7 @@
     }
     #wrapper #orderTableContainer #orderTable tbody td:nth-child(7):before {
         content: 'Status: ';
+        color: black;
         font-size: 1rem;
         font-weight: 700;
     }

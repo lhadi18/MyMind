@@ -42,12 +42,12 @@ $(document).ready(async function () {
                         x += `<td>$${parseFloat(therapistInfo.sessionCost * multiplier * 1.12).toFixed(2)}</td>`
                         x += `<td>${cartData.orderId}</td>`
 
-                        if(cartData.status == "refunded") {
+                        if (cartData.status == "refunded") {
                             x += `<td>Refunded</td>`
                         } else if (new Date(cartData.expiringTime) > new Date()) {
-                            x += `<td>Active</td>`
+                            x += `<td class="activeStatus">Active</td>`
                         } else {
-                            x += `<td>Expired</td>`
+                            x += `<td class="expiredStatus">Expired</td>`
                         }
                         x += `</tr>`
                         $("tbody").append(x);
@@ -74,13 +74,14 @@ $(document).ready(async function () {
     document.getElementById('refundBtn').onclick = function () {
         setTimeout(() => {
             $.get('/activeSession', function (data) {
-                if(data == "NoActiveSession") {
+                if (data == "NoActiveSession") {
+                    document.getElementById('modalHeader').style.display = 'block';
                     document.getElementById("headerRefund").innerHTML = "No active orders found"
                     document.getElementById("msgRefund").innerHTML = "You have no active session at this time. Please place an order from our <a href='/therapists'>Therapists</a> page"
+                    document.getElementById('refundButtonsSec').style.display = 'none';
                 } else {
-                    console.log(data);
-                $("#refundTherapist").text(`${data.therapistName}.`);
-                $("#refundPrice").text(`$${data.cost}`)
+                    $("#refundTherapist").text(`${data.therapistName}.`);
+                    $("#refundPrice").text(`$${data.cost}`)
                 }
             })
             orderRefundModal.style.display = "block";
@@ -88,11 +89,14 @@ $(document).ready(async function () {
         }, 50);
         $('#orderRefundBtn').off();
         $('#orderRefundBtn').click(() => {
+            orderRefundModal.style.display = "none";
+            document.getElementById('signupSuccessModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
             setTimeout(() => {
                 $.post('/refundOrder', function () {
                     location.reload();
                 })
-            }, 50);
+            }, 2500);
         });
     }
 });
@@ -232,10 +236,15 @@ document.getElementById("closeRefund").onclick = function () {
     document.body.style.overflow = 'auto';
 }
 
+// If cancel button is clicked, hide modal for Delete User
+document.getElementById("closeRefundIcon").onclick = function () {
+    orderRefundModal.style.display = "none";
+    document.body.style.overflow = 'auto';
+}
+
 // If user clicks outside of the modal for both Create, Edit and Delete then hide modal
 window.onclick = function (event) {
     if (event.target == orderRefundModal) {
-        document.getElementById("refundErrorMessage").style.display = 'none';
         orderRefundModal.style.display = "none";
         document.body.style.overflow = 'auto';
     }
