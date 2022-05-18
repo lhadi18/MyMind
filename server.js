@@ -14,34 +14,6 @@ const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server);
 
-
-//Creates connection between server and client
-io.on('connection', (socket) => {
-    socket.on('chat message', (msg) => {
-        io.emit('chat message', msg);
-    });
-
-    socket.on("chat message", function (msg) {
-
-        //broadcast message to everyone in port:8000 except yourself.
-        socket.broadcast.emit("received", { message: msg });
-
-        //save chat to the database
-        let connect = mongoose.connect(uri, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true
-        })
-        connect.then(db => {
-            let chatMessage = new Chat({
-                message: msg,
-                sender: "Anonymous"
-            });
-
-            chatMessage.save();
-        });
-    });
-});
-
 app.set('view engine', 'text/html');
 
 if (process.env.NODE_ENV != 'production') {
@@ -955,6 +927,35 @@ app.post('/refundOrder', isLoggedIn, (req, res) => {
         console.log(error);
     })
 })
+
+//Live Chat//
+
+//Creates connection between server and client
+io.on('connection', (socket) => {
+    socket.on('chat message', (msg) => {
+        io.emit('chat message', msg);
+    });
+
+    socket.on("chat message", function (msg) {
+
+        //broadcast message to everyone in port:8000 except yourself.
+        socket.broadcast.emit("received", { message: msg });
+
+        //save chat to the database
+        let connect = mongoose.connect(process.env.DATABASE_URL, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true
+        })
+        connect.then(db => {
+            let chatMessage = new Chat({
+                message: msg,
+                sender: 'Anonymous'
+            });
+
+            chatMessage.save();
+        });
+    });
+});
 
 server.listen(8000, () => {
     console.log('listening on port:8000');
