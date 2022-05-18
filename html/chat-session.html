@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="COMP 2800 - MyMind" />
 
-    <title>MyMind</title>
+    <title>MyMind - Chat Session</title>
 
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="./images/logo.svg" />
@@ -27,7 +27,7 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" type="text/css" href="./css/style.css" />
-    <link rel="stylesheet" type="text/css" href="./css/home.css" />
+    <link rel="stylesheet" type="text/css" href="./css/chat-session.css" />
     <link rel="stylesheet" type="text/css" href="./css/responsive.css" />
 </head>
 
@@ -124,94 +124,6 @@
             </div>
         </div>
 
-        <div id="therapySec">
-            <h2>Popular Therapy Sessions</h2>
-            <div id="therapistCards">
-            </div>
-        </div>
-
-        <div id="companySec">
-            <div>
-                <img src="./images/home.jpg" alt="Company Info">
-            </div>
-            <div id="companyDesc">
-                <h2>MyMind Can Help You</h2>
-                <p>MyMind can help anyone that struggles with mental health problems with guided therapy sessions.</p>
-                <p>Although therapy in Canada is available, it is not cheap and fees can range from $50-$240 per
-                    session. Many people with mental health problems require 12-16 sessions on average and only 50
-                    percent of patients recover as indicated by self-reported symptom measures.</p>
-            </div>
-        </div>
-
-        <div id="contactSec">
-            <div id="contactContainer">
-                <div id="contactInfo">
-                    <h4>Contact Details</h4>
-                    <h2>Burnaby</h2>
-                    <p>3700 Willingdon Ave, Burnaby, BC V5G 3H2</p>
-                    <div class="contactDetails">
-                        <div class="contactIcons">
-                            <i class="bi bi-envelope"></i>
-                        </div>
-                        <a href="mailto:info@mymind.com">info@mymind.com</a>
-                    </div>
-                    <div class="contactDetails">
-                        <div class="contactIcons">
-                            <i class="bi bi-telephone"></i>
-                        </div>
-                        <a href="tel:604.555.5012">(604) 555 - 5012</a>
-                    </div>
-                </div>
-                <div id="mapSec">
-                    <div id="map"></div>
-                </div>
-            </div>
-        </div>
-
-        <div id="therapistChat">
-            <i class="fa fa-comments" id="chatMsgIcon" aria-hidden="true"></i>
-            <div class="chatContainer">
-                <div id="chatHeader">
-                    <div id="chatProfile">
-                        <div>
-                            <img src="./images/therapist1.jpg" alt="Profile Picture of Therapist / Patient" />
-                        </div>
-                        <div id="chatProfileDesc">
-                            <p id="chatName">Towa Quimbayo</p>
-                            <p>Active <span id="chatActiveState">Now</span></p>
-                            <!-- don't know if possible, need to look how to check if user is active on page or not -->
-                            <!-- <p>Active <span id="chatActiveState">10mins ago</span></p> -->
-                        </div>
-                    </div>
-                    <div id="chatTools">
-                        <a href="tel:7785808243"><i class="bi bi-telephone-fill"></i></a>
-                        <button id="closeChat">
-                            <i class="fa fa-times" aria-hidden="true"></i>
-                        </button>
-                    </div>
-                </div>
-                <ul id="chatMessages">
-                    <li class="other">Hi, Alex how are you feeling today?</li>
-                    <li class="self">I am doing fine.</li>
-                    <li class="other">Do you worship god?</li>
-                    <li class="self">yes i love god, god is good, god is everything. dont ever ask me that again u fraud.</li>
-                    <li class="other">i am the therapist so you listen to me you fraud</li>
-                    <li class="self">ok your majesty</li>
-                    <li class="other">LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL</li>
-                    <li class="self">wooooooooooooooooooooooooooow</li>
-                    <li class="other">ok pce</li>
-                    <li class="self">alright bro.</li>
-                </ul>
-                <div id="sendMessageContainer">
-                    <!-- <div id="chatbox" contenteditable="true" disabled="true"></div> -->
-                    <textarea id="chatbox" maxlength="500" contenteditable="true" disabled="true" wrap="soft"></textarea>
-                    <button id="sendMessage">
-                        <img src="./images/send.svg">
-                    </button>
-                </div>
-            </div>
-        </div>
-
         <div id="footerPlaceHolder"></div>
     </div>
 
@@ -221,7 +133,7 @@
         </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="./js/main.js"></script>
-    <script src="./js/index.js"></script>
+    <script src="./js/chat-session.js"></script>
 </body>
 
 </html>

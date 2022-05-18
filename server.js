@@ -157,6 +157,10 @@ app.get('/therapists', function (req, res) {
     res.sendFile(path.resolve('html/therapists.html'));
 });
 
+app.get('/chat-session', isLoggedIn, function (req, res) {
+    res.sendFile(path.resolve('html/chat-session.html'));
+});
+
 app.get('/checkout', isLoggedIn, isPatient, function (req, res) {
     res.sendFile(path.resolve('html/checkout.html'));
 });
