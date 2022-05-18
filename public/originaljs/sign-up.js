@@ -11,7 +11,7 @@ $('#signupBtn').click(() => {
         window.scrollTo(0, document.body.scrollHeight);
         document.getElementById("signUpErrorMessage").style.display = 'block';
         document.getElementById("signUpErrorMessage").innerHTML = "Please follow this email pattern: example@email.com";
-    } else if (inputValidation()) {
+    } else if (inputValidation($("#userType").val())) {
         window.scrollTo(0, document.body.scrollHeight);
         document.getElementById("signUpErrorMessage").style.display = 'block';
         document.getElementById("signUpErrorMessage").innerHTML = "There are empty fields";
@@ -70,9 +70,9 @@ setInterval(eastereEgg, 1000);
 // Easter egg function
 var doOnce = false;
 function eastereEgg() {
-    $('#username').keyup(function() {
+    $('#username').keyup(function () {
         var userField = $(this).val().toLowerCase();
-        if(userField.includes('batman') && doOnce == false){
+        if (userField.includes('batman') && doOnce == false) {
             window.scrollTo(0, document.body.scrollHeight);
             batmanAnimation.classList.add('startAnimation');
             document.getElementById("audio").play();
@@ -87,15 +87,21 @@ function isEmail(email) {
     return regex.test(email);
 }
 
-function inputValidation() {
+function inputValidation(userType) {
     const inpObjFirstName = document.getElementById("firstname");
     const inpObjLastName = document.getElementById("lastname");
     const inpObjUsername = document.getElementById("username");
     const inpObjExperience = document.getElementById("yearsExperience");
     const inpObjSession = document.getElementById("sessionCost");
-    if (!inpObjFirstName.checkValidity() || !inpObjLastName.checkValidity() || !inpObjUsername.checkValidity()
-        || !inpObjExperience.checkValidity() || !inpObjSession.checkValidity()) {
-        return true;
+    if (userType == "therapist") {
+        if (!inpObjFirstName.checkValidity() || !inpObjLastName.checkValidity() || !inpObjUsername.checkValidity()
+            || !inpObjExperience.checkValidity() || !inpObjSession.checkValidity()) {
+            return true;
+        }
+    } else {
+        if (!inpObjFirstName.checkValidity() || !inpObjLastName.checkValidity() || !inpObjUsername.checkValidity()) {
+            return true;
+        }
     }
 }
 
