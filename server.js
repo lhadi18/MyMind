@@ -150,31 +150,31 @@ app.get('/isLoggedIn', (req, res) => {
 })
 
 app.get('/', function (req, res) {
-    res.sendFile(path.resolve('public/index.html'));
+    res.sendFile(path.resolve('html/index.html'));
 });
 
 app.get('/therapists', function (req, res) {
-    res.sendFile(path.resolve('public/therapists.html'));
+    res.sendFile(path.resolve('html/therapists.html'));
 });
 
 app.get('/checkout', isLoggedIn, isPatient, function (req, res) {
-    res.sendFile(path.resolve('public/checkout.html'));
+    res.sendFile(path.resolve('html/checkout.html'));
 });
 
 app.get('/order-history', isLoggedIn, isPatient, function (req, res) {
-    res.sendFile(path.resolve('public/order-history.html'));
+    res.sendFile(path.resolve('html/order-history.html'));
 });
 
 app.get('/thank-you', isLoggedIn, hasRecentlyPurchased, function (req, res) {
-    res.sendFile(path.resolve('public/thank-you.html'));
+    res.sendFile(path.resolve('html/thank-you.html'));
 });
 
 app.get("/login", isLoggedOut, setHeaders, (req, res) => {
-    res.sendFile(path.resolve('public/login.html'));
+    res.sendFile(path.resolve('html/login.html'));
 });
 
 app.get('/admin-dashboard', isLoggedIn, isAdmin, setHeaders, (req, res) => {
-    res.sendFile(path.resolve('public/admin-dashboard.html'))
+    res.sendFile(path.resolve('html/admin-dashboard.html'))
 });
 
 app.get('/getUserInfo', isLoggedIn, setHeaders, (req, res) => {
@@ -197,6 +197,8 @@ app.get('/getTherapists', (req, res) => {
         if (user) {
             res.json(user);
         }
+    }).sort({
+        numSessions: 'desc'
     })
 })
 
@@ -241,15 +243,15 @@ app.post('/logout', (req, res) => {
 })
 
 app.get('/userprofile', isLoggedIn, setHeaders, (req, res) => {
-    res.sendFile(path.resolve('public/userprofile.html'))
+    res.sendFile(path.resolve('html/userprofile.html'))
 })
 
 app.get('/edit-account', isLoggedIn, setHeaders, (req, res) => {
-    res.sendFile(path.resolve('public/edit-account.html'))
+    res.sendFile(path.resolve('html/edit-account.html'))
 })
 
 app.get("/sign-up", isLoggedOut, setHeaders, (req, res) => {
-    res.sendFile(path.resolve('public/sign-up.html'))
+    res.sendFile(path.resolve('html/sign-up.html'))
 })
 
 app.post('/editProfile', isLoggedIn, isNotExisting, async (req, res) => {
@@ -750,8 +752,6 @@ app.delete('/deleteCart', isLoggedIn, async (req, res) => {
 
 
 app.post('/confirmCart', isLoggedIn, async (req, res) => {
-    let userId = req.session.user._id;
-    let therapistId = req.body.therapistID;
     if (req.body.cartPlan == "freePlan") {
         var trialStatus = await User.exists({
             _id: req.session.user._id,
@@ -788,22 +788,34 @@ app.post('/confirmCart', isLoggedIn, async (req, res) => {
     }).catch(function (error) {
         console.log(error);
     })
-    
-    User.updateOne({
-        "_id": userId
-    }, {
-        assigned: therapistId
-    }).then((obj) => {
-        console.log('Assigned therapist to user - ' + obj);
-    })
-    User.updateOne({
-        "_id": therapistId
-    }, {
-        assigned: userId
-    }).then((obj) => {
-        console.log('Assigned user to therapist - ' + obj);
-    })
+    incrementTherapistSessionNum(req.session.user._id);
 })
+
+function incrementTherapistSessionNum(userID) {
+    Cart.find({
+        userId: userID,
+        status: "completed"
+    }, function (err, carts) {
+        if (err) {
+            console.log('Error searching cart.', err);
+        }
+        if (carts) {
+            const sortedCart = carts.sort((a, b) => b.purchased - a.purchased)
+            var therapistID = sortedCart[0].therapist
+            User.updateOne({
+                _id: therapistID
+            }, {
+                $inc: {
+                    numSessions: 1
+                }
+            }).then((obj) => {
+                console.log(obj)
+            }).catch(function (error) {
+                console.log(error);
+            })
+        }
+    });
+}
 
 app.put('/updateCart', isLoggedIn, async (req, res) => {
     Cart.updateOne({
@@ -821,7 +833,11 @@ app.put('/updateCart', isLoggedIn, async (req, res) => {
 app.get('/getPreviousPurchases', isLoggedIn, (req, res) => {
     Cart.find({
         userId: req.session.user._id,
-        status: "completed"
+        $or: [{
+            status: "completed",
+        }, {
+            status: "refunded",
+        }]
     }, function (err, carts) {
         if (err) {
             console.log('Error searching cart.', err);
@@ -848,17 +864,22 @@ app.get('/recentPurchase', isLoggedIn, (req, res) => {
 })
 
 app.get('/activeSession', isLoggedIn, (req, res) => {
+    var currentTime = new Date();
     Cart.find({
         userId: req.session.user._id,
-        status: "completed"
+        status: "completed",
+        expiringTime: {
+            $gt: currentTime
+        }
     }, function (err, carts) {
         if (err) {
             console.log('Error searching cart.', err);
         }
-        if (carts) {
+        if (carts.length > 0) {
+            console.log(carts)
             const sortedCart = carts.sort((a, b) => b.purchased - a.purchased);
             var therapistName;
-            var errorMessageVariables
+            var errorMessageVariables;
             User.findOne({
                 _id: sortedCart[0].therapist
             }, function (err, user) {
@@ -873,7 +894,27 @@ app.get('/activeSession', isLoggedIn, (req, res) => {
                     return res.json(errorMessageVariables)
                 }
             })
+        } else {
+            return res.json("NoActiveSession");
         }
+    })
+})
+
+app.post('/refundOrder', isLoggedIn, (req, res) => {
+    var currentTime = new Date();
+    Cart.updateOne({
+        userId: req.session.user._id,
+        status: "completed",
+        expiringTime: {
+            $gt: currentTime
+        }
+    }, {
+        expiringTime: currentTime,
+        status: "refunded"
+    }).then((obj) => {
+        res.send(obj)
+    }).catch(function (error) {
+        console.log(error);
     })
 })
 

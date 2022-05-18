@@ -21,7 +21,7 @@ const cartSchema = new mongoose.Schema({
     },
     status: {
         type: String,
-        enum: ["completed", "active", "deleted"],
+        enum: ["completed", "active", "deleted", "refunded"],
         required: true
     },
     cost: {

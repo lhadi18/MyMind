@@ -133,6 +133,7 @@
             <form id="searchForm">
                 <input type="text" id="searchbar" onkeypress="return event.keyCode != 13;" onkeyup="searchTable()" placeholder="Search..." />
             </form>
+            <button id="refundBtn">Refund</button>
         </div>
 
         <div id="orderTableContainer">
@@ -140,15 +141,28 @@
                 <thead>
                     <tr id="tableHeader">
                         <th data-type="string" class="tHead">Date<i id="0"></i></th>
-                        <th class="tHead">Therapist<i id="1"></i></th>
-                        <th data-type="plan" class="tHead">Plan<i id="2"></i></th>
-                        <th data-type="number" class="tHead">Price<i id="3"></i></th>
-                        <th class="tHead">Status<i id="4"></i></th>
+                        <th class="tHead">Time<i id="1"></i></th>
+                        <th class="tHead">Therapist<i id="2"></i></th>
+                        <th data-type="plan" class="tHead">Plan<i id="3"></i></th>
+                        <th data-type="number" class="tHead">Price<i id="4"></i></th>
                         <th class="tHead">Order #<i id="5"></i></th>
+                        <th class="tHead">Status<i id="6"></i></th>
                     </tr>
                 </thead>
                 <tbody></tbody>
             </table>
+        </div>
+
+        <!-- Order Refund Modal -->
+        <div id="orderRefundModal">
+            <div id="modalContent">
+                <h2 id="headerRefund">Want to refund?</h2>
+                <p id="msgRefund">You're about to refund your session order for the user <span id="refundTherapist"></span> and will be refunded <span id="refundPrice"></span> This action is irreversible and cannot be undone. Are you sure?</p>
+                <div id="refundButtonsSec">
+                    <button id="closeRefund">Cancel</button>
+                    <button type="submit" id="orderRefundBtn">Refund</button>
+                </div>
+            </div>
         </div>
 
         <div id="footerPlaceHolder"></div>

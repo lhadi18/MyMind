@@ -1,3 +1,5 @@
+const orderRefundModal = document.getElementById('orderRefundModal');
+
 $(document).ready(async function () {
 
     await $.ajax({
@@ -13,14 +15,16 @@ $(document).ready(async function () {
                     getTherapist(cartData.therapist, therapistInfo => {
                         let multiplier;
                         var x = `<tr class="tableRows">`;
-                        
+
                         let purchasedDate = new Date(cartData.purchased);
                         let offSet = purchasedDate.getTimezoneOffset() * 60 * 1000;
                         let tLocalISO = new Date(purchasedDate - offSet).toISOString().slice(0, 10);
                         x += `<td>${tLocalISO}</td>`;
 
+                        x += `<td>${new Date(cartData.expiringTime).toLocaleString('en-CA', { hour: 'numeric', minute: 'numeric', hour12: true })}</td>`
 
                         x += `<td>${therapistInfo.fullName}</td>`
+
                         if (cartData.timeLength == 'freePlan') {
                             x += `<td>Trial</td>`
                             multiplier = 0;
@@ -32,15 +36,19 @@ $(document).ready(async function () {
                             multiplier = 3;
                         } else {
                             x += `<td>1 Year</td>`
-                            multiplier = 12;
+                            multiplier = 6;
                         }
+
                         x += `<td>$${parseFloat(therapistInfo.sessionCost * multiplier * 1.12).toFixed(2)}</td>`
-                        if (new Date(cartData.expiringTime) > new Date()) {
+                        x += `<td>${cartData.orderId}</td>`
+
+                        if(cartData.status == "refunded") {
+                            x += `<td>Refunded</td>`
+                        } else if (new Date(cartData.expiringTime) > new Date()) {
                             x += `<td>Active</td>`
                         } else {
                             x += `<td>Expired</td>`
                         }
-                        x += `<td>${cartData.orderId}</td>`
                         x += `</tr>`
                         $("tbody").append(x);
                     });
@@ -57,9 +65,36 @@ $(document).ready(async function () {
     document.getElementById('3').setAttribute("class", "bi bi-caret-down-fill");
     document.getElementById('4').setAttribute("class", "bi bi-caret-down-fill");
     document.getElementById('5').setAttribute("class", "bi bi-caret-down-fill");
+    document.getElementById('6').setAttribute("class", "bi bi-caret-down-fill");
 
     // Call sort table fucntion when user clicks table headings
     sortTable();
+
+    // If create button is clicked, display modal (form)
+    document.getElementById('refundBtn').onclick = function () {
+        setTimeout(() => {
+            $.get('/activeSession', function (data) {
+                if(data == "NoActiveSession") {
+                    document.getElementById("headerRefund").innerHTML = "No active orders found"
+                    document.getElementById("msgRefund").innerHTML = "You have no active session at this time. Please place an order from our <a href='/therapists'>Therapists</a> page"
+                } else {
+                    console.log(data);
+                $("#refundTherapist").text(`${data.therapistName}.`);
+                $("#refundPrice").text(`$${data.cost}`)
+                }
+            })
+            orderRefundModal.style.display = "block";
+            document.body.style.overflow = 'hidden';
+        }, 50);
+        $('#orderRefundBtn').off();
+        $('#orderRefundBtn').click(() => {
+            setTimeout(() => {
+                $.post('/refundOrder', function () {
+                    location.reload();
+                })
+            }, 50);
+        });
+    }
 });
 
 function getTherapist(therapistId, callback) {
@@ -72,7 +107,7 @@ function getTherapist(therapistId, callback) {
         },
         success: function (therapist) {
             therapistInfo = {
-                fullName: `${therapist.firstName} ${therapist.lastName}`,
+                fullName: `${therapist.firstName.charAt(0)}. ${therapist.lastName}`,
                 sessionCost: therapist.sessionCost
             }
             callback(therapistInfo);
@@ -189,4 +224,19 @@ function sortTable() {
             }
         });
     });
+}
+
+// If cancel button is clicked, hide modal for Delete User
+document.getElementById("closeRefund").onclick = function () {
+    orderRefundModal.style.display = "none";
+    document.body.style.overflow = 'auto';
+}
+
+// If user clicks outside of the modal for both Create, Edit and Delete then hide modal
+window.onclick = function (event) {
+    if (event.target == orderRefundModal) {
+        document.getElementById("refundErrorMessage").style.display = 'none';
+        orderRefundModal.style.display = "none";
+        document.body.style.overflow = 'auto';
+    }
 }

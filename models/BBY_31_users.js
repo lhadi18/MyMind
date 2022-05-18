@@ -40,12 +40,12 @@ const userSchema = new Schema({
     sessionCost: {
         type: String
     },
-    assigned: {
-        type: String
-    },
     usedTrial: {
         type: Boolean,
         default:false
+    },
+    numSessions: {
+        type: Number
     },
     profileImg: {
         type: String,

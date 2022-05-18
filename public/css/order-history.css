@@ -110,8 +110,8 @@
 }
 
 #wrapper #orderToolbar #searchForm {
-    width: 80%;
-    margin-left: 1.5rem;
+    width: 65%;
+    margin: 0 1.5rem;
 }
 
 #wrapper #orderToolbar #searchForm #searchbar {
@@ -125,6 +125,31 @@
     outline: none;
     border-radius: 500px;
     box-shadow: 0px 0px 30px -5px rgba(0, 0, 0, 0.1);
+}
+
+#wrapper #orderToolbar #refundBtn {
+    font-family: 'Nunito', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 18px;
+    align-items: center;
+    justify-content: center;
+    width: 15%;
+    color: white;
+    background-color: var(--primaryColor);
+    border: solid var(--primaryColor) 2px;
+    border-radius: 500px;
+    cursor: pointer;
+    -webkit-transition: all ease-in-out 0.3s;
+    -moz-transition: all ease-in-out 0.3s;
+    -ms-transition: all ease-in-out 0.3s;
+    -o-transition: all ease-in-out 0.3s;
+    transition: all ease-in-out 0.3s;
+}
+
+#wrapper #orderToolbar #refundBtn:hover {
+    border: 2px solid var(--secondaryColor);
+    background-color: var(--secondaryColor);
 }
 
 #wrapper #orderTableContainer {
@@ -175,6 +200,10 @@
     border-radius: 15px;
 }
 
+#wrapper #orderTableContainer #orderTable tbody .tableRows td:nth-child(7) {
+    width: 12%;
+}
+
 #wrapper #orderTableContainer #orderTable tbody .tableRows td:first-child {
     border-top-left-radius: 15px;
     border-bottom-left-radius: 15px;
@@ -185,5 +214,190 @@
     border-top-right-radius: 15px;
     border-bottom-right-radius: 15px;
     padding-right: 2rem;
-    width: 10%;
+    width: 13%;
+}
+
+#orderRefundModal {
+    display: none;
+    position: fixed;
+    -webkit-backdrop-filter: blur(5px);
+    -moz-backdrop-filter: blur(5px);
+    -ms-backdrop-filter: blur(5px);
+    -o-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+    background-color: rgba(0, 0, 0, 0.5);
+    left: 0;
+    top: 0;
+    padding-top: 15%;
+    padding-bottom: 5%;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    z-index: 10000;
+}
+
+#orderRefundModal #modalContent {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    background-color: white;
+    border-radius: 15px;
+    margin: auto;
+    padding: 3rem;
+    width: 60%;
+    -webkit-animation-name: animatetopRefund;
+    -moz-animation-name: animatetopRefund;
+    -ms-animation-name: animatetopRefund;
+    -o-animation-name: animatetopRefund;
+    animation-name: animatetopRefund;
+    -webkit-animation-duration: 1s ease-in-out;
+    -moz-animation-duration: 1s ease-in-out;
+    -ms-animation-duration: 1s ease-in-out;
+    -o-animation-duration: 1s ease-in-out;
+    animation-duration: 1s;
+}
+
+@-webkit-keyframes animatetopRefund {
+    from {
+        top: -100%;
+        opacity: 0
+    }
+
+    to {
+        top: 0;
+        opacity: 1
+    }
+}
+
+@-moz-keyframes animatetopRefund {
+    from {
+        top: -100%;
+        opacity: 0
+    }
+
+    to {
+        top: 0;
+        opacity: 1
+    }
+}
+
+@-ms-keyframes animatetopRefund {
+    from {
+        top: -100%;
+        opacity: 0
+    }
+
+    to {
+        top: 0;
+        opacity: 1
+    }
+}
+
+@-o-keyframes animatetopRefund {
+    from {
+        top: -100%;
+        opacity: 0;
+    }
+
+    to {
+        top: 0;
+        opacity: 1;
+    }
+}
+
+@keyframes animatetopRefund {
+    from {
+        top: -100%;
+        opacity: 0;
+    }
+
+    to {
+        top: 0;
+        opacity: 1;
+    }
+}
+
+#orderRefundModal #modalContent #refundErrorMessage {
+    display: none;
+    font-size: 1rem;
+    font-weight: 500;
+    padding-top: 1.5rem;
+    margin: 0;
+    color: red;
+    width: 100%;
+    text-align: center;
+}
+
+#orderRefundModal #modalContent h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-transform: capitalize;
+    color: black;
+    padding-bottom: 1.5rem;
+    margin: 0;
+}
+
+#orderRefundModal #modalContent p {
+    font-size: 1rem;
+    font-weight: 500;
+    color: black;
+    line-height: 1.5rem;
+    padding-bottom: 1rem;
+    margin: 0;
+}
+
+#orderRefundModal #modalContent p #refundTherapist,
+#orderRefundModal #modalContent p #refundPrice {
+    font-weight: 700;
+    color: var(--primaryColor);
+}
+
+#orderRefundModal #modalContent #refundButtonsSec {
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    width: 100%;
+}
+
+#orderRefundModal #modalContent #refundButtonsSec #closeRefund {
+    font-family: 'Nunito', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: black;
+    padding-right: 2rem;
+    border: none;
+    background: transparent;
+    -webkit-transition: all ease-in-out 0.3s;
+    -moz-transition: all ease-in-out 0.3s;
+    -ms-transition: all ease-in-out 0.3s;
+    -o-transition: all ease-in-out 0.3s;
+    transition: all ease-in-out 0.3s;
+}
+
+#orderRefundModal #modalContent #refundButtonsSec #closeRefund:hover {
+    opacity: 0.5;
+    cursor: pointer;
+}
+
+#orderRefundModal #modalContent #refundButtonsSec #orderRefundBtn {
+    font-family: 'Nunito', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    padding: 14px;
+    width: 20%;
+    color: white;
+    background-color: var(--primaryColor);
+    border: solid var(--primaryColor) 2px;
+    border-radius: 500px;
+    cursor: pointer;
+    -webkit-transition: all ease-in-out 0.3s;
+    -moz-transition: all ease-in-out 0.3s;
+    -ms-transition: all ease-in-out 0.3s;
+    -o-transition: all ease-in-out 0.3s;
+    transition: all ease-in-out 0.3s;
+}
+
+#orderRefundModal #modalContent #refundButtonsSec #orderRefundBtn:hover {
+    border: 2px solid var(--secondaryColor);
+    background-color: var(--secondaryColor);
 }

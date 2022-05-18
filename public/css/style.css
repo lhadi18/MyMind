@@ -337,10 +337,10 @@ body::-webkit-scrollbar-thumb {
     left: 0;
     font-size: 16px;
     font-weight: 500;
-    margin-bottom: -5rem;
+    text-align: center;
+    margin-bottom: -6rem;
     padding: 3rem 7rem;
     color: black;
-    text-align: center;
 }
 
 .isTherapist, .isPatient, .isLoggedIn, .isLoggedOut, .isAdmin {
