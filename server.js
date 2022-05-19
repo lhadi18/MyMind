@@ -14,6 +14,8 @@ const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server);
 
+
+
 app.set('view engine', 'text/html');
 
 if (process.env.NODE_ENV != 'production') {
@@ -928,18 +930,21 @@ app.post('/refundOrder', isLoggedIn, (req, res) => {
     })
 })
 
-//Live Chat//
+
+//Live Chat
 
 //Creates connection between server and client
 io.on('connection', (socket) => {
-    socket.on('chat message', (msg) => {
-        io.emit('chat message', msg);
-    });
+    // socket.on('chat message', (msg) => {
+    //     io.emit('chat message', msg);
+    // });
 
-    socket.on("chat message", function (msg) {
+    socket.on("chat message", function (msg, room) {
+
+        console.log('message:', msg, ' to room:', room);
 
         //broadcast message to everyone in port:8000 except yourself.
-        socket.broadcast.emit("received", { message: msg });
+        socket.to(room).emit("chat message", { message: msg });
 
         //save chat to the database
         let connect = mongoose.connect(process.env.DATABASE_URL, {
@@ -949,13 +954,67 @@ io.on('connection', (socket) => {
         connect.then(db => {
             let chatMessage = new Chat({
                 message: msg,
-                sender: 'Anonymous'
+                sender: "Anonymous"
             });
 
             chatMessage.save();
         });
     });
+
+    socket.on("join-room", function (room) {
+        socket.join(room);
+        console.log('connected to room', room);
+
+    })
+
 });
+
+app.get('/activeChatSession', isLoggedIn, (req, res) => {
+    var currentTime = new Date();
+    Cart.findOne({
+        $or: [{
+            userId: req.session.user._id,
+        }, {
+            therapist: req.session.user._id,
+        }],
+        status: "completed",
+        expiringTime: {
+            $gt: currentTime
+        }
+    }, function (err, carts) {
+        if (err) {
+            console.log('Error searching cart.', err);
+        }
+        if (carts) {
+            console.log(carts)
+            
+            var orderId = carts.orderId;
+            var purchased = carts.expiringTime;
+            var therapistId = carts.therapist;
+            var userId = carts.userId;
+            var chatInfo;
+            User.findOne({
+                _id: req.session.user._id
+            }, function (err, user) {
+                if (err) console.log(err)
+                if (user) {
+                    chatInfo = {
+                        purchased: purchased,
+                        orderId: orderId,
+                        therapistId: therapistId,
+                        userId: userId
+                    };
+                    return res.json(chatInfo)
+                } else {
+                    return res.json("InvalidUser")
+                }
+
+            })
+        } else {
+            return res.json("NoActiveSession");
+        }
+    })
+})
 
 server.listen(8000, () => {
     console.log('listening on port:8000');
