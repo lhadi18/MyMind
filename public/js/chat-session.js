@@ -30,7 +30,6 @@ $.get('/activeChatSession', function (data) {
                 item.textContent = input.value;
                 messages.appendChild(item);
                 input.value = '';
-
             }
 
         });
