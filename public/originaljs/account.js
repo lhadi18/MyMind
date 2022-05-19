@@ -1,5 +1,6 @@
 var profileImgBtn = document.getElementById('profileImage');
 var profileFile = document.getElementById('profileFile');
+var currentType;
 
 profileImgBtn.addEventListener('click', function () {
     profileFile.click();
@@ -21,6 +22,7 @@ $.ajax({
     url: '/getUserInfo',
     type: "GET",
     success: function (data) {
+        currentType = data.userType;
         $("#displayFullname").text(`${data.firstName}  ${data.lastName}`)
         $("#displayUsername").text(`@${data.username}`)
         $("#joinedDate").text(`${new Date(data.createdAt).toDateString()}`)
@@ -176,11 +178,21 @@ function isEmail(email) {
 }
 
 function inputValidation() {
+    console.log(currentType)
     const inpObjFirstName = document.getElementById("firstname");
     const inpObjLastName = document.getElementById("lastname");
     const inpObjUsername = document.getElementById("username");
-    if (!inpObjFirstName.checkValidity() || !inpObjLastName.checkValidity() || !inpObjUsername.checkValidity()) {
-        return true;
+    const inpObjExperience = document.getElementById("yearsExperience");
+    const inpObjSession = document.getElementById("sessionCost");
+    if (currentType == "therapist") {
+        if (!inpObjFirstName.checkValidity() || !inpObjLastName.checkValidity() || !inpObjUsername.checkValidity()
+            || !inpObjExperience.checkValidity() || !inpObjSession.checkValidity()) {
+            return true;
+        }
+    } else {
+        if (!inpObjFirstName.checkValidity() || !inpObjLastName.checkValidity() || !inpObjUsername.checkValidity()) {
+            return true;
+        }
     }
 }
 

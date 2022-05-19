@@ -124,7 +124,8 @@
                         <div class="form-group">
                             <label>First Name</label>
                             <input type="text" class="form-control" name="firstname" id="firstname"
-                                placeholder="First Name" maxlength="15" value="" required="required" minlength="1" onkeydown="return /[a-z]/i.test(event.key)">
+                                placeholder="First Name" maxlength="15" value="" required="required" minlength="1"
+                                onkeydown="return /[a-z]/i.test(event.key)">
                         </div>
                     </div>
 
@@ -132,7 +133,8 @@
                         <div class="form-group">
                             <label>Last Name</label>
                             <input type="text" class="form-control" name="lastname" id="lastname"
-                                placeholder="Last Name" maxlength="30" value="" required="required" minlength="1" onkeydown="return /[a-z]/i.test(event.key)">
+                                placeholder="Last Name" maxlength="30" value="" required="required" minlength="1"
+                                onkeydown="return /[a-z]/i.test(event.key)">
                         </div>
                     </div>
 
@@ -147,8 +149,8 @@
                     <div class="form-row col-6">
                         <div class="form-group">
                             <label for="phone">Phone</label>
-                            <input type="tel" class="form-control" name="phone" id="phone" placeholder="Phone"
-                                value="" required="required" onkeyup="this.value=this.value.replace(/[^\d]/,'')">
+                            <input type="tel" class="form-control" name="phone" id="phone" placeholder="Phone" value=""
+                                required="required" onkeyup="this.value=this.value.replace(/[^\d]/,'')">
                         </div>
                     </div>
 
@@ -174,16 +176,16 @@
                     <div class="form-row col-6 therapistOptions">
                         <div class="form-group">
                             <label for="yearsExperience">Years Of Experience</label>
-                            <input type="number" class="form-control" name="yearsExperience" id="yearsExperience" placeholder="5"
-                                value="" min="1" step="1" required="required">
+                            <input type="number" class="form-control" name="yearsExperience" id="yearsExperience"
+                                placeholder="5" value="" min="1" step="1" required="required">
                         </div>
                     </div>
 
                     <div class="form-row col-6 therapistOptions">
                         <div class="form-group">
                             <label for="sessionCost">Session Cost</label>
-                            <input type="number" class="form-control" name="sessionCost" id="sessionCost" placeholder="90"
-                                value="" min="0.01" step="0.01" required="required">
+                            <input type="number" class="form-control" name="sessionCost" id="sessionCost"
+                                placeholder="90" value="" min="0.01" step="0.01" required="required">
                         </div>
                     </div>
 
@@ -212,9 +214,18 @@
             <div id="signupSuccessContainer">
                 <div id="signupSuccessBg">
                     <svg viewBox="0 0 65 51" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M7 25L27.3077 44L58.5 7" stroke="white" stroke-width="13" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M7 25L27.3077 44L58.5 7" stroke="white" stroke-width="13" stroke-linecap="round"
+                            stroke-linejoin="round" />
                     </svg>
                 </div>
+            </div>
+        </div>
+
+        <!-- Batman Easter Egg -->
+        <div id="batmanEasterEgg">
+            <div id="batmanContainer">
+                <img id="batmanImg" src="./images/batman.png" alt="Batman Easter Egg" />
+                <audio id="audio" src="./images/batman.mp3"></audio>
             </div>
         </div>
 

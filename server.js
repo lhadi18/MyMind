@@ -158,31 +158,31 @@ app.get('/isLoggedIn', (req, res) => {
 })
 
 app.get('/', function (req, res) {
-    res.sendFile(path.resolve('public/index.html'));
+    res.sendFile(path.resolve('html/index.html'));
 });
 
 app.get('/therapists', function (req, res) {
-    res.sendFile(path.resolve('public/therapists.html'));
+    res.sendFile(path.resolve('html/therapists.html'));
 });
 
 app.get('/checkout', isLoggedIn, isPatient, function (req, res) {
-    res.sendFile(path.resolve('public/checkout.html'));
+    res.sendFile(path.resolve('html/checkout.html'));
 });
 
 app.get('/order-history', isLoggedIn, isPatient, function (req, res) {
-    res.sendFile(path.resolve('public/order-history.html'));
+    res.sendFile(path.resolve('html/order-history.html'));
 });
 
 app.get('/thank-you', isLoggedIn, hasRecentlyPurchased, function (req, res) {
-    res.sendFile(path.resolve('public/thank-you.html'));
+    res.sendFile(path.resolve('html/thank-you.html'));
 });
 
 app.get("/login", isLoggedOut, setHeaders, (req, res) => {
-    res.sendFile(path.resolve('public/login.html'));
+    res.sendFile(path.resolve('html/login.html'));
 });
 
 app.get('/admin-dashboard', isLoggedIn, isAdmin, setHeaders, (req, res) => {
-    res.sendFile(path.resolve('public/admin-dashboard.html'))
+    res.sendFile(path.resolve('html/admin-dashboard.html'))
 });
 
 app.get('/chat-session', isLoggedIn, setHeaders, (req, res) => {
@@ -255,15 +255,15 @@ app.post('/logout', (req, res) => {
 })
 
 app.get('/userprofile', isLoggedIn, setHeaders, (req, res) => {
-    res.sendFile(path.resolve('public/userprofile.html'))
+    res.sendFile(path.resolve('html/userprofile.html'))
 })
 
 app.get('/edit-account', isLoggedIn, setHeaders, (req, res) => {
-    res.sendFile(path.resolve('public/edit-account.html'))
+    res.sendFile(path.resolve('html/edit-account.html'))
 })
 
 app.get("/sign-up", isLoggedOut, setHeaders, (req, res) => {
-    res.sendFile(path.resolve('public/sign-up.html'))
+    res.sendFile(path.resolve('html/sign-up.html'))
 })
 
 app.post('/editProfile', isLoggedIn, isNotExisting, async (req, res) => {
