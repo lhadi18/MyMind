@@ -91,6 +91,7 @@ function loadNavbarFooter() {
         });
     });
     $('#footerPlaceHolder').load('../headerfooter/footer.html');
+    $('#therapistChat').load('../headerfooter/chatbox.html');
 }
 
 // Display hashed password for signup and login form
