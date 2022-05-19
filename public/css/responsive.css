@@ -2766,7 +2766,7 @@
     }
 }
 
-@media (min-width: 992px) and (max-width: 1899.98px) {
+@media (min-width: 992px) and (max-width: 1299.98px) {
     #wrapper #navPlaceHolder #headContainer {
         padding: 1rem 5rem;
     }
@@ -3101,11 +3101,7 @@
     }
 }
 
-@media (min-width: 1900px) and (max-width: 2599.98px) {
-    
-}
-
-@media (min-width: 2600px) {
+@media (min-width: 2500px) {
     #wrapper #therapistChat {
         width: 7rem;
         height: 7rem;
