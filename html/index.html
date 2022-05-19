@@ -174,12 +174,11 @@
                 <div id="chatHeader">
                     <div id="chatProfile">
                         <div>
-                            <img src="./images/therapist1.jpg" alt="Profile Picture of Therapist / Patient" />
+                            <img id="chatImg" src="./images/therapist1.jpg" alt="Profile Picture of Therapist / Patient" />
                         </div>
                         <div id="chatProfileDesc">
                             <p id="chatName">Towa Quimbayo</p>
                             <p>Active <span id="chatActiveState">Now</span></p>
-                            <!-- don't know if possible, need to look how to check if user is active on page or not -->
                             <!-- <p>Active <span id="chatActiveState">10mins ago</span></p> -->
                         </div>
                     </div>
@@ -203,8 +202,7 @@
                     <li class="self">alright bro.</li>
                 </ul>
                 <div id="sendMessageContainer">
-                    <!-- <div id="chatbox" contenteditable="true" disabled="true"></div> -->
-                    <textarea id="chatbox" maxlength="500" contenteditable="true" disabled="true" wrap="soft"></textarea>
+                    <textarea id="chatbox" maxlength="250" contenteditable="true" disabled="true" wrap="soft"></textarea>
                     <button id="sendMessage">
                         <img src="./images/send.svg">
                     </button>

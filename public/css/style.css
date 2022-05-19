@@ -445,7 +445,7 @@ body::-webkit-scrollbar-thumb {
     align-items: center;
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
-    padding: 0.5rem 1.5rem;
+    padding: 1rem 1.5rem;
     background: var(--primaryColor);
 }
 
@@ -456,7 +456,11 @@ body::-webkit-scrollbar-thumb {
     max-width: 70%;
 }
 
-#wrapper #therapistChat .chatContainer #chatHeader #chatProfile div img {
+#wrapper #therapistChat .chatContainer #chatHeader #chatProfile div {
+    display: flex;
+}
+
+#wrapper #therapistChat .chatContainer #chatHeader #chatProfile div #chatImg {
     width: 3rem;
     height: 3rem;
     border-radius: 50%;
@@ -486,6 +490,7 @@ body::-webkit-scrollbar-thumb {
 #wrapper #therapistChat .chatContainer #chatHeader #chatTools {
     display: flex;
     flex-direction: row;
+    align-items: center;
     max-width: 30%;
 }
 
@@ -580,6 +585,10 @@ body::-webkit-scrollbar-thumb {
     border-left: 10px solid transparent;
     bottom: 0%;
     left: -10px;
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
     transform: rotate(90deg);
 }
 
@@ -661,7 +670,7 @@ body::-webkit-scrollbar-thumb {
     height: 2rem;
     width: 2rem;
     padding: 5px;
-    background: #09C5A3;
+    background: var(--primaryColor);
     border-radius: 50px;
     border: none;
     cursor: pointer;

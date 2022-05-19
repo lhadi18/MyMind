@@ -1049,6 +1049,38 @@
     #wrapper #batmanEasterEgg #batmanContainer #batmanImg {
         width: 100%;
     }
+    #wrapper #chatProfileSec {
+        padding: 1rem 2rem;
+        min-height: 5vh;
+    }
+    #wrapper #chatProfileSec #chatHeader #chatProfile div #chatImg {
+        width: 3rem;
+        height: 3rem;
+    }
+    #wrapper #chatProfileSec #chatHeader #chatProfile #chatProfileDesc #chatName {
+        font-size: 1rem;
+        padding-bottom: 5px;
+    }
+    #wrapper #chatProfileSec #chatHeader #chatProfile #chatProfileDesc p:nth-child(2) {
+        font-size: 14px;
+    }
+    #wrapper #chatMessages {
+        height: 72vh;
+        padding: 3rem 1rem;
+    }
+    #wrapper #chatMessages li {
+        font-size: 14px;
+    }
+    #wrapper #sendMessageContainer {
+        padding: 0.5rem 1rem;
+    }
+    #wrapper #sendMessageContainer #chatbox {
+        font-size: 14px;
+    }
+    #wrapper #sendMessageContainer #sendMessage {
+        right: 2rem;
+        bottom: 1rem;
+    }
 }
 
 @media (min-width: 576px) and (max-width: 767.98px) {
@@ -1991,6 +2023,17 @@
     }
     #wrapper #batmanEasterEgg #batmanContainer #batmanImg {
         width: 100%;
+    }
+    #wrapper #chatProfileSec #chatHeader #chatProfile div #chatImg {
+        width: 3.5rem;
+        height: 3.5rem;
+    }
+    #wrapper #chatProfileSec #chatHeader #chatProfile #chatProfileDesc #chatName {
+        font-size: 1.2rem;
+        padding-bottom: 5px;
+    }
+    #wrapper #chatProfileSec #chatHeader #chatProfile #chatProfileDesc p:nth-child(2) {
+        font-size: 14px;
     }
 }
 

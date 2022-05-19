@@ -117,15 +117,43 @@ function linkAction() {
 
 navLink.forEach(n => n.addEventListener('click', linkAction));
 
+// Chat Page for mobile
+if (window.location.pathname == '/chat-session') {
+    var element = $('#wrapper');
+    var messages = element.find('#chatMessages');
+    var textInput = element.find('#chatbox');
+    var userInput = $('#chatbox');
+    element.find('>i').hide();
+    element.addClass('expand');
+    textInput.keydown(onMetaAndEnter).prop("disabled", false).focus();
+    element.off('click', openElement);
+    element.find('#sendMessage').click(sendNewMessage);
+    messages.scrollTop(messages.prop("scrollHeight"));
+    
+    userInput.each(function () {
+        this.setAttribute("style", `${this.scrollHeight + 2}px`);
+    }).on("input", function () {
+        this.style.height = (this.scrollHeight + 2) + "px";
+    });
+    
+    userInput.focus(function () {
+        if ($(this).val() === "Message ...") {
+            $(this).val("").focus();
+            this.setAttribute("style", `${this.scrollHeight + 2}px`);
+        }
+    });
+    userInput.blur(function () {
+        if ($(this).val() === "") {
+            $(this).val("Message ...");
+            this.setAttribute("style", `${this.scrollHeight + 2}px`);
+        }
+    });
 
-// Chat Box
+    userInput.blur();
+}
+
+// Chat Box for desktop
 var element = $('#therapistChat');
-
-// var myStorage = localStorage;
-// if (!myStorage.getItem('chatID')) {
-//     myStorage.setItem('chatID', createUUID());
-// }
-
 element.addClass('enter');
 element.click(openElement);
 
@@ -176,21 +204,6 @@ function closeElement() {
         element.click(openElement);
     }, 500);
 }
-
-// function createUUID() {
-//     // http://www.ietf.org/rfc/rfc4122.txt
-//     var s = [];
-//     var hexDigits = "0123456789abcdef";
-//     for (var i = 0; i < 36; i++) {
-//         s[i] = hexDigits.substr(Math.floor(Math.random() * 0x10), 1);
-//     }
-//     s[14] = "4"; // bits 12-15 of the time_hi_and_version field to 0010
-//     s[19] = hexDigits.substr((s[19] & 0x3) | 0x8, 1); // bits 6-7 of the clock_seq_hi_and_reserved to 01
-//     s[8] = s[13] = s[18] = s[23] = "-";
-
-//     var uuid = s.join("");
-//     return uuid;
-// }
 
 function sendNewMessage() {
     var userInput = $('#chatbox');
