@@ -265,15 +265,22 @@ $(document).ready(async function () {
     }
 
     function inputValidationEdit() {
+        var currentType = document.getElementById("editUserType").value
         const inpObjFirstName = document.getElementById("editFirstname");
         const inpObjLastName = document.getElementById("editLastname");
         const inpObjUsername = document.getElementById("editUsername");
         const inpObjExperience = document.getElementById("editYearsExperience");
         const inpObjSession = document.getElementById("editSessionCost");
+        if (currentType == "therapist") {
         if (!inpObjFirstName.checkValidity() || !inpObjLastName.checkValidity() || !inpObjUsername.checkValidity()
             || !inpObjExperience.checkValidity() || !inpObjSession.checkValidity()) {
             return true;
         }
+    } else {
+        if (!inpObjFirstName.checkValidity() || !inpObjLastName.checkValidity() || !inpObjUsername.checkValidity()) {
+            return true;
+        }
+    }
     }
     function passwordValidationEdit() {
         const inpObjPassword = document.getElementById("editPassword");
