@@ -393,7 +393,7 @@ body::-webkit-scrollbar-thumb {
 
 #wrapper #therapistChat.expand {
     width: 25rem;
-    height: 40rem;
+    height: 60%;
     border-radius: 15px;
     cursor: auto;
     opacity: 1;
