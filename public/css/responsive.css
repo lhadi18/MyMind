@@ -903,7 +903,7 @@
     #wrapper #thankyouContainer .col-6 #thankyouSec p {
         font-size: 1.1rem;
     }
-    #wrapper #thankyouContainer .col-6 #thankyouSec #startSession a {
+    #wrapper #thankyouContainer .col-6 #thankyouSec #startSession #startSessionBtn {
         font-size: 1rem;
         width: 100%;
     }
@@ -1891,7 +1891,7 @@
     #wrapper #thankyouContainer .col-6 #thankyouSec p {
         font-size: 1.1rem;
     }
-    #wrapper #thankyouContainer .col-6 #thankyouSec #startSession a {
+    #wrapper #thankyouContainer .col-6 #thankyouSec #startSession #startSessionBtn {
         font-size: 1rem;
         width: 60%;
     }
@@ -2694,7 +2694,7 @@
         padding-top: 1rem;
         padding-left: 0;
     }
-    #wrapper #thankyouContainer .col-6 #thankyouSec #startSession a {
+    #wrapper #thankyouContainer .col-6 #thankyouSec #startSession #startSessionBtn {
         font-size: 1.1rem;
         width: 60%;
     }
@@ -3057,7 +3057,7 @@
         padding-top: 1rem;
         padding-left: 0;
     }
-    #wrapper #thankyouContainer .col-6 #thankyouSec #startSession a {
+    #wrapper #thankyouContainer .col-6 #thankyouSec #startSession #startSessionBtn {
         font-size: 1.1rem;
         width: 80%;
     }
