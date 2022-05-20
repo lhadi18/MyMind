@@ -16,11 +16,15 @@ $.get('/activeChatSession', function (data) {
     } else {
         console.log(data);
         socket.emit('join-room', data.orderId)
+        orderId = data.orderId;
         socket.on("chat message", (msg) => {
-            var item = document.createElement('li');
-            item.textContent = msg.message;
-            messages.appendChild(item);
-            window.scrollTo(0, document.body.scrollHeight);
+            var messagesContainer = $('#chatMessages');
+
+            messagesContainer.append([
+                '<li class="self">',
+                newMessage,
+                '</li>'
+            ].join(''));
         });
         form.addEventListener('submit', function (e) {
             e.preventDefault();

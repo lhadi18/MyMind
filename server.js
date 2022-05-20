@@ -83,7 +83,7 @@ function setHeaders(req, res, next) {
     return next();
 }
 
-async function hasRecentlyPurchased(req, res, next){
+async function hasRecentlyPurchased(req, res, next) {
     //If a purchase was made in the last 3 mins, render thank-you page
     var currentTime = new Date();
     var nowMinus3Mins = new Date(currentTime.getTime() - 3 * 60000);
@@ -96,15 +96,15 @@ async function hasRecentlyPurchased(req, res, next){
         }
     })
 
-    if (recentOrderExists){
+    if (recentOrderExists) {
         return next();
     } else {
         return res.redirect('/');
     }
 }
 
-function isPatient(req, res, next){
-    if (req.session.user.userType == 'patient'){
+function isPatient(req, res, next) {
+    if (req.session.user.userType == 'patient') {
         return next();
     }
     return res.redirect('/');
@@ -189,8 +189,8 @@ app.get('/admin-dashboard', isLoggedIn, isAdmin, setHeaders, (req, res) => {
     res.sendFile(path.resolve('html/admin-dashboard.html'))
 });
 
-app.get('/chat-session', isLoggedIn, setHeaders, (req, res) => {
-    res.sendFile(path.resolve('public/chat-session.html'))
+app.get('/chat-session2', isLoggedIn, setHeaders, (req, res) => {
+    res.sendFile(path.resolve('public/chat-session2.html'))
 });
 
 app.get('/getUserInfo', isLoggedIn, setHeaders, (req, res) => {
@@ -939,9 +939,8 @@ app.post('/refundOrder', isLoggedIn, (req, res) => {
 
 //Creates connection between server and client
 io.on('connection', (socket) => {
-    // socket.on('chat message', (msg) => {
-    //     io.emit('chat message', msg);
-    // });
+    var senderName;
+    var orderID;
 
     socket.on("chat message", function (msg, room) {
 
@@ -958,12 +957,22 @@ io.on('connection', (socket) => {
         connect.then(db => {
             let chatMessage = new Chat({
                 message: msg,
-                sender: "Anonymous"
+                sender: senderName,
+                orderId: orderID
             });
 
             chatMessage.save();
         });
     });
+
+
+    socket.on("get-id", function (senderId) {
+        senderName = senderId;
+    })
+
+    socket.on("get-orderId", function (orderId) {
+        orderID = orderId;
+    })
 
     socket.on("join-room", function (room) {
         socket.join(room);
@@ -973,7 +982,10 @@ io.on('connection', (socket) => {
 
 });
 
-app.get('/activeChatSession', isLoggedIn, (req, res) => {
+app.get('/activeChatSession', (req, res) => {
+    if(!req.session.isLoggedIn) {
+        return res.json('notLoggedIn');
+    }
     var currentTime = new Date();
     Cart.findOne({
         $or: [{
@@ -990,8 +1002,8 @@ app.get('/activeChatSession', isLoggedIn, (req, res) => {
             console.log('Error searching cart.', err);
         }
         if (carts) {
-            console.log(carts)
-            
+            // console.log(carts)
+
             var orderId = carts.orderId;
             var purchased = carts.expiringTime;
             var therapistId = carts.therapist;
@@ -1002,13 +1014,52 @@ app.get('/activeChatSession', isLoggedIn, (req, res) => {
             }, function (err, user) {
                 if (err) console.log(err)
                 if (user) {
-                    chatInfo = {
-                        purchased: purchased,
-                        orderId: orderId,
-                        therapistId: therapistId,
-                        userId: userId
-                    };
-                    return res.json(chatInfo)
+                    if (user.userType == 'therapist') {
+                        User.findOne({
+                            _id: userId
+                        }, function (err, user) {
+                            if (err) console.log(err)
+                            if (user) {
+                                chatInfo = {
+                                    purchased: purchased,
+                                    orderId: orderId,
+                                    therapistId: therapistId,
+                                    userId: userId,
+                                    name: user.firstName + " " + user.lastName,
+                                    phone: user.phoneNum,
+                                    image: user.profileImg,
+                                    sender: therapistId,
+                                    currentId: req.session.user._id
+                                };
+                                return res.json(chatInfo)
+
+                            }
+                        })
+                    } else {
+                        User.findOne({
+                            _id: therapistId
+                        }, function (err, user) {
+                            if (err) console.log(err)
+                            if (user) {
+                                chatInfo = {
+                                    purchased: purchased,
+                                    orderId: orderId,
+                                    therapistId: therapistId,
+                                    userId: userId,
+                                    name: user.firstName + " " + user.lastName,
+                                    phone: user.phoneNum,
+                                    image: user.profileImg,
+                                    sender: userId,
+                                    currentId: req.session.user._id
+
+                                };
+                                return res.json(chatInfo)
+
+                            }
+                        })
+                    }
+
+
                 } else {
                     return res.json("InvalidUser")
                 }
@@ -1018,6 +1069,27 @@ app.get('/activeChatSession', isLoggedIn, (req, res) => {
             return res.json("NoActiveSession");
         }
     })
+})
+
+app.post('/loadMsgs', function (req, res) {
+    console.log(req.body.orderId);
+    Chat.find({
+        orderId: req.body.orderId
+    }, function (err, chats) {
+        if (err) {
+            console.log('Error searching cart.', err);
+        }
+        if (chats) {
+            res.json(chats);
+            console.log(chats);
+
+        }
+    }).sort({
+
+        createdAt: 'asc'
+
+    });
+
 })
 
 server.listen(8000, () => {
