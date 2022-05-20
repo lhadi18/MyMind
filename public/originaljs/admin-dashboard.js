@@ -109,8 +109,9 @@ $(document).ready(async function () {
         const inpObjUsername = document.getElementById("username");
         const inpObjExperience = document.getElementById("yearsExperience");
         const inpObjSession = document.getElementById("sessionCost");
-        if (!inpObjFirstName.checkValidity() || !inpObjLastName.checkValidity() || !inpObjUsername.checkValidity()
-            || !inpObjExperience.checkValidity() || !inpObjSession.checkValidity()) {
+        if (!inpObjFirstName.checkValidity() || !inpObjLastName.checkValidity() || !inpObjUsername.checkValidity()) {
+            return true;
+        } else if ($("#userType").val() == 'therapist' && (!inpObjExperience.checkValidity() || !inpObjSession.checkValidity())){
             return true;
         }
     }
