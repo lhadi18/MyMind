@@ -155,6 +155,16 @@ $(document).ready(function () {
         userInput.blur();
     }
 
+    if (window.location.pathname == '/thank-you') {
+        document.getElementById('startSessionBtn').onclick = function() {
+            if (document.body.clientWidth >= 992) {
+                openElement();
+            } else {
+                window.location.href = '/chat-session';
+            }
+        }
+    }
+
     // Chat Box for desktop
     var element = $('#therapistChat');
     var orderId;
@@ -250,7 +260,7 @@ $(document).ready(function () {
     // check active session
     $.get('/activeChatSession', function (data) {
 
-        if (data == "NoActiveSession" || data == "notLoggedIn") {
+        if (data == "NoActiveSession" || data == "notLoggedIn" || document.body.clientWidth < 992) {
             $('#therapistChat').hide();
         } else {
             console.log(data)

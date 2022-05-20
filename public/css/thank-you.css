@@ -137,7 +137,7 @@
     margin-top: 2rem;
 }
 
-#wrapper #thankyouContainer .col-6 #thankyouSec #startSession a {
+#wrapper #thankyouContainer .col-6 #thankyouSec #startSession #startSessionBtn {
     font-family: 'Nunito', sans-serif;
     font-size: 1.1rem;
     font-weight: 600;
@@ -156,7 +156,7 @@
     transition: all ease-in-out 0.3s;
 }
 
-#wrapper #thankyouContainer .col-6 #thankyouSec #startSession a:hover {
+#wrapper #thankyouContainer .col-6 #thankyouSec #startSession #startSessionBtn:hover {
     border: 2px solid var(--secondaryColor);
     background-color: var(--secondaryColor);
 }
