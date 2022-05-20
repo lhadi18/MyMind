@@ -126,51 +126,55 @@ $(document).ready(function () {
         if (data == "NoActiveSession" || data == "notLoggedIn") {
             $('#therapistChat').hide();
         } else {
-            $('#therapistChat').css('display', 'flex');
-            $.ajax({
-                url: '/loadMsgs',
-                type: 'POST',
-                data: {
-                    orderId: data.orderId
-                },
-                success: function (chats) {
-                    chats.forEach(function (element) {
-                        if (data.currentId == element.sender) {
-                            var messagesContainer = $('#chatMessages');
-                            messagesContainer.append([
-                                `<li class="self" data-before="Sent at ${new Date(element.createdAt).toLocaleString('en-CA', { hour: 'numeric', minute: 'numeric', hour12: true })}">`,
-                                element.message,
-                                '</li>'
-                            ].join(''));
-                        } else {
-                            var messagesContainer = $('#chatMessages');
-                            messagesContainer.append([
-                                `<li class="other" data-before="Sent at ${new Date(element.createdAt).toLocaleString('en-CA', { hour: 'numeric', minute: 'numeric', hour12: true })}">`,
-                                element.message,
-                                '</li>'
-                            ].join(''));
-                        }
-                    })
-                }
-            })
-
-            socket.emit('join-room', data.orderId)
-            socket.emit('get-id', data.sender)
-            socket.emit('get-orderId', data.orderId)
-
-            orderId = data.orderId;
-            socket.on("chat message", (msg) => {
-                var messagesContainer = $('#chatMessages');
-
-                messagesContainer.append([
-                    '<li class="other">',
-                    msg.message,
-                    '</li>'
-                ].join(''));
-            });
-            $("#chatName").text(`${data.name}`)
-            $("#chatPhone").attr("href", `tel:${data.phone}`)
-            $("#chatImg").attr("src", `${data.image}`)
+            if (window.location.pathname != '/chat-session' && document.body.clientWidth < 992) {
+                $('#therapistChat').hide();
+            } else {
+                $('#therapistChat').css('display', 'flex');
+                $.ajax({
+                    url: '/loadMsgs',
+                    type: 'POST',
+                    data: {
+                        orderId: data.orderId
+                    },
+                    success: function (chats) {
+                        chats.forEach(function (element) {
+                            if (data.currentId == element.sender) {
+                                var messagesContainer = $('#chatMessages');
+                                messagesContainer.append([
+                                    `<li class="self" data-before="Sent at ${new Date(element.createdAt).toLocaleString('en-CA', { hour: 'numeric', minute: 'numeric', hour12: true })}">`,
+                                    element.message,
+                                    '</li>'
+                                ].join(''));
+                            } else {
+                                var messagesContainer = $('#chatMessages');
+                                messagesContainer.append([
+                                    `<li class="other" data-before="Sent at ${new Date(element.createdAt).toLocaleString('en-CA', { hour: 'numeric', minute: 'numeric', hour12: true })}">`,
+                                    element.message,
+                                    '</li>'
+                                ].join(''));
+                            }
+                        })
+                    }
+                })
+    
+                socket.emit('join-room', data.orderId)
+                socket.emit('get-id', data.sender)
+                socket.emit('get-orderId', data.orderId)
+    
+                orderId = data.orderId;
+                socket.on("chat message", (msg) => {
+                    var messagesContainer = $('#chatMessages');
+    
+                    messagesContainer.append([
+                        '<li class="other">',
+                        msg.message,
+                        '</li>'
+                    ].join(''));
+                });
+                $("#chatName").text(`${data.name}`)
+                $("#chatPhone").attr("href", `tel:${data.phone}`)
+                $("#chatImg").attr("src", `${data.image}`)
+            }
         }
     })
 
