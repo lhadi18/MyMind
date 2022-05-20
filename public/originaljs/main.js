@@ -156,7 +156,7 @@ $(document).ready(function () {
                         })
                     }
                 })
-    
+
                 socket.emit('join-room', data.orderId)
                 socket.emit('get-id', data.sender)
                 socket.emit('get-orderId', data.orderId)
@@ -182,26 +182,27 @@ $(document).ready(function () {
     if (window.location.pathname == '/chat-session') {
         var element = $('#wrapper');
         var messages = element.find('#chatMessages');
-        var textInput = element.find('#chatbox');
         var userInput = $('#chatbox');
-        element.find('>i').hide();
-        textInput.keydown(onMetaAndEnter).prop("disabled", false).focus();
+        userInput.keydown(onMetaAndEnter).prop("disabled", false).focus();
         element.find('#sendMessage').click(sendNewMessage);
         messages.scrollTop(messages.prop("scrollHeight"));
 
-        var selfMsgs = document.querySelectorAll('.self');
-        var otherMsgs = document.querySelectorAll('.other');
-        for (var i = 0; i < selfMsgs.length; i++) {
-            selfMsgs[i].onclick = function () {
-                $(this).toggleClass('showTime');
+        setTimeout(() => {
+            var selfMsgs = document.querySelectorAll('.self');
+            var otherMsgs = document.querySelectorAll('.other');
+            console.log(selfMsgs)
+            for (var i = 0; i < selfMsgs.length; i++) {
+                selfMsgs[i].onclick = function () {
+                    $(this).toggleClass('showTime');
+                }
             }
-        }
-
-        for (var i = 0; i < otherMsgs.length; i++) {
-            otherMsgs[i].onclick = function () {
-                $(this).toggleClass('showTime');
+    
+            for (var i = 0; i < otherMsgs.length; i++) {
+                otherMsgs[i].onclick = function () {
+                    $(this).toggleClass('showTime');
+                }
             }
-        }
+        }, 500);
 
         userInput.each(function () {
             this.setAttribute("style", `${this.scrollHeight + 2}px`);
@@ -245,6 +246,8 @@ $(document).ready(function () {
 
             var selfMsgs = document.querySelectorAll('.self');
             var otherMsgs = document.querySelectorAll('.other');
+
+            console.log(selfMsgs)
 
             for (var i = 0; i < selfMsgs.length; i++) {
                 selfMsgs[i].onclick = function () {
