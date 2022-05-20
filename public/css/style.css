@@ -554,11 +554,17 @@ body::-webkit-scrollbar-thumb {
     clear: both;
     max-width: 65%;
     padding: 8px 10px;
-    margin: 0 0 1rem 0;
+    margin: 0 0 1.5rem 0;
+    cursor: pointer;
     color: white;
     word-wrap: break-word;
     border-radius: 10px;
     background-color: var(--primaryColor);
+    -webkit-transition: all ease-in-out 0.3s;
+    -moz-transition: all ease-in-out 0.3s;
+    -ms-transition: all ease-in-out 0.3s;
+    -o-transition: all ease-in-out 0.3s;
+    transition: all ease-in-out 0.3s;
 }
 
 #wrapper #therapistChat .chatContainer #chatMessages li:after {
@@ -578,6 +584,24 @@ body::-webkit-scrollbar-thumb {
     -ms-animation: show-chat-odd 0.15s 1 ease-in-out;
     -o-animation: show-chat-odd 0.15s 1 ease-in-out;
     animation: show-chat-odd 0.15s 1 ease-in-out;
+}
+
+#wrapper #therapistChat .chatContainer #chatMessages li.other.showTime {
+    margin-bottom: 2.2rem;
+}
+
+#wrapper #therapistChat .chatContainer #chatMessages li.other.showTime::before {
+    display: block;
+    content: attr(data-before);
+    position: absolute;
+    left: 0;
+    bottom: -1.3rem;
+    font-size: 12px;
+    font-weight: 400;
+    color: #858585;
+    text-align: left;
+    width: fit-content;
+    min-width: 10rem;
 }
 
 #wrapper #therapistChat .chatContainer #chatMessages li.other:after {
@@ -600,6 +624,24 @@ body::-webkit-scrollbar-thumb {
     -ms-animation: show-chat-even 0.15s 1 ease-in-out;
     -o-animation: show-chat-even 0.15s 1 ease-in-out;
     animation: show-chat-even 0.15s 1 ease-in-out;
+}
+
+#wrapper #therapistChat .chatContainer #chatMessages li.self.showTime {
+    margin-bottom: 2.2rem;
+}
+
+#wrapper #therapistChat .chatContainer #chatMessages li.self.showTime::before {
+    display: block;
+    content: attr(data-before);
+    position: absolute;
+    right: 0;
+    bottom: -1.3rem;
+    font-size: 12px;
+    font-weight: 400;
+    color: #858585;
+    text-align: right;
+    width: fit-content;
+    min-width: 10rem;
 }
 
 #wrapper #therapistChat .chatContainer #chatMessages li.self:after {

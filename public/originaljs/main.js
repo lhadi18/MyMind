@@ -120,6 +120,60 @@ $(document).ready(function () {
 
     navLink.forEach(n => n.addEventListener('click', linkAction));
 
+    // check active session
+    $.get('/activeChatSession', function (data) {
+
+        if (data == "NoActiveSession" || data == "notLoggedIn") {
+            $('#therapistChat').hide();
+        } else {
+            $('#therapistChat').css('display', 'flex');
+            $.ajax({
+                url: '/loadMsgs',
+                type: 'POST',
+                data: {
+                    orderId: data.orderId
+                },
+                success: function (chats) {
+                    chats.forEach(function (element) {
+                        if (data.currentId == element.sender) {
+                            var messagesContainer = $('#chatMessages');
+                            messagesContainer.append([
+                                `<li class="self" data-before="Sent at ${new Date(element.createdAt).toLocaleString('en-CA', { hour: 'numeric', minute: 'numeric', hour12: true })}">`,
+                                element.message,
+                                '</li>'
+                            ].join(''));
+                        } else {
+                            var messagesContainer = $('#chatMessages');
+                            messagesContainer.append([
+                                `<li class="other" data-before="Sent at ${new Date(element.createdAt).toLocaleString('en-CA', { hour: 'numeric', minute: 'numeric', hour12: true })}">`,
+                                element.message,
+                                '</li>'
+                            ].join(''));
+                        }
+                    })
+                }
+            })
+
+            socket.emit('join-room', data.orderId)
+            socket.emit('get-id', data.sender)
+            socket.emit('get-orderId', data.orderId)
+
+            orderId = data.orderId;
+            socket.on("chat message", (msg) => {
+                var messagesContainer = $('#chatMessages');
+
+                messagesContainer.append([
+                    '<li class="other">',
+                    msg.message,
+                    '</li>'
+                ].join(''));
+            });
+            $("#chatName").text(`${data.name}`)
+            $("#chatPhone").attr("href", `tel:${data.phone}`)
+            $("#chatImg").attr("src", `${data.image}`)
+        }
+    })
+
     // Chat Page for mobile
     if (window.location.pathname == '/chat-session') {
         var element = $('#wrapper');
@@ -127,11 +181,23 @@ $(document).ready(function () {
         var textInput = element.find('#chatbox');
         var userInput = $('#chatbox');
         element.find('>i').hide();
-        element.addClass('expand');
         textInput.keydown(onMetaAndEnter).prop("disabled", false).focus();
-        element.off('click', openElement);
         element.find('#sendMessage').click(sendNewMessage);
         messages.scrollTop(messages.prop("scrollHeight"));
+
+        var selfMsgs = document.querySelectorAll('.self');
+        var otherMsgs = document.querySelectorAll('.other');
+        for (var i = 0; i < selfMsgs.length; i++) {
+            selfMsgs[i].onclick = function () {
+                $(this).toggleClass('showTime');
+            }
+        }
+
+        for (var i = 0; i < otherMsgs.length; i++) {
+            otherMsgs[i].onclick = function () {
+                $(this).toggleClass('showTime');
+            }
+        }
 
         userInput.each(function () {
             this.setAttribute("style", `${this.scrollHeight + 2}px`);
@@ -153,70 +219,85 @@ $(document).ready(function () {
         });
 
         userInput.blur();
+    } else {
+        // Chat Box for desktop
+        var element = $('#therapistChat');
+        var orderId;
+        element.addClass('enter');
+        element.click(openElement);
+
+        function openElement() {
+            var messages = element.find('#chatMessages');
+            var textInput = element.find('#chatbox');
+            var userInput = $('#chatbox');
+            element.find('>i').hide();
+            element.addClass('expand');
+            element.find('.chatContainer').addClass('enter');
+            textInput.keydown(onMetaAndEnter).prop("disabled", false).focus();
+            element.off('click', openElement);
+            element.find('#closeChat').click(closeElement);
+            element.find('#sendMessage').click(sendNewMessage);
+            messages.scrollTop(messages.prop("scrollHeight"));
+
+            var selfMsgs = document.querySelectorAll('.self');
+            var otherMsgs = document.querySelectorAll('.other');
+
+            for (var i = 0; i < selfMsgs.length; i++) {
+                selfMsgs[i].onclick = function () {
+                    $(this).toggleClass('showTime');
+                }
+            }
+
+            for (var i = 0; i < otherMsgs.length; i++) {
+                otherMsgs[i].onclick = function () {
+                    $(this).toggleClass('showTime');
+                }
+            }
+
+            userInput.each(function () {
+                this.setAttribute("style", `${this.scrollHeight + 2}px`);
+            }).on("input", function () {
+                this.style.height = (this.scrollHeight + 2) + "px";
+            });
+
+            userInput.focus(function () {
+                if ($(this).val() === "Message ...") {
+                    $(this).val("").focus();
+                    this.setAttribute("style", `${this.scrollHeight + 2}px`);
+                }
+            });
+            userInput.blur(function () {
+                if ($(this).val() === "") {
+                    $(this).val("Message ...");
+                    this.setAttribute("style", `${this.scrollHeight + 2}px`);
+                }
+            });
+
+            userInput.blur();
+        }
+
+        function closeElement() {
+            element.find('.chatContainer').removeClass('enter').hide();
+            element.find('#chatMsgIcon').show();
+            element.removeClass('expand');
+            element.find('#closeChat').off('click', closeElement);
+            element.find('#sendMessage').off('click', sendNewMessage);
+            element.find('#chatbox').off('keydown', onMetaAndEnter).prop("disabled", true).blur();
+            setTimeout(function () {
+                element.find('.chatContainer').removeClass('enter').show()
+                element.click(openElement);
+            }, 500);
+        }
     }
 
     if (window.location.pathname == '/thank-you') {
-        document.getElementById('startSessionBtn').onclick = function() {
+        document.getElementById('startSessionBtn').onclick = function () {
             if (document.body.clientWidth >= 992) {
                 openElement();
             } else {
                 window.location.href = '/chat-session';
             }
         }
-    }
-
-    // Chat Box for desktop
-    var element = $('#therapistChat');
-    var orderId;
-    element.addClass('enter');
-    element.click(openElement);
-
-    function openElement() {
-        var messages = element.find('#chatMessages');
-        var textInput = element.find('#chatbox');
-        var userInput = $('#chatbox');
-        element.find('>i').hide();
-        element.addClass('expand');
-        element.find('.chatContainer').addClass('enter');
-        textInput.keydown(onMetaAndEnter).prop("disabled", false).focus();
-        element.off('click', openElement);
-        element.find('#closeChat').click(closeElement);
-        element.find('#sendMessage').click(sendNewMessage);
-        messages.scrollTop(messages.prop("scrollHeight"));
-
-        userInput.each(function () {
-            this.setAttribute("style", `${this.scrollHeight + 2}px`);
-        }).on("input", function () {
-            this.style.height = (this.scrollHeight + 2) + "px";
-        });
-
-        userInput.focus(function () {
-            if ($(this).val() === "Message ...") {
-                $(this).val("").focus();
-                this.setAttribute("style", `${this.scrollHeight + 2}px`);
-            }
-        });
-        userInput.blur(function () {
-            if ($(this).val() === "") {
-                $(this).val("Message ...");
-                this.setAttribute("style", `${this.scrollHeight + 2}px`);
-            }
-        });
-
-        userInput.blur();
-    }
-
-    function closeElement() {
-        element.find('.chatContainer').removeClass('enter').hide();
-        element.find('#chatMsgIcon').show();
-        element.removeClass('expand');
-        element.find('#closeChat').off('click', closeElement);
-        element.find('#sendMessage').off('click', sendNewMessage);
-        element.find('#chatbox').off('keydown', onMetaAndEnter).prop("disabled", true).blur();
-        setTimeout(function () {
-            element.find('.chatContainer').removeClass('enter').show()
-            element.click(openElement);
-        }, 500);
     }
 
     function sendNewMessage() {
@@ -256,63 +337,4 @@ $(document).ready(function () {
             sendNewMessage();
         }
     }
-
-    // check active session
-    $.get('/activeChatSession', function (data) {
-
-        if (data == "NoActiveSession" || data == "notLoggedIn" || document.body.clientWidth < 992) {
-            $('#therapistChat').hide();
-        } else {
-            console.log(data)
-            $('#therapistChat').css('display', 'flex');
-            $.ajax({
-                url: '/loadMsgs',
-                type: 'POST',
-                data: {
-                    orderId: data.orderId
-                },
-                success: function (chats) {
-                    chats.forEach(function (element) {
-                        if (data.currentId == element.sender) {
-                            var messagesContainer = $('#chatMessages');
-
-                            messagesContainer.append([
-                                '<li class="self">',
-                                element.message,
-                                '</li>'
-                            ].join(''));
-                        } else {
-                            var messagesContainer = $('#chatMessages');
-
-                            messagesContainer.append([
-                                '<li class="other">',
-                                element.message,
-                                '</li>'
-                            ].join(''));
-                        }
-                    })
-
-                }
-            })
-
-            socket.emit('join-room', data.orderId)
-            socket.emit('get-id', data.sender)
-            socket.emit('get-orderId', data.orderId)
-
-            orderId = data.orderId;
-            socket.on("chat message", (msg) => {
-                var messagesContainer = $('#chatMessages');
-
-                messagesContainer.append([
-                    '<li class="other">',
-                    msg.message,
-                    '</li>'
-                ].join(''));
-            });
-            $("#chatName").text(`${data.name}`)
-            $("#chatPhone").attr("href", `tel:${data.phone}`)
-            $("#chatImg").attr("src", `${data.image}`)
-
-        }
-    })
 });
