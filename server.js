@@ -2,12 +2,20 @@ const express = require("express");
 const path = require('path');
 const session = require('express-session');
 const User = require("./models/BBY_31_users");
+const Chat = require("./models/BBY_31_messages");
 const Cart = require("./models/BBY_31_shoppingCarts");
 const mongoose = require("mongoose");
 const multer = require("multer");
 const bcrypt = require('bcrypt');
 const port = process.env.PORT || 8000;
 const app = express();
+const http = require('http');
+const server = http.createServer(app);
+const { Server } = require("socket.io");
+const io = new Server(server);
+
+
+
 app.set('view engine', 'text/html');
 
 if (process.env.NODE_ENV != 'production') {
@@ -27,7 +35,10 @@ app.use(express.static(__dirname + '/public'));
 app.use(session({
     secret: "password",
     resave: false,
-    saveUninitialized: true
+    saveUninitialized: true,
+    cookie: {
+        maxAge: 10800000
+    }
 }));
 
 //Custom middleware functions
@@ -72,7 +83,35 @@ function setHeaders(req, res, next) {
     return next();
 }
 
+async function hasRecentlyPurchased(req, res, next) {
+    //If a purchase was made in the last 3 mins, render thank-you page
+    var currentTime = new Date();
+    var nowMinus3Mins = new Date(currentTime.getTime() - 3 * 60000);
+
+    var recentOrderExists = await Cart.exists({
+        userId: req.session.user._id,
+        status: "completed",
+        purchased: {
+            $gt: nowMinus3Mins
+        }
+    })
+
+    if (recentOrderExists) {
+        return next();
+    } else {
+        return res.redirect('/');
+    }
+}
+
+function isPatient(req, res, next) {
+    if (req.session.user.userType == 'patient') {
+        return next();
+    }
+    return res.redirect('/');
+}
+
 //Routes
+
 //user profile page multer to update/change/fetch profile images
 var profileStorage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -119,27 +158,39 @@ app.get('/isLoggedIn', (req, res) => {
 })
 
 app.get('/', function (req, res) {
-    res.sendFile(path.resolve('public/index.html'));
+    res.sendFile(path.resolve('html/index.html'));
 });
 
 app.get('/therapists', function (req, res) {
-    res.sendFile(path.resolve('public/therapists.html'));
+    res.sendFile(path.resolve('html/therapists.html'));
 });
 
-app.get('/checkout', isLoggedIn, function (req, res) {
-    res.sendFile(path.resolve('public/checkout.html'));
+app.get('/chat-session', isLoggedIn, function (req, res) {
+    res.sendFile(path.resolve('html/chat-session.html'));
 });
 
-app.get('/thank-you', function (req, res) {
-    res.sendFile(path.resolve('public/thank-you.html'));
+app.get('/checkout', isLoggedIn, isPatient, function (req, res) {
+    res.sendFile(path.resolve('html/checkout.html'));
+});
+
+app.get('/order-history', isLoggedIn, isPatient, function (req, res) {
+    res.sendFile(path.resolve('html/order-history.html'));
+});
+
+app.get('/thank-you', isLoggedIn, hasRecentlyPurchased, function (req, res) {
+    res.sendFile(path.resolve('html/thank-you.html'));
 });
 
 app.get("/login", isLoggedOut, setHeaders, (req, res) => {
-    res.sendFile(path.resolve('public/login.html'));
+    res.sendFile(path.resolve('html/login.html'));
 });
 
 app.get('/admin-dashboard', isLoggedIn, isAdmin, setHeaders, (req, res) => {
-    res.sendFile(path.resolve('public/admin-dashboard.html'))
+    res.sendFile(path.resolve('html/admin-dashboard.html'))
+});
+
+app.get('/chat-session2', isLoggedIn, setHeaders, (req, res) => {
+    res.sendFile(path.resolve('public/chat-session2.html'))
 });
 
 app.get('/getUserInfo', isLoggedIn, setHeaders, (req, res) => {
@@ -162,6 +213,8 @@ app.get('/getTherapists', (req, res) => {
         if (user) {
             res.json(user);
         }
+    }).sort({
+        numSessions: 'desc'
     })
 })
 
@@ -206,15 +259,15 @@ app.post('/logout', (req, res) => {
 })
 
 app.get('/userprofile', isLoggedIn, setHeaders, (req, res) => {
-    res.sendFile(path.resolve('public/userprofile.html'))
+    res.sendFile(path.resolve('html/userprofile.html'))
 })
 
 app.get('/edit-account', isLoggedIn, setHeaders, (req, res) => {
-    res.sendFile(path.resolve('public/edit-account.html'))
+    res.sendFile(path.resolve('html/edit-account.html'))
 })
 
 app.get("/sign-up", isLoggedOut, setHeaders, (req, res) => {
-    res.sendFile(path.resolve('public/sign-up.html'))
+    res.sendFile(path.resolve('html/sign-up.html'))
 })
 
 app.post('/editProfile', isLoggedIn, isNotExisting, async (req, res) => {
@@ -621,13 +674,27 @@ app.post("/createUser", isLoggedIn, isAdmin, isNotRegistered, async (req, res) =
 //Checkout
 
 app.post('/addToCart', isLoggedIn, async (req, res) => {
+    //Check if there is already something in cart
     var cartExists = await Cart.exists({
         userId: req.session.user._id,
         status: "active"
     })
-
     if (cartExists) {
         return res.send("cartExists");
+    }
+
+    //Check if user has a current valid session with another therapist
+    var currentTime = new Date();
+    var orderExists = await Cart.exists({
+        userId: req.session.user._id,
+        status: "completed",
+        expiringTime: {
+            $gt: currentTime
+        }
+    })
+    if (orderExists) {
+        console.log("Something exists")
+        return res.send("orderExists");
     }
 
     const new_cart = new Cart({
@@ -646,7 +713,7 @@ app.post('/addToCart', isLoggedIn, async (req, res) => {
 
 })
 
-app.get('/checkStatus', (req, res) => {
+app.get('/checkStatus', isLoggedIn, (req, res) => {
     Cart.findOne({
         userId: req.session.user._id,
         status: "active"
@@ -662,7 +729,7 @@ app.get('/checkStatus', (req, res) => {
     });
 })
 
-app.post('/getTherapistInfo', (req, res) => {
+app.post('/getTherapistInfo', isLoggedIn, (req, res) => {
     var therapistInfo;
     User.findById({
         _id: req.body.therapistId
@@ -699,32 +766,72 @@ app.delete('/deleteCart', isLoggedIn, async (req, res) => {
     })
 })
 
-//check later
-app.post('/confirmCart', isLoggedIn, async (req, res) => {
-    Cart.findOne({
-        userId: req.session.user._id,
-        status: "completed",
-        timeLength: "freePlan",
-    }, function (err, exists) {
-        if (err) console.log(err);
-        if (exists) {
-            return res.json("usedTrial");
-        }
-    })
 
+app.post('/confirmCart', isLoggedIn, async (req, res) => {
+    if (req.body.cartPlan == "freePlan") {
+        var trialStatus = await User.exists({
+            _id: req.session.user._id,
+            usedTrial: true
+        })
+    }
+    if (trialStatus) {
+        return res.send("usedTrial");
+    }
+
+    const currentDate = Date.now();
     Cart.updateOne({
         userId: req.session.user._id,
         status: "active"
     }, {
-        status: "completed"
+        status: "completed",
+        $set: {
+            purchased: currentDate,
+            expiringTime: req.body.timeLengthforUse,
+            cost: req.body.totalPrice
+        }
     }).then((obj) => {
         console.log("Completed");
-        return res.json(obj);
+        return res.send(obj);
     }).catch(function (error) {
         console.log(error);
     })
+    User.updateOne({
+        _id: req.session.user._id
+    }, {
+        usedTrial: true
+    }).then((obj) => {
+        console.log("User used their free trial!");
+    }).catch(function (error) {
+        console.log(error);
+    })
+    incrementTherapistSessionNum(req.session.user._id);
 })
 
+function incrementTherapistSessionNum(userID) {
+    Cart.find({
+        userId: userID,
+        status: "completed"
+    }, function (err, carts) {
+        if (err) {
+            console.log('Error searching cart.', err);
+        }
+        if (carts) {
+            const sortedCart = carts.sort((a, b) => b.purchased - a.purchased)
+            var therapistID = sortedCart[0].therapist
+            User.updateOne({
+                _id: therapistID
+            }, {
+                $inc: {
+                    numSessions: 1
+                }
+            }).then((obj) => {
+                console.log(obj)
+            }).catch(function (error) {
+                console.log(error);
+            })
+        }
+    });
+}
 
 app.put('/updateCart', isLoggedIn, async (req, res) => {
     Cart.updateOne({
@@ -733,16 +840,20 @@ app.put('/updateCart', isLoggedIn, async (req, res) => {
     }, {
         timeLength: req.body.timeLength
     }).then((obj) => {
-        res.send()
+        res.send(obj)
     }).catch(function (error) {
         console.log(error);
     })
 })
 
-app.get('/getPreviousPurchases', (req, res) => {
+app.get('/getPreviousPurchases', isLoggedIn, (req, res) => {
     Cart.find({
         userId: req.session.user._id,
-        status: "completed"
+        $or: [{
+            status: "completed",
+        }, {
+            status: "refunded",
+        }]
     }, function (err, carts) {
         if (err) {
             console.log('Error searching cart.', err);
@@ -753,6 +864,234 @@ app.get('/getPreviousPurchases', (req, res) => {
     });
 })
 
-app.listen(port, () => {
-    console.log(`Example app  listening on port ${port}`)
+app.get('/recentPurchase', isLoggedIn, (req, res) => {
+    Cart.find({
+        userId: req.session.user._id,
+        status: "completed"
+    }, function (err, carts) {
+        if (err) {
+            console.log('Error searching cart.', err);
+        }
+        if (carts) {
+            const sortedCart = carts.sort((a, b) => b.purchased - a.purchased)
+            return res.json(sortedCart[0])
+        }
+    });
 })
+
+app.get('/activeSession', isLoggedIn, (req, res) => {
+    var currentTime = new Date();
+    Cart.find({
+        userId: req.session.user._id,
+        status: "completed",
+        expiringTime: {
+            $gt: currentTime
+        }
+    }, function (err, carts) {
+        if (err) {
+            console.log('Error searching cart.', err);
+        }
+        if (carts.length > 0) {
+            console.log(carts)
+            const sortedCart = carts.sort((a, b) => b.purchased - a.purchased);
+            var therapistName;
+            var errorMessageVariables;
+            User.findOne({
+                _id: sortedCart[0].therapist
+            }, function (err, user) {
+                if (err) console.log(err)
+                if (user) {
+                    therapistName = user.firstName + " " + user.lastName
+                    errorMessageVariables = {
+                        cost: sortedCart[0].cost,
+                        purchased: sortedCart[0].expiringTime,
+                        therapistName: therapistName
+                    };
+                    return res.json(errorMessageVariables)
+                }
+            })
+        } else {
+            return res.json("NoActiveSession");
+        }
+    })
+})
+
+app.post('/refundOrder', isLoggedIn, (req, res) => {
+    var currentTime = new Date();
+    Cart.updateOne({
+        userId: req.session.user._id,
+        status: "completed",
+        expiringTime: {
+            $gt: currentTime
+        }
+    }, {
+        expiringTime: currentTime,
+        status: "refunded"
+    }).then((obj) => {
+        res.send(obj)
+    }).catch(function (error) {
+        console.log(error);
+    })
+})
+
+
+//Live Chat
+
+//Creates connection between server and client
+io.on('connection', (socket) => {
+    var senderName;
+    var orderID;
+
+    socket.on("chat message", function (msg, room) {
+
+        console.log('message:', msg, ' to room:', room);
+
+        //broadcast message to everyone in port:8000 except yourself.
+        socket.to(room).emit("chat message", { message: msg });
+
+        //save chat to the database
+        let connect = mongoose.connect(process.env.DATABASE_URL, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true
+        })
+        connect.then(db => {
+            let chatMessage = new Chat({
+                message: msg,
+                sender: senderName,
+                orderId: orderID
+            });
+
+            chatMessage.save();
+        });
+    });
+
+
+    socket.on("get-id", function (senderId) {
+        senderName = senderId;
+    })
+
+    socket.on("get-orderId", function (orderId) {
+        orderID = orderId;
+    })
+
+    socket.on("join-room", function (room) {
+        socket.join(room);
+        console.log('connected to room', room);
+
+    })
+
+});
+
+app.get('/activeChatSession', (req, res) => {
+    if(!req.session.isLoggedIn) {
+        return res.json('notLoggedIn');
+    }
+    var currentTime = new Date();
+    Cart.findOne({
+        $or: [{
+            userId: req.session.user._id,
+        }, {
+            therapist: req.session.user._id,
+        }],
+        status: "completed",
+        expiringTime: {
+            $gt: currentTime
+        }
+    }, function (err, carts) {
+        if (err) {
+            console.log('Error searching cart.', err);
+        }
+        if (carts) {
+            // console.log(carts)
+
+            var orderId = carts.orderId;
+            var purchased = carts.expiringTime;
+            var therapistId = carts.therapist;
+            var userId = carts.userId;
+            var chatInfo;
+            User.findOne({
+                _id: req.session.user._id
+            }, function (err, user) {
+                if (err) console.log(err)
+                if (user) {
+                    if (user.userType == 'therapist') {
+                        User.findOne({
+                            _id: userId
+                        }, function (err, user) {
+                            if (err) console.log(err)
+                            if (user) {
+                                chatInfo = {
+                                    purchased: purchased,
+                                    orderId: orderId,
+                                    therapistId: therapistId,
+                                    userId: userId,
+                                    name: user.firstName + " " + user.lastName,
+                                    phone: user.phoneNum,
+                                    image: user.profileImg,
+                                    sender: therapistId,
+                                    currentId: req.session.user._id
+                                };
+                                return res.json(chatInfo)
+
+                            }
+                        })
+                    } else {
+                        User.findOne({
+                            _id: therapistId
+                        }, function (err, user) {
+                            if (err) console.log(err)
+                            if (user) {
+                                chatInfo = {
+                                    purchased: purchased,
+                                    orderId: orderId,
+                                    therapistId: therapistId,
+                                    userId: userId,
+                                    name: user.firstName + " " + user.lastName,
+                                    phone: user.phoneNum,
+                                    image: user.profileImg,
+                                    sender: userId,
+                                    currentId: req.session.user._id
+
+                                };
+                                return res.json(chatInfo)
+
+                            }
+                        })
+                    }
+
+
+                } else {
+                    return res.json("InvalidUser")
+                }
+
+            })
+        } else {
+            return res.json("NoActiveSession");
+        }
+    })
+})
+
+app.post('/loadMsgs', function (req, res) {
+    console.log(req.body.orderId);
+    Chat.find({
+        orderId: req.body.orderId
+    }, function (err, chats) {
+        if (err) {
+            console.log('Error searching cart.', err);
+        }
+        if (chats) {
+            res.json(chats);
+            console.log(chats);
+
+        }
+    }).sort({
+
+        createdAt: 'asc'
+
+    });
+
+})
+
+server.listen(process.env.PORT || 8000, () => {
+    console.log('listening on port:8000');
+});

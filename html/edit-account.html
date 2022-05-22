@@ -27,13 +27,12 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" type="text/css" href="../css/style.css" />
-    <link rel="stylesheet" type="text/css" href="../css/account.css" />
+    <link rel="stylesheet" type="text/css" href="../css/edit-account.css" />
     <link rel="stylesheet" type="text/css" href="../css/responsive.css" />
 </head>
 
 <body>
     <div id="wrapper">
-        <div id="navPlaceHolder"></div>
         <header id="headMobile">
             <nav class="nav-container">
                 <p id="footerNav">MyMind 2022 © COMP 2800</p>
@@ -64,12 +63,17 @@
                                 <i class="bi bi-bag-check nav-icon"></i>Checkout
                             </a>
                         </li>
+                        <li class="nav-item isPatient">
+                            <a href="/order-history" class="nav-link">
+                                <i class="bi bi-clock-history nav-icon"></i>Order History
+                            </a>
+                        </li>
                         <li class="nav-item isAdmin">
                             <a href="/admin-dashboard" class="nav-link">
                                 <i class="fa-solid fa-users-gear nav-icon"></i>Admin Dashboard
                             </a>
                         </li>
-                        <li class="nav-item isPatient">
+                        <li class="nav-item isLoggedIn">
                             <a href="/chat-session" class="nav-link">
                                 <i class="bi bi-chat-left-dots nav-icon"></i>Chat Session
                             </a>
@@ -110,86 +114,58 @@
             </nav>
         </header>
 
-        <div id="banner">
+        <div id="bannerMob">
             <div id="overlay">
                 <div id="profileHeader">
-                    <h2>My Account</h2>
-                    <a id="editProfileBtn" href="../edit-account">Edit Profile</a>
                 </div>
             </div>
         </div>
 
-        <form id="profileSummary" action="/uploadProfile" enctype="multipart/form-data" method="POST">
-            <div id="profileImageSec">
-                <div id="profileImgContainer">
-                    <!-- Profile image for full screen -->
-                    <input type="file" accept="image/gif, image/jpeg, image/png, image/svg" name="profileFile"
-                        id="profileFile" />
-                    <img id="profileImage" src="/" alt="Profile Picture">
-                </div>
-            </div>
-
+        <form id="profileSummaryMob" action="/uploadProfile" enctype="multipart/form-data" method="POST">
             <div id="profileDesc">
-                <div id="profileImageSecMob">
-                    <div id="profileImgContainerMob">
-                        <img id="profileImageMob" src="/" alt="Profile Picture">
+                <div id="profileImageSec">
+                    <div id="profileImgContainer">
+                        <input type="file" accept="image/gif, image/jpeg, image/png, image/svg" name="profileFile"
+                            id="profileFile" />
+                        <img id="profileImage" src="../images/placeholder-profile.jpg" alt="Profile Picture">
                     </div>
                 </div>
-                <h2 id="displayFullname"></h2>
-                <h4 id="displayUsername"></h4>
-                <p>Joined: <span id="joinedDate"></span></p>
-                <div id="buttonSec">
-                    <button type="submit" id="deleteAccount">Delete Account</button>
-                    <button type="submit" id="saveChanges">Save</button>
-                </div>
-
-                <div id="contactInfoMob">
-                    <div>
-                        <i class="bi bi-telephone"></i>
-                        <span id="phonemobile"></span>
-                    </div>
-                    <div>
-                        <i class="bi bi-envelope"></i>
-                        <span id="emailmobile"></span>
-                    </div>
-                </div>
-                <span id="joinedDateMob"></span>
-                <button type="submit" id="mobDeleteAccount">Delete Account</button>
             </div>
+            <button type="submit" id="saveChanges">Save</button>
         </form>
 
-        <div id="profileDetails">
+        <div id="profileDetailsMob">
             <form id="profileForm">
-                <div class="form-row col-6">
+                <div class="form-row">
                     <div class="form-group">
                         <label>First Name</label>
                         <input type="text" class="form-control" name="firstname" id="firstname" placeholder="First Name"
-                            required="required" maxlength="15" onkeydown="return /[a-z]/i.test(event.key)">
+                            maxlength="15" required="required" onkeydown="return /[a-z]/i.test(event.key)">
                     </div>
                 </div>
 
-                <div class="form-row col-6">
+                <div class="form-row">
                     <div class="form-group">
                         <label>Last Name</label>
                         <input type="text" class="form-control" name="lastname" id="lastname" placeholder="Last Name"
-                            required="required" maxlength="30" onkeydown="return /[a-z]/i.test(event.key)">
+                            maxlength="30" required="required" onkeydown="return /[a-z]/i.test(event.key)">
                     </div>
                 </div>
 
-                <div class="form-row col-6">
+                <div class="form-row">
                     <div class="form-group">
                         <label>Username</label>
                         <input type="text" class="form-control" name="username" id="username" placeholder="Username"
-                            value="a" maxlength="30" required="required">
+                            value="tquimbayo" maxlength="30" required="required">
                         <p id="usernameErrorMessage">&nbsp;</p>
                     </div>
                 </div>
 
-                <div class="form-row col-6">
+                <div class="form-row">
                     <div class="form-group">
                         <label>Phone</label>
-                        <input type="tel" class="form-control" name="phone" id="phone" placeholder="ex. 6041231234"
-                            required="required" onkeyup="this.value=this.value.replace(/[^\d]/,'')">
+                        <input type="tel" class="form-control" name="phone" id="phone" placeholder="phone"
+                            value="7785555555" required="required" onkeyup="this.value=this.value.replace(/[^\d]/,'')">
                         <p id="phoneErrorMessage">&nbsp;</p>
                     </div>
                 </div>
@@ -198,7 +174,7 @@
                     <div class="form-group">
                         <label for="email">Email Address</label>
                         <input type="email" class="form-control" name="email" id="email" placeholder="Email"
-                            maxlength="30" required="required">
+                            value="towacurtis@hotmail.com" maxlength="30" required="required">
                         <p id="emailErrorMessage">&nbsp;</p>
                     </div>
                 </div>
@@ -236,7 +212,7 @@
             </form>
         </div>
 
-        <!-- Profile Update Success Modal -->
+        <!-- Mobile Profile Update Success Modal -->
         <div id="profileSuccessModal">
             <div id="profileSuccessContainer">
                 <div id="profileSuccessBg">
@@ -247,26 +223,11 @@
                 </div>
             </div>
         </div>
-
-        <!-- Delete User Modal -->
-        <div id="deleteAccountModal">
-            <div id="modalContent">
-                <h2>You're about to delete your account!</h2>
-                <p>All information regarding your account will be permanently removed and this process can't be undone.
-                    Are you sure?</p>
-                <div id="deleteButtonsSec">
-                    <button id="closeDelete">Cancel</button>
-                    <button id="deleteAccountBtn">Delete</button>
-                </div>
-                <p id="deleteAccountErrorMessage">&nbsp;</p>
-            </div>
-        </div>
-
-        <div id="footerPlaceHolder"></div>
     </div>
 
     <!-- jQuery CDN -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
     <script src="../js/main.js"></script>
     <script src="../js/account.js"></script>
 </body>

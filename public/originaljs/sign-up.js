@@ -1,3 +1,6 @@
+const batmanAnimation = document.getElementById('batmanImg');
+const batmanSec = document.getElementById('batmanImg');
+
 $('#signupBtn').click(() => {
     var phoneLength = $("#phone").val();
     if (phoneLength.length != 10) {
@@ -8,11 +11,11 @@ $('#signupBtn').click(() => {
         window.scrollTo(0, document.body.scrollHeight);
         document.getElementById("signUpErrorMessage").style.display = 'block';
         document.getElementById("signUpErrorMessage").innerHTML = "Please follow this email pattern: example@email.com";
-    } else if (inputValidation()) {
+    } else if (inputValidation($("#userType").val())) {
         window.scrollTo(0, document.body.scrollHeight);
         document.getElementById("signUpErrorMessage").style.display = 'block';
         document.getElementById("signUpErrorMessage").innerHTML = "There are empty fields";
-    } else if(passwordValidation()) {
+    } else if (passwordValidation()) {
         window.scrollTo(0, document.body.scrollHeight);
         document.getElementById("signUpErrorMessage").style.display = 'block';
         document.getElementById("signUpErrorMessage").innerHTML = "Password must be at least 5 or less than 20 characters long";
@@ -61,17 +64,44 @@ $('#signupBtn').click(() => {
     }
 });
 
+// Set for every second
+setInterval(eastereEgg, 1000);
+
+// Easter egg function
+var doOnce = false;
+function eastereEgg() {
+    $('#username').keyup(function () {
+        var userField = $(this).val().toLowerCase();
+        if (userField.includes('batman') && doOnce == false) {
+            window.scrollTo(0, document.body.scrollHeight);
+            batmanAnimation.classList.add('startAnimation');
+            document.getElementById("audio").play();
+            document.getElementById("audio").volume = 1;
+            doOnce = true;
+        }
+    });
+}
+
 function isEmail(email) {
     var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
     return regex.test(email);
 }
 
-function inputValidation() {
+function inputValidation(userType) {
     const inpObjFirstName = document.getElementById("firstname");
     const inpObjLastName = document.getElementById("lastname");
     const inpObjUsername = document.getElementById("username");
-    if (!inpObjFirstName.checkValidity() || !inpObjLastName.checkValidity() || !inpObjUsername.checkValidity()) {
-        return true;
+    const inpObjExperience = document.getElementById("yearsExperience");
+    const inpObjSession = document.getElementById("sessionCost");
+    if (userType == "therapist") {
+        if (!inpObjFirstName.checkValidity() || !inpObjLastName.checkValidity() || !inpObjUsername.checkValidity()
+            || !inpObjExperience.checkValidity() || !inpObjSession.checkValidity()) {
+            return true;
+        }
+    } else {
+        if (!inpObjFirstName.checkValidity() || !inpObjLastName.checkValidity() || !inpObjUsername.checkValidity()) {
+            return true;
+        }
     }
 }
 
@@ -85,7 +115,7 @@ function passwordValidation() {
 function negativeValidation() {
     const yearsExp = document.getElementById("yearsExperience").value;
     const cost = document.getElementById("sessionCost").value;
-    if(yearsExp < 0 || cost < 0) {
+    if (yearsExp < 0 || cost < 0) {
         return true;
     }
 }

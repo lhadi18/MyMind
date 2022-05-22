@@ -40,6 +40,13 @@ const userSchema = new Schema({
     sessionCost: {
         type: String
     },
+    usedTrial: {
+        type: Boolean,
+        default:false
+    },
+    numSessions: {
+        type: Number
+    },
     profileImg: {
         type: String,
         default: "../uploads/placeholder-profile.jpg"

@@ -7,10 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="COMP 2800 - MyMind" />
 
-    <title>MyMind - Login</title>
+    <title>MyMind - Chat Session</title>
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="../images/logo.svg" />
+    <link rel="icon" type="image/x-icon" href="./images/logo.svg" />
 
     <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/410249dbdb.js" crossorigin="anonymous"></script>
@@ -26,9 +26,9 @@
         rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" type="text/css" href="../css/style.css" />
-    <link rel="stylesheet" type="text/css" href="../css/login.css" />
-    <link rel="stylesheet" type="text/css" href="../css/responsive.css" />
+    <link rel="stylesheet" type="text/css" href="./css/style.css" />
+    <link rel="stylesheet" type="text/css" href="./css/chat-session.css" />
+    <link rel="stylesheet" type="text/css" href="./css/responsive.css" />
 </head>
 
 <body>
@@ -64,12 +64,17 @@
                                 <i class="bi bi-bag-check nav-icon"></i>Checkout
                             </a>
                         </li>
+                        <li class="nav-item isPatient">
+                            <a href="/order-history" class="nav-link">
+                                <i class="bi bi-clock-history nav-icon"></i>Order History
+                            </a>
+                        </li>
                         <li class="nav-item isAdmin">
                             <a href="/admin-dashboard" class="nav-link">
                                 <i class="fa-solid fa-users-gear nav-icon"></i>Admin Dashboard
                             </a>
                         </li>
-                        <li class="nav-item isPatient">
+                        <li class="nav-item isLoggedIn">
                             <a href="/chat-session" class="nav-link">
                                 <i class="bi bi-chat-left-dots nav-icon"></i>Chat Session
                             </a>
@@ -110,55 +115,31 @@
             </nav>
         </header>
 
-        <div id="loginContainer">
-            <div class="col-6">
-                <img src="../images/login-graphic.svg" alt="Login Graphic">
-            </div>
-
-            <div class="col-6">
-                <div id="loginSec">
-                    <h2>Welcome Back!</h2>
-
-                    <div id="formContainer">
-                        <form id="loginForm">
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="email">Email Address</label>
-                                    <input type="email" class="form-control" name="email" id="email" placeholder="Email"
-                                        value="" required="required">
-                                </div>
-                            </div>
-
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="password">Password</label>
-                                    <div class="input-group" id="show-hide-password">
-                                        <input type="password" name="password" class="form-control" id="password"
-                                            value="" required="required">
-                                        <div class="input-group-addon">
-                                            <a href=""><i class="fa fa-eye-slash" aria-hidden="true"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <button type="button" id="loginBtn" value="Login">Login</button>
-                            <p id="signupDesc">Don't have an account? <a href="../sign-up">Sign Up</a></p>
-                            <p id="loginErrorMessage">&nbsp;</p>
-                        </form>
+        <div id="chatProfileSec">
+            <div id="chatHeader">
+                <div id="chatProfile">
+                    <div>
+                        <img id="chatImg" src="" alt="" />
                     </div>
+                    <div id="chatProfileDesc">
+                        <p id="chatName"></p>
+                        <p>Active <span id="chatActiveState">Now</span></p>
+                        <!-- <p>Active <span id="chatActiveState">10mins ago</span></p> -->
+                    </div>
+                </div>
+                <div id="chatTools">
+                    <a id="chatPhone" href=""><i class="bi bi-telephone-fill"></i></a>
                 </div>
             </div>
         </div>
 
-        <!-- Login Success Modal -->
-        <div id="loginSuccessModal">
-            <div id="loginSuccessContainer">
-                <div id="loginSuccessBg">
-                    <svg viewBox="0 0 65 51" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M7 25L27.3077 44L58.5 7" stroke="white" stroke-width="13" stroke-linecap="round" stroke-linejoin="round" />
-                    </svg>
-                </div>
-            </div>
+        <ul id="chatMessages"></ul>
+
+        <div id="sendMessageContainer">
+            <textarea id="chatbox" maxlength="250" contenteditable="true" disabled="true" wrap="soft"></textarea>
+            <button id="sendMessage">
+                <img src="./images/send.svg">
+            </button>
         </div>
 
         <div id="footerPlaceHolder"></div>
@@ -166,8 +147,8 @@
 
     <!-- jQuery CDN -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="../js/main.js"></script>
-    <script src="../js/login.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="./js/main.js"></script>
 </body>
 
 </html>

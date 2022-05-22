@@ -29,6 +29,9 @@
     #wrapper #footerPlaceHolder {
         display: none;
     }
+    #wrapper #therapistChat {
+        display: none;
+    }
     #wrapper #signUp {
         grid-row: 2 / span 1;
         padding: 5rem 3rem;
@@ -726,8 +729,7 @@
         width: 100%;
     }
     #wrapper #orderSummary #orderTable #tableHeader h3:nth-child(2),
-    #wrapper #orderSummary #orderTable #tableHeader h3:nth-child(3),
-    #wrapper #orderSummary #orderTable #tableHeader h3:nth-child(4) {
+    #wrapper #orderSummary #orderTable #tableHeader h3:nth-child(3) {
         display: none;
     }
     #wrapper #orderSummary #orderTable #tableBody {
@@ -744,7 +746,7 @@
         padding: 0;
     }
     #wrapper #orderSummary #orderTable #tableBody #orderReview #cartDesc h4 {
-        font-size: 1.2rem;
+        font-size: 1.5rem;
         padding-top: 2.5rem;
         padding-bottom: 1rem;
     }
@@ -761,28 +763,11 @@
         padding-right: 0;
     }
     #wrapper #orderSummary #orderTable #tableBody #orderReview #cartImg img {
-        height: 100%;
+        height: 300px;
     }
     #wrapper #orderSummary #orderTable #tableBody #orderReview #cartDesc {
         width: 100%;
         height: 100%;
-    }
-    #wrapper #orderSummary #orderTable #tableBody #timeSec {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        width: 100%;
-        margin-bottom: 2rem;
-    }
-    #wrapper #orderSummary #orderTable #tableBody #timeSec p:first-child {
-        display: block;
-        text-align: left;
-        padding-right: 0;
-        width: 50%;
-    }
-    #wrapper #orderSummary #orderTable #tableBody #timeSec p:nth-child(2) {
-        width: 50%;
-        padding: 1rem 0;
     }
     #wrapper #orderSummary #orderTable #tableBody #cartPlanSec {
         display: flex;
@@ -794,7 +779,6 @@
     #wrapper #orderSummary #orderTable #tableBody #cartPlanSec p {
         display: block;
         text-align: left;
-        font-size: 1rem;
         width: 50%;
     }
     #wrapper #orderSummary #orderTable #tableBody #cartPlanSec #cartPlan {
@@ -833,21 +817,43 @@
         text-align: left;
         padding-left: 1.5rem;
     }
-    #wrapper #cartExistModal {
+    #wrapper #cartExistModal,
+    #wrapper #therapySessionExistModal {
         padding-top: 50%;
     }
-    #wrapper #cartExistModal #modalContent {
+    #wrapper #cartExistModal #modalContent,
+    #wrapper #therapySessionExistModal #modalContent {
         width: 90%;
         padding: 2rem 1.5rem;
     }
-    #wrapper #cartExistModal #modalContent #closeCart {
+    #wrapper #cartExistModal #modalContent #closeCart,
+    #wrapper #therapySessionExistModal #modalContent #closeSession {
         font-size: 1.7rem;
     }
-    #wrapper #cartExistModal #modalContent h2 {
+    #wrapper #cartExistModal #modalContent h2,
+    #wrapper #therapySessionExistModal #modalContent h2 {
         font-size: 1.8rem;
     }
-    #wrapper #cartExistModal #modalContent p {
+    #wrapper #cartExistModal #modalContent p,
+    #wrapper #therapySessionExistModal #modalContent p {
         font-size: 1rem;
+    }
+    #wrapper #notAuthorizedModal {
+        margin-top: 3%;
+    }
+    #wrapper #notAuthorizedModal #modalContent {
+        width: 90%;
+        padding: 1rem;
+    }
+    #wrapper #notAuthorizedModal #modalContent #authorizedModalMessage {
+        max-width: 90%;
+    }
+    #wrapper #notAuthorizedModal #modalContent #authorizedModalMessage h2,
+    #wrapper #notAuthorizedModal #modalContent #authorizedModalMessage p {
+        font-size: 14px;
+    }
+    #wrapper #notAuthorizedModal #modalContent #closeAuthorized {
+        right: 1.5rem;
     }
     #removeOrderModal {
         padding-top: 70%;
@@ -897,9 +903,183 @@
     #wrapper #thankyouContainer .col-6 #thankyouSec p {
         font-size: 1.1rem;
     }
-    #wrapper #thankyouContainer .col-6 #thankyouSec #startSession a {
+    #wrapper #thankyouContainer .col-6 #thankyouSec #startSession #startSessionBtn {
         font-size: 1rem;
         width: 100%;
+    }
+    #wrapper #orderHistoryHeroContainer {
+        grid-row: 1 / span 1;
+        height: 30vh;
+        background-attachment: scroll;
+    }
+    #wrapper #orderHistoryHeroContainer #overlay {
+        height: 30vh;
+    }
+    #wrapper #orderHistoryHeroContainer #overlay #orderHistoryHero {
+        padding: 3rem;
+    }
+    #wrapper #orderHistoryHeroContainer #overlay #orderHistoryHero h2 {
+        font-size: 2.5rem;
+    }
+    #wrapper #noOrderHistorySummary {
+        grid-row: 2 / span 1;
+        padding: 7rem 3rem 7rem;
+    }
+    #wrapper #noOrderHistorySummary #noOrderMessage {
+        font-size: 1rem;
+    }
+    #wrapper #orderToolbar {
+        grid-row: 3 / span 1;
+        padding: 5rem 3rem 2rem;
+        flex-wrap: wrap;
+    }
+    #wrapper #orderToolbar p {
+        width: 100%;
+        padding-bottom: 2rem;
+        text-align: center;
+    }
+    #wrapper #orderToolbar #searchForm {
+        width: 100%;
+        order: 3;
+        margin: 2rem 0 0;
+    }
+    #wrapper #orderToolbar #searchForm #searchbar {
+        padding: 1.5rem 2rem;
+    }
+    #wrapper #orderToolbar #refundBtn {
+        width: 100%;
+        order: 2;
+    }
+    #orderRefundModal {
+        padding-top: 40%;
+        padding-bottom: 0;
+    }
+    #orderRefundModal #modalContent {
+        padding: 2rem 1.5rem;
+        width: 90%;
+    }
+    #orderRefundModal #modalContent h2 {
+        font-size: 1.2rem;
+    }
+    #orderRefundModal #modalContent #refundButtonsSec {
+        flex-direction: row-reverse;
+        justify-content: center;
+    }
+    #orderRefundModal #modalContent #refundButtonsSec #closeRefund {
+        font-size: 1rem;
+        padding-left: 1rem;
+        padding-right: 1.5rem;
+    }
+    #orderRefundModal #modalContent #refundButtonsSec #orderRefundBtn {
+        padding: 12px;
+        width: 50%;
+        font-size: 1rem;
+        margin-left: 0;
+    }
+    #wrapper #orderTableContainer {
+        grid-row: 4 / span 1;
+        padding: 0 3rem 7rem;
+    }
+    #wrapper #orderTableContainer #orderTable thead {
+        display: none;
+    }
+    #wrapper #orderTableContainer #orderTable tbody {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+    #wrapper #orderTableContainer #orderTable tbody .tableRows {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        padding: 2rem 1rem;
+        margin-bottom: 1.5rem;
+    }
+    #wrapper #orderTableContainer #orderTable tbody .tableRows td:first-child {
+        padding: 0.5rem;
+    }
+    #wrapper #orderTableContainer #orderTable tbody .tableRows td:last-child {
+        width: auto;
+        padding: 0.5rem;
+    }
+    #wrapper #orderTableContainer #orderTable tbody td {
+        font-size: 1rem;
+        padding: 0.5rem;
+    }
+    #wrapper #orderTableContainer #orderTable tbody td:nth-child(1):before {
+        content: 'Date: ';
+        font-size: 1rem;
+        font-weight: 700;
+    }
+    #wrapper #orderTableContainer #orderTable tbody td:nth-child(2):before {
+        content: 'Time: ';
+        font-size: 1rem;
+        font-weight: 700;
+    }
+    #wrapper #orderTableContainer #orderTable tbody td:nth-child(3):before {
+        content: 'Therapist: ';
+        font-size: 1rem;
+        font-weight: 700;
+    }
+    #wrapper #orderTableContainer #orderTable tbody td:nth-child(4):before {
+        content: 'Plan: ';
+        font-size: 1rem;
+        font-weight: 700;
+    }
+    #wrapper #orderTableContainer #orderTable tbody td:nth-child(5):before {
+        content: 'Price: ';
+        font-size: 1rem;
+        font-weight: 700;
+    }
+    #wrapper #orderTableContainer #orderTable tbody td:nth-child(6):before {
+        content: 'Order #: ';
+        font-size: 1rem;
+        font-weight: 700;
+    }
+    #wrapper #orderTableContainer #orderTable tbody td:nth-child(7):before {
+        content: 'Status: ';
+        color: black;
+        font-size: 1rem;
+        font-weight: 700;
+    }
+    #wrapper #batmanEasterEgg #batmanContainer {
+        bottom: 4rem;
+    }
+    #wrapper #batmanEasterEgg #batmanContainer #batmanImg {
+        width: 100%;
+    }
+    #wrapper #chatProfileSec {
+        padding: 1rem 2rem;
+        min-height: 5vh;
+    }
+    #wrapper #chatProfileSec #chatHeader #chatProfile div #chatImg {
+        width: 3rem;
+        height: 3rem;
+    }
+    #wrapper #chatProfileSec #chatHeader #chatProfile #chatProfileDesc #chatName {
+        font-size: 1rem;
+        padding-bottom: 5px;
+    }
+    #wrapper #chatProfileSec #chatHeader #chatProfile #chatProfileDesc p:nth-child(2) {
+        font-size: 14px;
+    }
+    #wrapper #chatMessages {
+        height: 72vh;
+        padding: 3rem 1rem;
+    }
+    #wrapper #chatMessages li {
+        font-size: 14px;
+    }
+    #wrapper #sendMessageContainer {
+        padding: 0.5rem 1rem;
+    }
+    #wrapper #sendMessageContainer #chatbox {
+        font-size: 14px;
+    }
+    #wrapper #sendMessageContainer #sendMessage {
+        right: 2rem;
+        bottom: 1rem;
     }
 }
 
@@ -918,6 +1098,9 @@
         padding: 0 3rem;
     }
     #wrapper #footerPlaceHolder {
+        display: none;
+    }
+    #wrapper #therapistChat {
         display: none;
     }
     #wrapper #signUp {
@@ -1560,8 +1743,7 @@
         width: 100%;
     }
     #wrapper #orderSummary #orderTable #tableHeader h3:nth-child(2),
-    #wrapper #orderSummary #orderTable #tableHeader h3:nth-child(3),
-    #wrapper #orderSummary #orderTable #tableHeader h3:nth-child(4) {
+    #wrapper #orderSummary #orderTable #tableHeader h3:nth-child(3) {
         display: none;
     }
     #wrapper #orderSummary #orderTable #tableBody {
@@ -1577,7 +1759,7 @@
         padding: 0;
     }
     #wrapper #orderSummary #orderTable #tableBody #orderReview #cartDesc h4 {
-        font-size: 1.2rem;
+        font-size: 1.5rem;
         padding-top: 3rem;
         padding-bottom: 1rem;
     }
@@ -1594,35 +1776,18 @@
         padding-right: 0;
     }
     #wrapper #orderSummary #orderTable #tableBody #orderReview #cartImg img {
-        height: 100%;
+        height: 300px;
     }
     #wrapper #orderSummary #orderTable #tableBody #orderReview #cartDesc {
         width: 100%;
         height: 100%;
     }
-    #wrapper #orderSummary #orderTable #tableBody #timeSec {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 25%;
-    }
-    #wrapper #orderSummary #orderTable #tableBody #timeSec p:first-child {
-        display: block;
-        text-align: left;
-        padding-right: 0;
-        padding-bottom: 1.5rem;
-        width: 100%;
-    }
-    #wrapper #orderSummary #orderTable #tableBody #timeSec p:nth-child(2) {
-        width: 100%;
-        text-align: left;
-        padding: 1rem 0;
-    }
     #wrapper #orderSummary #orderTable #tableBody #cartPlanSec {
         display: flex;
         flex-direction: column;
         align-items: center;
-        width: 40%;
+        width: 50%;
+        padding-right: 1rem;
     }
     #wrapper #orderSummary #orderTable #tableBody #cartPlanSec p {
         display: block;
@@ -1638,7 +1803,8 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        width: 20%;
+        width: 50%;
+        padding-left: 1rem;
     }
     #wrapper #orderSummary #orderTable #tableBody #cartCostSec p:first-child {
         display: block;
@@ -1655,14 +1821,31 @@
     #wrapper #orderSummary #cartTotalSec {
         padding: 3rem 0;
     }
-    #wrapper #cartExistModal {
+    #wrapper #cartExistModal,
+    #wrapper #therapySessionExistModal {
         padding-top: 40%;
     }
-    #wrapper #cartExistModal #modalContent {
+    #wrapper #cartExistModal #modalContent,
+    #wrapper #therapySessionExistModal #modalContent {
         width: 80%;
     }
-    #wrapper #cartExistModal #modalContent #closeCart {
+    #wrapper #cartExistModal #modalContent #closeCart,
+    #wrapper #therapySessionExistModal #modalContent #closeSession {
         font-size: 1.7rem;
+    }
+    #wrapper #notAuthorizedModal {
+        margin-top: 3%;
+    }
+    #wrapper #notAuthorizedModal #modalContent {
+        width: 90%;
+        padding: 1rem 1.5rem;
+    }
+    #wrapper #notAuthorizedModal #modalContent #authorizedModalMessage h2,
+    #wrapper #notAuthorizedModal #modalContent #authorizedModalMessage p {
+        font-size: 14px;
+    }
+    #wrapper #notAuthorizedModal #modalContent #closeAuthorized {
+        right: 1.5rem;
     }
     #removeOrderModal {
         padding-top: 30%;
@@ -1708,9 +1891,149 @@
     #wrapper #thankyouContainer .col-6 #thankyouSec p {
         font-size: 1.1rem;
     }
-    #wrapper #thankyouContainer .col-6 #thankyouSec #startSession a {
+    #wrapper #thankyouContainer .col-6 #thankyouSec #startSession #startSessionBtn {
         font-size: 1rem;
         width: 60%;
+    }
+    #wrapper #orderHistoryHeroContainer {
+        grid-row: 1 / span 1;
+        height: 30vh;
+        background-attachment: scroll;
+    }
+    #wrapper #orderHistoryHeroContainer #overlay {
+        height: 30vh;
+    }
+    #wrapper #orderHistoryHeroContainer #overlay #orderHistoryHero {
+        padding: 3rem;
+    }
+    #wrapper #orderHistoryHeroContainer #overlay #orderHistoryHero h2 {
+        font-size: 2.5rem;
+    }
+    #wrapper #noOrderHistorySummary {
+        grid-row: 2 / span 1;
+        padding: 7rem 3rem 7rem;
+    }
+    #wrapper #noOrderHistorySummary #noOrderMessage {
+        font-size: 1rem;
+    }
+    #wrapper #orderToolbar {
+        grid-row: 3 / span 1;
+        padding: 5rem 3rem 2rem;
+        flex-wrap: wrap;
+    }
+    #wrapper #orderToolbar p {
+        width: 50%;
+    }
+    #wrapper #orderToolbar #searchForm {
+        width: 100%;
+        order: 3;
+        margin: 2rem 0 0;
+    }
+    #wrapper #orderToolbar #refundBtn {
+        width: 50%;
+        order: 2;
+    }
+    #orderRefundModal {
+        padding-top: 40%;
+        padding-bottom: 0;
+    }
+    #orderRefundModal #modalContent {
+        width: 80%;
+    }
+    #orderRefundModal #modalContent h2 {
+        font-size: 1.3rem;
+    }
+    #orderRefundModal #modalContent #refundButtonsSec #closeRefund {
+        font-size: 1rem;
+    }
+    #orderRefundModal #modalContent #refundButtonsSec #orderRefundBtn {
+        padding: 12px;
+        width: 25%;
+        font-size: 1rem;
+    }
+    #wrapper #orderTableContainer {
+        grid-row: 4 / span 1;
+        padding: 0 3rem 7rem;
+    }
+    #wrapper #orderTableContainer #orderTable thead {
+        display: none;
+    }
+    #wrapper #orderTableContainer #orderTable tbody {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+    #wrapper #orderTableContainer #orderTable tbody .tableRows {
+        display: flex;
+        flex-direction: column;
+        width: 47%;
+        padding: 2rem 1rem;
+        margin-bottom: 1.5rem;
+    }
+    #wrapper #orderTableContainer #orderTable tbody .tableRows td:first-child {
+        padding: 0.5rem;
+    }
+    #wrapper #orderTableContainer #orderTable tbody .tableRows td:last-child {
+        width: auto;
+        padding: 0.5rem;
+    }
+    #wrapper #orderTableContainer #orderTable tbody td {
+        font-size: 1rem;
+        padding: 0.5rem;
+    }
+    #wrapper #orderTableContainer #orderTable tbody td:nth-child(1):before {
+        content: 'Date: ';
+        font-size: 1rem;
+        font-weight: 700;
+    }
+    #wrapper #orderTableContainer #orderTable tbody td:nth-child(2):before {
+        content: 'Time: ';
+        font-size: 1rem;
+        font-weight: 700;
+    }
+    #wrapper #orderTableContainer #orderTable tbody td:nth-child(3):before {
+        content: 'Therapist: ';
+        font-size: 1rem;
+        font-weight: 700;
+    }
+    #wrapper #orderTableContainer #orderTable tbody td:nth-child(4):before {
+        content: 'Plan: ';
+        font-size: 1rem;
+        font-weight: 700;
+    }
+    #wrapper #orderTableContainer #orderTable tbody td:nth-child(5):before {
+        content: 'Price: ';
+        font-size: 1rem;
+        font-weight: 700;
+    }
+    #wrapper #orderTableContainer #orderTable tbody td:nth-child(6):before {
+        content: 'Order #: ';
+        font-size: 1rem;
+        font-weight: 700;
+    }
+    #wrapper #orderTableContainer #orderTable tbody td:nth-child(7):before {
+        content: 'Status: ';
+        color: black;
+        font-size: 1rem;
+        font-weight: 700;
+    }
+    #wrapper #batmanEasterEgg #batmanContainer {
+        bottom: 4rem;
+    }
+    #wrapper #batmanEasterEgg #batmanContainer #batmanImg {
+        width: 100%;
+    }
+    #wrapper #chatProfileSec #chatHeader #chatProfile div #chatImg {
+        width: 3.5rem;
+        height: 3.5rem;
+    }
+    #wrapper #chatProfileSec #chatHeader #chatProfile #chatProfileDesc #chatName {
+        font-size: 1.2rem;
+        padding-bottom: 5px;
+    }
+    #wrapper #chatProfileSec #chatHeader #chatProfile #chatProfileDesc p:nth-child(2) {
+        font-size: 14px;
     }
 }
 
@@ -1726,6 +2049,9 @@
         z-index: 9999;
     }
     #wrapper #footerPlaceHolder {
+        display: none;
+    }
+    #wrapper #therapistChat {
         display: none;
     }
     #wrapper #signUp {
@@ -1986,9 +2312,6 @@
     #wrapper #therapistListSec h4 {
         font-size: 1.2rem;
     }
-    #wrapper #therapistListSec #therapistList {
-        justify-content: center;
-    }
     #wrapper #therapistListSec #therapistList .therapistCard {
         width: 45%;
         margin-left: 0.75rem;
@@ -2238,12 +2561,12 @@
         width: 100%;
     }
     #wrapper #orderSummary #orderTable #tableHeader h3:nth-child(2),
-    #wrapper #orderSummary #orderTable #tableHeader h3:nth-child(3),
-    #wrapper #orderSummary #orderTable #tableHeader h3:nth-child(4) {
+    #wrapper #orderSummary #orderTable #tableHeader h3:nth-child(3) {
         display: none;
     }
     #wrapper #orderSummary #orderTable #tableBody {
         flex-wrap: wrap;
+        padding: 5rem 1rem;
     }
     #wrapper #orderSummary #orderTable #tableBody #orderReview {
         width: 100%;
@@ -2255,7 +2578,7 @@
         padding: 0;
     }
     #wrapper #orderSummary #orderTable #tableBody #orderReview #cartDesc h4 {
-        font-size: 1.2rem;
+        font-size: 1.5rem;
         padding-bottom: 1rem;
     }
     #wrapper #orderSummary #orderTable #tableBody #orderReview #cartDesc p {
@@ -2273,48 +2596,35 @@
         width: 100%;
         height: 100%;
     }
-    #wrapper #orderSummary #orderTable #tableBody #timeSec {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 20%;
-    }
-    #wrapper #orderSummary #orderTable #tableBody #timeSec p:first-child {
-        display: block;
-        text-align: left;
-        padding-right: 0;
-        padding-bottom: 1.5rem;
-        width: 100%;
-    }
-    #wrapper #orderSummary #orderTable #tableBody #timeSec p:nth-child(2) {
-        width: 100%;
-        text-align: left;
-        padding: 1rem 0;
-    }
     #wrapper #orderSummary #orderTable #tableBody #cartPlanSec {
         display: flex;
         flex-direction: column;
         align-items: center;
-        width: 40%;
+        width: 50%;
+        padding-right: 1rem;
     }
     #wrapper #orderSummary #orderTable #tableBody #cartPlanSec p {
         display: block;
+        font-size: 1.1rem;
         text-align: left;
         padding-bottom: 1.5rem;
         width: 100%;
     }
     #wrapper #orderSummary #orderTable #tableBody #cartPlanSec #cartPlan {
         background-position: calc(100% - 1rem) center !important;
+        font-size: 1rem;
         width: 100%;
     }
     #wrapper #orderSummary #orderTable #tableBody #cartCostSec {
         display: flex;
         flex-direction: column;
         align-items: center;
-        width: 20%;
+        width: 50%;
+        padding-left: 1rem;
     }
     #wrapper #orderSummary #orderTable #tableBody #cartCostSec p:first-child {
         display: block;
+        font-size: 1.1rem;
         text-align: left;
         padding-right: 0;
         padding-bottom: 1.5rem;
@@ -2322,14 +2632,26 @@
     }
     #wrapper #orderSummary #orderTable #tableBody #cartCostSec p:nth-child(2) {
         width: 100%;
+        font-size: 1.1rem;
         text-align: left;
         padding: 1rem 0;
     }
-    #wrapper #cartExistModal {
+    #wrapper #cartExistModal,
+    #wrapper #therapySessionExistModal {
         padding-top: 30%;
     }
-    #wrapper #cartExistModal #modalContent {
+    #wrapper #cartExistModal #modalContent,
+    #wrapper #therapySessionExistModal #modalContent {
         width: 80%;
+    }
+    #wrapper #notAuthorizedModal {
+        margin-top: 3%;
+    }
+    #wrapper #notAuthorizedModal #modalContent {
+        width: 90%;
+    }
+    #wrapper #notAuthorizedModal #modalContent #closeAuthorized {
+        right: 2rem;
     }
     #removeOrderModal {
         padding-top: 30%;
@@ -2372,13 +2694,79 @@
         padding-top: 1rem;
         padding-left: 0;
     }
-    #wrapper #thankyouContainer .col-6 #thankyouSec #startSession a {
+    #wrapper #thankyouContainer .col-6 #thankyouSec #startSession #startSessionBtn {
         font-size: 1.1rem;
         width: 60%;
     }
+    #wrapper #orderHistoryHeroContainer {
+        grid-row: 1 / span 1;
+    }
+    #wrapper #orderHistoryHeroContainer #overlay #orderHistoryHero {
+        padding: 5rem;
+    }
+    #wrapper #orderHistoryHeroContainer #overlay #orderHistoryHero h2 {
+        font-size: 3rem;
+    }
+    #wrapper #noOrderHistorySummary {
+        grid-row: 2 / span 1;
+        padding: 7rem 5rem 7rem;
+    }
+    #wrapper #orderToolbar {
+        grid-row: 3 / span 1;
+        padding: 5rem 3rem 2rem;
+        flex-wrap: wrap;
+    }
+    #wrapper #orderToolbar p {
+        width: 50%;
+    }
+    #wrapper #orderToolbar #searchForm {
+        width: 100%;
+        order: 3;
+        margin: 2rem 0 0;
+    }
+    #wrapper #orderToolbar #refundBtn {
+        width: 50%;
+        order: 2;
+    }
+    #orderRefundModal {
+        padding-top: 25%;
+        padding-bottom: 0%;
+    }
+    #orderRefundModal #modalContent {
+        width: 80%;
+    }
+    #orderRefundModal #modalContent h2 {
+        font-size: 1.3rem;
+    }
+    #orderRefundModal #modalContent #refundButtonsSec #closeRefund {
+        font-size: 1rem;
+    }
+    #orderRefundModal #modalContent #refundButtonsSec #orderRefundBtn {
+        padding: 12px;
+        width: 25%;
+        font-size: 1rem;
+    }
+    #wrapper #orderTableContainer {
+        grid-row: 4 / span 1;
+        padding: 0 2.5rem 7rem;
+    }
+    #wrapper #orderTableContainer #orderTable thead #tableHeader th i {
+        padding-left: 0.5rem;
+    }
+    #wrapper #orderTableContainer #orderTable thead th,
+    #wrapper #orderTableContainer #orderTable tbody td {
+        font-size: 12px;
+        padding: 1.5rem 0.5rem;
+    }
+    #wrapper #batmanEasterEgg #batmanContainer {
+        bottom: 4rem;
+    }
+    #wrapper #batmanEasterEgg #batmanContainer #batmanImg {
+        width: 100%;
+    }
 }
 
-@media (min-width: 992px) and (max-width: 1199.98px) {
+@media (min-width: 992px) and (max-width: 1299.98px) {
     #wrapper #navPlaceHolder #headContainer {
         padding: 1rem 5rem;
     }
@@ -2388,11 +2776,18 @@
     #wrapper #navPlaceHolder #headContainer #logo h2 {
         font-size: 2.5rem;
     }
+    #wrapper #navPlaceHolder #headContainer #navbar #navMenu .navLinks {
+        padding-left: 1rem;
+        min-width: fit-content;
+    }
     #wrapper #navPlaceHolder #headContainer #navbar #navMenu .navLinks a {
         font-size: 14px;
     }
     #wrapper #navPlaceHolder #headContainer #navbar #navMenu .navLinks:not(:last-child) {
-        padding-right: 1.5rem;
+        padding-right: 1rem;
+    }
+    #wrapper #navPlaceHolder #headContainer #navbar #navMenu .navLinks a.loginNav {
+        padding: 12px 36px;
     }
     #wrapper #navPlaceHolder #headContainer #navbar #navMenu .navLinks a.loginNav, 
     #wrapper #navPlaceHolder #headContainer #navbar #navMenu .navLinks input {
@@ -2589,8 +2984,7 @@
         width: 100%;
     }
     #wrapper #orderSummary #orderTable #tableHeader h3:nth-child(2),
-    #wrapper #orderSummary #orderTable #tableHeader h3:nth-child(3),
-    #wrapper #orderSummary #orderTable #tableHeader h3:nth-child(4) {
+    #wrapper #orderSummary #orderTable #tableHeader h3:nth-child(3) {
         display: none;
     }
     #wrapper #orderSummary #orderTable #tableBody {
@@ -2600,7 +2994,7 @@
         width: 100%;
         flex-direction: row;
         flex-wrap: nowrap;
-        margin-bottom: 3rem;
+        margin-bottom: 5rem;
     }
     #wrapper #orderSummary #orderTable #tableBody #orderReview #cartImg {
         width: 100%;
@@ -2610,22 +3004,10 @@
         width: 100%;
         height: 100%;
     }
-    #wrapper #orderSummary #orderTable #tableBody #timeSec {
-        display: flex;
-        align-items: center;
-        width: 30%;
-    }
-    #wrapper #orderSummary #orderTable #tableBody #timeSec p:first-child {
-        display: block;
-        width: 70%;
-    }
-    #wrapper #orderSummary #orderTable #tableBody #timeSec p:nth-child(2) {
-        width: 30%;
-    }
     #wrapper #orderSummary #orderTable #tableBody #cartPlanSec {
         display: flex;
         align-items: center;
-        width: 45%;
+        width: 50%;
     }
     #wrapper #orderSummary #orderTable #tableBody #cartPlanSec p {
         display: block;
@@ -2638,7 +3020,7 @@
     #wrapper #orderSummary #orderTable #tableBody #cartCostSec {
         display: flex;
         align-items: center;
-        width: 25%;
+        width: 50%;
     }
     #wrapper #orderSummary #orderTable #tableBody #cartCostSec p:first-child {
         display: block;
@@ -2646,11 +3028,14 @@
     }
     #wrapper #orderSummary #orderTable #tableBody #cartCostSec p:nth-child(2) {
         width: 40%;
+        text-align: left;
     }
-    #wrapper #cartExistModal {
+    #wrapper #cartExistModal,
+    #wrapper #therapySessionExistModal {
         padding-top: 20%;
     }
-    #wrapper #cartExistModal #modalContent {
+    #wrapper #cartExistModal #modalContent,
+    #wrapper #therapySessionExistModal #modalContent {
         width: 80%;
     }
     #removeOrderModal {
@@ -2672,16 +3057,72 @@
         padding-top: 1rem;
         padding-left: 0;
     }
-    #wrapper #thankyouContainer .col-6 #thankyouSec #startSession a {
+    #wrapper #thankyouContainer .col-6 #thankyouSec #startSession #startSessionBtn {
         font-size: 1.1rem;
+        width: 80%;
+    }
+    #wrapper #noOrderHistorySummary {
+        padding: 10rem 5rem 5rem;
+    }
+    #wrapper #orderHistoryHeroContainer #overlay #orderHistoryHero {
+        padding: 5rem;
+    }  
+    #wrapper #orderHistoryHeroContainer #overlay #orderHistoryHero h2 {
+        font-size: 3rem;
+    }
+    #wrapper #orderToolbar {
+        padding: 5rem;
+    }
+    #wrapper #orderToolbar p {
+        width: 25%;
+    }
+    #wrapper #orderToolbar #searchForm {
+        width: 55%;
+    }
+    #wrapper #orderToolbar #refundBtn {
+        width: 20%;
+    }
+    #wrapper #orderTableContainer {
+        padding: 0 5rem 5rem;
+    }
+    #wrapper #orderTableContainer #orderTable thead #tableHeader th i {
+        padding-left: 0.5rem;
+    }
+    #wrapper #orderTableContainer #orderTable thead th,
+    #wrapper #orderTableContainer #orderTable tbody td {
+        font-size: 14px;
+    }
+    #orderRefundModal {
+        padding-top: 25%;
+        padding-bottom: 0%;
+    }
+    #orderRefundModal #modalContent {
         width: 80%;
     }
 }
 
-@media (min-width: 1200px) and (max-width: 1499.98px) {
-    
-}
-
-@media (min-width: 2000px) {
-
+@media (min-width: 2500px) {
+    #wrapper #therapistChat {
+        width: 7rem;
+        height: 7rem;
+    }
+    #wrapper #therapistChat.expand {
+        width: 30rem;
+        height: 45rem;
+    }
+    #wrapper #therapistChat #chatMsgIcon {
+        font-size: 3rem;
+    }
+    #wrapper #therapistChat .chatContainer #chatMessages li {
+        font-size: 1.1rem;
+    }
+    #wrapper #therapistChat .chatContainer #sendMessageContainer #chatbox {
+        font-size: 1.1rem;
+        height: 4rem;
+    }
+    #wrapper #therapistChat .chatContainer #sendMessageContainer #sendMessage {
+        height: 2.5rem;
+        width: 2.5rem;
+        bottom: 1.6rem;
+    }
 }

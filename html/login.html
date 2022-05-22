@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="COMP 2800 - MyMind" />
 
-    <title>MyMind - Thank You</title>
+    <title>MyMind - Login</title>
 
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="../images/logo.svg" />
@@ -27,7 +27,7 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" type="text/css" href="../css/style.css" />
-    <link rel="stylesheet" type="text/css" href="../css/thank-you.css" />
+    <link rel="stylesheet" type="text/css" href="../css/login.css" />
     <link rel="stylesheet" type="text/css" href="../css/responsive.css" />
 </head>
 
@@ -64,12 +64,17 @@
                                 <i class="bi bi-bag-check nav-icon"></i>Checkout
                             </a>
                         </li>
+                        <li class="nav-item isPatient">
+                            <a href="/order-history" class="nav-link">
+                                <i class="bi bi-clock-history nav-icon"></i>Order History
+                            </a>
+                        </li>
                         <li class="nav-item isAdmin">
                             <a href="/admin-dashboard" class="nav-link">
                                 <i class="fa-solid fa-users-gear nav-icon"></i>Admin Dashboard
                             </a>
                         </li>
-                        <li class="nav-item isPatient">
+                        <li class="nav-item isLoggedIn">
                             <a href="/chat-session" class="nav-link">
                                 <i class="bi bi-chat-left-dots nav-icon"></i>Chat Session
                             </a>
@@ -109,39 +114,67 @@
                 </div>
             </nav>
         </header>
-
-        <div id="thankyouContainer">
+        
+        <div id="loginContainer">
             <div class="col-6">
-                <img src="../images/thankyou.svg" alt="Thank You Graphic">
+                <img src="../images/login-graphic.svg" alt="Login Graphic">
             </div>
 
             <div class="col-6">
-                <div id="thankyouSec">
-                    <div id="thankyouHeader">
-                        <i class="bi bi-check-circle"></i>
-                        <h2>Order Successfully Placed</h2>
-                    </div>
+                <div id="loginSec">
+                    <h2>Welcome Back!</h2>
 
-                    <p>Your Order <span id="orderNumber">MM0509123456</span></p>
-                    <p>If you have any questions about your order, please contact us at
-                        <a href="mailto:info@mymind.com">info@mymind.com</a> or call us at
-                        <a href="tel:604.555.5012">(604) 555 - 5012</a>
-                    </p>
+                    <div id="formContainer">
+                        <form id="loginForm">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="email">Email Address</label>
+                                    <input type="email" class="form-control" name="email" id="email" placeholder="Email"
+                                        value="" required="required">
+                                </div>
+                            </div>
 
-                    <div id="startSession">
-                        <a href="/chat-session" >Start You Therapy Session</a>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="password">Password</label>
+                                    <div class="input-group" id="show-hide-password">
+                                        <input type="password" name="password" class="form-control" id="password"
+                                            value="" required="required">
+                                        <div class="input-group-addon">
+                                            <a href=""><i class="fa fa-eye-slash" aria-hidden="true"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="button" id="loginBtn" value="Login">Login</button>
+                            <p id="signupDesc">Don't have an account? <a href="../sign-up">Sign Up</a></p>
+                            <p id="loginErrorMessage">&nbsp;</p>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
 
+        <!-- Login Success Modal -->
+        <div id="loginSuccessModal">
+            <div id="loginSuccessContainer">
+                <div id="loginSuccessBg">
+                    <svg viewBox="0 0 65 51" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M7 25L27.3077 44L58.5 7" stroke="white" stroke-width="13" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <div id="therapistChat"></div>
         <div id="footerPlaceHolder"></div>
     </div>
 
     <!-- jQuery CDN -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
     <script src="../js/main.js"></script>
-    <script src="../js/thank-you.js"></script>
+    <script src="../js/login.js"></script>
 </body>
 
 </html>
