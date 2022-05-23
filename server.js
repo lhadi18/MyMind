@@ -173,6 +173,14 @@ app.get('/checkout', isLoggedIn, isPatient, function (req, res) {
     res.sendFile(path.resolve('html/checkout.html'));
 });
 
+app.get('/privacypolicy', function (req, res) {
+    res.sendFile(path.resolve('html/privacypolicy.html'));
+});
+
+app.get('/termsandconditions', function (req, res) {
+    res.sendFile(path.resolve('html/termsandconditions.html'));
+});
+
 app.get('/order-history', isLoggedIn, isPatient, function (req, res) {
     res.sendFile(path.resolve('html/order-history.html'));
 });
