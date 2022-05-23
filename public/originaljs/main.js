@@ -122,7 +122,6 @@ $(document).ready(function () {
 
     // check active session
     $.get('/activeChatSession', function (data) {
-
         if (data == "NoActiveSession" || data == "notLoggedIn") {
             $('#therapistChat').hide();
         } else {
@@ -177,6 +176,32 @@ $(document).ready(function () {
             }
         }
     })
+
+    // Get and display session expiring time
+    setInterval(getSessionEndTime, 1000);
+    function getSessionEndTime() {
+        $.get('/activeChatSession', function (data) {
+            if (data != "NoActiveSession" && data != "notLoggedIn") {
+                var currDate = new Date();
+                var expiringDate = new Date(data.purchased);
+                var diffTime = Math.abs((expiringDate.getTime() - currDate.getTime())/ 1000);
+                var diffHours = Math.floor(diffTime / 3600) % 24;
+                diffTime -= diffHours * 3600;
+                var diffMins = Math.floor(diffTime / 60) % 60;
+                diffTime -= diffMins * 60;
+                var diffSecs = Math.floor(diffTime % 60);
+                if (diffMins == 0 && diffSecs != 0) {
+                    $("#sessionTimer").text('Session expires in ' + diffSecs + 's');
+                } else if (diffMins == 0 && diffSecs == 0) { 
+                    // add modal later to inform the user that chat expired
+                    location.reload();
+                } else {
+                    $("#sessionTimer").text('Session expires in ' + diffMins + 'm ' + diffSecs + 's');
+                }
+                console.log(new Date(data.purchased).toLocaleString('en-CA', { hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true }))
+            }
+        })
+    }
 
     // Chat Page for mobile
     if (window.location.pathname == '/chat-session') {

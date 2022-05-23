@@ -526,10 +526,21 @@ body::-webkit-scrollbar-thumb {
 
 #wrapper #therapistChat .chatContainer #chatMessages {
     margin: 0;
-    padding: 1.5rem 1rem 5rem;
+    padding: 1.5rem 1rem 6rem;
     list-style: none;
     overflow-x: hidden;
     overflow-y: scroll;
+}
+
+#wrapper #therapistChat .chatContainer #chatMessages #sessionTimer {
+    position: absolute;
+    bottom: 5rem;
+    width: 90%;
+    font-size: 12px;
+    font-weight: 500;
+    text-align: center;
+    color: #858585;
+    background-color: white;
 }
 
 #wrapper #therapistChat .chatContainer #chatMessages::-webkit-scrollbar {
