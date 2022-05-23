@@ -199,20 +199,21 @@ $(document).ready(function () {
             this.style.height = (this.scrollHeight + 2) + "px";
         });
 
-        userInput.focus(function () {
-            if ($(this).val() === "Message ...") {
-                $(this).val("").focus();
-                this.setAttribute("style", `${this.scrollHeight + 2}px`);
-            }
-        });
-        userInput.blur(function () {
-            if ($(this).val() === "") {
-                $(this).val("Message ...");
-                this.setAttribute("style", `${this.scrollHeight + 2}px`);
-            }
-        });
+        // userInput.focus(function () {
+        //     if ($(this).val() === "Message ...") {
+        //         $(this).val("").focus();
+        //         this.setAttribute("style", `${this.scrollHeight + 2}px`);
+        //     }
+        // });
+        // userInput.blur(function () {
+        //     if ($(this).val() === "") {
+        //         $(this).val("Message ...");
+        //         this.setAttribute("style", `${this.scrollHeight + 2}px`);
+        //     }
+        // });
+        // userInput.blur();
 
-        userInput.blur();
+        
     } else {
         // Chat Box for desktop
         var element = $('#therapistChat');
@@ -244,20 +245,19 @@ $(document).ready(function () {
                 this.style.height = (this.scrollHeight + 2) + "px";
             });
 
-            userInput.focus(function () {
-                if ($(this).val() === "Message ...") {
-                    $(this).val("").focus();
-                    this.setAttribute("style", `${this.scrollHeight + 2}px`);
-                }
-            });
-            userInput.blur(function () {
-                if ($(this).val() === "") {
-                    $(this).val("Message ...");
-                    this.setAttribute("style", `${this.scrollHeight + 2}px`);
-                }
-            });
-
-            userInput.blur();
+            // userInput.focus(function () {
+            //     if ($(this).val() === "Message ...") {
+            //         $(this).val("").focus();
+            //         this.setAttribute("style", `${this.scrollHeight + 2}px`);
+            //     }
+            // });
+            // userInput.blur(function () {
+            //     if ($(this).val() === "") {
+            //         $(this).val("Message ...");
+            //         this.setAttribute("style", `${this.scrollHeight + 2}px`);
+            //     }
+            // });
+            // userInput.blur();
         }
 
         function closeElement() {
@@ -286,15 +286,14 @@ $(document).ready(function () {
 
     function sendNewMessage() {
         var userInput = $('#chatbox');
-        var newMessage = userInput.val().replace(/\<div\>|\<br.*?\>/ig, '\n').replace(/\<\/div\>/g, '').trim().replace(/\n/g, '<br>');
-
-        socket.emit('chat message', userInput.val(), orderId);
+        var newMessage = userInput.val();
 
         if (!newMessage) {
+            userInput.focus();
             return;
-        } else if (newMessage === 'Message ...') {
-            return null;
-        }
+        } 
+
+        socket.emit('chat message', newMessage, orderId);
 
         var messagesContainer = $('#chatMessages');
 
