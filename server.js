@@ -12,6 +12,7 @@ const app = express();
 const http = require('http');
 const server = http.createServer(app);
 const { Server } = require("socket.io");
+const { GridFSBucketReadStream } = require("mongodb");
 const io = new Server(server);
 
 
@@ -348,6 +349,7 @@ app.post("/sign-up", isNotRegistered, async (req, res) => {
                 yearsExperience: req.body.yearsExperience,
                 sessionCost: req.body.sessionCost,
                 email: req.body.email,
+                hasActiveSession: false,
                 password: hashedPassword
             });
 
@@ -823,7 +825,8 @@ function incrementTherapistSessionNum(userID) {
             }, {
                 $inc: {
                     numSessions: 1
-                }
+                },
+                hasActiveSession: true
             }).then((obj) => {
                 console.log(obj)
             }).catch(function (error) {
