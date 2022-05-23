@@ -205,13 +205,38 @@ app.get('/getUserInfo', isLoggedIn, setHeaders, (req, res) => {
     })
 })
 
+async function therapistHasActiveSession(therapistInfo) {
+    var currentTime = new Date();
+    let orderExists = await Cart.exists({
+        therapist: therapistInfo._id,
+        status: "completed",
+        expiringTime: {
+            $gt: currentTime
+        }
+    })
+    if (orderExists) {
+        return true;
+    } else {
+        return false
+    }
+}
+
 app.get('/getTherapists', (req, res) => {
+    var allTherapists;
     User.find({
         userType: "therapist"
-    }, function (err, user) {
+    }, async function (err, user) {
         if (err) console.log(err)
         if (user) {
-            res.json(user);
+            var existingSession;
+            
+            for(let i = 0; i < user.length; i++) {
+                existingSession = await therapistHasActiveSession(user[i])
+                if(existingSession) {
+                    user.splice(i , 1);
+                }
+            }
+            return res.json(user)
         }
     }).sort({
         numSessions: 'desc'
