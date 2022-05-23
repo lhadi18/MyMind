@@ -299,7 +299,7 @@ $(document).ready(function () {
         var messagesContainer = $('#chatMessages');
 
         messagesContainer.append([
-            '<li class="self">',
+            `<li class="self" data-before="Sent at ${new Date().toLocaleString('en-CA', { hour: 'numeric', minute: 'numeric', hour12: true })}">`,
             newMessage,
             '</li>'
         ].join(''));
