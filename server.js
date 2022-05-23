@@ -222,14 +222,12 @@ async function therapistHasActiveSession(therapistInfo) {
 }
 
 app.get('/getTherapists', (req, res) => {
-    var allTherapists;
     User.find({
         userType: "therapist"
     }, async function (err, user) {
         if (err) console.log(err)
         if (user) {
             var existingSession;
-            
             for(let i = 0; i < user.length; i++) {
                 existingSession = await therapistHasActiveSession(user[i])
                 if(existingSession) {
