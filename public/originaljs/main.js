@@ -166,7 +166,7 @@ $(document).ready(function () {
                     var messagesContainer = $('#chatMessages');
     
                     messagesContainer.append([
-                        '<li class="other">',
+                        `<li class="other" data-before="Sent at ${new Date().toLocaleString('en-CA', { hour: 'numeric', minute: 'numeric', hour12: true })}">`,
                         msg.message,
                         '</li>'
                     ].join(''));
@@ -187,22 +187,11 @@ $(document).ready(function () {
         element.find('#sendMessage').click(sendNewMessage);
         messages.scrollTop(messages.prop("scrollHeight"));
 
-        setTimeout(() => {
-            var selfMsgs = document.querySelectorAll('.self');
-            var otherMsgs = document.querySelectorAll('.other');
-            console.log(selfMsgs)
-            for (var i = 0; i < selfMsgs.length; i++) {
-                selfMsgs[i].onclick = function () {
-                    $(this).toggleClass('showTime');
-                }
-            }
-    
-            for (var i = 0; i < otherMsgs.length; i++) {
-                otherMsgs[i].onclick = function () {
-                    $(this).toggleClass('showTime');
-                }
-            }
-        }, 500);
+
+        $(document).on('click', '.self, .other', function(){
+            $(this).toggleClass('showTime');
+        });
+
 
         userInput.each(function () {
             this.setAttribute("style", `${this.scrollHeight + 2}px`);
@@ -244,22 +233,10 @@ $(document).ready(function () {
             element.find('#sendMessage').click(sendNewMessage);
             messages.scrollTop(messages.prop("scrollHeight"));
 
-            var selfMsgs = document.querySelectorAll('.self');
-            var otherMsgs = document.querySelectorAll('.other');
 
-            console.log(selfMsgs)
-
-            for (var i = 0; i < selfMsgs.length; i++) {
-                selfMsgs[i].onclick = function () {
-                    $(this).toggleClass('showTime');
-                }
-            }
-
-            for (var i = 0; i < otherMsgs.length; i++) {
-                otherMsgs[i].onclick = function () {
-                    $(this).toggleClass('showTime');
-                }
-            }
+            $(document).on('click', '.self, .other', function(){
+                $(this).toggleClass('showTime');
+            });
 
             userInput.each(function () {
                 this.setAttribute("style", `${this.scrollHeight + 2}px`);
