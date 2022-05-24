@@ -4,6 +4,14 @@
 }
 
 @media (max-width: 575.98px) {
+    #wrapper #defaultContainer {
+        grid-row: 1 / span 1;
+        padding: 5rem 2rem 7rem;
+    }
+    #wrapper #defaultContainer h1 {
+        font-size: 2rem;
+        padding-bottom: 1rem;
+    }
     #wrapper #navPlaceHolder {
         display: none;
     }
@@ -34,7 +42,7 @@
     }
     #wrapper #signUp {
         grid-row: 2 / span 1;
-        padding: 5rem 3rem;
+        padding: 5rem 1.5rem;
         margin-bottom: 5rem;
     }
     #wrapper #signUp h2 {
@@ -49,7 +57,7 @@
     }
     #wrapper #loginContainer {
         grid-row: 2 / span 1;
-        padding: 5rem 3rem;
+        padding: 5rem 1.5rem;
         flex-direction: column-reverse;
     }
     #wrapper #loginContainer .col-6 {
@@ -1084,6 +1092,10 @@
 }
 
 @media (min-width: 576px) and (max-width: 767.98px) {
+    #wrapper #defaultContainer {
+        grid-row: 1 / span 1;
+        padding: 5rem 3rem 7rem;
+    }
     #wrapper #navPlaceHolder {
         display: none;
     }
@@ -2038,6 +2050,10 @@
 }
 
 @media (min-width: 768px) and (max-width: 991.98px) {
+    #wrapper #defaultContainer {
+        grid-row: 1 / span 1;
+        padding: 5rem 5rem 7rem;
+    }
     #wrapper #navPlaceHolder {
         display: none;
     }
