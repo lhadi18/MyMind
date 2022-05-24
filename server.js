@@ -7,7 +7,6 @@ const Cart = require("./models/BBY_31_shoppingCarts");
 const mongoose = require("mongoose");
 const multer = require("multer");
 const bcrypt = require('bcrypt');
-const port = process.env.PORT || 8000;
 const app = express();
 const http = require('http');
 const server = http.createServer(app);
