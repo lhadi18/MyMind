@@ -4,7 +4,7 @@ const notAuthorizedModal = document.getElementById('notAuthorizedModal');
 
 var currentURL = window.location.href;
 if (currentURL !=  window.location.origin + '/therapists') {
-    setTimeout("window.location=currentURL", 200);
+    setTimeout("window.location=currentURL", 400);
 }
 
 $(document).ready(async function () {

@@ -159,11 +159,11 @@ $(document).ready(function () {
                 socket.emit('join-room', data.orderId)
                 socket.emit('get-id', data.sender)
                 socket.emit('get-orderId', data.orderId)
-    
+
                 orderId = data.orderId;
                 socket.on("chat message", (msg) => {
                     var messagesContainer = $('#chatMessages');
-    
+
                     messagesContainer.append([
                         `<li class="other" data-before="Sent at ${new Date().toLocaleString('en-CA', { hour: 'numeric', minute: 'numeric', hour12: true })}">`,
                         msg.message,
@@ -184,7 +184,7 @@ $(document).ready(function () {
             if (data != "NoActiveSession" && data != "notLoggedIn") {
                 var currDate = new Date();
                 var expiringDate = new Date(data.purchased);
-                var diffTime = Math.abs((expiringDate.getTime() - currDate.getTime())/ 1000);
+                var diffTime = Math.abs((expiringDate.getTime() - currDate.getTime()) / 1000);
                 var diffHours = Math.floor(diffTime / 3600) % 24;
                 diffTime -= diffHours * 3600;
                 var diffMins = Math.floor(diffTime / 60) % 60;
@@ -192,16 +192,46 @@ $(document).ready(function () {
                 var diffSecs = Math.floor(diffTime % 60);
                 if (diffMins == 0 && diffSecs != 0) {
                     $("#sessionTimer").text('Session expires in ' + diffSecs + 's');
-                } else if (diffMins == 0 && diffSecs == 0) { 
+                } else if (diffMins == 0 && diffSecs == 0) {
                     // add modal later to inform the user that chat expired
                     location.reload();
                 } else {
                     $("#sessionTimer").text('Session expires in ' + diffMins + 'm ' + diffSecs + 's');
                 }
-                console.log(new Date(data.purchased).toLocaleString('en-CA', { hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true }))
+                //console.log(new Date(data.purchased).toLocaleString('en-CA', { hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true }))
             }
         })
     }
+
+    // activityWatcher();
+
+    // function activityWatcher() {
+    //     var secondsSinceLastActivity = 0;
+    //     var maxInactivity = (10); // 60 * 5
+
+    //     setInterval(function () {
+    //         secondsSinceLastActivity++;
+    //         console.log(secondsSinceLastActivity + ' seconds since the user was last active');
+    //         if (secondsSinceLastActivity > maxInactivity) {
+    //             console.log('User has been inactive for more than ' + maxInactivity + ' seconds');
+    //             $('#chatActiveState').text('Inactive');
+    //         }
+    //     }, 1000);
+
+    //     function activity() {
+    //         $('#chatActiveState').text('Active Now');
+    //         secondsSinceLastActivity = 0;
+    //     }
+
+    //     var activityEvents = [
+    //         'mousedown', 'mousemove', 'mouseup', 'keydown', 'scroll', 'touchstart',
+    //         'click', 'keypress', 'keyup', 'submit', 'change', 'mouseenter', 'resize', 'dblclick'
+    //     ];
+
+    //     activityEvents.forEach(function (e) {
+    //         document.addEventListener(e, activity, true);
+    //     });
+    // }
 
     // Chat Page for mobile
     if (window.location.pathname == '/chat-session') {
@@ -213,7 +243,7 @@ $(document).ready(function () {
         messages.scrollTop(messages.prop("scrollHeight"));
 
 
-        $(document).on('click', '.self, .other', function(){
+        $(document).on('click', '.self, .other', function () {
             $(this).toggleClass('showTime');
         });
 
@@ -238,7 +268,7 @@ $(document).ready(function () {
         // });
         // userInput.blur();
 
-        
+
     } else {
         // Chat Box for desktop
         var element = $('#therapistChat');
@@ -260,7 +290,7 @@ $(document).ready(function () {
             messages.scrollTop(messages.prop("scrollHeight"));
 
 
-            $(document).on('click', '.self, .other', function(){
+            $(document).on('click', '.self, .other', function () {
                 $(this).toggleClass('showTime');
             });
 
@@ -316,7 +346,7 @@ $(document).ready(function () {
         if (!newMessage) {
             userInput.focus();
             return;
-        } 
+        }
 
         socket.emit('chat message', newMessage, orderId);
 

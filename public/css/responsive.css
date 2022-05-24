@@ -1089,6 +1089,112 @@
         right: 2rem;
         bottom: 1rem;
     }
+    #wrapper #myPatientsHeroContainer {
+        grid-row: 1 / span 1;
+        height: 30vh;
+        background-attachment: scroll;
+    }
+    #wrapper #myPatientsHeroContainer #overlay {
+        height: 30vh;
+    }
+    #wrapper #myPatientsHeroContainer #overlay #myPatientsHero {
+        padding: 3rem;
+    }
+    #wrapper #myPatientsHeroContainer #overlay #myPatientsHero h2 {
+        font-size: 2.5rem;
+    }
+    #wrapper #noPatientsAvailable {
+        grid-row: 2 / span 1;
+        padding: 7rem 3rem 7rem;
+    }
+    #wrapper #noPatientsAvailable #noPatientsMessage {
+        font-size: 1rem;
+    }
+    #wrapper #patientToolbar {
+        grid-row: 3 / span 1;
+        padding: 5rem 3rem 2rem;
+        flex-wrap: wrap;
+    }
+    #wrapper #patientToolbar p {
+        width: 100%;
+        padding-bottom: 2rem;
+        text-align: center;
+    }
+    #wrapper #patientToolbar #searchForm {
+        width: 100%;
+        order: 3;
+        margin: 2rem 0 0;
+    }
+    #wrapper #patientToolbar #searchForm #searchbar {
+        padding: 1.5rem 2rem;
+    }
+    #wrapper #patientTableContainer {
+        grid-row: 4 / span 1;
+        padding: 0 3rem 7rem;
+    }
+    #wrapper #patientTableContainer #patientTable thead {
+        display: none;
+    }
+    #wrapper #patientTableContainer #patientTable tbody {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+    #wrapper #patientTableContainer #patientTable tbody .tableRows {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        padding: 2rem 1rem;
+        margin-bottom: 1.5rem;
+    }
+    #wrapper #patientTableContainer #patientTable tbody .tableRows td:first-child {
+        padding: 0.5rem;
+    }
+    #wrapper #patientTableContainer #patientTable tbody .tableRows td:last-child {
+        width: auto;
+        padding: 0.5rem;
+    }
+    #wrapper #patientTableContainer #patientTable tbody td {
+        font-size: 1rem;
+        padding: 0.5rem;
+    }
+    #wrapper #patientTableContainer #patientTable tbody td:nth-child(1):before {
+        content: 'Date: ';
+        font-size: 1rem;
+        font-weight: 700;
+    }
+    #wrapper #patientTableContainer #patientTable tbody td:nth-child(2):before {
+        content: 'Time: ';
+        font-size: 1rem;
+        font-weight: 700;
+    }
+    #wrapper #patientTableContainer #patientTable tbody td:nth-child(3):before {
+        content: 'Patient: ';
+        font-size: 1rem;
+        font-weight: 700;
+    }
+    #wrapper #patientTableContainer #patientTable tbody td:nth-child(4):before {
+        content: 'Plan: ';
+        font-size: 1rem;
+        font-weight: 700;
+    }
+    #wrapper #patientTableContainer #patientTable tbody td:nth-child(5):before {
+        content: 'Price: ';
+        font-size: 1rem;
+        font-weight: 700;
+    }
+    #wrapper #patientTableContainer #patientTable tbody td:nth-child(6):before {
+        content: 'Order #: ';
+        font-size: 1rem;
+        font-weight: 700;
+    }
+    #wrapper #patientTableContainer #patientTable tbody td:nth-child(7):before {
+        content: 'Status: ';
+        color: black;
+        font-size: 1rem;
+        font-weight: 700;
+    }
 }
 
 @media (min-width: 576px) and (max-width: 767.98px) {
@@ -2047,6 +2153,108 @@
     #wrapper #chatProfileSec #chatHeader #chatProfile #chatProfileDesc p:nth-child(2) {
         font-size: 14px;
     }
+    #wrapper #myPatientsHeroContainer {
+        grid-row: 1 / span 1;
+        height: 30vh;
+        background-attachment: scroll;
+    }
+    #wrapper #myPatientsHeroContainer #overlay {
+        height: 30vh;
+    }
+    #wrapper #myPatientsHeroContainer #overlay #myPatientsHero {
+        padding: 3rem;
+    }
+    #wrapper #myPatientsHeroContainer #overlay #myPatientsHero h2 {
+        font-size: 2.5rem;
+    }
+    #wrapper #noPatientsAvailable {
+        grid-row: 2 / span 1;
+        padding: 7rem 3rem 7rem;
+    }
+    #wrapper #noPatientsAvailable #noPatientsMessage {
+        font-size: 1rem;
+    }
+    #wrapper #patientToolbar {
+        grid-row: 3 / span 1;
+        padding: 5rem 3rem 2rem;
+        flex-wrap: wrap;
+    }
+    #wrapper #patientToolbar p {
+        width: 100%;
+        text-align: center;
+    }
+    #wrapper #patientToolbar #searchForm {
+        width: 100%;
+        order: 3;
+        margin: 3rem 0 0;
+    }
+    #wrapper #patientTableContainer {
+        grid-row: 4 / span 1;
+        padding: 0 3rem 7rem;
+    }
+    #wrapper #patientTableContainer #patientTable thead {
+        display: none;
+    }
+    #wrapper #patientTableContainer #patientTable tbody {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+    #wrapper #patientTableContainer #patientTable tbody .tableRows {
+        display: flex;
+        flex-direction: column;
+        width: 47%;
+        padding: 2rem 1rem;
+        margin-bottom: 1.5rem;
+    }
+    #wrapper #patientTableContainer #patientTable tbody .tableRows td:first-child {
+        padding: 0.5rem;
+    }
+    #wrapper #patientTableContainer #patientTable tbody .tableRows td:last-child {
+        width: auto;
+        padding: 0.5rem;
+    }
+    #wrapper #patientTableContainer #patientTable tbody td {
+        font-size: 1rem;
+        padding: 0.5rem;
+    }
+    #wrapper #patientTableContainer #patientTable tbody td:nth-child(1):before {
+        content: 'Date: ';
+        font-size: 1rem;
+        font-weight: 700;
+    }
+    #wrapper #patientTableContainer #patientTable tbody td:nth-child(2):before {
+        content: 'Time: ';
+        font-size: 1rem;
+        font-weight: 700;
+    }
+    #wrapper #patientTableContainer #patientTable tbody td:nth-child(3):before {
+        content: 'Patient: ';
+        font-size: 1rem;
+        font-weight: 700;
+    }
+    #wrapper #patientTableContainer #patientTable tbody td:nth-child(4):before {
+        content: 'Plan: ';
+        font-size: 1rem;
+        font-weight: 700;
+    }
+    #wrapper #patientTableContainer #patientTable tbody td:nth-child(5):before {
+        content: 'Price: ';
+        font-size: 1rem;
+        font-weight: 700;
+    }
+    #wrapper #patientTableContainer #patientTable tbody td:nth-child(6):before {
+        content: 'Order #: ';
+        font-size: 1rem;
+        font-weight: 700;
+    }
+    #wrapper #patientTableContainer #patientTable tbody td:nth-child(7):before {
+        content: 'Status: ';
+        color: black;
+        font-size: 1rem;
+        font-weight: 700;
+    }
 }
 
 @media (min-width: 768px) and (max-width: 991.98px) {
@@ -2780,6 +2988,49 @@
     #wrapper #batmanEasterEgg #batmanContainer #batmanImg {
         width: 100%;
     }
+    #wrapper #myPatientsHeroContainer {
+        grid-row: 1 / span 1;
+    }
+    #wrapper #myPatientsHeroContainer #overlay #myPatientsHero {
+        padding: 5rem;
+    }
+    #wrapper #myPatientsHeroContainer #overlay #myPatientsHero h2 {
+        font-size: 3rem;
+    }
+    #wrapper #noPatientsAvailable {
+        grid-row: 2 / span 1;
+        padding: 7rem 5rem 7rem;
+    }
+    #wrapper #patientToolbar {
+        grid-row: 3 / span 1;
+        padding: 5rem 3rem 2rem;
+        flex-wrap: wrap;
+    }
+    #wrapper #patientToolbar p {
+        width: 100%;
+        text-align: center;
+    }
+    #wrapper #patientToolbar #searchForm {
+        width: 100%;
+        order: 3;
+        margin: 3rem 0 0;
+    }
+    #orderRefundModal {
+        padding-top: 25%;
+        padding-bottom: 0%;
+    }
+    #wrapper #patientTableContainer {
+        grid-row: 4 / span 1;
+        padding: 0 2.5rem 7rem;
+    }
+    #wrapper #patientTableContainer #patientTable thead #tableHeader th i {
+        padding-left: 0.5rem;
+    }
+    #wrapper #patientTableContainer #patientTable thead th,
+    #wrapper #patientTableContainer #patientTable tbody td {
+        font-size: 12px;
+        padding: 1.5rem 0.5rem;
+    }
 }
 
 @media (min-width: 992px) and (max-width: 1299.98px) {
@@ -3114,6 +3365,34 @@
     }
     #orderRefundModal #modalContent {
         width: 80%;
+    }
+    #wrapper #noPatientsAvailable {
+        padding: 10rem 5rem 5rem;
+    }
+    #wrapper #myPatientsHeroContainer #overlay #myPatientsHero {
+        padding: 5rem;
+    }  
+    #wrapper #myPatientsHeroContainer #overlay #myPatientsHero h2 {
+        font-size: 3rem;
+    }
+    #wrapper #patientToolbar {
+        padding: 5rem;
+    }
+    #wrapper #patientToolbar p {
+        width: 25%;
+    }
+    #wrapper #patientToolbar #searchForm {
+        width: 75%;
+    }
+    #wrapper #patientTableContainer {
+        padding: 0 5rem 5rem;
+    }
+    #wrapper #patientTableContainer #patientTable thead #tableHeader th i {
+        padding-left: 0.5rem;
+    }
+    #wrapper #patientTableContainer #patientTable thead th,
+    #wrapper #patientTableContainer #patientTable tbody td {
+        font-size: 14px;
     }
 }
 

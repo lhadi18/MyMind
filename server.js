@@ -189,6 +189,10 @@ app.get('/chat-session', isLoggedIn, function (req, res) {
     res.sendFile(path.resolve('html/chat-session.html'));
 });
 
+app.get('/my-patients', isLoggedIn, function (req, res) {
+    res.sendFile(path.resolve('html/my-patients.html'));
+});
+
 app.get('/checkout', isLoggedIn, isPatient, function (req, res) {
     res.sendFile(path.resolve('html/checkout.html'));
 });
