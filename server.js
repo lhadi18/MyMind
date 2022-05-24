@@ -835,9 +835,53 @@ async function usedTrial(req, res, next){
     }
 }
 
+async function sendEmails(userId, therapistId, cartInfo){
+    const transporter = nodemailer.createTransport({
+        service: 'hotmail',
+        auth: {
+            user: process.env.MAIL_USER,
+            pass: process.env.MAIL_PASS
+        }
+    });
+
+    let patientInfo = await User.findById({_id: userId});
+    let therapistInfo = await User.findById({_id: therapistId});
+    
+    const mailPatient = {
+        from: process.env.MAIL_USER, 
+        to: patientInfo.email, 
+        subject: 'Thank you for purchasing a session with MyMind!',
+        text: `We have activated a therapy session with ${therapistInfo.firstName} ${therapistInfo.lastName}. Your session will expire at ${new Date(cartInfo.expiringTime).toLocaleString('en-CA', { hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true })}, and you can view your cart history at our Order History page at any time! We hope you have a wonderful session, thank you for your time and support.`
+    };
+    transporter.sendMail(mailPatient, function(err, info) {
+        if (err) console.log(err) 
+        else console.log('Email sent to patient');
+    });
+
+    let sessionLength;
+    if(cartInfo.timeLength == 'yearPlan') sessionLength = 15;
+    else if(cartInfo.timeLength == 'threeMonthPlan') sessionLength = 10;
+    else if(cartInfo.timeLength == 'monthPlan') sessionLength = 5;
+    else sessionLength = 3;
+
+    // email to therapist -- timeout because hotmail has a limit of requests/second
+    setTimeout(()=>{
+        const mailTherapist = {
+            from: process.env.MAIL_USER, 
+            to: therapistInfo.email,
+            subject: 'You have a new patient waiting for you!',
+            text: `Your patient, ${patientInfo.firstName} ${patientInfo.lastName} has purchased a session with you for ${sessionLength} mins and is waiting to chat! Please get in contact with him as soon as possible!`
+        }
+        transporter.sendMail(mailTherapist, function(err, info) {
+            if (err) console.log(err) 
+            else console.log('Email sent to therapist');
+        });
+    }, 1500);
+}
+
 app.post('/confirmCart', isLoggedIn, usedTrial, isTherapistAvailable, (req, res) => {
     const currentDate = Date.now();
-    Cart.updateOne({
+    Cart.findOneAndUpdate({
         userId: req.session.user._id,
         status: "active"
     }, {
@@ -847,62 +891,25 @@ app.post('/confirmCart', isLoggedIn, usedTrial, isTherapistAvailable, (req, res)
             expiringTime: req.body.timeLengthforUse,
             cost: req.body.totalPrice
         }
-    }).then((obj) => {
-        console.log("Completed");
-
-        const transporter = nodemailer.createTransport({
-            service: 'hotmail',
-            auth: {
-                user: process.env.MAIL_USER,
-                pass: process.env.MAIL_PASS,
-            }
-        });
-
-        // email to patients
-        const mailPatient = {
-            from: process.env.MAIL_USER, 
-            to: 'towacurtis@gmail.com', // logged in user email (patient)
-            subject: 'Thank you for purchasing a session with MyMind!',
-            text: 'We have activated a therapy session with Jacky Chan (Hardcoded). Your session will expire at ??:?? am, and you can view your cart histor at our Order History page at any time! We hope you have a wonderful session, thank you for your time and support.'
-        };
-
-        // email to therapist
-        const mailTherapist = {
-            from: process.env.MAIL_USER, 
-            to: 'towacurtis@hotmail.com', // purchased therapist email
-            subject: 'You have a new patient waiting for you!',
-            text: 'Your patent, Towa Quimbayo has purchased a session with you for 20 mins and is waiting to chat! Please get in contact with him as soon as possible!'
-        }
-        
-        transporter.sendMail(mailPatient, function(err, info) {
-            if (err) {
-                console.log(err);
-            } else {
-                console.log('Email sent to: ' + info.response);
-            }
-        });
-
-        // transporter.sendMail(mailTherapist, function(err, info) {
-        //     if (err) {
-        //         console.log(err);
-        //     } else {
-        //         console.log('Email sent to: ' + info.response);
-        //     }
-        // });
-
-        return res.send(obj);
+    }, {new: true}).then((cart) => {
+        console.log("Updated Cart");
+        //sendEmails(req.session.user._id, req.body.therapistID, cart)
+        res.send(cart);
     }).catch(function (error) {
         console.log(error);
     })
-    User.updateOne({
-        _id: req.session.user._id
-    }, {
-        usedTrial: true
-    }).then((obj) => {
-        console.log("User used their free trial!");
-    }).catch(function (error) {
-        console.log(error);
-    })
+
+    if(req.body.cartPlan == 'freePlan'){
+        User.updateOne({
+            _id: req.session.user._id
+        }, {
+            usedTrial: true
+        }).then((obj) => {
+            console.log("User used their free trial!");
+        }).catch(function (error) {
+            console.log(error);
+        })
+    }
     incrementTherapistSessionNum(req.session.user._id);
 })
 
@@ -923,8 +930,8 @@ function incrementTherapistSessionNum(userID) {
                 $inc: {
                     numSessions: 1
                 }
-            }).then((obj) => {
-                console.log(obj)
+            }).then(() => {
+                console.log('Incremented number of sessions for therapist.')
             }).catch(function (error) {
                 console.log(error);
             })
