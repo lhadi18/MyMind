@@ -13,8 +13,7 @@ const http = require('http');
 const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server);
-
-
+const nodemailer = require('nodemailer');
 
 app.set('view engine', 'text/html');
 
@@ -850,6 +849,47 @@ app.post('/confirmCart', isLoggedIn, usedTrial, isTherapistAvailable, (req, res)
         }
     }).then((obj) => {
         console.log("Completed");
+
+        const transporter = nodemailer.createTransport({
+            service: 'hotmail',
+            auth: {
+                user: process.env.MAIL_USER,
+                pass: process.env.MAIL_PASS,
+            }
+        });
+
+        // email to patients
+        const mailPatient = {
+            from: process.env.MAIL_USER, 
+            to: 'towacurtis@gmail.com', // logged in user email (patient)
+            subject: 'Thank you for purchasing a session with MyMind!',
+            text: 'We have activated a therapy session with Jacky Chan (Hardcoded). Your session will expire at ??:?? am, and you can view your cart histor at our Order History page at any time! We hope you have a wonderful session, thank you for your time and support.'
+        };
+
+        // email to therapist
+        const mailTherapist = {
+            from: process.env.MAIL_USER, 
+            to: 'towacurtis@hotmail.com', // purchased therapist email
+            subject: 'You have a new patient waiting for you!',
+            text: 'Your patent, Towa Quimbayo has purchased a session with you for 20 mins and is waiting to chat! Please get in contact with him as soon as possible!'
+        }
+        
+        transporter.sendMail(mailPatient, function(err, info) {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log('Email sent to: ' + info.response);
+            }
+        });
+
+        // transporter.sendMail(mailTherapist, function(err, info) {
+        //     if (err) {
+        //         console.log(err);
+        //     } else {
+        //         console.log('Email sent to: ' + info.response);
+        //     }
+        // });
+
         return res.send(obj);
     }).catch(function (error) {
         console.log(error);
