@@ -1,59 +1,59 @@
 $(document).ready(async function () {
-    // await $.ajax({
-    //     url: '/getPreviousPurchases',
-    //     type: "GET",
-    //     success: function (data) {
-    //         if (data.length > 0) {
-    //             document.getElementById('noPatientsAvailable').style.display = 'none';
-    //             document.getElementById('patientToolbar').style.display = 'flex';
-    //             document.getElementById('patientTableContainer').style.display = 'flex';
+    await $.ajax({
+        url: '/getPreviousPatients',
+        type: "GET",
+        success: function (data) {
+            if (data.length > 0) {
+                document.getElementById('noPatientsAvailable').style.display = 'none';
+                document.getElementById('patientToolbar').style.display = 'flex';
+                document.getElementById('patientTableContainer').style.display = 'flex';
 
-    //             data.forEach(cartData => {
-    //                 getTherapist(cartData.therapist, therapistInfo => {
-    //                     let multiplier;
-    //                     var x = `<tr class="tableRows">`;
+                data.forEach(cartData => {
+                    getPatient(cartData.userId, cartData.therapist, patientInfo => {
+                        console.log("got here");
+                        let multiplier;
+                        var x = `<tr class="tableRows">`;
 
-    //                     let purchasedDate = new Date(cartData.purchased);
-    //                     let offSet = purchasedDate.getTimezoneOffset() * 60 * 1000;
-    //                     let tLocalISO = new Date(purchasedDate - offSet).toISOString().slice(0, 10);
-    //                     x += `<td>${tLocalISO}</td>`;
+                        let purchasedDate = new Date(cartData.purchased);
+                        let offSet = purchasedDate.getTimezoneOffset() * 60 * 1000;
+                        let tLocalISO = new Date(purchasedDate - offSet).toISOString().slice(0, 10);
+                        x += `<td>${tLocalISO}</td>`;
 
-    //                     x += `<td>${new Date(cartData.expiringTime).toLocaleString('en-CA', { hour: 'numeric', minute: 'numeric', hour12: true })}</td>`
+                        x += `<td>${new Date(cartData.purchased).toLocaleString('en-CA', { hour: 'numeric', minute: 'numeric', hour12: true })}</td>`
 
-    //                     x += `<td>${therapistInfo.fullName}</td>`
+                        x += `<td>${patientInfo.fullName}</td>`
 
-    //                     if (cartData.timeLength == 'freePlan') {
-    //                         x += `<td>Trial</td>`
-    //                         multiplier = 0;
-    //                     } else if (cartData.timeLength == 'monthPlan') {
-    //                         x += `<td>1 Month</td>`
-    //                         multiplier = 1;
-    //                     } else if (cartData.timeLength == 'threeMonthPlan') {
-    //                         x += `<td>3 Months</td>`
-    //                         multiplier = 3;
-    //                     } else {
-    //                         x += `<td>1 Year</td>`
-    //                         multiplier = 6;
-    //                     }
+                        if (cartData.timeLength == 'freePlan') {
+                            x += `<td>Trial</td>`
+                            multiplier = 0;
+                        } else if (cartData.timeLength == 'monthPlan') {
+                            x += `<td>1 Month</td>`
+                            multiplier = 1;
+                        } else if (cartData.timeLength == 'threeMonthPlan') {
+                            x += `<td>3 Months</td>`
+                            multiplier = 3;
+                        } else {
+                            x += `<td>1 Year</td>`
+                            multiplier = 6;
+                        }
+                        x += `<td>$${parseFloat(patientInfo.sessionCost * multiplier * 1.12).toFixed(2)}</td>`
+                        x += `<td>${cartData.orderId}</td>`
 
-    //                     x += `<td>$${parseFloat(therapistInfo.sessionCost * multiplier * 1.12).toFixed(2)}</td>`
-    //                     x += `<td>${cartData.orderId}</td>`
-
-    //                     if (cartData.status == "refunded") {
-    //                         x += `<td>Refunded</td>`
-    //                     } else if (new Date(cartData.expiringTime) > new Date()) {
-    //                         x += `<td class="activeStatus">Active</td>`
-    //                     } else {
-    //                         x += `<td class="expiredStatus">Expired</td>`
-    //                     }
-    //                     x += `</tr>`
-    //                     $("tbody").append(x);
-    //                 });
-    //             });
-    //             document.getElementById("resultsFound").innerHTML = data.length;
-    //         }
-    //     }
-    // });
+                        if (cartData.status == "refunded") {
+                            x += `<td>Refunded</td>`
+                        } else if (new Date(cartData.expiringTime) > new Date()) {
+                            x += `<td class="activeStatus">Active</td>`
+                        } else {
+                            x += `<td class="expiredStatus">Expired</td>`
+                        }
+                        x += `</tr>`
+                        $("tbody").append(x);
+                    });
+                });
+                document.getElementById("resultsFound").innerHTML = data.length;
+            }
+        }
+    });
 
     // Set the caret icons faced down by default
     document.getElementById('0').setAttribute("class", "bi bi-caret-down-fill");
@@ -68,20 +68,29 @@ $(document).ready(async function () {
     sortTable();
 });
 
-function getTherapist(therapistId, callback) {
-    let therapistInfo;
+function getPatient(userId, therapistId, callback) {
+    let patientInfo;
     $.ajax({
-        url: '/getTherapistInfo',
+        url: '/getPatientInfo',
         method: "POST",
         data: {
-            therapistId: therapistId
+            _id: userId
         },
-        success: function (therapist) {
-            therapistInfo = {
-                fullName: `${therapist.firstName.charAt(0)}. ${therapist.lastName}`,
-                sessionCost: therapist.sessionCost
+        success: function (patient) {
+            patientInfo = {
+                fullName: `${patient.firstName.charAt(0)}. ${patient.lastName}`
             }
-            callback(therapistInfo);
+            $.ajax({
+                url: '/getTherapistInfo',
+                method: "POST",
+                data: {
+                    therapistId: therapistId
+                },
+                success: function (therapist) {
+                    patientInfo.sessionCost = therapist.sessionCost;
+                    callback(patientInfo);
+                }
+            })
         }
     })
 }

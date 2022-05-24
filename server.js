@@ -102,7 +102,7 @@ async function hasRecentlyPurchased(req, res, next) {
     }
 }
 
-async function isTherapistAvailable(req, res, next){
+async function isTherapistAvailable(req, res, next) {
     console.log(req.body.therapistID)
     var currentTime = new Date();
     let orderExists = await Cart.exists({
@@ -228,7 +228,19 @@ app.get('/chat-session2', isLoggedIn, setHeaders, (req, res) => {
 app.get('/getUserInfo', isLoggedIn, setHeaders, (req, res) => {
     let userId = req.session.user._id;
     User.findById({
-        _id: userId
+            _id: userId,
+    }, function (err, user) {
+        if (err) console.log(err)
+        if (user) {
+            res.json(user);
+        }
+    })
+})
+
+app.post('/getPatientInfo', isLoggedIn, setHeaders, (req, res) => {
+    let userId = req.body._id
+    User.findById({
+            _id: userId,
     }, function (err, user) {
         if (err) console.log(err)
         if (user) {
@@ -260,10 +272,10 @@ app.get('/getTherapists', (req, res) => {
         if (err) console.log(err)
         if (user) {
             var existingSession;
-            for(let i = 0; i < user.length; i++) {
+            for (let i = 0; i < user.length; i++) {
                 existingSession = await therapistHasActiveSession(user[i])
-                if(existingSession) {
-                    user.splice(i , 1);
+                if (existingSession) {
+                    user.splice(i, 1);
                 }
             }
             return res.json(user)
@@ -822,7 +834,7 @@ app.delete('/deleteCart', isLoggedIn, async (req, res) => {
 })
 
 // MiddleWare for checkout
-async function usedTrial(req, res, next){
+async function usedTrial(req, res, next) {
     var trialStatus;
     if (req.body.cartPlan == "freePlan") {
         trialStatus = await User.exists({
@@ -839,7 +851,7 @@ async function usedTrial(req, res, next){
     }
 }
 
-async function sendEmails(userId, therapistId, cartInfo){
+async function sendEmails(userId, therapistId, cartInfo) {
     const transporter = nodemailer.createTransport({
         service: 'hotmail',
         auth: {
@@ -848,36 +860,36 @@ async function sendEmails(userId, therapistId, cartInfo){
         }
     });
 
-    let patientInfo = await User.findById({_id: userId});
-    let therapistInfo = await User.findById({_id: therapistId});
-    
+    let patientInfo = await User.findById({ _id: userId });
+    let therapistInfo = await User.findById({ _id: therapistId });
+
     const mailPatient = {
-        from: process.env.MAIL_USER, 
-        to: patientInfo.email, 
+        from: process.env.MAIL_USER,
+        to: patientInfo.email,
         subject: 'Thank you for purchasing a session with MyMind!',
         text: `We have activated a therapy session with ${therapistInfo.firstName} ${therapistInfo.lastName}. Your session will expire at ${new Date(cartInfo.expiringTime).toLocaleString('en-CA', { hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true })}, and you can view your cart history at our Order History page at any time! We hope you have a wonderful session, thank you for your time and support.`
     };
-    transporter.sendMail(mailPatient, function(err, info) {
-        if (err) console.log(err) 
+    transporter.sendMail(mailPatient, function (err, info) {
+        if (err) console.log(err)
         else console.log('Email sent to patient');
     });
 
     let sessionLength;
-    if(cartInfo.timeLength == 'yearPlan') sessionLength = 15;
-    else if(cartInfo.timeLength == 'threeMonthPlan') sessionLength = 10;
-    else if(cartInfo.timeLength == 'monthPlan') sessionLength = 5;
+    if (cartInfo.timeLength == 'yearPlan') sessionLength = 15;
+    else if (cartInfo.timeLength == 'threeMonthPlan') sessionLength = 10;
+    else if (cartInfo.timeLength == 'monthPlan') sessionLength = 5;
     else sessionLength = 3;
 
     // email to therapist -- timeout because hotmail has a limit of requests/second
-    setTimeout(()=>{
+    setTimeout(() => {
         const mailTherapist = {
-            from: process.env.MAIL_USER, 
+            from: process.env.MAIL_USER,
             to: therapistInfo.email,
             subject: 'You have a new patient waiting for you!',
             text: `Your patient, ${patientInfo.firstName} ${patientInfo.lastName} has purchased a session with you for ${sessionLength} mins and is waiting to chat! Please get in contact with him as soon as possible!`
         }
-        transporter.sendMail(mailTherapist, function(err, info) {
-            if (err) console.log(err) 
+        transporter.sendMail(mailTherapist, function (err, info) {
+            if (err) console.log(err)
             else console.log('Email sent to therapist');
         });
     }, 1500);
@@ -895,7 +907,7 @@ app.post('/confirmCart', isLoggedIn, usedTrial, isTherapistAvailable, (req, res)
             expiringTime: req.body.timeLengthforUse,
             cost: req.body.totalPrice
         }
-    }, {new: true}).then((cart) => {
+    }, { new: true }).then((cart) => {
         console.log("Updated Cart");
         //sendEmails(req.session.user._id, req.body.therapistID, cart)
         res.send(cart);
@@ -903,7 +915,7 @@ app.post('/confirmCart', isLoggedIn, usedTrial, isTherapistAvailable, (req, res)
         console.log(error);
     })
 
-    if(req.body.cartPlan == 'freePlan'){
+    if (req.body.cartPlan == 'freePlan') {
         User.updateOne({
             _id: req.session.user._id
         }, {
@@ -959,6 +971,24 @@ app.put('/updateCart', isLoggedIn, async (req, res) => {
 app.get('/getPreviousPurchases', isLoggedIn, (req, res) => {
     Cart.find({
         userId: req.session.user._id,
+        $or: [{
+            status: "completed",
+        }, {
+            status: "refunded",
+        }]
+    }, function (err, carts) {
+        if (err) {
+            console.log('Error searching cart.', err);
+        }
+        if (carts) {
+            res.json(carts);
+        }
+    });
+})
+
+app.get('/getPreviousPatients', isLoggedIn, (req, res) => {
+    Cart.find({
+        therapist: req.session.user._id,
         $or: [{
             status: "completed",
         }, {
@@ -1093,7 +1123,7 @@ io.on('connection', (socket) => {
 });
 
 app.get('/activeChatSession', (req, res) => {
-    if(!req.session.isLoggedIn) {
+    if (!req.session.isLoggedIn) {
         return res.json('notLoggedIn');
     }
     var currentTime = new Date();
