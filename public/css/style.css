@@ -343,7 +343,7 @@ body::-webkit-scrollbar-thumb {
     color: black;
 }
 
-.isTherapist, .isPatient, .isLoggedIn, .isLoggedOut, .isAdmin {
+.isTherapist, .isPatient, .isLoggedIn, .isLoggedOut, .isAdmin, .hasActiveSession{
     display: none;
 }
 

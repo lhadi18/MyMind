@@ -102,6 +102,25 @@ async function hasRecentlyPurchased(req, res, next) {
     }
 }
 
+async function hasActiveSession(req, res, next) {
+    var currentTime = new Date();
+
+    var patientActiveSession = await Cart.exists({
+        therapist: req.session.user._id,
+        status: "completed",
+        expiringTime: {
+            $gt: currentTime
+        }
+    })
+
+    console.log(patientActiveSession)
+    if (patientActiveSession) {
+        return next();
+    } else {
+        return res.redirect('/');
+    }
+}
+
 async function isTherapistAvailable(req, res, next) {
     console.log(req.body.therapistID)
     var currentTime = new Date();
@@ -185,7 +204,7 @@ app.get('/therapists', function (req, res) {
     res.sendFile(path.resolve('html/therapists.html'));
 });
 
-app.get('/chat-session', isLoggedIn, function (req, res) {
+app.get('/chat-session', isLoggedIn, hasActiveSession, function (req, res) {
     res.sendFile(path.resolve('html/chat-session.html'));
 });
 
@@ -219,10 +238,6 @@ app.get("/login", isLoggedOut, setHeaders, (req, res) => {
 
 app.get('/admin-dashboard', isLoggedIn, isAdmin, setHeaders, (req, res) => {
     res.sendFile(path.resolve('html/admin-dashboard.html'))
-});
-
-app.get('/chat-session2', isLoggedIn, setHeaders, (req, res) => {
-    res.sendFile(path.resolve('public/chat-session2.html'))
 });
 
 app.get('/getUserInfo', isLoggedIn, setHeaders, (req, res) => {

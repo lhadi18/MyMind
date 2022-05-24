@@ -125,6 +125,9 @@ $(document).ready(function () {
         if (data == "NoActiveSession" || data == "notLoggedIn") {
             $('#therapistChat').hide();
         } else {
+            let therapistEls = document.querySelectorAll(".hasActiveSession");
+            for (var x = 0; x < therapistEls.length; x++)
+                therapistEls[x].style.display = 'list-item';
             if (window.location.pathname != '/chat-session' && document.body.clientWidth < 992) {
                 $('#therapistChat').hide();
             } else {
