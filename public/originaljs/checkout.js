@@ -29,6 +29,7 @@ function getTherapist(therapistId) {
             $('#therapistDesc').text(`${therapist.yearsExperience} years of experience in the profession, and offers $${therapist.sessionCost} per session`)
             $('#therapistImg').attr('src', `${therapist.profileImg}`)
             therapistInformation = therapist;
+            therapistInformation._id = therapistId;
             if ($('#cartPlan').val() == "freePlan") {
                 $("#cartCost").html(`0.00`)
                 $("#subTotal").html(`$0.00`)
@@ -167,9 +168,9 @@ document.getElementById('confirmOrder').onclick = function () {
             therapistID: therapistInformation._id
         },
         success: function (data) {
-            if (data == "usedTrial") {
+            if (data.errorMsg) {
                 checkoutErrorMsg.style.display = 'block';
-                checkoutErrorMsg.innerHTML = "You have already used your free trial.";
+                checkoutErrorMsg.innerHTML = data.errorMsg;
             } else {
                 checkoutErrorMsg.style.display = 'none';
                 document.getElementById('signupSuccessModal').style.display = 'flex';

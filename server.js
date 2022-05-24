@@ -103,6 +103,27 @@ async function hasRecentlyPurchased(req, res, next) {
     }
 }
 
+async function isTherapistAvailable(req, res, next){
+    console.log(req.body.therapistID)
+    var currentTime = new Date();
+    let orderExists = await Cart.exists({
+        therapist: req.body.therapistID,
+        status: "completed",
+        expiringTime: {
+            $gt: currentTime
+        }
+    })
+    console.log(orderExists)
+    if (orderExists) {
+        return res.json({
+            errorMsg: "Therapist is currently busy. Please delete him from your cart or wait until they become available again."
+        });
+    } else {
+        return next();
+    }
+
+}
+
 function isPatient(req, res, next) {
     if (req.session.user.userType == 'patient') {
         return next();
@@ -791,18 +812,25 @@ app.delete('/deleteCart', isLoggedIn, async (req, res) => {
     })
 })
 
-
-app.post('/confirmCart', isLoggedIn, async (req, res) => {
+// MiddleWare for checkout
+async function usedTrial(req, res, next){
+    var trialStatus;
     if (req.body.cartPlan == "freePlan") {
-        var trialStatus = await User.exists({
+        trialStatus = await User.exists({
             _id: req.session.user._id,
             usedTrial: true
         })
     }
     if (trialStatus) {
-        return res.send("usedTrial");
+        return res.json({
+            errorMsg: "You have already used your free trial."
+        });
+    } else {
+        return next();
     }
+}
 
+app.post('/confirmCart', isLoggedIn, usedTrial, isTherapistAvailable, (req, res) => {
     const currentDate = Date.now();
     Cart.updateOne({
         userId: req.session.user._id,
