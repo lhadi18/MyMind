@@ -194,6 +194,14 @@ app.get('/checkout', isLoggedIn, isPatient, function (req, res) {
     res.sendFile(path.resolve('html/checkout.html'));
 });
 
+app.get('/privacypolicy', function (req, res) {
+    res.sendFile(path.resolve('html/privacypolicy.html'));
+});
+
+app.get('/termsandconditions', function (req, res) {
+    res.sendFile(path.resolve('html/termsandconditions.html'));
+});
+
 app.get('/order-history', isLoggedIn, isPatient, function (req, res) {
     res.sendFile(path.resolve('html/order-history.html'));
 });
@@ -243,14 +251,12 @@ async function therapistHasActiveSession(therapistInfo) {
 }
 
 app.get('/getTherapists', (req, res) => {
-    var allTherapists;
     User.find({
         userType: "therapist"
     }, async function (err, user) {
         if (err) console.log(err)
         if (user) {
             var existingSession;
-            
             for(let i = 0; i < user.length; i++) {
                 existingSession = await therapistHasActiveSession(user[i])
                 if(existingSession) {
