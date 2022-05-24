@@ -1191,6 +1191,10 @@ app.post('/loadMsgs', function (req, res) {
 
 })
 
+app.get("*",(req, res) => {
+    res.sendFile(path.resolve('html/404.html'))
+});
+
 server.listen(process.env.PORT || 8000, () => {
     console.log('listening on port:8000');
 });
