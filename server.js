@@ -881,7 +881,14 @@ async function sendEmails(userId, therapistId, cartInfo) {
         from: process.env.MAIL_USER,
         to: patientInfo.email,
         subject: 'Thank you for purchasing a session with MyMind!',
-        text: `We have activated a therapy session with ${therapistInfo.firstName} ${therapistInfo.lastName}. Your session will expire at ${new Date(cartInfo.expiringTime).toLocaleString('en-CA', { hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true })}, and you can view your cart history at our Order History page at any time! We hope you have a wonderful session, thank you for your time and support.`
+        // text: `We have activated a therapy session with ${therapistInfo.firstName} ${therapistInfo.lastName}. Your session will expire at ${new Date(cartInfo.expiringTime).toLocaleString('en-CA', { hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true })}, and you can view your cart history at our Order History page at any time! We hope you have a wonderful session, thank you for your time and support.`
+        html: `<img src="https://imgur.com/2id2jly"><h1>DOLLARS DOLLARS!</h1><p>We have activated a therapy session with ${therapistInfo.firstName} ${therapistInfo.lastName}. Your session will expire at ${new Date(cartInfo.expiringTime).toLocaleString('en-CA', { hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true })}, and you can view your cart history at our Order History page at any time! We hope you have a wonderful session, thank you for your time and support.</p>`,
+    //     attachments: [{
+    //         filename: 'image.png',
+    //         path: '/path/to/file',
+    //         cid: 'unique@kreata.ee' //same cid value as in the html img src
+    //     }]
+    // }
     };
     transporter.sendMail(mailPatient, function (err, info) {
         if (err) console.log(err)
@@ -923,7 +930,8 @@ app.post('/confirmCart', isLoggedIn, usedTrial, isTherapistAvailable, (req, res)
         }
     }, { new: true }).then((cart) => {
         console.log("Updated Cart");
-        //sendEmails(req.session.user._id, req.body.therapistID, cart)
+        sendEmails(req.session.user._id, req.body.therapistID, cart)
+        incrementTherapistSessionNum(req.session.user._id);
         res.send(cart);
     }).catch(function (error) {
         console.log(error);
@@ -940,7 +948,6 @@ app.post('/confirmCart', isLoggedIn, usedTrial, isTherapistAvailable, (req, res)
             console.log(error);
         })
     }
-    incrementTherapistSessionNum(req.session.user._id);
 })
 
 function incrementTherapistSessionNum(userID) {
