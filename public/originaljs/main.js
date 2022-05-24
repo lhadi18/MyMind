@@ -344,7 +344,7 @@ $(document).ready(function () {
 
     function sendNewMessage() {
         var userInput = $('#chatbox');
-        var newMessage = userInput.val();
+        var newMessage = userInput.val().trim();
 
         if (!newMessage) {
             userInput.focus();
