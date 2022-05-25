@@ -3,7 +3,7 @@ const navToggle = document.getElementById('nav-toggle');
 const navClose = document.getElementById('nav-close');
 const navLink = document.querySelectorAll('.nav-link');
 var socket = io();
-
+const chatExpiredModal = document.getElementById('chatExpiredModal');
 
 $(document).ready(function () {
 
@@ -196,14 +196,22 @@ $(document).ready(function () {
                 if (diffMins == 0 && diffSecs != 0) {
                     $("#sessionTimer").text('Session expires in ' + diffSecs + 's');
                 } else if (diffMins == 0 && diffSecs == 0) {
-                    // add modal later to inform the user that chat expired
-                    location.reload();
+                    $("#sessionTimer").text('Chat ended');
+                    var textInput = element.find('#chatbox');
+                    textInput.keydown(onMetaAndEnter).prop("disabled", true).focus();
+                    document.getElementById('sendMessage').style.backgroundColor = '#858585';
+                    chatExpiredModal.style.display = 'block';
                 } else {
                     $("#sessionTimer").text('Session expires in ' + diffMins + 'm ' + diffSecs + 's');
                 }
-                //console.log(new Date(data.purchased).toLocaleString('en-CA', { hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true }))
             }
         })
+    }
+
+    // If cancel button is clicked, hide modal for Delete User
+    document.getElementById("closeChatExpired").onclick = function () {
+        chatExpiredModal.style.display = "none";
+        document.body.style.overflow = 'auto';
     }
 
     // activityWatcher();
@@ -256,22 +264,6 @@ $(document).ready(function () {
         }).on("input", function () {
             this.style.height = (this.scrollHeight + 2) + "px";
         });
-
-        // userInput.focus(function () {
-        //     if ($(this).val() === "Message ...") {
-        //         $(this).val("").focus();
-        //         this.setAttribute("style", `${this.scrollHeight + 2}px`);
-        //     }
-        // });
-        // userInput.blur(function () {
-        //     if ($(this).val() === "") {
-        //         $(this).val("Message ...");
-        //         this.setAttribute("style", `${this.scrollHeight + 2}px`);
-        //     }
-        // });
-        // userInput.blur();
-
-
     } else {
         // Chat Box for desktop
         var element = $('#therapistChat');
@@ -302,20 +294,6 @@ $(document).ready(function () {
             }).on("input", function () {
                 this.style.height = (this.scrollHeight + 2) + "px";
             });
-
-            // userInput.focus(function () {
-            //     if ($(this).val() === "Message ...") {
-            //         $(this).val("").focus();
-            //         this.setAttribute("style", `${this.scrollHeight + 2}px`);
-            //     }
-            // });
-            // userInput.blur(function () {
-            //     if ($(this).val() === "") {
-            //         $(this).val("Message ...");
-            //         this.setAttribute("style", `${this.scrollHeight + 2}px`);
-            //     }
-            // });
-            // userInput.blur();
         }
 
         function closeElement() {

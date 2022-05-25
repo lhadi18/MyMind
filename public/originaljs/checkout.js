@@ -199,7 +199,9 @@ function printInvoice() {
     printWindow.document.write('</div></div></body></html>');
     printWindow.document.close();
 
-    printWindow.focus();
-    printWindow.print();
+    setTimeout(() => {
+        printWindow.focus();
+        printWindow.print();
+    }, 1000);
     return false;
 }

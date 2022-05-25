@@ -863,6 +863,23 @@
     #wrapper #notAuthorizedModal #modalContent #closeAuthorized {
         right: 1.5rem;
     }
+    #wrapper #chatExpiredModal {
+        margin-top: 3%;
+    }
+    #wrapper #chatExpiredModal #modalContent {
+        width: 90%;
+        padding: 1rem;
+    }
+    #wrapper #chatExpiredModal #modalContent #chatExpiredModalMessage {
+        max-width: 90%;
+    }
+    #wrapper #chatExpiredModal #modalContent #chatExpiredModalMessage h2,
+    #wrapper #chatExpiredModal #modalContent #chatExpiredModalMessage p {
+        font-size: 14px;
+    }
+    #wrapper #chatExpiredModal #modalContent #closeChatExpired {
+        right: 1.5rem;
+    }
     #removeOrderModal {
         padding-top: 70%;
         padding-bottom: 0%;
@@ -1965,6 +1982,20 @@
     #wrapper #notAuthorizedModal #modalContent #closeAuthorized {
         right: 1.5rem;
     }
+    #wrapper #chatExpiredModal {
+        margin-top: 3%;
+    }
+    #wrapper #chatExpiredModal #modalContent {
+        width: 90%;
+        padding: 1rem 1.5rem;
+    }
+    #wrapper #chatExpiredModal #modalContent #chatExpiredModalMessage h2,
+    #wrapper #chatExpiredModal #modalContent #chatExpiredModalMessage p {
+        font-size: 14px;
+    }
+    #wrapper #chatExpiredModal #modalContent #closeChatExpired {
+        right: 1.5rem;
+    }
     #removeOrderModal {
         padding-top: 30%;
         padding-bottom: 0%;
@@ -2875,6 +2906,15 @@
         width: 90%;
     }
     #wrapper #notAuthorizedModal #modalContent #closeAuthorized {
+        right: 2rem;
+    }
+    #wrapper #chatExpiredModal {
+        margin-top: 3%;
+    }
+    #wrapper #chatExpiredModal #modalContent {
+        width: 90%;
+    }
+    #wrapper #chatExpiredModal #modalContent #closeChatExpired {
         right: 2rem;
     }
     #removeOrderModal {
