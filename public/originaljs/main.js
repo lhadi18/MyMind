@@ -3,7 +3,7 @@ const navToggle = document.getElementById('nav-toggle');
 const navClose = document.getElementById('nav-close');
 const navLink = document.querySelectorAll('.nav-link');
 var socket = io();
-
+const chatExpiredModal = document.getElementById('chatExpiredModal');
 
 $(document).ready(function () {
 
@@ -125,6 +125,9 @@ $(document).ready(function () {
         if (data == "NoActiveSession" || data == "notLoggedIn") {
             $('#therapistChat').hide();
         } else {
+            let therapistEls = document.querySelectorAll(".hasActiveSession");
+            for (var x = 0; x < therapistEls.length; x++)
+                therapistEls[x].style.display = 'list-item';
             if (window.location.pathname != '/chat-session' && document.body.clientWidth < 992) {
                 $('#therapistChat').hide();
             } else {
@@ -165,7 +168,7 @@ $(document).ready(function () {
                 orderId = data.orderId;
                 socket.on("chat message", (msg) => {
                     var messagesContainer = $('#chatMessages');
-    
+
                     messagesContainer.append([
                         `<li class="other" data-before="Sent at ${new Date().toLocaleString('en-CA', { hour: 'numeric', minute: 'numeric', hour12: true })}">`,
                         msg.message,
@@ -198,7 +201,7 @@ $(document).ready(function () {
             if (data != "NoActiveSession" && data != "notLoggedIn") {
                 var currDate = new Date();
                 var expiringDate = new Date(data.purchased);
-                var diffTime = Math.abs((expiringDate.getTime() - currDate.getTime())/ 1000);
+                var diffTime = Math.abs((expiringDate.getTime() - currDate.getTime()) / 1000);
                 var diffHours = Math.floor(diffTime / 3600) % 24;
                 diffTime -= diffHours * 3600;
                 var diffMins = Math.floor(diffTime / 60) % 60;
@@ -206,16 +209,54 @@ $(document).ready(function () {
                 var diffSecs = Math.floor(diffTime % 60);
                 if (diffMins == 0 && diffSecs != 0) {
                     $("#sessionTimer").text('Session expires in ' + diffSecs + 's');
-                } else if (diffMins == 0 && diffSecs == 0) { 
-                    // add modal later to inform the user that chat expired
-                    location.reload();
+                } else if (diffMins == 0 && diffSecs == 0) {
+                    $("#sessionTimer").text('Chat ended');
+                    var textInput = element.find('#chatbox');
+                    textInput.keydown(onMetaAndEnter).prop("disabled", true).focus();
+                    document.getElementById('sendMessage').style.backgroundColor = '#858585';
+                    chatExpiredModal.style.display = 'block';
                 } else {
                     $("#sessionTimer").text('Session expires in ' + diffMins + 'm ' + diffSecs + 's');
                 }
-                console.log(new Date(data.purchased).toLocaleString('en-CA', { hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true }))
             }
         })
     }
+
+    // If cancel button is clicked, hide modal for Delete User
+    document.getElementById("closeChatExpired").onclick = function () {
+        chatExpiredModal.style.display = "none";
+        document.body.style.overflow = 'auto';
+    }
+
+    // activityWatcher();
+
+    // function activityWatcher() {
+    //     var secondsSinceLastActivity = 0;
+    //     var maxInactivity = (10); // 60 * 5
+
+    //     setInterval(function () {
+    //         secondsSinceLastActivity++;
+    //         console.log(secondsSinceLastActivity + ' seconds since the user was last active');
+    //         if (secondsSinceLastActivity > maxInactivity) {
+    //             console.log('User has been inactive for more than ' + maxInactivity + ' seconds');
+    //             $('#chatActiveState').text('Inactive');
+    //         }
+    //     }, 1000);
+
+    //     function activity() {
+    //         $('#chatActiveState').text('Active Now');
+    //         secondsSinceLastActivity = 0;
+    //     }
+
+    //     var activityEvents = [
+    //         'mousedown', 'mousemove', 'mouseup', 'keydown', 'scroll', 'touchstart',
+    //         'click', 'keypress', 'keyup', 'submit', 'change', 'mouseenter', 'resize', 'dblclick'
+    //     ];
+
+    //     activityEvents.forEach(function (e) {
+    //         document.addEventListener(e, activity, true);
+    //     });
+    // }
 
     // Chat Page for mobile
     if (window.location.pathname == '/chat-session') {
@@ -227,7 +268,7 @@ $(document).ready(function () {
         messages.scrollTop(messages.prop("scrollHeight"));
 
 
-        $(document).on('click', '.self, .other', function(){
+        $(document).on('click', '.self, .other', function () {
             $(this).toggleClass('showTime');
         });
 
@@ -237,22 +278,6 @@ $(document).ready(function () {
         }).on("input", function () {
             this.style.height = (this.scrollHeight + 2) + "px";
         });
-
-        // userInput.focus(function () {
-        //     if ($(this).val() === "Message ...") {
-        //         $(this).val("").focus();
-        //         this.setAttribute("style", `${this.scrollHeight + 2}px`);
-        //     }
-        // });
-        // userInput.blur(function () {
-        //     if ($(this).val() === "") {
-        //         $(this).val("Message ...");
-        //         this.setAttribute("style", `${this.scrollHeight + 2}px`);
-        //     }
-        // });
-        // userInput.blur();
-
-        
     } else {
         // Chat Box for desktop
         var element = $('#therapistChat');
@@ -274,7 +299,7 @@ $(document).ready(function () {
             messages.scrollTop(messages.prop("scrollHeight"));
 
 
-            $(document).on('click', '.self, .other', function(){
+            $(document).on('click', '.self, .other', function () {
                 $(this).toggleClass('showTime');
             });
 
@@ -283,20 +308,6 @@ $(document).ready(function () {
             }).on("input", function () {
                 this.style.height = (this.scrollHeight + 2) + "px";
             });
-
-            // userInput.focus(function () {
-            //     if ($(this).val() === "Message ...") {
-            //         $(this).val("").focus();
-            //         this.setAttribute("style", `${this.scrollHeight + 2}px`);
-            //     }
-            // });
-            // userInput.blur(function () {
-            //     if ($(this).val() === "") {
-            //         $(this).val("Message ...");
-            //         this.setAttribute("style", `${this.scrollHeight + 2}px`);
-            //     }
-            // });
-            // userInput.blur();
         }
 
         function closeElement() {
@@ -325,12 +336,12 @@ $(document).ready(function () {
 
     function sendNewMessage() {
         var userInput = $('#chatbox');
-        var newMessage = userInput.val();
+        var newMessage = userInput.val().trim();
 
         if (!newMessage) {
             userInput.focus();
             return;
-        } 
+        }
 
         socket.emit('chat message', newMessage, orderId);
 

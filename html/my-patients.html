@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="COMP 2800 - MyMind" />
 
-    <title>MyMind - Therapists</title>
+    <title>MyMind - My Patients</title>
 
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="../images/logo.svg" />
@@ -27,7 +27,7 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" type="text/css" href="../css/style.css" />
-    <link rel="stylesheet" type="text/css" href="../css/therapists.css" />
+    <link rel="stylesheet" type="text/css" href="../css/my-patients.css" />
     <link rel="stylesheet" type="text/css" href="../css/responsive.css" />
 </head>
 
@@ -74,7 +74,7 @@
                                 <i class="fa-solid fa-users-gear nav-icon"></i>Admin Dashboard
                             </a>
                         </li>
-                        <li class="nav-item hasActiveSession">
+                        <li class="nav-item isLoggedIn">
                             <a href="/chat-session" class="nav-link">
                                 <i class="bi bi-chat-left-dots nav-icon"></i>Chat Session
                             </a>
@@ -115,56 +115,42 @@
             </nav>
         </header>
 
-        <div id="bannerTherapist">
+        <div id="myPatientsHeroContainer">
             <div id="overlay">
-                <div id="therapistHeader">
-                    <h2>Therapy Sessions</h2>
+                <div id="myPatientsHero">
+                    <h2>My Patients</h2>
                 </div>
             </div>
         </div>
 
-        <div id="therapistListSec">
-            <h2>Available Therapists</h2>
-            <h4>Choose a therapy session to get started!</h4>
-            <div id="therapistList"></div>
+        <div id="noPatientsAvailable">
+            <p id="noPatientsMessage">No patients have placed an order with you yet. Please wait and check your email
+                frequenty for any future patients that book a session with you.</p>
         </div>
 
-        <!-- Cart Exist Modal -->
-        <div id="cartExistModal">
-            <div id="modalContent">
-                <i class="fa-solid fa-xmark" id="closeCart"></i>
-                <div id="alertIcon">
-                    <i class="bi bi-bag-check-fill"></i>
-                </div>
-                <h2>Cart is full!</h2>
-                <p>You already have a therapist added to your cart, empty your cart at <a href="/checkout">Checkout</a>
-                    to proceed.</p>
-            </div>
+        <div id="patientToolbar">
+            <p>Results Found: <span id="boldResults"><span id="resultsFound"></span> Patient(s)</span></p>
+            <form id="searchForm">
+                <input type="text" id="searchbar" onkeypress="return event.keyCode != 13;" onkeyup="searchTable()"
+                    placeholder="Search..." />
+            </form>
         </div>
 
-        <!-- Active Therapy Session Exist Modal -->
-        <div id="therapySessionExistModal">
-            <div id="modalContent">
-                <i class="fa-solid fa-xmark" id="closeSession"></i>
-                <div id="alertIcon">
-                    <i class="bi bi-exclamation-triangle-fill"></i>
-                </div>
-                <h2>Hold on there!</h2>
-                <p>You currently have an active session with your therapist, <span id="therapistName"></span>
-                    Your session expires on <span id="expireDate"></span> at <span id="expireTime"></span></p>
-            </div>
-        </div>
-
-        <!-- Not Authorized to Purchase Modal -->
-        <div id="notAuthorizedModal">
-            <div id="modalContent">
-                <div id="authorizedModalMessage">
-                    <h2>Not authorized to purchase!</h2>
-                    <p>To purchase a therapist, please <a href="/login">Login</a> or <a href="/sign-up">Sign Up</a> as a
-                        patient.</p>
-                </div>
-                <i class="fa-solid fa-xmark" id="closeAuthorized"></i>
-            </div>
+        <div id="patientTableContainer">
+            <table id="patientTable">
+                <thead>
+                    <tr id="tableHeader">
+                        <th data-type="string" class="tHead">Purchased Date<i id="0"></i></th>
+                        <th class="tHead">Purchased Time<i id="1"></i></th>
+                        <th class="tHead">Patient<i id="2"></i></th>
+                        <th data-type="plan" class="tHead">Plan<i id="3"></i></th>
+                        <th data-type="number" class="tHead">Price<i id="4"></i></th>
+                        <th class="tHead">Order #<i id="5"></i></th>
+                        <th class="tHead">Status<i id="6"></i></th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
         </div>
 
         <!-- Chat Expired Modal -->
@@ -186,7 +172,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="../js/main.js"></script>
-    <script src="../js/therapists.js"></script>
+    <script src="../js/my-patients.js"></script>
 </body>
 
 </html>

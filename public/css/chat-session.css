@@ -240,6 +240,7 @@
     left: 0;
     right: 0;
     padding: 1rem 3rem;
+    z-index: 2;
 }
 
 #wrapper #sendMessageContainer #chatbox {

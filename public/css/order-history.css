@@ -3,7 +3,7 @@
     --secondaryColor: #00A98B;
 }
 
-/* Admin Dashboard Page */
+/* Order History Page */
 #wrapper #orderHistoryHeroContainer {
     grid-column: 1 / span 4;
     grid-row: 2 / span 1;

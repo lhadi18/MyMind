@@ -4,7 +4,7 @@ const notAuthorizedModal = document.getElementById('notAuthorizedModal');
 
 var currentURL = window.location.href;
 if (currentURL !=  window.location.origin + '/therapists') {
-    setTimeout("window.location=currentURL", 200);
+    setTimeout("window.location=currentURL", 500);
 }
 
 $(document).ready(async function () {
@@ -43,7 +43,6 @@ $(document).ready(async function () {
                     $.get('/isLoggedIn', function (user) {
                         if (user.userType != 'patient') {
                             notAuthorizedModal.style.display = 'block';
-                            // therapistBtns[i].disabled = true;
                             btn.title = "Only patients can purchase therapy sessions."
                             btn.style.cursor = "context-menu";
                         } else {
