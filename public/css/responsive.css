@@ -92,7 +92,7 @@
         background: rgba(2, 105, 86, 0.2);
     }
     #wrapper #bannerHome #overlay #homeHeader {
-        padding: 0 3rem 10rem;
+        padding: 0 3rem 7rem;
         justify-content: end;
         width: 100%;
     }
@@ -1211,6 +1211,27 @@
         color: black;
         font-size: 1rem;
         font-weight: 700;
+    #wrapper #ErrorContainer {
+        padding: 5rem 3rem 7rem;
+        grid-row: 1 / span 1;
+    }
+    #wrapper #ErrorContainer #ErrorHeading h1 { 
+        font-size: 7rem;
+    }
+    #wrapper #ErrorContainer #ErrorHeading img {
+        width: 8rem;
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+    }
+    #wrapper #ErrorContainer h2 {
+        font-size: 1.2rem;
+    }
+    #wrapper #ErrorContainer p {
+        font-size: 1rem;
+    }
+    #wrapper #ErrorContainer #returnSection a {
+        width: 100%;
+        font-size: 1rem;
     }
 }
 
@@ -2285,6 +2306,27 @@
         color: black;
         font-size: 1rem;
         font-weight: 700;
+    #wrapper #ErrorContainer {
+        padding: 5rem 5rem 7rem;
+        grid-row: 1 / span 1;
+    }
+    #wrapper #ErrorContainer #ErrorHeading h1 { 
+        font-size: 10rem;
+    }
+    #wrapper #ErrorContainer #ErrorHeading img {
+        width: 12rem;
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    #wrapper #ErrorContainer h2 {
+        font-size: 1.5rem;
+    }
+    #wrapper #ErrorContainer p {
+        font-size: 1rem;
+    }
+    #wrapper #ErrorContainer #returnSection a {
+        width: 80%;
+        font-size: 1rem;
     }
 }
 
@@ -3070,6 +3112,27 @@
     #wrapper #patientTableContainer #patientTable tbody td {
         font-size: 12px;
         padding: 1.5rem 0.5rem;
+    #wrapper #ErrorContainer {
+        padding: 5rem 5rem 7rem;
+        grid-row: 1 / span 1;
+    }
+    #wrapper #ErrorContainer #ErrorHeading h1 { 
+        font-size: 10rem;
+    }
+    #wrapper #ErrorContainer #ErrorHeading img {
+        width: 12rem;
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    #wrapper #ErrorContainer h2 {
+        font-size: 2rem;
+    }
+    #wrapper #ErrorContainer p {
+        font-size: 1rem;
+    }
+    #wrapper #ErrorContainer #returnSection a {
+        width: 50%;
+        font-size: 1rem;
     }
 }
 
@@ -3433,6 +3496,26 @@
     #wrapper #patientTableContainer #patientTable thead th,
     #wrapper #patientTableContainer #patientTable tbody td {
         font-size: 14px;
+    #wrapper #ErrorContainer {
+        padding: 5rem 5rem 7rem;
+    }
+    #wrapper #ErrorContainer #ErrorHeading h1 { 
+        font-size: 10rem;
+    }
+    #wrapper #ErrorContainer #ErrorHeading img {
+        width: 12rem;
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    #wrapper #ErrorContainer h2 {
+        font-size: 2rem;
+    }
+    #wrapper #ErrorContainer p {
+        font-size: 1rem;
+    }
+    #wrapper #ErrorContainer #returnSection a {
+        width: 50%;
+        font-size: 1rem;
     }
 }
 
