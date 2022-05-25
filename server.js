@@ -242,7 +242,7 @@ app.get('/admin-dashboard', isLoggedIn, isAdmin, setHeaders, (req, res) => {
 app.get('/getUserInfo', isLoggedIn, setHeaders, (req, res) => {
     let userId = req.session.user._id;
     User.findById({
-            _id: userId,
+        _id: userId,
     }, function (err, user) {
         if (err) console.log(err)
         if (user) {
@@ -254,7 +254,7 @@ app.get('/getUserInfo', isLoggedIn, setHeaders, (req, res) => {
 app.post('/getPatientInfo', isLoggedIn, setHeaders, (req, res) => {
     let userId = req.body._id
     User.findById({
-            _id: userId,
+        _id: userId,
     }, function (err, user) {
         if (err) console.log(err)
         if (user) {
@@ -881,14 +881,14 @@ async function sendEmails(userId, therapistId, cartInfo) {
         from: process.env.MAIL_USER,
         to: patientInfo.email,
         subject: 'Thank you for purchasing a session with MyMind!',
-        // text: `We have activated a therapy session with ${therapistInfo.firstName} ${therapistInfo.lastName}. Your session will expire at ${new Date(cartInfo.expiringTime).toLocaleString('en-CA', { hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true })}, and you can view your cart history at our Order History page at any time! We hope you have a wonderful session, thank you for your time and support.`
-        html: `<img src="https://imgur.com/2id2jly"><h1>DOLLARS DOLLARS!</h1><p>We have activated a therapy session with ${therapistInfo.firstName} ${therapistInfo.lastName}. Your session will expire at ${new Date(cartInfo.expiringTime).toLocaleString('en-CA', { hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true })}, and you can view your cart history at our Order History page at any time! We hope you have a wonderful session, thank you for your time and support.</p>`,
-    //     attachments: [{
-    //         filename: 'image.png',
-    //         path: '/path/to/file',
-    //         cid: 'unique@kreata.ee' //same cid value as in the html img src
-    //     }]
-    // }
+        html: `<div style="display:flex;width:100%;flex-direction:column;background:#09C5A3;padding:5rem;margin-bottom:3rem;">
+        <img src="cid:logo"><h1 style="color:#fff;font-size:2rem;font-weight:700;">Thank you for purchasing!</h1></div>
+        <p>We have activated a therapy session with ${therapistInfo.firstName} ${therapistInfo.lastName}. Your session will expire at ${new Date(cartInfo.expiringTime).toLocaleString('en-CA', { hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true })}, and you can view your cart history at our Order History page at any time! We hope you have a wonderful session, thank you for your time and support. To start your journey, please login to your account and visit <a style="color:#09C5A3;text-decoration:none;font-weight:700;" href="https://mymindweb.herokuapp.com/" target="_blank">MyMind</a> to start your journey!</p>`,
+        attachments: [{
+            filename: 'logo.png',
+            path: 'https://imgur.com/2id2jly',
+            cid: 'logo'
+        }]
     };
     transporter.sendMail(mailPatient, function (err, info) {
         if (err) console.log(err)
