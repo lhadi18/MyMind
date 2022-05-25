@@ -92,7 +92,7 @@
         background: rgba(2, 105, 86, 0.2);
     }
     #wrapper #bannerHome #overlay #homeHeader {
-        padding: 0 3rem 10rem;
+        padding: 0 3rem 7rem;
         justify-content: end;
         width: 100%;
     }
