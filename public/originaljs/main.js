@@ -156,9 +156,11 @@ $(document).ready(function () {
                     }
                 })
 
-                socket.emit('join-room', data.orderId)
-                socket.emit('get-id', data.sender)
-                socket.emit('get-orderId', data.orderId)
+                socket.emit('join-room', data.orderId, data.sender);
+                socket.emit('check-status', data.other, function(){
+                    console.log('other is offline')
+                });
+
     
                 orderId = data.orderId;
                 socket.on("chat message", (msg) => {
@@ -170,6 +172,18 @@ $(document).ready(function () {
                         '</li>'
                     ].join(''));
                 });
+
+                socket.on('connected', function(connectedId){
+                    if (connectedId != data.currentId)
+                        // $("chatActiveState").html('Online')
+                        console.log('online')
+                })
+
+                socket.on('disconnected', function(){
+                        // $("chatActiveState").html('Offline')
+                        console.log('offline')
+                })
+
                 $("#chatName").text(`${data.name}`)
                 $("#chatPhone").attr("href", `tel:${data.phone}`)
                 $("#chatImg").attr("src", `${data.image}`)

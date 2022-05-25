@@ -1042,15 +1042,17 @@ app.post('/refundOrder', isLoggedIn, (req, res) => {
 
 
 //Live Chat
+//record ids of users connected to a room
+let users = [];
 
 //Creates connection between server and client
 io.on('connection', (socket) => {
-    var senderName;
+    var userId;
     var orderID;
 
     socket.on("chat message", function (msg, room) {
 
-        console.log('message:', msg, ' to room:', room);
+        //console.log('message:', msg, ' to room:', room);
 
         //broadcast message to everyone in port:8000 except yourself.
         socket.to(room).emit("chat message", { message: msg });
@@ -1063,27 +1065,43 @@ io.on('connection', (socket) => {
         connect.then(db => {
             let chatMessage = new Chat({
                 message: msg,
-                sender: senderName,
+                sender: userId,
                 orderId: orderID
             });
 
             chatMessage.save();
         });
+
     });
 
-
-    socket.on("get-id", function (senderId) {
-        senderName = senderId;
-    })
-
-    socket.on("get-orderId", function (orderId) {
-        orderID = orderId;
-    })
-
-    socket.on("join-room", function (room) {
+    socket.on("join-room", function (room, senderId) {
         socket.join(room);
         console.log('connected to room', room);
+        orderID = room;
+        userId = senderId;
+        users.push(senderId);
+        socket.to(room).emit("connected", senderId)
+    })
 
+    socket.on('disconnect', () => {
+        if(!userId) return;
+  
+        var index = users.indexOf(userId);
+        users.splice(index, 1);
+
+        let newIndex = users.indexOf(userId);
+        if (newIndex == -1){
+            socket.to(orderID).emit("disconnected")
+        }
+    })
+
+    socket.on('check-status', (otherId, callback) => {
+        if(!otherId) return;
+  
+        var index = users.indexOf(otherId);
+        if (index > -1){
+            callback();
+        }
     })
 
 });
@@ -1135,7 +1153,8 @@ app.get('/activeChatSession', (req, res) => {
                                     phone: user.phoneNum,
                                     image: user.profileImg,
                                     sender: therapistId,
-                                    currentId: req.session.user._id
+                                    currentId: req.session.user._id,
+                                    other: userId
                                 };
                                 return res.json(chatInfo)
 
@@ -1156,8 +1175,8 @@ app.get('/activeChatSession', (req, res) => {
                                     phone: user.phoneNum,
                                     image: user.profileImg,
                                     sender: userId,
-                                    currentId: req.session.user._id
-
+                                    currentId: req.session.user._id,
+                                    other: therapistId
                                 };
                                 return res.json(chatInfo)
 
@@ -1187,13 +1206,9 @@ app.post('/loadMsgs', function (req, res) {
         }
         if (chats) {
             res.json(chats);
-            console.log(chats);
-
         }
     }).sort({
-
         createdAt: 'asc'
-
     });
 
 })
