@@ -217,7 +217,6 @@ $(document).ready(function () {
                         chatExpiredModal.style.display = "none";
                         document.body.style.overflow = 'auto';
                     }
-
                 } else {
                     $("#sessionTimer").text('Session expires in ' + diffMins + 'm ' + diffSecs + 's');
                 }
