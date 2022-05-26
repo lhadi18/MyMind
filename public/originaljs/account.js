@@ -1,6 +1,6 @@
 var profileImgBtn = document.getElementById('profileImage');
 var profileFile = document.getElementById('profileFile');
-var deleteUserModal = document.getElementById("deleteAccountModal");
+const deleteUserModal = document.getElementById("deleteAccountModal");
 var currentType;
 
 // When profile image clicked, call onclick function for uploading image file
@@ -38,7 +38,7 @@ $.ajax({
         $("#yearsExperience").attr("value", `${data.yearsExperience}`)
         $("#sessionCost").attr("value", `${data.sessionCost}`)
         if (!data.phoneNum) {
-            $("#phone").attr("value", )
+            $("#phone").attr("value",)
             $("#phonemobile").text()
         } else {
             $("#phone").attr("value", data.phoneNum)
@@ -77,6 +77,7 @@ function hideErrorMessages() {
 }
 
 // Display input field errors on profile page depending on which field was invalid
+// @param data from form fields
 function serverInputValidation(data) {
     let validated = false;
     if (data == "existingEmail") {
@@ -102,6 +103,7 @@ function serverInputValidation(data) {
 }
 
 // Display animation for when user clicks save changes
+// @params data from form fields
 function handleEditSuccess(data) {
     // If password is empty then simply refresh the page, 
     // if password is changed then log the user out back to login page
@@ -183,6 +185,7 @@ $('#saveChanges').click(() => {
 });
 
 // Email validation to ensure the email is formatted correctly
+// @params email input field value
 function isEmail(email) {
     var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
     return regex.test(email);
@@ -241,50 +244,63 @@ if (window.location.pathname == '/userprofile') {
 
     // If delete account is clicked for desktop account page, then display the confirmation modal 
     document.getElementById('deleteAccount').onclick = function (e) {
-        deleteUserModal.style.display = "block";
-        document.body.style.overflow = 'hidden';
+        displayDeleteUserModal();
 
         // When user confirms the deletion for the account, display a message and redirect user back to login page
         document.getElementById('deleteAccountBtn').onclick = function () {
             document.getElementById("deleteAccountErrorMessage").style.display = 'none';
-            $.ajax({
-                url: '/deleteUserProfile',
-                type: 'DELETE',
-                success: function (data) {
-                    // If user is the last admin, then display message to alert they are the last admin and cannot be deleted
-                    if (data == 'lastAdmin') {
-                        document.getElementById("deleteAccountErrorMessage").style.display = 'block';
-                        $('#deleteAccountErrorMessage').html('Deletion failed. Database needs to have at least 1 administrator.')
-                        return;
-                    } else {
-                        document.getElementById("deleteAccountErrorMessage").style.display = 'none';
-                        document.getElementById('profileSuccessModal').style.display = 'flex';
-                    }
-                    setTimeout(() => {
-                        window.location = '/login'
-                    }, 2500);
-                }
-            })
+            ajaxDeleteUserAccunt();
         }
     }
 
     // If delete account is clicked for mobile account page, then display the confirmation modal
     document.getElementById('mobDeleteAccount').onclick = function (e) {
-        deleteUserModal.style.display = "block";
-        document.body.style.overflow = 'hidden';
+        displayDeleteUserModal();
     }
 
     // If cancel button is clicked, hide modal for Delete User
     document.getElementById("closeDelete").onclick = function () {
-        deleteUserModal.style.display = "none";
-        document.body.style.overflow = 'auto';
+        hideDeleteUserModal();
     }
 
     // If user clicks outside of the modal for both Create and Delete then hide modal
     window.onclick = function (event) {
         if (event.target == deleteUserModal) {
-            deleteUserModal.style.display = "none";
-            document.body.style.overflow = 'auto';
+            hideDeleteUserModal();
         }
     }
+}
+
+// Display the delete user modal
+function displayDeleteUserModal() {
+    deleteUserModal.style.display = "block";
+    document.body.style.overflow = 'hidden';
+}
+
+// Hide the delete user modal
+function hideDeleteUserModal() {
+    deleteUserModal.style.display = "none";
+    document.body.style.overflow = 'auto';
+}
+
+// AJAX call to delete the user from the database and log the user out
+function ajaxDeleteUserAccunt() {
+    $.ajax({
+        url: '/deleteUserProfile',
+        type: 'DELETE',
+        success: function (data) {
+            // If user is the last admin, then display message to alert they are the last admin and cannot be deleted
+            if (data == 'lastAdmin') {
+                document.getElementById("deleteAccountErrorMessage").style.display = 'block';
+                $('#deleteAccountErrorMessage').html('Deletion failed. Database needs to have at least 1 administrator.')
+                return;
+            } else {
+                document.getElementById("deleteAccountErrorMessage").style.display = 'none';
+                document.getElementById('profileSuccessModal').style.display = 'flex';
+            }
+            setTimeout(() => {
+                window.location = '/login'
+            }, 2500);
+        }
+    })
 }
