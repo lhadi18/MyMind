@@ -1,14 +1,16 @@
 var profileImgBtn = document.getElementById('profileImage');
 var profileFile = document.getElementById('profileFile');
+var deleteUserModal = document.getElementById("deleteAccountModal");
 var currentType;
 
+// When profile image clicked, call onclick function for uploading image file
 profileImgBtn.addEventListener('click', function () {
     profileFile.click();
 });
 
+// Image uploader function that allows user to choose an image locally to uplaod and update their profile picture
 profileFile.addEventListener('change', function () {
     const choosedFile = this.files[0];
-
     if (choosedFile) {
         const reader = new FileReader();
         reader.addEventListener('load', function () {
@@ -18,6 +20,7 @@ profileFile.addEventListener('change', function () {
     }
 });
 
+// AJAX call to retreive the logged in user's info and display in each field on user profile page
 $.ajax({
     url: '/getUserInfo',
     type: "GET",
@@ -42,6 +45,7 @@ $.ajax({
             $("#phone").attr("value", phonenumber)
             $("#phonemobile").text(phonenumber)
         }
+        // For therapist users, display the 2 additional fields
         if (data.userType == "therapist") {
             var displayTherapist = document.querySelectorAll(".therapistOptions");
             for (var i = 0; i < displayTherapist.length; i++) {
@@ -51,7 +55,9 @@ $.ajax({
     }
 });
 
-//admin dashboard backpage to userprofile fix
+// Retrieving user's profile picture from database and linking the src to display image
+// Putting in timeout with a small margin delay is needed to shift the loading time 
+// so it wouldn't load everything at once.
 setTimeout(() => {
     $.ajax({
         url: '/getProfilePicture',
@@ -63,6 +69,7 @@ setTimeout(() => {
     })
 }, 50);
 
+// Save changes function to update the changes made from user
 $('#saveChanges').click(() => {
     var emp = document.getElementById("password").value;
     var phoneLength = $("#phone").val();
@@ -115,7 +122,6 @@ $('#saveChanges').click(() => {
                     yearsExperience: $("#yearsExperience").val(),
                     sessionCost: $("#sessionCost").val(),
                 }, success: function (data) {
-                    console.log(data);
                     if (data == "existingEmail") {
                         document.getElementById("phoneErrorMessage").style.display = 'none';
                         document.getElementById("emailErrorMessage").style.display = 'block';
@@ -172,13 +178,14 @@ $('#saveChanges').click(() => {
     }
 });
 
+// Email validation to ensure the email is formatted correctly
 function isEmail(email) {
     var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
     return regex.test(email);
 }
 
+// Standard input validation to ensure not empty and formatted correctly
 function inputValidation() {
-    console.log(currentType)
     const inpObjFirstName = document.getElementById("firstname");
     const inpObjLastName = document.getElementById("lastname");
     const inpObjUsername = document.getElementById("username");
@@ -196,6 +203,7 @@ function inputValidation() {
     }
 }
 
+// Password validation check
 function passwordValidation() {
     const inpObjPassword = document.getElementById("password");
     if (!inpObjPassword.checkValidity()) {
@@ -203,6 +211,7 @@ function passwordValidation() {
     }
 }
 
+// Negative validation check for therapist fields to restrict user from entering non-positive values
 function negativeValidation() {
     const yearsExp = document.getElementById("yearsExperience").value;
     const cost = document.getElementById("sessionCost").value;
@@ -223,21 +232,22 @@ for (var i = 0; i < input.length; i++) {
     });
 }
 
-// Variables for Delete User Modal 
-var deleteUserModal = document.getElementById("deleteAccountModal");
-
+// If its user profile page for desktop view then execute the following functions
 if (window.location.pathname == '/userprofile') {
+
+    // If delete account is clicked for desktop account page, then display the confirmation modal 
     document.getElementById('deleteAccount').onclick = function (e) {
         deleteUserModal.style.display = "block";
         document.body.style.overflow = 'hidden';
 
+        // When user confirms the deletion for the account, display a message and redirect user back to login page
         document.getElementById('deleteAccountBtn').onclick = function () {
             document.getElementById("deleteAccountErrorMessage").style.display = 'none';
             $.ajax({
                 url: '/deleteUserProfile',
                 type: 'DELETE',
                 success: function (data) {
-                    console.log(data);
+                    // If user is the last admin, then display message to alert they are the last admin and cannot be deleted
                     if (data == 'lastAdmin') {
                         document.getElementById("deleteAccountErrorMessage").style.display = 'block';
                         $('#deleteAccountErrorMessage').html('Deletion failed. Database needs to have at least 1 administrator.')
@@ -253,6 +263,8 @@ if (window.location.pathname == '/userprofile') {
             })
         }
     }
+
+    // If delete account is clicked for mobile account page, then display the confirmation modal
     document.getElementById('mobDeleteAccount').onclick = function (e) {
         deleteUserModal.style.display = "block";
         document.body.style.overflow = 'hidden';

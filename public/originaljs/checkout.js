@@ -195,7 +195,6 @@ function printInvoice() {
     printWindow.document.write('</div><hr /><div id="cartTotalSec">');
     printWindow.document.write(document.getElementById('cartTotalSec').innerHTML);
     printWindow.document.write('</div>');
-    // printWindow.document.write(document.getElementById('orderSummary').innerHTML);
     printWindow.document.write('</div></div></body></html>');
     printWindow.document.close();
 

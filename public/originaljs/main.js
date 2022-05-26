@@ -77,7 +77,7 @@ $(document).ready(function () {
 
     // Load the Navbar and Footer 
     function loadNavbarFooter() {
-        $('#navPlaceHolder').load('../headerfooter/nav.html', function () {
+        $('#navPlaceHolder').load('../temp/nav.html', function () {
             // For mobile nav links
             $('.nav-item .nav-link').each(function () {
                 $(this).toggleClass('active', this.getAttribute('href') === location.pathname);
@@ -92,8 +92,8 @@ $(document).ready(function () {
                 $(this).toggleClass('active', this.getAttribute('href') === location.pathname);
             });
         });
-        $('#footerPlaceHolder').load('../headerfooter/footer.html');
-        $('#therapistChat').load('../headerfooter/chatbox.html');
+        $('#footerPlaceHolder').load('../temp/footer.html');
+        $('#therapistChat').load('../temp/chatbox.html');
     }
 
     // Display hashed password for signup and login form
@@ -223,38 +223,6 @@ $(document).ready(function () {
             }
         })
     }
-
-
-
-    // activityWatcher();
-
-    // function activityWatcher() {
-    //     var secondsSinceLastActivity = 0;
-    //     var maxInactivity = (10); // 60 * 5
-
-    //     setInterval(function () {
-    //         secondsSinceLastActivity++;
-    //         console.log(secondsSinceLastActivity + ' seconds since the user was last active');
-    //         if (secondsSinceLastActivity > maxInactivity) {
-    //             console.log('User has been inactive for more than ' + maxInactivity + ' seconds');
-    //             $('#chatActiveState').text('Inactive');
-    //         }
-    //     }, 1000);
-
-    //     function activity() {
-    //         $('#chatActiveState').text('Active Now');
-    //         secondsSinceLastActivity = 0;
-    //     }
-
-    //     var activityEvents = [
-    //         'mousedown', 'mousemove', 'mouseup', 'keydown', 'scroll', 'touchstart',
-    //         'click', 'keypress', 'keyup', 'submit', 'change', 'mouseenter', 'resize', 'dblclick'
-    //     ];
-
-    //     activityEvents.forEach(function (e) {
-    //         document.addEventListener(e, activity, true);
-    //     });
-    // }
 
     // Chat Page for mobile
     if (window.location.pathname == '/chat-session') {
