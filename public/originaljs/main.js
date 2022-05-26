@@ -161,7 +161,7 @@ $(document).ready(function () {
 
                 socket.emit('join-room', data.orderId, data.sender);
                 socket.emit('check-status', data.other, function(){
-                    console.log('other is offline')
+                    changeActiveState('Online')
                 });
 
     
@@ -178,13 +178,11 @@ $(document).ready(function () {
 
                 socket.on('connected', function(connectedId){
                     if (connectedId != data.currentId)
-                        // $("chatActiveState").html('Online')
-                        console.log('online')
+                        changeActiveState('Online');
                 })
 
                 socket.on('disconnected', function(){
-                        // $("chatActiveState").html('Offline')
-                        console.log('offline')
+                        changeActiveState('Offline');
                 })
 
                 $("#chatName").text(`${data.name}`)
@@ -369,5 +367,12 @@ $(document).ready(function () {
         if (e.ctrlKey && e.keyCode == 13) {
             sendNewMessage();
         }
+    }
+
+    function changeActiveState(status){
+        activeStates = document.querySelectorAll("#chatActiveState");
+        activeStates.forEach(function(element){
+            element.innerHTML = status;
+        })
     }
 });
