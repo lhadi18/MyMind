@@ -78,6 +78,7 @@ function hideErrorMessages() {
 
 // Display input field errors on profile page depending on which field was invalid
 // @param data from form fields
+// @return validated true if all fields are valid
 function serverInputValidation(data) {
     let validated = false;
     if (data == "existingEmail") {
@@ -186,12 +187,14 @@ $('#saveChanges').click(() => {
 
 // Email validation to ensure the email is formatted correctly
 // @params email input field value
+// @return the formatted email pattern value
 function isEmail(email) {
     var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
     return regex.test(email);
 }
 
 // Standard input validation to ensure not empty and formatted correctly
+// @return true if all form fields are validated
 function inputValidation() {
     const inpObjFirstName = document.getElementById("firstname");
     const inpObjLastName = document.getElementById("lastname");
@@ -211,6 +214,7 @@ function inputValidation() {
 }
 
 // Password validation check
+// @return true if password is validated
 function passwordValidation() {
     const inpObjPassword = document.getElementById("password");
     if (!inpObjPassword.checkValidity()) {
@@ -219,6 +223,7 @@ function passwordValidation() {
 }
 
 // Negative validation check for therapist fields to restrict user from entering non-positive values
+// @return true if therapist fields are validated with a positive value
 function negativeValidation() {
     const yearsExp = document.getElementById("yearsExperience").value;
     const cost = document.getElementById("sessionCost").value;
@@ -284,6 +289,7 @@ function hideDeleteUserModal() {
 }
 
 // AJAX call to delete the user from the database and log the user out
+// @return empty if the last admin wants to delete their profile to prevent 0 admin errors
 function ajaxDeleteUserAccunt() {
     $.ajax({
         url: '/deleteUserProfile',
