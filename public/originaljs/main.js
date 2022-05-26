@@ -1,43 +1,55 @@
-const navMenu = document.getElementById('nav-menu');
-const navToggle = document.getElementById('nav-toggle');
-const navClose = document.getElementById('nav-close');
-const navLink = document.querySelectorAll('.nav-link');
-var socket = io();
-const chatExpiredModal = document.getElementById('chatExpiredModal');
-
 $(document).ready(function () {
+    const navMenu = document.getElementById('nav-menu');
+    const navToggle = document.getElementById('nav-toggle');
+    const navClose = document.getElementById('nav-close');
+    const navLink = document.querySelectorAll('.nav-link');
+    var socket = io();
+    var orderId;
+    const chatExpiredModal = document.getElementById('chatExpiredModal');
 
     // Load the Navbar and Footer 
     loadNavbarFooter();
 
+    function patientNavbarSetup() {
+        var patientEls = document.querySelectorAll(".isPatient");
+        for (var x = 0; x < patientEls.length; x++)
+            patientEls[x].style.display = 'list-item';
+    }
+
+    function therapistNavbarSetup() {
+        let therapistEls = document.querySelectorAll(".isTherapist");
+        for (var x = 0; x < therapistEls.length; x++)
+            therapistEls[x].style.display = 'list-item';
+    }
+
+    function adminNavbarSetup() {
+        let adminEls = document.querySelectorAll(".isAdmin");
+        for (var x = 0; x < adminEls.length; x++)
+            adminEls[x].style.display = 'list-item';
+    }
+
+    function loggedInNavbarSetup() {
+        let loggedInEls = document.querySelectorAll(".isLoggedIn");
+        for (var x = 0; x < loggedInEls.length; x++)
+            loggedInEls[x].style.display = 'list-item';
+    }
+
+    function loggedOutNavbarSetup() {
+        let loggedOutEls = document.querySelectorAll(".isLoggedOut")
+        for (var x = 0; x < loggedOutEls.length; x++)
+            loggedOutEls[x].style.display = 'list-item';
+    }
+
     setTimeout(() => {
         $.get('/isLoggedIn', function (user) {
             if (user) {
+                loggedInNavbarSetup()
                 if (user.userType == 'patient') {
-                    var patientEls = document.querySelectorAll(".isPatient");
-                    for (var x = 0; x < patientEls.length; x++)
-                        patientEls[x].style.display = 'list-item';
-
-                    let loggedInEls = document.querySelectorAll(".isLoggedIn");
-                    for (var x = 0; x < loggedInEls.length; x++)
-                        loggedInEls[x].style.display = 'list-item';
-
+                    patientNavbarSetup()
                 } else if (user.userType == 'therapist') {
-                    let therapistEls = document.querySelectorAll(".isTherapist");
-                    for (var x = 0; x < therapistEls.length; x++)
-                        therapistEls[x].style.display = 'list-item';
-
-                    let loggedInEls = document.querySelectorAll(".isLoggedIn");
-                    for (var x = 0; x < loggedInEls.length; x++)
-                        loggedInEls[x].style.display = 'list-item';
+                    therapistNavbarSetup();
                 } else if (user.userType == 'admin') {
-                    let adminEls = document.querySelectorAll(".isAdmin");
-                    for (var x = 0; x < adminEls.length; x++)
-                        adminEls[x].style.display = 'list-item';
-
-                    let loggedInEls = document.querySelectorAll(".isLoggedIn");
-                    for (var x = 0; x < loggedInEls.length; x++)
-                        loggedInEls[x].style.display = 'list-item';
+                    adminNavbarSetup()
                 }
                 setTimeout(() => {
                     $('.logout-link').click(function () {
@@ -47,9 +59,7 @@ $(document).ready(function () {
                     })
                 }, 400);
             } else {
-                let loggedOutEls = document.querySelectorAll(".isLoggedOut")
-                for (var x = 0; x < loggedOutEls.length; x++)
-                    loggedOutEls[x].style.display = 'list-item';
+                loggedOutNavbarSetup();
             }
         })
 
@@ -120,6 +130,53 @@ $(document).ready(function () {
 
     navLink.forEach(n => n.addEventListener('click', linkAction));
 
+    function loadMsgs(data) {
+        $.ajax({
+            url: '/loadMsgs',
+            type: 'POST',
+            data: {
+                orderId: data.orderId
+            },
+            success: function (chats) {
+                chats.forEach(function (element) {
+                    let msgClass = (data.currentId == element.sender) ? 'self' : 'other';
+                    var messagesContainer = $('#chatMessages');
+                    messagesContainer.append([
+                        `<li class="${msgClass}" data-before="Sent at ${new Date(element.createdAt).toLocaleString('en-CA', { hour: 'numeric', minute: 'numeric', hour12: true })}">`,
+                        element.message,
+                        '</li>'
+                    ].join(''));
+                })
+            }
+        })
+    }
+
+    function socketSetup(data) {
+        socket.emit('join-room', data.orderId, data.sender);
+        socket.emit('check-status', data.other, function () {
+            changeActiveState('Online')
+        });
+
+        socket.on("chat message", (msg) => {
+            var messagesContainer = $('#chatMessages');
+            messagesContainer.append([
+                `<li class="other" data-before="Sent at ${new Date().toLocaleString('en-CA', { hour: 'numeric', minute: 'numeric', hour12: true })}">`,
+                msg.message,
+                '</li>'
+            ].join(''));
+        });
+
+        socket.on('connected', function (connectedId) {
+            if (connectedId != data.currentId)
+                changeActiveState('Online');
+        })
+
+        socket.on('disconnected', function () {
+            changeActiveState('Offline');
+        })
+
+    }
+
     // check active session
     $.get('/activeChatSession', function (data) {
         if (data == "NoActiveSession" || data == "notLoggedIn") {
@@ -132,59 +189,10 @@ $(document).ready(function () {
                 $('#therapistChat').hide();
             } else {
                 $('#therapistChat').css('display', 'flex');
-                $.ajax({
-                    url: '/loadMsgs',
-                    type: 'POST',
-                    data: {
-                        orderId: data.orderId
-                    },
-                    success: function (chats) {
-                        chats.forEach(function (element) {
-                            if (data.currentId == element.sender) {
-                                var messagesContainer = $('#chatMessages');
-                                messagesContainer.append([
-                                    `<li class="self" data-before="Sent at ${new Date(element.createdAt).toLocaleString('en-CA', { hour: 'numeric', minute: 'numeric', hour12: true })}">`,
-                                    element.message,
-                                    '</li>'
-                                ].join(''));
-                            } else {
-                                var messagesContainer = $('#chatMessages');
-                                messagesContainer.append([
-                                    `<li class="other" data-before="Sent at ${new Date(element.createdAt).toLocaleString('en-CA', { hour: 'numeric', minute: 'numeric', hour12: true })}">`,
-                                    element.message,
-                                    '</li>'
-                                ].join(''));
-                            }
-                        })
-                    }
-                })
-
-                socket.emit('join-room', data.orderId, data.sender);
-                socket.emit('check-status', data.other, function(){
-                    changeActiveState('Online')
-                });
-
-    
+                loadMsgs(data);
+                chatSetup();
                 orderId = data.orderId;
-                socket.on("chat message", (msg) => {
-                    var messagesContainer = $('#chatMessages');
-
-                    messagesContainer.append([
-                        `<li class="other" data-before="Sent at ${new Date().toLocaleString('en-CA', { hour: 'numeric', minute: 'numeric', hour12: true })}">`,
-                        msg.message,
-                        '</li>'
-                    ].join(''));
-                });
-
-                socket.on('connected', function(connectedId){
-                    if (connectedId != data.currentId)
-                        changeActiveState('Online');
-                })
-
-                socket.on('disconnected', function(){
-                        changeActiveState('Offline');
-                })
-
+                socketSetup(data);
                 $("#chatName").text(`${data.name}`)
                 $("#chatPhone").attr("href", `tel:${data.phone}`)
                 $("#chatImg").attr("src", `${data.image}`)
@@ -192,8 +200,11 @@ $(document).ready(function () {
         }
     })
 
+
+
     // Get and display session expiring time
     setInterval(getSessionEndTime, 1000);
+
     function getSessionEndTime() {
         $.get('/activeChatSession', function (data) {
             if (data != "NoActiveSession" && data != "notLoggedIn") {
@@ -256,46 +267,15 @@ $(document).ready(function () {
     //     });
     // }
 
-    // Chat Page for mobile
-    if (window.location.pathname == '/chat-session') {
-        var element = $('#wrapper');
-        var messages = element.find('#chatMessages');
-        var userInput = $('#chatbox');
-        userInput.keydown(onMetaAndEnter).prop("disabled", false).focus();
-        element.find('#sendMessage').click(sendNewMessage);
-        messages.scrollTop(messages.prop("scrollHeight"));
-
-
-        $(document).on('click', '.self, .other', function () {
-            $(this).toggleClass('showTime');
-        });
-
-
-        userInput.each(function () {
-            this.setAttribute("style", `${this.scrollHeight + 2}px`);
-        }).on("input", function () {
-            this.style.height = (this.scrollHeight + 2) + "px";
-        });
-    } else {
-        // Chat Box for desktop
-        var element = $('#therapistChat');
-        var orderId;
-        element.addClass('enter');
-        element.click(openElement);
-
-        function openElement() {
+    function chatSetup() {
+        // Chat Page for mobile
+        if (window.location.pathname == '/chat-session') {
+            var element = $('#wrapper');
             var messages = element.find('#chatMessages');
-            var textInput = element.find('#chatbox');
             var userInput = $('#chatbox');
-            element.find('>i').hide();
-            element.addClass('expand');
-            element.find('.chatContainer').addClass('enter');
-            textInput.keydown(onMetaAndEnter).prop("disabled", false).focus();
-            element.off('click', openElement);
-            element.find('#closeChat').click(closeElement);
+            userInput.keydown(onMetaAndEnter).prop("disabled", false).focus();
             element.find('#sendMessage').click(sendNewMessage);
             messages.scrollTop(messages.prop("scrollHeight"));
-
 
             $(document).on('click', '.self, .other', function () {
                 $(this).toggleClass('showTime');
@@ -306,20 +286,52 @@ $(document).ready(function () {
             }).on("input", function () {
                 this.style.height = (this.scrollHeight + 2) + "px";
             });
+        } else {
+            // Chat Box for desktop
+            var element = $('#therapistChat');
+            element.addClass('enter');
+            element.click(openElement);
         }
+    }
 
-        function closeElement() {
-            element.find('.chatContainer').removeClass('enter').hide();
-            element.find('#chatMsgIcon').show();
-            element.removeClass('expand');
-            element.find('#closeChat').off('click', closeElement);
-            element.find('#sendMessage').off('click', sendNewMessage);
-            element.find('#chatbox').off('keydown', onMetaAndEnter).prop("disabled", true).blur();
-            setTimeout(function () {
-                element.find('.chatContainer').removeClass('enter').show()
-                element.click(openElement);
-            }, 500);
-        }
+    function openElement() {
+        var element = $('#therapistChat');
+        var messages = element.find('#chatMessages');
+        var textInput = element.find('#chatbox');
+        var userInput = $('#chatbox');
+        element.find('>i').hide();
+        element.addClass('expand');
+        element.find('.chatContainer').addClass('enter');
+        textInput.keydown(onMetaAndEnter).prop("disabled", false).focus();
+        element.off('click', openElement);
+        element.find('#closeChat').click(closeElement);
+        element.find('#sendMessage').click(sendNewMessage);
+        messages.scrollTop(messages.prop("scrollHeight"));
+
+
+        $(document).on('click', '.self, .other', function () {
+            $(this).toggleClass('showTime');
+        });
+
+        userInput.each(function () {
+            this.setAttribute("style", `${this.scrollHeight + 2}px`);
+        }).on("input", function () {
+            this.style.height = (this.scrollHeight + 2) + "px";
+        });
+    }
+
+    function closeElement() {
+        var element = $('#therapistChat');
+        element.find('.chatContainer').removeClass('enter').hide();
+        element.find('#chatMsgIcon').show();
+        element.removeClass('expand');
+        element.find('#closeChat').off('click', closeElement);
+        element.find('#sendMessage').off('click', sendNewMessage);
+        element.find('#chatbox').off('keydown', onMetaAndEnter).prop("disabled", true).blur();
+        setTimeout(function () {
+            element.find('.chatContainer').removeClass('enter').show()
+            element.click(openElement);
+        }, 500);
     }
 
     if (window.location.pathname == '/thank-you') {
@@ -335,16 +347,13 @@ $(document).ready(function () {
     function sendNewMessage() {
         var userInput = $('#chatbox');
         var newMessage = userInput.val().trim();
-
         if (!newMessage) {
             userInput.focus();
             return;
         }
 
         socket.emit('chat message', newMessage, orderId);
-
         var messagesContainer = $('#chatMessages');
-
         messagesContainer.append([
             `<li class="self" data-before="Sent at ${new Date().toLocaleString('en-CA', { hour: 'numeric', minute: 'numeric', hour12: true })}">`,
             newMessage,
@@ -369,9 +378,9 @@ $(document).ready(function () {
         }
     }
 
-    function changeActiveState(status){
+    function changeActiveState(status) {
         activeStates = document.querySelectorAll("#chatActiveState");
-        activeStates.forEach(function(element){
+        activeStates.forEach(function (element) {
             element.innerHTML = status;
         })
     }
