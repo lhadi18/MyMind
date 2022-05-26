@@ -10,36 +10,42 @@ $(document).ready(function () {
     // Load the Navbar and Footer 
     loadNavbarFooter();
 
+    // Display Patient navbar 
     function patientNavbarSetup() {
         var patientEls = document.querySelectorAll(".isPatient");
         for (var x = 0; x < patientEls.length; x++)
             patientEls[x].style.display = 'list-item';
     }
 
+    // Display Therapist navbar 
     function therapistNavbarSetup() {
         let therapistEls = document.querySelectorAll(".isTherapist");
         for (var x = 0; x < therapistEls.length; x++)
             therapistEls[x].style.display = 'list-item';
     }
 
+    // Display Admin navbar 
     function adminNavbarSetup() {
         let adminEls = document.querySelectorAll(".isAdmin");
         for (var x = 0; x < adminEls.length; x++)
             adminEls[x].style.display = 'list-item';
     }
 
+    // Display Logged In navbar for standard users 
     function loggedInNavbarSetup() {
         let loggedInEls = document.querySelectorAll(".isLoggedIn");
         for (var x = 0; x < loggedInEls.length; x++)
             loggedInEls[x].style.display = 'list-item';
     }
 
+    // Display logged out navbar
     function loggedOutNavbarSetup() {
         let loggedOutEls = document.querySelectorAll(".isLoggedOut")
         for (var x = 0; x < loggedOutEls.length; x++)
             loggedOutEls[x].style.display = 'list-item';
     }
 
+    // GET call from server to check which user type has logged in to display its dedicated navbar
     setTimeout(() => {
         $.get('/isLoggedIn', function (user) {
             if (user) {
@@ -87,7 +93,7 @@ $(document).ready(function () {
 
     // Load the Navbar and Footer 
     function loadNavbarFooter() {
-        $('#navPlaceHolder').load('../headerfooter/nav.html', function () {
+        $('#navPlaceHolder').load('../temp/nav.html', function () {
             // For mobile nav links
             $('.nav-item .nav-link').each(function () {
                 $(this).toggleClass('active', this.getAttribute('href') === location.pathname);
@@ -102,8 +108,8 @@ $(document).ready(function () {
                 $(this).toggleClass('active', this.getAttribute('href') === location.pathname);
             });
         });
-        $('#footerPlaceHolder').load('../headerfooter/footer.html');
-        $('#therapistChat').load('../headerfooter/chatbox.html');
+        $('#footerPlaceHolder').load('../temp/footer.html');
+        $('#therapistChat').load('../temp/chatbox.html');
     }
 
     // Display hashed password for signup and login form
@@ -128,8 +134,10 @@ $(document).ready(function () {
         document.getElementById('nav-menu').classList.remove('show-menu');
     }
 
+    // For mobile nav, each clic on a link will close the nav menu on selected pages
     navLink.forEach(n => n.addEventListener('click', linkAction));
 
+    // AJAX call to load messages for chatbox
     function loadMsgs(data) {
         $.ajax({
             url: '/loadMsgs',
@@ -151,6 +159,7 @@ $(document).ready(function () {
         })
     }
 
+    // Socket setup for chat rooms
     function socketSetup(data) {
         socket.emit('join-room', data.orderId, data.sender);
         socket.emit('check-status', data.other, function () {
@@ -234,38 +243,6 @@ $(document).ready(function () {
             }
         })
     }
-
-
-
-    // activityWatcher();
-
-    // function activityWatcher() {
-    //     var secondsSinceLastActivity = 0;
-    //     var maxInactivity = (10); // 60 * 5
-
-    //     setInterval(function () {
-    //         secondsSinceLastActivity++;
-    //         console.log(secondsSinceLastActivity + ' seconds since the user was last active');
-    //         if (secondsSinceLastActivity > maxInactivity) {
-    //             console.log('User has been inactive for more than ' + maxInactivity + ' seconds');
-    //             $('#chatActiveState').text('Inactive');
-    //         }
-    //     }, 1000);
-
-    //     function activity() {
-    //         $('#chatActiveState').text('Active Now');
-    //         secondsSinceLastActivity = 0;
-    //     }
-
-    //     var activityEvents = [
-    //         'mousedown', 'mousemove', 'mouseup', 'keydown', 'scroll', 'touchstart',
-    //         'click', 'keypress', 'keyup', 'submit', 'change', 'mouseenter', 'resize', 'dblclick'
-    //     ];
-
-    //     activityEvents.forEach(function (e) {
-    //         document.addEventListener(e, activity, true);
-    //     });
-    // }
 
     function chatSetup() {
         // Chat Page for mobile

@@ -3,7 +3,7 @@
     --secondaryColor: #00A98B;
 }
 
-/* Admin Dashboard Page */
+/* 404 Page */
 #wrapper #ErrorContainer {
     grid-column: 1 / span 4;
     grid-row: 2 / span 1;
@@ -48,6 +48,7 @@
     font-size: 1.2rem;
     font-weight: 500;
 }
+
 #wrapper #ErrorContainer #returnSection {
     display: flex;
     flex-direction: row;
@@ -55,7 +56,6 @@
     padding-top: 3rem;
     width: 100%;
 }
-
 
 #wrapper #ErrorContainer #returnSection a {
     font-family: 'Nunito', sans-serif;

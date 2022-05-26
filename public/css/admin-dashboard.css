@@ -864,7 +864,9 @@
         -ms-backdrop-filter: blur(0);
         -o-backdrop-filter: blur(0);
         backdrop-filter: blur(0);
-    } to {
+    }
+
+    to {
         background: rgba(0, 0, 0, 0.5);
         -webkit-backdrop-filter: blur(5px);
         -moz-backdrop-filter: blur(5px);
@@ -875,14 +877,16 @@
 }
 
 @-moz-keyframes animateModal {
- from {
+    from {
         background: rgba(0, 0, 0, 0);
         -webkit-backdrop-filter: blur(0);
         -moz-backdrop-filter: blur(0);
         -ms-backdrop-filter: blur(0);
         -o-backdrop-filter: blur(0);
         backdrop-filter: blur(0);
-    } to {
+    }
+
+    to {
         background: rgba(0, 0, 0, 0.5);
         -webkit-backdrop-filter: blur(5px);
         -moz-backdrop-filter: blur(5px);
@@ -900,7 +904,9 @@
         -ms-backdrop-filter: blur(0);
         -o-backdrop-filter: blur(0);
         backdrop-filter: blur(0);
-    } to {
+    }
+
+    to {
         background: rgba(0, 0, 0, 0.5);
         -webkit-backdrop-filter: blur(5px);
         -moz-backdrop-filter: blur(5px);
@@ -918,7 +924,9 @@
         -ms-backdrop-filter: blur(0);
         -o-backdrop-filter: blur(0);
         backdrop-filter: blur(0);
-    } to {
+    }
+
+    to {
         background: rgba(0, 0, 0, 0.5);
         -webkit-backdrop-filter: blur(5px);
         -moz-backdrop-filter: blur(5px);
@@ -936,7 +944,9 @@
         -ms-backdrop-filter: blur(0);
         -o-backdrop-filter: blur(0);
         backdrop-filter: blur(0);
-    } to {
+    }
+
+    to {
         background: rgba(0, 0, 0, 0.5);
         -webkit-backdrop-filter: blur(5px);
         -moz-backdrop-filter: blur(5px);
@@ -1145,6 +1155,7 @@
     from {
         stroke-dashoffset: 80;
     }
+
     to {
         stroke-dashoffset: 0;
     }
@@ -1154,6 +1165,7 @@
     from {
         stroke-dashoffset: 80;
     }
+
     to {
         stroke-dashoffset: 0;
     }
@@ -1163,6 +1175,7 @@
     from {
         stroke-dashoffset: 80;
     }
+
     to {
         stroke-dashoffset: 0;
     }
@@ -1172,6 +1185,7 @@
     from {
         stroke-dashoffset: 80;
     }
+
     to {
         stroke-dashoffset: 0;
     }
@@ -1181,6 +1195,7 @@
     from {
         stroke-dashoffset: 80;
     }
+
     to {
         stroke-dashoffset: 0;
     }

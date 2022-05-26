@@ -48,62 +48,72 @@
 
 @-webkit-keyframes floatCheck {
     0% {
-		transform: translatey(0px);
-	}
-	50% {
-		transform: translatey(10px);
-	}
-	100% {
-		transform: translatey(0px);
-	}
+        transform: translatey(0px);
+    }
+
+    50% {
+        transform: translatey(10px);
+    }
+
+    100% {
+        transform: translatey(0px);
+    }
 }
 
 @-moz-keyframes floatCheck {
     0% {
-		transform: translatey(0px);
-	}
-	50% {
-		transform: translatey(10px);
-	}
-	100% {
-		transform: translatey(0px);
-	}
+        transform: translatey(0px);
+    }
+
+    50% {
+        transform: translatey(10px);
+    }
+
+    100% {
+        transform: translatey(0px);
+    }
 }
 
 @-ms-keyframes floatCheck {
     0% {
-		transform: translatey(0px);
-	}
-	50% {
-		transform: translatey(10px);
-	}
-	100% {
-		transform: translatey(0px);
-	}
+        transform: translatey(0px);
+    }
+
+    50% {
+        transform: translatey(10px);
+    }
+
+    100% {
+        transform: translatey(0px);
+    }
 }
 
 @-o-keyframes floatCheck {
     0% {
-		transform: translatey(0px);
-	}
-	50% {
-		transform: translatey(10px);
-	}
-	100% {
-		transform: translatey(0px);
-	}
+        transform: translatey(0px);
+    }
+
+    50% {
+        transform: translatey(10px);
+    }
+
+    100% {
+        transform: translatey(0px);
+    }
 }
 
 @keyframes floatCheck {
-	0% {
-		transform: translatey(0px);
-	}
-	50% {
-		transform: translatey(10px);
-	}
-	100% {
-		transform: translatey(0px);
-	}
+    0% {
+        transform: translatey(0px);
+    }
+
+    50% {
+        transform: translatey(10px);
+    }
+
+    100% {
+        transform: translatey(0px);
+    }
 }
 
 #wrapper #thankyouContainer .col-6 #thankyouSec #thankyouHeader h2 {
