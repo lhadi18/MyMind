@@ -3,7 +3,7 @@ $(document).ready(function () {
     const navToggle = document.getElementById('nav-toggle');
     const navClose = document.getElementById('nav-close');
     const navLink = document.querySelectorAll('.nav-link');
-    var socket = io();
+    var socket;
     var orderId;
     const chatExpiredModal = document.getElementById('chatExpiredModal');
 
@@ -197,6 +197,7 @@ $(document).ready(function () {
             if (window.location.pathname != '/chat-session' && document.body.clientWidth < 992) {
                 $('#therapistChat').hide();
             } else {
+                socket = io();
                 $('#therapistChat').css('display', 'flex');
                 loadMsgs(data);
                 chatSetup();
