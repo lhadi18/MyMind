@@ -213,6 +213,11 @@ $(document).ready(function () {
                     textInput.keydown(onMetaAndEnter).prop("disabled", true).focus();
                     document.getElementById('sendMessage').style.backgroundColor = '#858585';
                     chatExpiredModal.style.display = 'block';
+                    document.getElementById("closeChatExpired").onclick = function () {
+                        chatExpiredModal.style.display = "none";
+                        document.body.style.overflow = 'auto';
+                    }
+
                 } else {
                     $("#sessionTimer").text('Session expires in ' + diffMins + 'm ' + diffSecs + 's');
                 }
@@ -220,11 +225,7 @@ $(document).ready(function () {
         })
     }
 
-    // If cancel button is clicked, hide modal for Delete User
-    document.getElementById("closeChatExpired").onclick = function () {
-        chatExpiredModal.style.display = "none";
-        document.body.style.overflow = 'auto';
-    }
+
 
     // activityWatcher();
 
