@@ -105,7 +105,7 @@ async function hasActiveSession(req, res, next) {
     var currentTime = new Date();
 
     var patientActiveSession = await Cart.exists({
-        therapist: req.session.user._id,
+        $or: [{therapist: req.session.user._id}, {userId: req.session.user._id}],
         status: "completed",
         expiringTime: {
             $gt: currentTime
