@@ -1,3 +1,6 @@
+/**
+ * Dependencies.
+ */
 const express = require("express");
 const path = require('path');
 const session = require('express-session');
@@ -14,8 +17,9 @@ const { Server } = require("socket.io");
 const io = new Server(server);
 const nodemailer = require('nodemailer');
 
-app.set('view engine', 'text/html');
-
+/**
+ * MangoDB connection.
+ */
 if (process.env.NODE_ENV != 'production') {
     require('dotenv').config()
 }
@@ -26,6 +30,10 @@ mongoose.connect(process.env.DATABASE_URL, {
     .then(() => console.log("connected to db"))
     .catch((err) => console.log(err));
 
+/**
+ * Middlewares to set up view engine.
+ */
+app.set('view engine', 'text/html');
 app.use(express.urlencoded({
     extended: true
 }));
@@ -40,6 +48,14 @@ app.use(session({
 }));
 
 //Custom middleware functions
+/**
+ * This function checks to see if a user is logged in.
+ * 
+ * @param {*} req as request object
+ * @param {*} res as response object
+ * @param {*} next executes the middleware succeeding the current middleware.
+ * @returns next if user is logged in or redirects to login page.
+ */
 function isLoggedIn(req, res, next) {
     if (req.session.isLoggedIn) {
         return next();
@@ -48,6 +64,15 @@ function isLoggedIn(req, res, next) {
     }
 }
 
+/**
+ * 
+ * This function checks to see if a user is logged out.
+ * 
+ * @param {*} req as request object
+ * @param {*} res as response object
+ * @param {*} next executes the middleware succeeding the current middleware.
+ * @returns next if user is logged out or redirects to userprofile page.
+ */
 function isLoggedOut(req, res, next) {
     if (!req.session.isLoggedIn) {
         return next();
@@ -56,6 +81,16 @@ function isLoggedOut(req, res, next) {
     }
 }
 
+/**
+ * 
+ * This function checks to see if a user is an administrator.
+ * 
+ * @param {*} req as request object
+ * @param {*} res as response object
+ * @param {*} next executes the middleware succeeding the current middleware.
+ * @returns returns to login page if user is not logged in, next if user is administrator, 
+ * or returns to home page if user is not admin AND is logged in.
+ */
 function isAdmin(req, res, next) {
     let userId = req.session.user._id;
     User.findById({
@@ -74,6 +109,16 @@ function isAdmin(req, res, next) {
     })
 }
 
+/**
+ * 
+ * This function stops the browsers from storing protected pages on cache
+ * -User cannot backspace to previous page if page is protected(Eg. not logged in).
+ * 
+ * @param {*} req as request object
+ * @param {*} res as response object
+ * @param {*} next executes the middleware succeeding the current middleware.
+ * @returns calls next middleware function.
+ */
 function setHeaders(req, res, next) {
     res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
     res.setHeader("Pragma", "no-cache"); // HTTP 1.0.
@@ -81,6 +126,16 @@ function setHeaders(req, res, next) {
     return next();
 }
 
+/**
+ * 
+ * This function checks to see if a user has recently purchased a session within the last three minutes
+ * This function helps with displaying a thank-you page upon purchase.
+ * 
+ * @param {*} req as request object
+ * @param {*} res as response object
+ * @param {*} next executes the middleware succeeding the current middleware.
+ * @returns next if a user has recently placed an order or redirects to home page.
+ */
 async function hasRecentlyPurchased(req, res, next) {
     //If a purchase was made in the last 3 mins, render thank-you page
     var currentTime = new Date();
@@ -101,18 +156,25 @@ async function hasRecentlyPurchased(req, res, next) {
     }
 }
 
+/**
+ * 
+ * This function checks to see if a user has an active session with a therapist.
+ * 
+ * @param {*} req as request object
+ * @param {*} res as response object
+ * @param {*} next executes the middleware succeeding the current middleware.
+ * @returns next if a user has an active session or redirects to home page.
+ */
 async function hasActiveSession(req, res, next) {
     var currentTime = new Date();
 
     var patientActiveSession = await Cart.exists({
-        $or: [{therapist: req.session.user._id}, {userId: req.session.user._id}],
+        $or: [{ therapist: req.session.user._id }, { userId: req.session.user._id }],
         status: "completed",
         expiringTime: {
             $gt: currentTime
         }
     })
-
-    console.log(patientActiveSession)
     if (patientActiveSession) {
         return next();
     } else {
@@ -120,9 +182,19 @@ async function hasActiveSession(req, res, next) {
     }
 }
 
+/**
+ * 
+ * Since therapist and patients have a one-to-one relationship, this function checks to see if a therapist is available.
+ * 
+ * @param {*} req as request object
+ * @param {*} res as response object
+ * @param {*} next executes the middleware succeeding the current middleware.
+ * @returns if a therapist has an active session with another user it will return an error message, else it will
+ * return next.
+ */
 async function isTherapistAvailable(req, res, next) {
-    console.log(req.body.therapistID)
     var currentTime = new Date();
+
     let orderExists = await Cart.exists({
         therapist: req.body.therapistID,
         status: "completed",
@@ -130,7 +202,6 @@ async function isTherapistAvailable(req, res, next) {
             $gt: currentTime
         }
     })
-    console.log(orderExists)
     if (orderExists) {
         return res.json({
             errorMsg: "Therapist is currently busy. Please delete him from your cart or wait until they become available again."
@@ -138,9 +209,17 @@ async function isTherapistAvailable(req, res, next) {
     } else {
         return next();
     }
-
 }
 
+/**
+ * 
+ * This function checks to see if the logged in user is a patient
+ * 
+ * @param {*} req as request object
+ * @param {*} res as response object
+ * @param {*} next executes the middleware succeeding the current middleware.
+ * @returns next if the user is a patient, else redirects to home page.
+ */
 function isPatient(req, res, next) {
     if (req.session.user.userType == 'patient') {
         return next();
@@ -150,8 +229,116 @@ function isPatient(req, res, next) {
 
 //Routes
 
-//user profile page multer to update/change/fetch profile images
-var profileStorage = multer.diskStorage({
+/**
+ * This get route renders the home (index.html) page.
+ */
+app.get('/', function (req, res) {
+    res.sendFile(path.resolve('html/index.html'));
+});
+
+/**
+ * This get route renders the therapist.html page.
+ */
+app.get('/therapists', function (req, res) {
+    res.sendFile(path.resolve('html/therapists.html'));
+});
+
+/**
+ * This get route renders the chat-session.html page.
+ */
+app.get('/chat-session', isLoggedIn, hasActiveSession, setHeaders, function (req, res) {
+    res.sendFile(path.resolve('html/chat-session.html'));
+});
+
+/**
+ * This get route renders the my-patient.html page.
+ */
+app.get('/my-patients', isLoggedIn, setHeaders, function (req, res) {
+    res.sendFile(path.resolve('html/my-patients.html'));
+});
+
+/**
+ * This get route renders the checkout.html page.
+ */
+app.get('/checkout', isLoggedIn, isPatient, setHeaders, function (req, res) {
+    res.sendFile(path.resolve('html/checkout.html'));
+});
+
+/**
+ * This get route renders the privacypolicy.html page.
+ */
+app.get('/privacypolicy', function (req, res) {
+    res.sendFile(path.resolve('html/privacypolicy.html'));
+});
+
+/**
+ * This get route renders the termsandconditions.html page.
+ */
+app.get('/termsandconditions', function (req, res) {
+    res.sendFile(path.resolve('html/termsandconditions.html'));
+});
+
+/**
+ * This get route renders order-history.html page.
+ */
+app.get('/order-history', isLoggedIn, isPatient, setHeaders, function (req, res) {
+    res.sendFile(path.resolve('html/order-history.html'));
+});
+
+/**
+ * This get route renders thank-you.html page.
+ */
+app.get('/thank-you', isLoggedIn, hasRecentlyPurchased, setHeaders, function (req, res) {
+    res.sendFile(path.resolve('html/thank-you.html'));
+});
+
+/**
+ * This get route renders the login.html page.
+ */
+app.get("/login", isLoggedOut, setHeaders, (req, res) => {
+    res.sendFile(path.resolve('html/login.html'));
+});
+
+/**
+ * This get route renders the admin-dashboard.html page.
+ */
+app.get('/admin-dashboard', isLoggedIn, isAdmin, setHeaders, (req, res) => {
+    res.sendFile(path.resolve('html/admin-dashboard.html'))
+});
+
+/**
+ * This get route renders userprofile.html page.
+ */
+app.get('/userprofile', isLoggedIn, setHeaders, (req, res) => {
+    res.sendFile(path.resolve('html/userprofile.html'))
+})
+
+/**
+ * This get route renders edit-account.html page.
+ */
+app.get('/edit-account', isLoggedIn, setHeaders, (req, res) => {
+    res.sendFile(path.resolve('html/edit-account.html'))
+})
+
+/**
+ * This get route renders sign-up.html page.
+ */
+app.get("/sign-up", isLoggedOut, setHeaders, (req, res) => {
+    res.sendFile(path.resolve('html/sign-up.html'))
+})
+
+/**
+ * This get route renders 404.html page.
+ */
+ app.get("*", (req, res) => {
+    res.sendFile(path.resolve('html/404.html'))
+});
+
+/**
+ * This variable initializes a diskStorage for multer.
+ * Multer is a dependency that stores user profile images.
+ */
+ var profileStorage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, 'public/uploads')
     },
@@ -159,11 +346,13 @@ var profileStorage = multer.diskStorage({
         cb(null, Date.now() + file.originalname);
     }
 })
-
 var profileUpload = multer({
     storage: profileStorage
 })
 
+/**
+ * This post route allows users to upload their profile images onto mongodb.
+ */
 app.post('/uploadProfile', profileUpload.single('profileFile'), (req, res) => {
     if (req.file) {
         var fileName = req.file.filename;
@@ -173,13 +362,15 @@ app.post('/uploadProfile', profileUpload.single('profileFile'), (req, res) => {
         }, {
             profileImg: "../uploads/" + fileName
         }).then((obj) => {
-            console.log('Updated - ' + obj);
         })
     } else {
         return;
     }
 });
 
+/**
+ * This get route will get the uploaded images from mongodb and render them on the html.
+ */
 app.get('/getProfilePicture', (req, res) => {
     var id = req.session.user._id;
     User.findById({
@@ -191,54 +382,17 @@ app.get('/getProfilePicture', (req, res) => {
     })
 })
 
+/**
+ * This get route checks to see if a user is logged in.
+ */
 app.get('/isLoggedIn', (req, res) => {
     res.send(req.session.user);
 })
 
-app.get('/', function (req, res) {
-    res.sendFile(path.resolve('html/index.html'));
-});
-
-app.get('/therapists', function (req, res) {
-    res.sendFile(path.resolve('html/therapists.html'));
-});
-
-app.get('/chat-session', isLoggedIn, hasActiveSession, function (req, res) {
-    res.sendFile(path.resolve('html/chat-session.html'));
-});
-
-app.get('/my-patients', isLoggedIn, function (req, res) {
-    res.sendFile(path.resolve('html/my-patients.html'));
-});
-
-app.get('/checkout', isLoggedIn, isPatient, function (req, res) {
-    res.sendFile(path.resolve('html/checkout.html'));
-});
-
-app.get('/privacypolicy', function (req, res) {
-    res.sendFile(path.resolve('html/privacypolicy.html'));
-});
-
-app.get('/termsandconditions', function (req, res) {
-    res.sendFile(path.resolve('html/termsandconditions.html'));
-});
-
-app.get('/order-history', isLoggedIn, isPatient, function (req, res) {
-    res.sendFile(path.resolve('html/order-history.html'));
-});
-
-app.get('/thank-you', isLoggedIn, hasRecentlyPurchased, function (req, res) {
-    res.sendFile(path.resolve('html/thank-you.html'));
-});
-
-app.get("/login", isLoggedOut, setHeaders, (req, res) => {
-    res.sendFile(path.resolve('html/login.html'));
-});
-
-app.get('/admin-dashboard', isLoggedIn, isAdmin, setHeaders, (req, res) => {
-    res.sendFile(path.resolve('html/admin-dashboard.html'))
-});
-
+/**
+ * This get route finds the user by their id from the database and returns
+ * the user and their information as an object.
+ */
 app.get('/getUserInfo', isLoggedIn, setHeaders, (req, res) => {
     let userId = req.session.user._id;
     User.findById({
@@ -251,6 +405,10 @@ app.get('/getUserInfo', isLoggedIn, setHeaders, (req, res) => {
     })
 })
 
+/**
+ * This post route finds a patient by their id from the database and returns
+ * the patient and their information as an object.
+ */
 app.post('/getPatientInfo', isLoggedIn, setHeaders, (req, res) => {
     let userId = req.body._id
     User.findById({
@@ -263,6 +421,13 @@ app.post('/getPatientInfo', isLoggedIn, setHeaders, (req, res) => {
     })
 })
 
+/**
+ * 
+ * This helper function for /getTherapists checks to see if a therapist has an active session with another user.
+ * 
+ * @param {*} therapistInfo as therapist id
+ * @returns true if therapist has an active session OR false if they don't.
+ */
 async function therapistHasActiveSession(therapistInfo) {
     var currentTime = new Date();
     let orderExists = await Cart.exists({
@@ -279,6 +444,10 @@ async function therapistHasActiveSession(therapistInfo) {
     }
 }
 
+/**
+ * This get route looks for all users with the type "therapist" and returns
+ * the therapist that do not have an active session as an array.
+ */
 app.get('/getTherapists', (req, res) => {
     User.find({
         userType: "therapist"
@@ -299,6 +468,11 @@ app.get('/getTherapists', (req, res) => {
     })
 })
 
+/**
+ * This post route verifies the users email and password when logging in
+ * If the user has an invalid email, it will return "NoEmailExists", return
+ * user to login if an error occurs or calls auth (a helper function which checks the users password)
+ */
 app.post('/login', async (req, res) => {
     User.findOne({
         email: req.body.email.toLowerCase()
@@ -309,20 +483,28 @@ app.post('/login', async (req, res) => {
         }
         if (!user) {
             res.json("NoEmailExist");
-            console.log('No user with such email.');
         } else {
             return auth(req, res, user);
         }
     });
 })
 
+/**
+ * 
+ * This helper function checks the users password from the database and if there is an error
+ * It will redirect the user to the login page, if the password is wrong, it will display an error
+ * message, else if password is correct it will log the user into the website and redirect them to homepage.
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} user 
+ */
 function auth(req, res, user) {
     bcrypt.compare(req.body.password, user.password, function (err, comp) {
         if (err) {
             console.log(err);
             res.redirect('/login');
         } else if (comp === false) {
-            console.log("Wrong password");
             res.json("wrongPassword");
         } else {
             req.session.user = user;
@@ -332,25 +514,22 @@ function auth(req, res, user) {
     })
 }
 
+/**
+ * This post route will destory the user's session (log them out) and redirect them to login page.
+ */
 app.post('/logout', (req, res) => {
     req.session.destroy((err) => {
-        if (err) console.log('Error removing user session data. ', err);
+        if (err) console.log(err);
     });
     res.redirect('/login')
 })
 
-app.get('/userprofile', isLoggedIn, setHeaders, (req, res) => {
-    res.sendFile(path.resolve('html/userprofile.html'))
-})
-
-app.get('/edit-account', isLoggedIn, setHeaders, (req, res) => {
-    res.sendFile(path.resolve('html/edit-account.html'))
-})
-
-app.get("/sign-up", isLoggedOut, setHeaders, (req, res) => {
-    res.sendFile(path.resolve('html/sign-up.html'))
-})
-
+/**
+ * This post route will update the user's information from the database when a user wants to 
+ * edit their profile and change their information including their password.
+ * It also uses the isNotExisting helper function to help not allow
+ * duplicate records in the datbase (two users having the same email, etc.)
+ */
 app.post('/editProfile', isLoggedIn, isNotExisting, async (req, res) => {
     let hashedPassword;
     var pass = req.session.user.password;
@@ -361,7 +540,6 @@ app.post('/editProfile', isLoggedIn, isNotExisting, async (req, res) => {
         hashedPassword = await bcrypt.hash(req.body.password, 10);
         newpass = hashedPassword;
     }
-
     User.updateOne({
         "_id": req.session.user._id
     }, {
@@ -378,10 +556,23 @@ app.post('/editProfile', isLoggedIn, isNotExisting, async (req, res) => {
             return res.json("updated");
         })
         .catch((err) => {
-            console.log('Error: ' + err);
+            console.log(err);
         })
 })
 
+/**
+ * 
+ * This helper function checks to see if an email, phone number, or username exists 
+ * or not from the database.
+ * It returns an error message if an email, phone number, or username exists in the
+ * database or else it returns next.
+ * If there is an error finding the user it will load an error message else it will
+ * destory the session and log the user out.
+ * 
+ * @param {*} req as request object
+ * @param {*} res as response object
+ * @param {*} next executes the middleware succeeding the current middleware.
+ */
 async function isNotExisting(req, res, next) {
     var emailExists = await User.exists({
         email: req.body.email
@@ -392,7 +583,6 @@ async function isNotExisting(req, res, next) {
     var usernameExists = await User.exists({
         username: req.body.username
     })
-
     let userId = req.session.user._id;
     User.findById({
         _id: userId
@@ -415,6 +605,12 @@ async function isNotExisting(req, res, next) {
     })
 }
 
+/**
+ * This route post allows users to sign up their account and store their information
+ * on mongodb and stores the password as a hashed password. Uses isNotRegistered
+ * helper function to ensure another user with given fields for
+ * email, phone number, or username does not already exist.
+ */
 app.post("/sign-up", isNotRegistered, async (req, res) => {
     let userType = (req.body.userType != 'patient' && req.body.userType != 'therapist') ? 'patient' : req.body.userType;
     if (req.body.userType == "therapist") {
@@ -438,7 +634,6 @@ app.post("/sign-up", isNotRegistered, async (req, res) => {
                     res.json("login");
                 });
         } catch (err) {
-            console.log("Error while checking if user was already registered. ", err);
             res.redirect('/sign-up');
         }
     } else {
@@ -460,12 +655,22 @@ app.post("/sign-up", isNotRegistered, async (req, res) => {
                     res.json("login");
                 });
         } catch (err) {
-            console.log("Error while checking if user was already registered. ", err);
             res.redirect('/sign-up');
         }
     }
 })
 
+/**
+ * 
+ * This helper function checks to see if a user with the email, phone number, or username
+ * the user provided upon sign-up already exist in the database.
+ * 
+ * @param {*} req as request object
+ * @param {*} res as response object
+ * @param {*} next executes the middleware succeeding the current middleware.
+ * @returns a certain message corrosponding to which field already exists(email, phonenum, or username)
+ * else if returns next.
+ */
 async function isNotRegistered(req, res, next) {
     var emailExists = await User.exists({
         email: req.body.email
@@ -487,17 +692,30 @@ async function isNotRegistered(req, res, next) {
     }
 }
 
-//////Admin Dashboard////////
+//////Admin Dashboard\\\\\\
 
 //MiddleWare
 
+/**
+ * 
+ * This helper function checks to see if an admin is deleted
+ * from the database from the admin dashboard is not the
+ * last administrator in the database to ensure there is always
+ * at least one admin.
+ * 
+ * @param {*} req as request object
+ * @param {*} res as response object
+ * @param {*} next executes the middleware succeeding the current middleware.
+ * @returns an error message if the admin to be deleted is the last administrator 
+ * in the database else it returns next.
+ */
 function isNotLastAdminDelete(req, res, next) {
     if (req.body.previousUserType == 'admin') {
         User.count({
             userType: 'admin'
         }, (err, count) => {
             if (err) {
-                console.log("Error while checking if user is last admin in db. ", err);
+                console.log(err);
             } else if (count > 1) {
                 return next();
             } else {
@@ -509,13 +727,26 @@ function isNotLastAdminDelete(req, res, next) {
     }
 }
 
+/**
+ * 
+ * This helper function checks to see if an admin's usertype is editted
+ * from the database from the admin dashboard is not the
+ * last administrator in the database to ensure there is always
+ * at least one admin.
+ * 
+ * @param {*} req as request object
+ * @param {*} res as response object
+ * @param {*} next executes the middleware succeeding the current middleware.
+ * @returns an error message if the admin to be editted is the last administrator 
+ * in the database else it returns next.
+ */
 function isNotLastAdminEdit(req, res, next) {
     if (req.body.previousUserType == 'admin' && req.body.userType != 'admin') {
         User.count({
             userType: 'admin'
         }, (err, count) => {
             if (err) {
-                console.log("Error while checking if user is last admin in db. ", err);
+                console.log(err);
             } else if (count > 1) {
                 return next();
             } else {
@@ -529,18 +760,25 @@ function isNotLastAdminEdit(req, res, next) {
 
 //Routes
 
+/**
+ * This get route grabs all users from the database and returns them as a json object
+ * so that they can be loaded in the admin dashboard.
+ */
 app.get('/getAllUsersData', isLoggedIn, isAdmin, setHeaders, (req, res) => {
     User.find({}, function (err, user) {
         if (err) {
-            console.log('Error searching user.', err);
+            console.log(err);
         }
         if (!user) {
-            console.log('Database is empty.');
         }
         res.json(user);
     });
 })
 
+/**
+ * This delete route allows administrators to delete a certain user from the database
+ * using their id.
+ */
 app.delete('/deleteUser', isLoggedIn, isAdmin, isNotLastAdminDelete, async (req, res) => {
     User.deleteOne({
         _id: req.body.id
@@ -556,6 +794,9 @@ app.delete('/deleteUser', isLoggedIn, isAdmin, isNotLastAdminDelete, async (req,
         });
 })
 
+/**
+ * This delete route allows users to delete their profiles from the database (Delete account).
+ */
 app.delete('/deleteUserProfile', isLoggedIn, isNotLastAdminDelete, async (req, res) => {
     User.deleteOne({
         _id: req.session.user._id
@@ -568,6 +809,16 @@ app.delete('/deleteUserProfile', isLoggedIn, isNotLastAdminDelete, async (req, r
         });
 })
 
+/**
+ * 
+ * This helper function checks to see if the given email, phone number, or username
+ * to be editted does not already exist in the database for administrators when they
+ * edit a certain users information.
+ * 
+ * @param {*} req as request object
+ * @param {*} res as response object
+ * @param {*} next executes the middleware succeeding the current middleware.
+ */
 async function isNotExistingAdmin(req, res, next) {
     var emailExists = await User.exists({
         email: req.body.email
@@ -600,6 +851,10 @@ async function isNotExistingAdmin(req, res, next) {
     })
 }
 
+/**
+ * This put route allows admins to edit a cetain users information in the database from
+ * the admin dashboard.
+ */
 app.put('/editUser', isLoggedIn, isAdmin, isNotExistingAdmin, isNotLastAdminEdit, (req, res) => {
     if (req.body.password != "") {
         return updateUserWithPassword(req, res);
@@ -623,7 +878,7 @@ app.put('/editUser', isLoggedIn, isAdmin, isNotExistingAdmin, isNotLastAdminEdit
                 return res.send("updatedWithoutPassword");
             })
             .catch((err) => {
-                console.log('Error: ' + err);
+                console.log(err);
             })
     } else {
         User.updateOne({
@@ -646,11 +901,16 @@ app.put('/editUser', isLoggedIn, isAdmin, isNotExistingAdmin, isNotLastAdminEdit
                 return res.send("updatedWithoutPassword");
             })
             .catch((err) => {
-                console.log('Error: ' + err);
+                console.log(err);
             })
     }
 })
 
+/**
+ * This helper function allows admins to edit a user's account AND their passwords.
+ * @param {*} req as request object
+ * @param {*} res as response object
+ */
 async function updateUserWithPassword(req, res) {
     var hashedPassword = await bcrypt.hash(req.body.password, 10);
     if (req.body.userType == "therapist") {
@@ -673,7 +933,7 @@ async function updateUserWithPassword(req, res) {
                 return res.send("updatedWithPassword");
             })
             .catch((err) => {
-                console.log('Error: ' + err);
+                console.log(err);
             })
     } else {
         User.updateOne({
@@ -697,11 +957,14 @@ async function updateUserWithPassword(req, res) {
                 return res.send("updatedWithPassword");
             })
             .catch((err) => {
-                console.log('Error: ' + err);
+                console.log(err);
             })
     }
 }
 
+/**
+ * This post route allows amdministrators to create a user from the admin panel.
+ */
 app.post("/createUser", isLoggedIn, isAdmin, isNotRegistered, async (req, res) => {
     if (req.body.userType == "therapist") {
         try {
@@ -724,7 +987,7 @@ app.post("/createUser", isLoggedIn, isAdmin, isNotRegistered, async (req, res) =
                     res.json("login");
                 });
         } catch (err) {
-            console.log("Error while checking if user was already registered. ", err);
+            console.log(err);
             res.redirect('/sign-up');
         }
     } else {
@@ -746,7 +1009,7 @@ app.post("/createUser", isLoggedIn, isAdmin, isNotRegistered, async (req, res) =
                     res.json("login");
                 });
         } catch (err) {
-            console.log("Error while checking if user was already registered. ", err);
+            console.log(err);
             res.redirect('/sign-up');
         }
     }
@@ -754,8 +1017,15 @@ app.post("/createUser", isLoggedIn, isAdmin, isNotRegistered, async (req, res) =
 
 //Checkout
 
+/**
+ * This post route allows users to add a therapy session to their
+ * cart so that they can checkout later.
+ * It checks to see if they already have something in their cart,
+ * or a session that is already active and returns an error message.
+ * Else it adds the session to their cart and the database with 
+ * an "active" status.
+ */
 app.post('/addToCart', isLoggedIn, async (req, res) => {
-    //Check if there is already something in cart
     var cartExists = await Cart.exists({
         userId: req.session.user._id,
         status: "active"
@@ -763,7 +1033,6 @@ app.post('/addToCart', isLoggedIn, async (req, res) => {
     if (cartExists) {
         return res.send("cartExists");
     }
-
     //Check if user has a current valid session with another therapist
     var currentTime = new Date();
     var orderExists = await Cart.exists({
@@ -774,33 +1043,32 @@ app.post('/addToCart', isLoggedIn, async (req, res) => {
         }
     })
     if (orderExists) {
-        console.log("Something exists")
         return res.send("orderExists");
     }
-
     const new_cart = new Cart({
         orderId: "MM" + Math.floor((Math.random() * 1500000000) + 1000000000),
         therapist: req.body.therapist,
         userId: req.session.user._id,
         status: "active"
     });
-
     new_cart.save()
         .then((result) => {
-            console.log(result);
         });
-
     res.send();
-
 })
 
+/**
+ * This get route checks the status of a shopping cart
+ * to ensure the user does not already have an item
+ * in their shopping cart.
+ */
 app.get('/checkStatus', isLoggedIn, (req, res) => {
     Cart.findOne({
         userId: req.session.user._id,
         status: "active"
     }, function (err, cart) {
         if (err) {
-            console.log('Error searching cart.', err);
+            console.log(err);
         }
         if (!cart) {
             res.send();
@@ -810,13 +1078,16 @@ app.get('/checkStatus', isLoggedIn, (req, res) => {
     });
 })
 
+/**
+ * This post route finds and grabs a certain therapist by their id and returns
+ * their information.
+ */
 app.post('/getTherapistInfo', isLoggedIn, (req, res) => {
     var therapistInfo;
     User.findById({
         _id: req.body.therapistId
     }, function (err, user) {
         if (err) console.log(err)
-
         if (!user) {
             return res.redirect('/')
         }
@@ -833,6 +1104,10 @@ app.post('/getTherapistInfo', isLoggedIn, (req, res) => {
     })
 })
 
+/**
+ * This delete route deletes the item that exists in the users
+ * shopping cart and changes the status from active to deleted.
+ */
 app.delete('/deleteCart', isLoggedIn, async (req, res) => {
     Cart.updateOne({
         userId: req.session.user._id,
@@ -840,7 +1115,6 @@ app.delete('/deleteCart', isLoggedIn, async (req, res) => {
     }, {
         status: "deleted"
     }).then((obj) => {
-        console.log("deleted");
         res.send()
     }).catch(function (error) {
         console.log(error);
@@ -848,6 +1122,17 @@ app.delete('/deleteCart', isLoggedIn, async (req, res) => {
 })
 
 // MiddleWare for checkout
+/**
+ * 
+ * This helper function checks to see if a user have already used their
+ * free trial, and if they have it will return an error message.
+ * 
+ * @param {*} req as request object
+ * @param {*} res as response object
+ * @param {*} next executes the middleware succeeding the current middleware.
+ * @returns an error message if trail is already used, or else it returns next to allow user
+ * to use their free trial.
+ */
 async function usedTrial(req, res, next) {
     var trialStatus;
     if (req.body.cartPlan == "freePlan") {
@@ -865,6 +1150,15 @@ async function usedTrial(req, res, next) {
     }
 }
 
+/**
+ * 
+ * This helper function sends an email confirmation to the users email and the therapists
+ * email and thank them for their purchase.
+ * 
+ * @param {*} userId as user's ID
+ * @param {*} therapistId as therapist's ID
+ * @param {*} cartInfo as an object that contains the order information
+ */
 async function sendEmails(userId, therapistId, cartInfo) {
     const transporter = nodemailer.createTransport({
         service: 'hotmail',
@@ -886,13 +1180,12 @@ async function sendEmails(userId, therapistId, cartInfo) {
         <p style="font-size:14px;color:#000;">We have activated a therapy session with ${therapistInfo.firstName} ${therapistInfo.lastName}. Your session will expire at ${new Date(cartInfo.expiringTime).toLocaleString('en-CA', { hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true })}, and you can view your cart history at our Order History page at any time! We hope you have a wonderful session, thank you for your time and support. To start your journey, please login to your account and visit <a style="color:#09C5A3;text-decoration:none;font-weight:700;" href="https://mymindweb.herokuapp.com/" target="_blank">MyMind</a> to start your journey!</p><p style="font-size:14px;color:#000;">Cheers</p>`,
         attachments: [{
             filename: 'logo.png',
-            path: __dirname +'/public/images/logo.png',
+            path: __dirname + '/public/images/logo.png',
             cid: 'logo'
         }]
     };
     transporter.sendMail(mailPatient, function (err, info) {
         if (err) console.log(err)
-        else console.log('Email sent to patient');
     });
 
     let sessionLength;
@@ -912,17 +1205,20 @@ async function sendEmails(userId, therapistId, cartInfo) {
             <p style="font-size:14px;color:#000;">Your patient, ${patientInfo.firstName} ${patientInfo.lastName} has purchased a session with you for ${sessionLength} mins and is waiting to chat! Please get in contact with him as soon as possible!</p><p style="font-size:14px;color:#000;">Cheers</p>`,
             attachments: [{
                 filename: 'logo.png',
-                path: __dirname +'/public/images/logo.png',
+                path: __dirname + '/public/images/logo.png',
                 cid: 'logo'
             }]
         }
         transporter.sendMail(mailTherapist, function (err, info) {
             if (err) console.log(err)
-            else console.log('Email sent to therapist');
         });
     }, 1500);
 }
 
+/**
+ * This post route confirms an order when user confirms the item in their shopping cart
+ * and starts their session with the chosen therapist.
+ */
 app.post('/confirmCart', isLoggedIn, usedTrial, isTherapistAvailable, (req, res) => {
     const currentDate = Date.now();
     Cart.findOneAndUpdate({
@@ -943,27 +1239,31 @@ app.post('/confirmCart', isLoggedIn, usedTrial, isTherapistAvailable, (req, res)
     }).catch(function (error) {
         console.log(error);
     })
-
     if (req.body.cartPlan == 'freePlan') {
         User.updateOne({
             _id: req.session.user._id
         }, {
             usedTrial: true
         }).then((obj) => {
-            console.log("User used their free trial!");
         }).catch(function (error) {
             console.log(error);
         })
     }
 })
 
+/**
+ * This helper function increments the number of session for
+ * each therapist when a order is confirmed so that the therapist
+ * can be loaded by popularity in the home page.
+ * @param {*} userID as therapists ID
+ */
 function incrementTherapistSessionNum(userID) {
     Cart.find({
         userId: userID,
         status: "completed"
     }, function (err, carts) {
         if (err) {
-            console.log('Error searching cart.', err);
+            console.log(err);
         }
         if (carts) {
             const sortedCart = carts.sort((a, b) => b.purchased - a.purchased)
@@ -975,7 +1275,6 @@ function incrementTherapistSessionNum(userID) {
                     numSessions: 1
                 }
             }).then(() => {
-                console.log('Incremented number of sessions for therapist.')
             }).catch(function (error) {
                 console.log(error);
             })
@@ -983,6 +1282,10 @@ function incrementTherapistSessionNum(userID) {
     });
 }
 
+/**
+ * This put route updates the user's shopping cart when they
+ * change the time length(eg. 1month to 1 year).
+ */
 app.put('/updateCart', isLoggedIn, async (req, res) => {
     Cart.updateOne({
         userId: req.session.user._id,
@@ -996,6 +1299,10 @@ app.put('/updateCart', isLoggedIn, async (req, res) => {
     })
 })
 
+/**
+ * This get route finds all completed or refunded orders for a 
+ * certain user and returns them as an object array.
+ */
 app.get('/getPreviousPurchases', isLoggedIn, (req, res) => {
     Cart.find({
         userId: req.session.user._id,
@@ -1006,7 +1313,7 @@ app.get('/getPreviousPurchases', isLoggedIn, (req, res) => {
         }]
     }, function (err, carts) {
         if (err) {
-            console.log('Error searching cart.', err);
+            console.log(err);
         }
         if (carts) {
             res.json(carts);
@@ -1014,6 +1321,10 @@ app.get('/getPreviousPurchases', isLoggedIn, (req, res) => {
     });
 })
 
+/**
+ * This get route finds all completed or refunded orders for a 
+ * certain user and returns them as an object array for a therapist.
+ */
 app.get('/getPreviousPatients', isLoggedIn, (req, res) => {
     Cart.find({
         therapist: req.session.user._id,
@@ -1024,7 +1335,7 @@ app.get('/getPreviousPatients', isLoggedIn, (req, res) => {
         }]
     }, function (err, carts) {
         if (err) {
-            console.log('Error searching cart.', err);
+            console.log(err);
         }
         if (carts) {
             res.json(carts);
@@ -1032,13 +1343,16 @@ app.get('/getPreviousPatients', isLoggedIn, (req, res) => {
     });
 })
 
+/**
+ * This get route finds the most recent purchase and returns it as an object.
+ */
 app.get('/recentPurchase', isLoggedIn, (req, res) => {
     Cart.find({
         userId: req.session.user._id,
         status: "completed"
     }, function (err, carts) {
         if (err) {
-            console.log('Error searching cart.', err);
+            console.log(err);
         }
         if (carts) {
             const sortedCart = carts.sort((a, b) => b.purchased - a.purchased)
@@ -1047,6 +1361,10 @@ app.get('/recentPurchase', isLoggedIn, (req, res) => {
     });
 })
 
+/**
+ * This get route checks to see if there is an active session for the user 'patient'
+ * by checking the expiring time on the order (time length they choose when placing an order).
+ */
 app.get('/activeSession', isLoggedIn, (req, res) => {
     var currentTime = new Date();
     Cart.find({
@@ -1057,7 +1375,7 @@ app.get('/activeSession', isLoggedIn, (req, res) => {
         }
     }, function (err, carts) {
         if (err) {
-            console.log('Error searching cart.', err);
+            console.log(err);
         }
         if (carts.length > 0) {
             console.log(carts)
@@ -1084,6 +1402,9 @@ app.get('/activeSession', isLoggedIn, (req, res) => {
     })
 })
 
+/**
+ * This post route allows a user to refund an active order.
+ */
 app.post('/refundOrder', isLoggedIn, (req, res) => {
     var currentTime = new Date();
     Cart.updateOne({
@@ -1108,13 +1429,17 @@ app.post('/refundOrder', isLoggedIn, (req, res) => {
 let users = [];
 
 //Creates connection between server and client
+/**
+ * This io function starts a connection for socket and connects 
+ * to the mongodb to store all messages sent by the patient and therapist.
+ * It also joins two users (the patient and the therapist) to a room
+ * to start their chatting session privately.
+ */
 io.on('connection', (socket) => {
     var userId;
     var orderID;
 
     socket.on("chat message", function (msg, room) {
-
-        //console.log('message:', msg, ' to room:', room);
 
         //broadcast message to everyone in port:8000 except yourself.
         socket.to(room).emit("chat message", { message: msg });
@@ -1146,28 +1471,31 @@ io.on('connection', (socket) => {
     })
 
     socket.on('disconnect', () => {
-        if(!userId) return;
-  
+        if (!userId) return;
+
         var index = users.indexOf(userId);
         users.splice(index, 1);
 
         let newIndex = users.indexOf(userId);
-        if (newIndex == -1){
+        if (newIndex == -1) {
             socket.to(orderID).emit("disconnected")
         }
     })
 
     socket.on('check-status', (otherId, callback) => {
-        if(!otherId) return;
-  
+        if (!otherId) return;
+
         var index = users.indexOf(otherId);
-        if (index > -1){
+        if (index > -1) {
             callback();
         }
     })
 
 });
 
+/**
+ * This get route checks to see if an active chat session already exists.
+ */
 app.get('/activeChatSession', (req, res) => {
     if (!req.session.isLoggedIn) {
         return res.json('notLoggedIn');
@@ -1188,8 +1516,6 @@ app.get('/activeChatSession', (req, res) => {
             console.log('Error searching cart.', err);
         }
         if (carts) {
-            // console.log(carts)
-
             var orderId = carts.orderId;
             var purchased = carts.expiringTime;
             var therapistId = carts.therapist;
@@ -1258,6 +1584,10 @@ app.get('/activeChatSession', (req, res) => {
     })
 })
 
+/**
+ * This post route finds and loads all messages from the dabatase
+ * in an ascending order based on when it was sent.
+ */
 app.post('/loadMsgs', function (req, res) {
     console.log(req.body.orderId);
     Chat.find({
@@ -1275,10 +1605,9 @@ app.post('/loadMsgs', function (req, res) {
 
 })
 
-app.get("*",(req, res) => {
-    res.sendFile(path.resolve('html/404.html'))
-});
-
+/**
+ * This allows the server to listen for a certain port.
+ */
 server.listen(process.env.PORT || 8000, () => {
     console.log('listening on port:8000');
 });
