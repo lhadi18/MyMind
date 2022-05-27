@@ -1463,6 +1463,78 @@ io.on('connection', (socket) => {
 
 });
 
+function getTherapistChat(req, res, carts){
+    var orderId = carts.orderId;
+    var purchased = carts.expiringTime;
+    var therapistId = carts.therapist;
+    var userId = carts.userId;
+    var chatInfo;
+    User.findOne({
+        _id: userId
+    }, function (err, user) {
+        if (err) console.log(err)
+        if (user) {
+            chatInfo = {
+                purchased: purchased,
+                orderId: orderId,
+                therapistId: therapistId,
+                userId: userId,
+                name: user.firstName + " " + user.lastName,
+                phone: user.phoneNum,
+                image: user.profileImg,
+                sender: therapistId,
+                currentId: req.session.user._id,
+                other: userId
+            };
+            return res.json(chatInfo)
+        }
+    })
+}
+function getPatientChat(req, res, carts){
+    var orderId = carts.orderId;
+    var purchased = carts.expiringTime;
+    var therapistId = carts.therapist;
+    var userId = carts.userId;
+    var chatInfo;
+    User.findOne({
+        _id: therapistId
+    }, function (err, user) {
+        if (err) console.log(err)
+        if (user) {
+            chatInfo = {
+                purchased: purchased,
+                orderId: orderId,
+                therapistId: therapistId,
+                userId: userId,
+                name: user.firstName + " " + user.lastName,
+                phone: user.phoneNum,
+                image: user.profileImg,
+                sender: userId,
+                currentId: req.session.user._id,
+                other: therapistId
+            };
+            return res.json(chatInfo)
+        }
+    })
+}
+
+function getOtherChat(req, res, carts){
+    User.findOne({
+        _id: req.session.user._id
+    }, function (err, user) {
+        if (err) console.log(err)
+        if (user) {
+            if (user.userType == 'therapist') {
+                return getTherapistChat(req, res, carts)
+            } else {
+                return getPatientChat(req, res, carts);
+            }
+        } else {
+            return res.json("InvalidUser")
+        }
+    })
+}
+
 /**
  * This get route checks to see if an active chat session already exists.
  */
@@ -1484,68 +1556,7 @@ app.get('/activeChatSession', (req, res) => {
     }, function (err, carts) {
         if (err) console.log(err);
         if (carts) {
-            var orderId = carts.orderId;
-            var purchased = carts.expiringTime;
-            var therapistId = carts.therapist;
-            var userId = carts.userId;
-            var chatInfo;
-            User.findOne({
-                _id: req.session.user._id
-            }, function (err, user) {
-                if (err) console.log(err)
-                if (user) {
-                    if (user.userType == 'therapist') {
-                        User.findOne({
-                            _id: userId
-                        }, function (err, user) {
-                            if (err) console.log(err)
-                            if (user) {
-                                chatInfo = {
-                                    purchased: purchased,
-                                    orderId: orderId,
-                                    therapistId: therapistId,
-                                    userId: userId,
-                                    name: user.firstName + " " + user.lastName,
-                                    phone: user.phoneNum,
-                                    image: user.profileImg,
-                                    sender: therapistId,
-                                    currentId: req.session.user._id,
-                                    other: userId
-                                };
-                                return res.json(chatInfo)
-
-                            }
-                        })
-                    } else {
-                        User.findOne({
-                            _id: therapistId
-                        }, function (err, user) {
-                            if (err) console.log(err)
-                            if (user) {
-                                chatInfo = {
-                                    purchased: purchased,
-                                    orderId: orderId,
-                                    therapistId: therapistId,
-                                    userId: userId,
-                                    name: user.firstName + " " + user.lastName,
-                                    phone: user.phoneNum,
-                                    image: user.profileImg,
-                                    sender: userId,
-                                    currentId: req.session.user._id,
-                                    other: therapistId
-                                };
-                                return res.json(chatInfo)
-
-                            }
-                        })
-                    }
-
-
-                } else {
-                    return res.json("InvalidUser")
-                }
-
-            })
+            return getOtherChat(req, res, carts)
         } else {
             return res.json("NoActiveSession");
         }
