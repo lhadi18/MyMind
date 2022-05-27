@@ -5,6 +5,7 @@ $(document).ready(function () {
     const navLink = document.querySelectorAll('.nav-link');
     var socket;
     var orderId;
+    var element;
     const chatExpiredModal = document.getElementById('chatExpiredModal');
 
     // Load the Navbar and Footer 
@@ -248,7 +249,7 @@ $(document).ready(function () {
     function chatSetup() {
         // Chat Page for mobile
         if (window.location.pathname == '/chat-session') {
-            var element = $('#wrapper');
+            element = $('#wrapper');
             var messages = element.find('#chatMessages');
             var userInput = $('#chatbox');
             userInput.keydown(onMetaAndEnter).prop("disabled", false).focus();
@@ -266,14 +267,13 @@ $(document).ready(function () {
             });
         } else {
             // Chat Box for desktop
-            var element = $('#therapistChat');
+            element = $('#therapistChat');
             element.addClass('enter');
             element.click(openElement);
         }
     }
 
     function openElement() {
-        var element = $('#therapistChat');
         var messages = element.find('#chatMessages');
         var textInput = element.find('#chatbox');
         var userInput = $('#chatbox');
@@ -299,7 +299,6 @@ $(document).ready(function () {
     }
 
     function closeElement() {
-        var element = $('#therapistChat');
         element.find('.chatContainer').removeClass('enter').hide();
         element.find('#chatMsgIcon').show();
         element.removeClass('expand');

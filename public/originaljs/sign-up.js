@@ -1,7 +1,8 @@
 const batmanAnimation = document.getElementById('batmanImg');
 const batmanSec = document.getElementById('batmanImg');
 
-$('#signupBtn').click(() => {
+function clientInputValidation(){
+    validated = false;
     var phoneLength = $("#phone").val();
     if (phoneLength.length != 10) {
         window.scrollTo(0, document.body.scrollHeight);
@@ -23,7 +24,37 @@ $('#signupBtn').click(() => {
         window.scrollTo(0, document.body.scrollHeight);
         document.getElementById("signUpErrorMessage").style.display = 'block';
         document.getElementById("signUpErrorMessage").innerHTML = "Experience or cost of session cannot be less than 0";
-    } else {
+    } else{
+        validated = true;
+    }
+    return validated;
+}
+
+function handleSignUpResponse(data) {
+    if (data == "existingEmail") {
+        window.scrollTo(0, document.body.scrollHeight);
+        document.getElementById("signUpErrorMessage").style.display = 'block';
+        document.getElementById("signUpErrorMessage").innerHTML = "A user with that email already exists";
+    } else if (data == "existingPhone") {
+        window.scrollTo(0, document.body.scrollHeight);
+        document.getElementById("signUpErrorMessage").style.display = 'block';
+        document.getElementById("signUpErrorMessage").innerHTML = "A user with that phone number already exists";
+    } else if (data == "existingUsername") {
+        window.scrollTo(0, document.body.scrollHeight);
+        document.getElementById("signUpErrorMessage").style.display = 'block';
+        document.getElementById("signUpErrorMessage").innerHTML = "A user with that username already exists";
+    } else if (data == "login") {
+        document.getElementById("signUpErrorMessage").style.display = 'none';
+        document.getElementById('signupSuccessModal').style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+        setTimeout(() => {
+            window.location = '/login'
+        }, 2500);
+    }
+}
+
+$('#signupBtn').click(() => {
+    if (clientInputValidation()) {
         $.ajax({
             url: '/sign-up',
             type: 'POST',
@@ -37,29 +68,7 @@ $('#signupBtn').click(() => {
                 yearsExperience: $("#yearsExperience").val(),
                 sessionCost: $("#sessionCost").val(),
                 password: $("#password").val(),
-            }, success: function (data) {
-                console.log(data);
-                if (data == "existingEmail") {
-                    window.scrollTo(0, document.body.scrollHeight);
-                    document.getElementById("signUpErrorMessage").style.display = 'block';
-                    document.getElementById("signUpErrorMessage").innerHTML = "A user with that email already exists";
-                } else if (data == "existingPhone") {
-                    window.scrollTo(0, document.body.scrollHeight);
-                    document.getElementById("signUpErrorMessage").style.display = 'block';
-                    document.getElementById("signUpErrorMessage").innerHTML = "A user with that phone number already exists";
-                } else if (data == "existingUsername") {
-                    window.scrollTo(0, document.body.scrollHeight);
-                    document.getElementById("signUpErrorMessage").style.display = 'block';
-                    document.getElementById("signUpErrorMessage").innerHTML = "A user with that username already exists";
-                } else if (data == "login") {
-                    document.getElementById("signUpErrorMessage").style.display = 'none';
-                    document.getElementById('signupSuccessModal').style.display = 'flex';
-                    document.body.style.overflow = 'hidden';
-                    setTimeout(() => {
-                        window.location = '/login'
-                    }, 2500);
-                }
-            }
+            }, success: handleSignUpResponse
         })
     }
 });
