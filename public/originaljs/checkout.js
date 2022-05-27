@@ -1,6 +1,10 @@
 var therapistInformation;
 var totalPrice;
 $(document).ready(async function () {
+    /**
+     * AJAX call that checks the status of a cart to see if
+     * there is an item that exist in the shopping cart.
+     */
     await $.ajax({
         url: '/checkStatus',
         method: 'GET',
@@ -17,6 +21,13 @@ $(document).ready(async function () {
     })
 })
 
+/**
+ * 
+ * This function has an AJAX call that finds the therapist that is selected from the shopping cart
+ * and displays their information in the checkout page.
+ * 
+ * @param {*} therapistId as object id
+ */
 function getTherapist(therapistId) {
     $.ajax({
         url: '/getTherapistInfo',
@@ -48,6 +59,12 @@ function getTherapist(therapistId) {
     })
 }
 
+/**
+ * This function allows users to change their shopping cart's timelength.
+ * It has an AJAX call that changes the timelength for the user's shopping cart
+ * in the database so when the order is confirmed the expiring time changes
+ * corrosponding to the timelength.
+ */
 function updateCart() {
     $('#cartPlan').change(() => {
         $.ajax({
@@ -76,19 +93,22 @@ function updateCart() {
     })
 }
 
-// Variables for Delete User Modal 
+/**
+ * Variables for Delete User Modal.
+ */
 var removeOrderModal = document.getElementById("removeOrderModal");
-
 document.getElementById('removeItem').onclick = function (e) {
     removeOrderModal.style.display = "block";
     document.body.style.overflow = 'hidden';
 
     document.getElementById('removeOrderBtn').onclick = function () {
+        /**
+         * AJAX call that deletes a item from the shopping cart and changes the status of the cart.
+         */
         $.ajax({
             url: '/deleteCart',
             type: 'DELETE',
             success: function (data) {
-                console.log("Deleted successfully");
                 removeOrderModal.style.display = "none";
                 document.getElementById('signupSuccessModal').style.display = 'flex';
                 document.body.style.overflow = 'hidden';
@@ -100,13 +120,20 @@ document.getElementById('removeItem').onclick = function (e) {
     }
 }
 
-// If cancel button is clicked, hide modal for Delete User
+/**
+ * If cancel button is clicked, hide modal for Delete User
+ */
 document.getElementById("cancelRemove").onclick = function () {
     removeOrderModal.style.display = "none";
     document.body.style.overflow = 'auto';
 }
 
-// If user clicks outside of the modal for both Create and Delete then hide modal
+/**
+ * 
+ * If user clicks outside of the modal for both Create and Delete then hide modal
+ * 
+ * @param {*} event as an event listener
+ */
 window.onclick = function (event) {
     if (event.target == removeOrderModal) {
         removeOrderModal.style.display = "none";
@@ -116,6 +143,14 @@ window.onclick = function (event) {
 
 const checkoutErrorMsg = document.getElementById("checkoutErrorMessage");
 
+/**
+ * 
+ * If the order is successfully placed redirect patient to
+ * thank you page and display their order number and a
+ * thank you message.
+ * 
+ * @param {*} data as form field
+ */
 function handleConfirmOrder(data) {
     if (data.errorMsg) {
         checkoutErrorMsg.style.display = 'block';
@@ -130,7 +165,12 @@ function handleConfirmOrder(data) {
     }
 }
 
-
+/**
+ * This onclick calls the AJAX call that confirms an order. Before
+ * calling the AJAX call it will check the timeLength the user
+ * chose for their session. It will then change the expiring time
+ * of the cart based on the timeLength when confirm order is done.
+ */
 document.getElementById('confirmOrder').onclick = function () {
     const time = new Date();
     var timeLengthforUse;
@@ -144,7 +184,9 @@ document.getElementById('confirmOrder').onclick = function () {
     } else if (selectedTime == "yearPlan") {
         timeLengthforUse = new Date(time.setMinutes(time.getMinutes() + 15));
     }
-    console.log(timeLengthforUse.toLocaleTimeString());
+    /**
+     * AJAX call that will confirm the order in the database and start the session for the user.
+     */
     $.ajax({
         url: "/confirmCart",
         method: "POST",
@@ -158,7 +200,12 @@ document.getElementById('confirmOrder').onclick = function () {
     })
 }
 
-// Print invoice function
+/**
+ * 
+ * Print invoice function
+ * 
+ * @returns N/A
+ */
 function printInvoice() {
     var printWindow = window.open('', 'new div', 'height=600,width=600');
     printWindow.document.write('<html><head><title>Print Invoice</title>');

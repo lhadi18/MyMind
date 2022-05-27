@@ -1,18 +1,27 @@
+/**
+ * Constant variables.
+ */
 const cartExistModal = document.getElementById('cartExistModal');
 const therapistExistModal = document.getElementById('therapySessionExistModal');
 const notAuthorizedModal = document.getElementById('notAuthorizedModal');
 
 var currentURL = window.location.href;
+/**
+ * Wait 0.5 seconds before loading the page, allows us to fetch data faster if there are more than 20 therapists.
+ */
 if (currentURL !=  window.location.origin + '/therapists') {
     setTimeout("window.location=currentURL", 500);
 }
 
 $(document).ready(async function () {
+    /**
+     * AJAX call that gets all the therapists from the database and 
+     * displays them in a table as rows on the page.
+     */
     await $.ajax({
         url: '/getTherapists',
         type: "GET",
         success: function (data) {
-            console.log("data: ", data)
             var i = 1;
 
             data.forEach(function (Therapist) {
@@ -30,6 +39,12 @@ $(document).ready(async function () {
         }
     })
 
+    /**
+     * 
+     * Helper function that allows a user to add a therapist to their shopping cart.
+     * 
+     * @param {*} data as an object
+     */
     function addToCartHandler(data) {
         $.get('/isLoggedIn', function (user) {
             if (user.userType != 'patient') {
@@ -42,8 +57,10 @@ $(document).ready(async function () {
                     document.body.style.overflow = 'hidden';
                 } else if (data == "orderExists") {
                     setTimeout(() => {
+                        /**
+                         * AJAX GET call that checks to see if an active session already exists for the user.
+                         */
                         $.get('/activeSession', function (data) {
-                            console.log(data)
                             $("#therapistName").text(`${data.therapistName}.`);
                             $("#expireDate").text(`${new Date(data.purchased).toLocaleString('en-CA', {
                                 month: 'short',
@@ -61,10 +78,15 @@ $(document).ready(async function () {
             }
         });
     }
-    // Disable buttons for admin, therapists, and logged out users
+    /**
+     * Disable buttons for admin, therapists, and logged out users.
+     */
     const therapistBtns = document.querySelectorAll(".therapistBtn");
     therapistBtns.forEach(function (btn) {
         $(btn).click(() => {
+            /**
+             * AJAX call that adds an item to the cart by calling its helper function.
+             */
             $.ajax({
                 url: "/addToCart",
                 type: "POST",
@@ -77,23 +99,36 @@ $(document).ready(async function () {
     })
 })
 
-// If cancel button is clicked, hide modal for Cart Exist 
+/**
+ * If cancel button is clicked, hide modal for Cart Exist 
+ */
 document.getElementById("closeCart").onclick = function () {
     cartExistModal.style.display = "none";
     document.body.style.overflow = 'auto';
 }
 
+/**
+ * If cancel button is clicked, hide modal for Cart Exist 
+ */
 document.getElementById("closeSession").onclick = function () {
     therapistExistModal.style.display = "none";
     document.body.style.overflow = 'auto';
 }
 
+/**
+ * If cancel button is clicked, hide modal for Cart Exist 
+ */
 document.getElementById("closeAuthorized").onclick = function () {
     notAuthorizedModal.style.display = "none";
     document.body.style.overflow = 'auto';
 }
 
-// If user clicks outside of the modal for Cart Exist Modal then hide modal
+/**
+ * 
+ * If user clicks outside of the modal for Cart Exist Modal then hide modal.
+ * 
+ * @param {*} event as an event listener
+ */
 window.onclick = function (event) {
     if (event.target == cartExistModal) {
         cartExistModal.style.display = "none";

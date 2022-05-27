@@ -1,5 +1,8 @@
 $(document).ready(async function () {
 
+    /**
+     * AJAX call to retreive all users data and display it in the admin panel.
+     */
     await $.ajax({
         url: '/getAllUsersData',
         type: "GET",
@@ -28,22 +31,34 @@ $(document).ready(async function () {
         }
     });
 
-    // Set the caret icons faced down by default
+    /**
+     * Set the caret icons faced down by default.
+     */
     document.getElementById('0').setAttribute("class", "bi bi-caret-down-fill");
     document.getElementById('1').setAttribute("class", "bi bi-caret-down-fill");
     document.getElementById('2').setAttribute("class", "bi bi-caret-down-fill");
     document.getElementById('3').setAttribute("class", "bi bi-caret-down-fill");
     document.getElementById('4').setAttribute("class", "bi bi-caret-down-fill");
 
-    // Call sort table fucntion when user clicks table headings
+    /**
+     * Call sort table fucntion when user clicks table headings.
+     */
     sortTable();
 
-    // Variables for Create and Delete User Modal 
+    /**
+     * Variables for Create and Delete User Modal.
+     */
     var createUserModal = document.getElementById("createUserModal");
     var editUserModal = document.getElementById("editUserModal");
     var deleteUserModal = document.getElementById("deleteUserModal");
 
 
+    /**
+     * 
+     * Display input field errors on profile page depending on which field was invalid.
+     * 
+     * @returns validated true if all fields are valid.
+     */
     function createInputValidation() {
         let validated = false;
         var phoneLength = $("#phone").val();
@@ -68,6 +83,13 @@ $(document).ready(async function () {
         return validated;
     }
 
+    /**
+     * 
+     * Display input field errors on profile page depending on which field was invalid.
+     * 
+     * @param {*} data from form fields
+     * @returns validated true if all fields are valid.
+     */
     function handleCreateResponse(data) {
         if (data == "existingEmail") {
             document.getElementById("createUserErrorMessage").style.display = 'block';
@@ -88,7 +110,9 @@ $(document).ready(async function () {
 
     }
 
-    // If create button is clicked, display modal (form)
+    /**
+     * If create button is clicked, display modal (form)
+     */
     document.getElementById('createUser').onclick = function () {
         createUserModal.style.display = "block";
         document.body.style.overflow = 'hidden';
@@ -96,6 +120,9 @@ $(document).ready(async function () {
         $('#createUserBtn').off();
         $('#createUserBtn').click(() => {
             if (createInputValidation()) {
+                /**
+                 * AJAX call to create a user with the values from the form admin fills out from the admin panel.
+                 */
                 $.ajax({
                     url: '/createUser',
                     type: 'POST',
@@ -116,6 +143,13 @@ $(document).ready(async function () {
         });
     }
 
+    /**
+     * 
+     * This function checks to see if the inputted values for the form fields
+     * are valid.
+     * 
+     * @returns true if there are validation errors
+     */
     function inputValidationCreate() {
         const inpObjFirstName = document.getElementById("firstname");
         const inpObjLastName = document.getElementById("lastname");
@@ -129,6 +163,13 @@ $(document).ready(async function () {
         }
     }
 
+    /**
+     * 
+     * This function checks to see if the inputted value for password field
+     * is valid.
+     * 
+     * @returns true if password is invalid
+     */
     function passwordValidationCreate() {
         const inpObjPassword = document.getElementById("password");
         if (!inpObjPassword.checkValidity()) {
@@ -136,6 +177,13 @@ $(document).ready(async function () {
         }
     }
 
+    /**
+     * 
+     * This function checks to see if the inputted values for sessionCost
+     * and yearsExperience fieldsa are valid.
+     * 
+     * @returns true if sessionCost or yearsExperience fields are invalid.
+     */
     function negativeValidationcreate() {
         const yearsExp = document.getElementById("yearsExperience").value;
         const cost = document.getElementById("sessionCost").value;
@@ -144,6 +192,14 @@ $(document).ready(async function () {
         }
     }
 
+    /**
+     * 
+     * This function checks to see if the to be deleted user is the last
+     * administrator in the database.
+     * 
+     * @param {*} data as form field
+     * @returns error if the deletion fails
+     */
     function handleDeleteResponse(data) {
         if (data == 'lastAdmin') {
             document.getElementById("deleteUserErrorMessage").style.display = 'block';
@@ -159,10 +215,14 @@ $(document).ready(async function () {
         }, 2500);
     }
 
-    // Get all classnames to check which row was clicked to delete user
+    /**
+     * Get all classnames to check which row was clicked to delete user.
+     */
     const deleteUserBtns = document.querySelectorAll('.deleteUser');
 
-    // Loop through each delete icon and set function to display modal
+    /**
+     * Loop through each delete icon and set function to display modal.
+     */
     for (var i = 0; i < deleteUserBtns.length; i++) {
         deleteUserBtns[i].onclick = function (e) {
             deleteUserModal.style.display = "block";
@@ -190,6 +250,13 @@ $(document).ready(async function () {
         }
     }
 
+    /**
+     * 
+     * This function checks inputted values for form fields to make sure
+     * they are valid.
+     * 
+     * @returns true if there are validation errors
+     */
     function editInputValidation() {
         let validated = false;
         var phoneLength = $("#editPhone").val();
@@ -214,6 +281,13 @@ $(document).ready(async function () {
         return validated;
     }
 
+    /**
+     * 
+     * This helper function checks inputted values for form fields to make sure
+     * they are valid.
+     * 
+     * @param {*} data as form field
+     */
     function handleEditResponse(data) {
         if (data == "existingEmail") {
             document.getElementById("editUserErrorMessage").style.display = 'block';
@@ -244,6 +318,13 @@ $(document).ready(async function () {
         }
     }
 
+    /**
+     * 
+     * This helper function fetches and display each row (users) information
+     * from the database and displays them on the admin panel's edit user form.
+     * 
+     * @param {*} currentRow as the form field 
+     */
     function setupEditModal(currentRow) {
         document.getElementById("editUserErrorMessage").style.display = 'none';
         document.getElementById('editFirstname').value = currentRow.children[0].innerHTML;
@@ -258,10 +339,14 @@ $(document).ready(async function () {
         showTherapyOptions($("#editUserType"));
     }
 
-    // Get all classnames to check which row was clicked to edit user
+    /**
+     * Get all classnames to check which row was clicked to edit user.
+     */
     const editUserBtns = document.querySelectorAll('.editUser');
 
-    // Loop through each edit icon and set function to display modal
+    /**
+     * Loop through each edit icon and set function to display modal.
+     */
     for (var i = 0; i < editUserBtns.length; i++) {
         editUserBtns[i].onclick = function (e) {
             editUserModal.style.display = "block";
@@ -272,6 +357,9 @@ $(document).ready(async function () {
             $('#editUserBtn').off();
             $('#editUserBtn').click(() => {
                 if (editInputValidation()) {
+                    /**
+                     * AJAX call to edit a user with the values from the form admin fills out from the admin panel.
+                     */
                     $.ajax({
                         url: '/editUser',
                         type: 'PUT',
@@ -295,6 +383,13 @@ $(document).ready(async function () {
         }
     }
 
+    /**
+     * 
+     * This helper function checks the inputted valies from the form fields
+     * to make sure they are valid.
+     * 
+     * @returns true if the inputs are invalid
+     */
     function inputValidationEdit() {
         var currentType = document.getElementById("editUserType").value
         const inpObjFirstName = document.getElementById("editFirstname");
@@ -314,6 +409,13 @@ $(document).ready(async function () {
         }
     }
 
+    /**
+     * 
+     * This helper function checks to see if the inputted value for the
+     * password field is valid.
+     * 
+     * @returns true if the input is invalid
+     */
     function passwordValidationEdit() {
         const inpObjPassword = document.getElementById("editPassword");
         if (!inpObjPassword.checkValidity()) {
@@ -321,6 +423,13 @@ $(document).ready(async function () {
         }
     }
 
+    /**
+     * 
+     * This helper function checks to see if the inputted values for
+     * sessionCost and yearsExperience are valid.
+     * 
+     * @returns true if the inputs are invalid.
+     */
     function negativeValidationEdit() {
         const yearsExp = document.getElementById("editYearsExperience").value;
         const cost = document.getElementById("editSessionCost").value;
@@ -329,25 +438,36 @@ $(document).ready(async function () {
         }
     }
 
-    // If close icon is clicked, hide modal for Create User
+    /**
+     * If close icon is clicked, hide modal for Create User.
+     */
     document.getElementById("closeCreate").onclick = function () {
         createUserModal.style.display = "none";
         document.body.style.overflow = 'auto';
     }
 
-    // If close icon is clicked, hide modal for Edit User
+    /**
+     * If close icon is clicked, hide modal for Edit User.
+     */
     document.getElementById("closeEdit").onclick = function () {
         editUserModal.style.display = "none";
         document.body.style.overflow = 'auto';
     }
 
-    // If cancel button is clicked, hide modal for Delete User
+    /**
+     * If cancel button is clicked, hide modal for Delete User.
+     */
     document.getElementById("closeDelete").onclick = function () {
         deleteUserModal.style.display = "none";
         document.body.style.overflow = 'auto';
     }
 
-    // If user clicks outside of the modal for both Create, Edit and Delete then hide modal
+    /**
+     * 
+     * If user clicks outside of the modal for both Create, Edit and Delete then hide modal.
+     * 
+     * @param {*} event as an eventlistened for what the user clicks
+     */
     window.onclick = function (event) {
         if (event.target == createUserModal) {
             document.getElementById("createUserErrorMessage").style.display = 'none';
@@ -364,7 +484,9 @@ $(document).ready(async function () {
         }
     }
 
-    // Get all settings icons from each row and iterate in a loop to check which one was clicked
+    /**
+     * Get all settings icons from each row and iterate in a loop to check which one was clicked.
+     */
     const dashSet = document.querySelectorAll('.dashSettings');
     for (const set of dashSet) {
         set.onclick = function () {
@@ -389,7 +511,9 @@ $(document).ready(async function () {
     }
 });
 
-// Live search function for table search 
+/**
+ * Live search function for table search.
+ */
 function searchTable() {
     const searchInput = document.getElementById("searchbar").value.toUpperCase();
     const table = document.getElementById("dashboardTable");
@@ -414,7 +538,9 @@ function searchTable() {
     $("#resultsFound").html(`${count}`);
 }
 
-// Sort table function when table headings is clicked
+/**
+ * Sort table function when table headings is clicked.
+ */
 function sortTable() {
     const table = document.getElementById('dashboardTable');
     const headers = table.querySelectorAll('.tHead');
@@ -494,7 +620,12 @@ function sortTable() {
     });
 }
 
-// Display therapy field options if usertype is a therapist
+/**
+ * 
+ * Display therapy field options if usertype is a therapist.
+ * 
+ * @param {*} selectObject as form field
+ */
 function showTherapyOptions(selectObject) {
     const value = $(selectObject).val();
     const therapyFieldOptions = document.querySelectorAll('.therapistOptions');
@@ -509,12 +640,21 @@ function showTherapyOptions(selectObject) {
     }
 }
 
+/**
+ * 
+ * This function checks to see if the given email matches the pattern.
+ * 
+ * @param {*} email as form field
+ * @returns true if it matches the pattern, else false
+ */
 function isEmail(email) {
     var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
     return regex.test(email);
 }
 
-// Trigger click function for enter key for all input fields for create form
+/**
+ * Trigger click function for enter key for all input fields for create form.
+ */
 const inputCreate = document.querySelectorAll("#createUserForm .form-control");
 for (var i = 0; i < inputCreate.length; i++) {
     inputCreate[i].addEventListener("keypress", function (e) {
@@ -525,7 +665,9 @@ for (var i = 0; i < inputCreate.length; i++) {
     });
 }
 
-// Trigger click function for enter key for all input fields for create form
+/**
+ *  Trigger click function for enter key for all input fields for create form
+ */
 const inputEdit = document.querySelectorAll("#editUserForm .form-control");
 for (var i = 0; i < inputEdit.length; i++) {
     inputEdit[i].addEventListener("keypress", function (e) {

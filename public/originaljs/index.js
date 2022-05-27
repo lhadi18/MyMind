@@ -1,9 +1,18 @@
+/**
+ * AJAX call to get all therapists from the database and call the helper function.
+ */
 $.ajax({
     url: '/getTherapists',
     type: "GET",
     success: handleGetTherapists
 })
 
+/**
+ * 
+ * This helper function will display the therapists on the home page based on their popularity.
+ * 
+ * @param {*} data as array of objects
+ */
 function handleGetTherapists(data) {
     var firstCard = data[1];
     var mainCard = data[0];
@@ -34,7 +43,9 @@ function handleGetTherapists(data) {
     document.getElementById("therapistCards").innerHTML += z;
 }
 
-// Google Maps
+/**
+ * Google Maps API.
+ */
 function initMap() {
     const uluru = {
         lat: 49.2484615,

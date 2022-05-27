@@ -1,14 +1,21 @@
+/**
+ * Helper variables to get certain values from forms.
+ */
 var profileImgBtn = document.getElementById('profileImage');
 var profileFile = document.getElementById('profileFile');
 const deleteUserModal = document.getElementById("deleteAccountModal");
 var currentType;
 
-// When profile image clicked, call onclick function for uploading image file
+/**
+ * When profile image clicked, call onclick function for uploading image file.
+ */
 profileImgBtn.addEventListener('click', function () {
     profileFile.click();
 });
 
-// Image uploader function that allows user to choose an image locally to uplaod and update their profile picture
+/**
+ * Image uploader function that allows user to choose an image locally to uplaod and update their profile picture.
+ */
 profileFile.addEventListener('change', function () {
     const choosedFile = this.files[0];
     if (choosedFile) {
@@ -20,7 +27,9 @@ profileFile.addEventListener('change', function () {
     }
 });
 
-// AJAX call to retreive the logged in user's info and display in each field on user profile page
+/**
+ * AJAX call to retreive the logged in user's info and display in each field on user profile page.
+ */
 $.ajax({
     url: '/getUserInfo',
     type: "GET",
@@ -54,9 +63,11 @@ $.ajax({
     }
 });
 
-// Retrieving user's profile picture from database and linking the src to display image
-// Putting in timeout with a small margin delay is needed to shift the loading time 
-// so it wouldn't load everything at once.
+/**
+ * Retrieving user's profile picture from database and linking the src to display image
+ * Putting in timeout with a small margin delay is needed to shift the loading time 
+ * so it wouldn't load everything at once.
+ */
 setTimeout(() => {
     $.ajax({
         url: '/getProfilePicture',
@@ -68,7 +79,9 @@ setTimeout(() => {
     })
 }, 50);
 
-// Hide error messages by default
+/**
+ * Hide error messages by default.
+ */
 function hideErrorMessages() {
     document.getElementById("phoneErrorMessage").style.display = 'none';
     document.getElementById("emailErrorMessage").style.display = 'none';
@@ -76,9 +89,13 @@ function hideErrorMessages() {
     document.getElementById("validationErrorMessage").style.display = 'none';
 }
 
-// Display input field errors on profile page depending on which field was invalid
-// @param data from form fields
-// @return validated true if all fields are valid
+/**
+ * 
+ * Display input field errors on profile page depending on which field was invalid.
+ * 
+ * @param {*} data from form fields
+ * @returns validated true if all fields are valid.
+ */
 function serverInputValidation(data) {
     let validated = false;
     if (data == "existingEmail") {
@@ -103,8 +120,12 @@ function serverInputValidation(data) {
     return validated;
 }
 
-// Display animation for when user clicks save changes
-// @params data from form fields
+/**
+ * 
+ * Display animation for when user clicks save changes.
+ * 
+ * @param {*} data from form fields
+ */
 function handleEditSuccess(data) {
     // If password is empty then simply refresh the page, 
     // if password is changed then log the user out back to login page
@@ -130,7 +151,9 @@ function handleEditSuccess(data) {
     }
 }
 
-// Edit Profile AJAX call to format the field values when user enters valid fields and clicks save changes
+/**
+ * Edit Profile AJAX call to format the field values when user enters valid fields and clicks save changes.
+ */
 function editProfile() {
     $.ajax({
         url: '/editProfile',
@@ -153,7 +176,9 @@ function editProfile() {
     })
 }
 
-// Save changes on profile page
+/**
+ * Save changes on profile page.
+ */
 $('#saveChanges').click(() => {
     var phoneLength = $("#phone").val();
     if (phoneLength.length != 10) {
@@ -185,16 +210,24 @@ $('#saveChanges').click(() => {
     }
 });
 
-// Email validation to ensure the email is formatted correctly
-// @params email input field value
-// @return the formatted email pattern value
+/**
+ * 
+ * Email validation to ensure the email is formatted correctly.
+ * 
+ * @param {*} email input field value
+ * @returns the formatted pattern value
+ */
 function isEmail(email) {
     var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
     return regex.test(email);
 }
 
-// Standard input validation to ensure not empty and formatted correctly
-// @return true if all form fields are validated
+/**
+ * 
+ * Standard input validation to ensure not empty and formatted correctly.
+ * 
+ * @returns true if all form fields are validated
+ */
 function inputValidation() {
     const inpObjFirstName = document.getElementById("firstname");
     const inpObjLastName = document.getElementById("lastname");
@@ -213,8 +246,12 @@ function inputValidation() {
     }
 }
 
-// Password validation check
-// @return true if password is validated
+/**
+ * 
+ * Password validation check.
+ * 
+ * @returns  true if password is validated
+ */
 function passwordValidation() {
     const inpObjPassword = document.getElementById("password");
     if (!inpObjPassword.checkValidity()) {
@@ -222,8 +259,12 @@ function passwordValidation() {
     }
 }
 
-// Negative validation check for therapist fields to restrict user from entering non-positive values
-// @return true if therapist fields are validated with a positive value
+/**
+ * 
+ *  Negative validation check for therapist fields to restrict user from entering non-positive values.
+ * 
+ * @returns  true if therapist fields are validated with a positive value
+ */
 function negativeValidation() {
     const yearsExp = document.getElementById("yearsExperience").value;
     const cost = document.getElementById("sessionCost").value;
@@ -232,8 +273,9 @@ function negativeValidation() {
     }
 }
 
-
-// Trigger click function for enter key for all input fields
+/**
+ * Trigger click function for enter key for all input fields.
+ */
 const input = document.querySelectorAll(".form-control");
 for (var i = 0; i < input.length; i++) {
     input[i].addEventListener("keypress", function (e) {
@@ -244,7 +286,9 @@ for (var i = 0; i < input.length; i++) {
     });
 }
 
-// If its user profile page for desktop view then execute the following functions
+/**
+ * If its user profile page for desktop view then execute the following functions.
+ */
 if (window.location.pathname == '/userprofile') {
 
     // If delete account is clicked for desktop account page, then display the confirmation modal 
@@ -276,20 +320,28 @@ if (window.location.pathname == '/userprofile') {
     }
 }
 
-// Display the delete user modal
+/**
+ * Display the delete user modal
+ */
 function displayDeleteUserModal() {
     deleteUserModal.style.display = "block";
     document.body.style.overflow = 'hidden';
 }
 
-// Hide the delete user modal
+/**
+ * Hide the delete user modal
+ */
 function hideDeleteUserModal() {
     deleteUserModal.style.display = "none";
     document.body.style.overflow = 'auto';
 }
 
-// AJAX call to delete the user from the database and log the user out
-// @return empty if the last admin wants to delete their profile to prevent 0 admin errors
+/**
+ * 
+ * AJAX call to delete the user from the database and log the user out
+ * 
+ * @return empty if the last admin wants to delete their profile to prevent 0 admin errors
+ */
 function ajaxDeleteUserAccunt() {
     $.ajax({
         url: '/deleteUserProfile',

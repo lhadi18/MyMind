@@ -1,12 +1,30 @@
+/**
+ * Constant variable.
+ */
 const orderRefundModal = document.getElementById('orderRefundModal');
 
 $(document).ready(async function () {
+    /**
+     * 
+     * This helper function allows us to get an actual date with the proper timezone.
+     * 
+     * @param {*} purchasedDate as a DATE
+     * @returns the LocalISO time with proper timezone
+     */
     function getActuatDate(purchasedDate) {
         let offSet = purchasedDate.getTimezoneOffset() * 60 * 1000;
         let tLocalISO = new Date(purchasedDate - offSet).toISOString().slice(0, 10);
         return tLocalISO;
     }
 
+    /**
+     * 
+     * This helper function populates all previous purchases with the therapists for the patient
+     * in a table as rows.
+     * 
+     * @param {*} therapistInfo as an object 
+     * @param {*} cartData as an object
+     */
     function populateTherapist(therapistInfo, cartData) {
         let multiplier;
         var x = `<tr class="tableRows">`;
@@ -38,6 +56,9 @@ $(document).ready(async function () {
         $("tbody").append(x);
     }
 
+    /**
+     * AJAX call that gets all previous purchases from the databsae and calls the helper function above to populate them.
+     */
     await $.ajax({
         url: '/getPreviousPurchases',
         type: "GET",
@@ -55,7 +76,9 @@ $(document).ready(async function () {
         }
     });
 
-    // Set the caret icons faced down by default
+    /**
+     * Set the caret icons faced down by default.
+     */
     document.getElementById('0').setAttribute("class", "bi bi-caret-down-fill");
     document.getElementById('1').setAttribute("class", "bi bi-caret-down-fill");
     document.getElementById('2').setAttribute("class", "bi bi-caret-down-fill");
@@ -64,12 +87,19 @@ $(document).ready(async function () {
     document.getElementById('5').setAttribute("class", "bi bi-caret-down-fill");
     document.getElementById('6').setAttribute("class", "bi bi-caret-down-fill");
 
-    // Call sort table fucntion when user clicks table headings
+    /**
+     * Call sort table fucntion when user clicks table headings.
+     */
     sortTable();
 
-    // If create button is clicked, display modal (form)
+    /**
+     * If create button is clicked, display modal (form).
+     */
     document.getElementById('refundBtn').onclick = function () {
         setTimeout(() => {
+            /**
+             * AJAX GET call that checks to see if the user already has an active session.
+             */
             $.get('/activeSession', function (data) {
                 if (data == "NoActiveSession") {
                     document.getElementById('modalHeader').style.display = 'block';
@@ -90,6 +120,9 @@ $(document).ready(async function () {
             document.getElementById('signupSuccessModal').style.display = 'flex';
             document.body.style.overflow = 'hidden';
             setTimeout(() => {
+                /**
+                 * AJAX POST call that allows user to refund their order.
+                 */
                 $.post('/refundOrder', function () {
                     location.reload();
                 })
@@ -98,9 +131,20 @@ $(document).ready(async function () {
     }
 });
 
+/**
+ * 
+ * This function calls an AJAX call to get therapist information.
+ * 
+ * @param {*} cartData as object
+ * @param {*} callback as listener
+ */
 function getTherapist(cartData, callback) {
     let therapistId = cartData.therapist
     let therapistInfo;
+    /**
+     * AJAX call that gets the therapists information, adds the required info into an array
+     * and returns it back through the callback.
+     */
     $.ajax({
         url: '/getTherapistInfo',
         method: "POST",
@@ -117,7 +161,9 @@ function getTherapist(cartData, callback) {
     })
 }
 
-// Live search function for table search 
+/**
+ * Live search function for table search.
+ */
 function searchTable() {
     const searchInput = document.getElementById("searchbar").value.toUpperCase();
     const table = document.getElementById("orderTable");
@@ -142,7 +188,9 @@ function searchTable() {
     $("#resultsFound").html(`${count}`);
 }
 
-// Sort table function when table headings is clicked
+/**
+ * Sort table function when table headings is clicked.
+ */
 function sortTable() {
     const table = document.getElementById('orderTable');
     const headers = table.querySelectorAll('.tHead');
@@ -152,7 +200,6 @@ function sortTable() {
 
     const transform = function (index, content) {
         const type = headers[index].getAttribute('data-type');
-        // console.log(content);
         var sort = {};
         switch (type) {
             case 'number':
@@ -228,19 +275,28 @@ function sortTable() {
     });
 }
 
-// If cancel button is clicked, hide modal for Delete User
+/**
+ * If cancel button is clicked, hide modal for Delete User.
+ */
 document.getElementById("closeRefund").onclick = function () {
     orderRefundModal.style.display = "none";
     document.body.style.overflow = 'auto';
 }
 
-// If cancel button is clicked, hide modal for Delete User
+/**
+ * If cancel button is clicked, hide modal for Delete User.
+ */
 document.getElementById("closeRefundIcon").onclick = function () {
     orderRefundModal.style.display = "none";
     document.body.style.overflow = 'auto';
 }
 
-// If user clicks outside of the modal for both Create, Edit and Delete then hide modal
+/**
+ * 
+ * If user clicks outside of the modal for both Create, Edit and Delete then hide modal
+ * 
+ * @param {*} event as event listener
+ */
 window.onclick = function (event) {
     if (event.target == orderRefundModal) {
         orderRefundModal.style.display = "none";

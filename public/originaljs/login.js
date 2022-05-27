@@ -1,3 +1,11 @@
+/**
+ * 
+ * This function displays error messages for logging in, if there are any. Otherwise,
+ * it will relocate the user to admin-dashboard if the logged in user is administrator
+ * else it will start their session (express session) and redirect them to home page.
+ * 
+ * @param {*} data as object
+ */
 function loginHandler(data) {
     if (data == "NoEmailExist") {
         document.getElementById("loginErrorMessage").style.display = 'block';
@@ -22,7 +30,14 @@ function loginHandler(data) {
     }
 }
 
+/**
+ * This onclick function will call the /login AJAX call.
+ */
 $('#loginBtn').click(() => {
+    /**
+     * AJAX that sends the values from email and password fields to /login and if the
+     * email and password match the databse records call the helper function.
+     */
     $.ajax({
         url: '/login',
         type: 'POST',
@@ -34,7 +49,9 @@ $('#loginBtn').click(() => {
     })
 });
 
-// Trigger click function for enter key for all input fields
+/**
+ * Trigger click function for enter key for all input fields.
+ */
 const input = document.querySelectorAll(".form-control");
 for (var i = 0; i < input.length; i++) {
     input[i].addEventListener("keypress", function (e) {
