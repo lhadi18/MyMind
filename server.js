@@ -27,7 +27,7 @@ mongoose.connect(process.env.DATABASE_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 })
-    .then(() => console.log("connected to db"))
+    .then((obj) => { })
     .catch((err) => console.log(err));
 
 /**
@@ -330,7 +330,7 @@ app.get("/sign-up", isLoggedOut, setHeaders, (req, res) => {
 /**
  * This get route renders 404.html page.
  */
- app.get("*", (req, res) => {
+app.get("*", (req, res) => {
     res.sendFile(path.resolve('html/404.html'))
 });
 
@@ -338,7 +338,7 @@ app.get("/sign-up", isLoggedOut, setHeaders, (req, res) => {
  * This variable initializes a diskStorage for multer.
  * Multer is a dependency that stores user profile images.
  */
- var profileStorage = multer.diskStorage({
+var profileStorage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, 'public/uploads')
     },
@@ -630,7 +630,6 @@ app.post("/sign-up", isNotRegistered, async (req, res) => {
 
             new_user.save()
                 .then((result) => {
-                    console.log(result);
                     res.json("login");
                 });
         } catch (err) {
@@ -651,7 +650,6 @@ app.post("/sign-up", isNotRegistered, async (req, res) => {
 
             new_user.save()
                 .then((result) => {
-                    console.log(result);
                     res.json("login");
                 });
         } catch (err) {
@@ -983,7 +981,6 @@ app.post("/createUser", isLoggedIn, isAdmin, isNotRegistered, async (req, res) =
 
             new_user.save()
                 .then((result) => {
-                    console.log(result);
                     res.json("login");
                 });
         } catch (err) {
@@ -1005,7 +1002,6 @@ app.post("/createUser", isLoggedIn, isAdmin, isNotRegistered, async (req, res) =
 
             new_user.save()
                 .then((result) => {
-                    console.log(result);
                     res.json("login");
                 });
         } catch (err) {
@@ -1232,7 +1228,6 @@ app.post('/confirmCart', isLoggedIn, usedTrial, isTherapistAvailable, (req, res)
             cost: req.body.totalPrice
         }
     }, { new: true }).then((cart) => {
-        console.log("Updated Cart");
         sendEmails(req.session.user._id, req.body.therapistID, cart)
         incrementTherapistSessionNum(req.session.user._id);
         res.send(cart);
@@ -1378,7 +1373,6 @@ app.get('/activeSession', isLoggedIn, (req, res) => {
             console.log(err);
         }
         if (carts.length > 0) {
-            console.log(carts)
             const sortedCart = carts.sort((a, b) => b.purchased - a.purchased);
             var therapistName;
             var errorMessageVariables;
@@ -1463,7 +1457,6 @@ io.on('connection', (socket) => {
 
     socket.on("join-room", function (room, senderId) {
         socket.join(room);
-        console.log('connected to room', room);
         orderID = room;
         userId = senderId;
         users.push(senderId);
@@ -1512,9 +1505,7 @@ app.get('/activeChatSession', (req, res) => {
             $gt: currentTime
         }
     }, function (err, carts) {
-        if (err) {
-            console.log('Error searching cart.', err);
-        }
+        if (err) console.log(err);
         if (carts) {
             var orderId = carts.orderId;
             var purchased = carts.expiringTime;
@@ -1589,12 +1580,11 @@ app.get('/activeChatSession', (req, res) => {
  * in an ascending order based on when it was sent.
  */
 app.post('/loadMsgs', function (req, res) {
-    console.log(req.body.orderId);
     Chat.find({
         orderId: req.body.orderId
     }, function (err, chats) {
         if (err) {
-            console.log('Error searching cart.', err);
+            console.log(err);
         }
         if (chats) {
             res.json(chats);
@@ -1609,5 +1599,4 @@ app.post('/loadMsgs', function (req, res) {
  * This allows the server to listen for a certain port.
  */
 server.listen(process.env.PORT || 8000, () => {
-    console.log('listening on port:8000');
 });
