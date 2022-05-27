@@ -1,43 +1,61 @@
-const navMenu = document.getElementById('nav-menu');
-const navToggle = document.getElementById('nav-toggle');
-const navClose = document.getElementById('nav-close');
-const navLink = document.querySelectorAll('.nav-link');
-var socket = io();
-const chatExpiredModal = document.getElementById('chatExpiredModal');
-
 $(document).ready(function () {
+    const navMenu = document.getElementById('nav-menu');
+    const navToggle = document.getElementById('nav-toggle');
+    const navClose = document.getElementById('nav-close');
+    const navLink = document.querySelectorAll('.nav-link');
+    var socket;
+    var orderId;
+    const chatExpiredModal = document.getElementById('chatExpiredModal');
 
     // Load the Navbar and Footer 
     loadNavbarFooter();
 
+    // Display Patient navbar 
+    function patientNavbarSetup() {
+        var patientEls = document.querySelectorAll(".isPatient");
+        for (var x = 0; x < patientEls.length; x++)
+            patientEls[x].style.display = 'list-item';
+    }
+
+    // Display Therapist navbar 
+    function therapistNavbarSetup() {
+        let therapistEls = document.querySelectorAll(".isTherapist");
+        for (var x = 0; x < therapistEls.length; x++)
+            therapistEls[x].style.display = 'list-item';
+    }
+
+    // Display Admin navbar 
+    function adminNavbarSetup() {
+        let adminEls = document.querySelectorAll(".isAdmin");
+        for (var x = 0; x < adminEls.length; x++)
+            adminEls[x].style.display = 'list-item';
+    }
+
+    // Display Logged In navbar for standard users 
+    function loggedInNavbarSetup() {
+        let loggedInEls = document.querySelectorAll(".isLoggedIn");
+        for (var x = 0; x < loggedInEls.length; x++)
+            loggedInEls[x].style.display = 'list-item';
+    }
+
+    // Display logged out navbar
+    function loggedOutNavbarSetup() {
+        let loggedOutEls = document.querySelectorAll(".isLoggedOut")
+        for (var x = 0; x < loggedOutEls.length; x++)
+            loggedOutEls[x].style.display = 'list-item';
+    }
+
+    // GET call from server to check which user type has logged in to display its dedicated navbar
     setTimeout(() => {
         $.get('/isLoggedIn', function (user) {
             if (user) {
+                loggedInNavbarSetup()
                 if (user.userType == 'patient') {
-                    var patientEls = document.querySelectorAll(".isPatient");
-                    for (var x = 0; x < patientEls.length; x++)
-                        patientEls[x].style.display = 'list-item';
-
-                    let loggedInEls = document.querySelectorAll(".isLoggedIn");
-                    for (var x = 0; x < loggedInEls.length; x++)
-                        loggedInEls[x].style.display = 'list-item';
-
+                    patientNavbarSetup()
                 } else if (user.userType == 'therapist') {
-                    let therapistEls = document.querySelectorAll(".isTherapist");
-                    for (var x = 0; x < therapistEls.length; x++)
-                        therapistEls[x].style.display = 'list-item';
-
-                    let loggedInEls = document.querySelectorAll(".isLoggedIn");
-                    for (var x = 0; x < loggedInEls.length; x++)
-                        loggedInEls[x].style.display = 'list-item';
+                    therapistNavbarSetup();
                 } else if (user.userType == 'admin') {
-                    let adminEls = document.querySelectorAll(".isAdmin");
-                    for (var x = 0; x < adminEls.length; x++)
-                        adminEls[x].style.display = 'list-item';
-
-                    let loggedInEls = document.querySelectorAll(".isLoggedIn");
-                    for (var x = 0; x < loggedInEls.length; x++)
-                        loggedInEls[x].style.display = 'list-item';
+                    adminNavbarSetup()
                 }
                 setTimeout(() => {
                     $('.logout-link').click(function () {
@@ -47,9 +65,7 @@ $(document).ready(function () {
                     })
                 }, 400);
             } else {
-                let loggedOutEls = document.querySelectorAll(".isLoggedOut")
-                for (var x = 0; x < loggedOutEls.length; x++)
-                    loggedOutEls[x].style.display = 'list-item';
+                loggedOutNavbarSetup();
             }
         })
 
@@ -77,7 +93,7 @@ $(document).ready(function () {
 
     // Load the Navbar and Footer 
     function loadNavbarFooter() {
-        $('#navPlaceHolder').load('../headerfooter/nav.html', function () {
+        $('#navPlaceHolder').load('../temp/nav.html', function () {
             // For mobile nav links
             $('.nav-item .nav-link').each(function () {
                 $(this).toggleClass('active', this.getAttribute('href') === location.pathname);
@@ -92,8 +108,8 @@ $(document).ready(function () {
                 $(this).toggleClass('active', this.getAttribute('href') === location.pathname);
             });
         });
-        $('#footerPlaceHolder').load('../headerfooter/footer.html');
-        $('#therapistChat').load('../headerfooter/chatbox.html');
+        $('#footerPlaceHolder').load('../temp/footer.html');
+        $('#therapistChat').load('../temp/chatbox.html');
     }
 
     // Display hashed password for signup and login form
@@ -118,7 +134,57 @@ $(document).ready(function () {
         document.getElementById('nav-menu').classList.remove('show-menu');
     }
 
+    // For mobile nav, each clic on a link will close the nav menu on selected pages
     navLink.forEach(n => n.addEventListener('click', linkAction));
+
+    // AJAX call to load messages for chatbox
+    function loadMsgs(data) {
+        $.ajax({
+            url: '/loadMsgs',
+            type: 'POST',
+            data: {
+                orderId: data.orderId
+            },
+            success: function (chats) {
+                chats.forEach(function (element) {
+                    let msgClass = (data.currentId == element.sender) ? 'self' : 'other';
+                    var messagesContainer = $('#chatMessages');
+                    messagesContainer.append([
+                        `<li class="${msgClass}" data-before="Sent at ${new Date(element.createdAt).toLocaleString('en-CA', { hour: 'numeric', minute: 'numeric', hour12: true })}">`,
+                        element.message,
+                        '</li>'
+                    ].join(''));
+                })
+            }
+        })
+    }
+
+    // Socket setup for chat rooms
+    function socketSetup(data) {
+        socket.emit('join-room', data.orderId, data.sender);
+        socket.emit('check-status', data.other, function () {
+            changeActiveState('Online')
+        });
+
+        socket.on("chat message", (msg) => {
+            var messagesContainer = $('#chatMessages');
+            messagesContainer.append([
+                `<li class="other" data-before="Sent at ${new Date().toLocaleString('en-CA', { hour: 'numeric', minute: 'numeric', hour12: true })}">`,
+                msg.message,
+                '</li>'
+            ].join(''));
+        });
+
+        socket.on('connected', function (connectedId) {
+            if (connectedId != data.currentId)
+                changeActiveState('Online');
+        })
+
+        socket.on('disconnected', function () {
+            changeActiveState('Offline');
+        })
+
+    }
 
     // check active session
     $.get('/activeChatSession', function (data) {
@@ -131,62 +197,12 @@ $(document).ready(function () {
             if (window.location.pathname != '/chat-session' && document.body.clientWidth < 992) {
                 $('#therapistChat').hide();
             } else {
+                socket = io();
                 $('#therapistChat').css('display', 'flex');
-                $.ajax({
-                    url: '/loadMsgs',
-                    type: 'POST',
-                    data: {
-                        orderId: data.orderId
-                    },
-                    success: function (chats) {
-                        chats.forEach(function (element) {
-                            if (data.currentId == element.sender) {
-                                var messagesContainer = $('#chatMessages');
-                                messagesContainer.append([
-                                    `<li class="self" data-before="Sent at ${new Date(element.createdAt).toLocaleString('en-CA', { hour: 'numeric', minute: 'numeric', hour12: true })}">`,
-                                    element.message,
-                                    '</li>'
-                                ].join(''));
-                            } else {
-                                var messagesContainer = $('#chatMessages');
-                                messagesContainer.append([
-                                    `<li class="other" data-before="Sent at ${new Date(element.createdAt).toLocaleString('en-CA', { hour: 'numeric', minute: 'numeric', hour12: true })}">`,
-                                    element.message,
-                                    '</li>'
-                                ].join(''));
-                            }
-                        })
-                    }
-                })
-
-                socket.emit('join-room', data.orderId, data.sender);
-                socket.emit('check-status', data.other, function(){
-                    console.log('other is offline')
-                });
-
-    
+                loadMsgs(data);
+                chatSetup();
                 orderId = data.orderId;
-                socket.on("chat message", (msg) => {
-                    var messagesContainer = $('#chatMessages');
-
-                    messagesContainer.append([
-                        `<li class="other" data-before="Sent at ${new Date().toLocaleString('en-CA', { hour: 'numeric', minute: 'numeric', hour12: true })}">`,
-                        msg.message,
-                        '</li>'
-                    ].join(''));
-                });
-
-                socket.on('connected', function(connectedId){
-                    if (connectedId != data.currentId)
-                        // $("chatActiveState").html('Online')
-                        console.log('online')
-                })
-
-                socket.on('disconnected', function(){
-                        // $("chatActiveState").html('Offline')
-                        console.log('offline')
-                })
-
+                socketSetup(data);
                 $("#chatName").text(`${data.name}`)
                 $("#chatPhone").attr("href", `tel:${data.phone}`)
                 $("#chatImg").attr("src", `${data.image}`)
@@ -194,8 +210,11 @@ $(document).ready(function () {
         }
     })
 
+
+
     // Get and display session expiring time
     setInterval(getSessionEndTime, 1000);
+
     function getSessionEndTime() {
         $.get('/activeChatSession', function (data) {
             if (data != "NoActiveSession" && data != "notLoggedIn") {
@@ -215,6 +234,10 @@ $(document).ready(function () {
                     textInput.keydown(onMetaAndEnter).prop("disabled", true).focus();
                     document.getElementById('sendMessage').style.backgroundColor = '#858585';
                     chatExpiredModal.style.display = 'block';
+                    document.getElementById("closeChatExpired").onclick = function () {
+                        chatExpiredModal.style.display = "none";
+                        document.body.style.overflow = 'auto';
+                    }
                 } else {
                     $("#sessionTimer").text('Session expires in ' + diffMins + 'm ' + diffSecs + 's');
                 }
@@ -222,82 +245,15 @@ $(document).ready(function () {
         })
     }
 
-    // If cancel button is clicked, hide modal for Delete User
-    document.getElementById("closeChatExpired").onclick = function () {
-        chatExpiredModal.style.display = "none";
-        document.body.style.overflow = 'auto';
-    }
-
-    // activityWatcher();
-
-    // function activityWatcher() {
-    //     var secondsSinceLastActivity = 0;
-    //     var maxInactivity = (10); // 60 * 5
-
-    //     setInterval(function () {
-    //         secondsSinceLastActivity++;
-    //         console.log(secondsSinceLastActivity + ' seconds since the user was last active');
-    //         if (secondsSinceLastActivity > maxInactivity) {
-    //             console.log('User has been inactive for more than ' + maxInactivity + ' seconds');
-    //             $('#chatActiveState').text('Inactive');
-    //         }
-    //     }, 1000);
-
-    //     function activity() {
-    //         $('#chatActiveState').text('Active Now');
-    //         secondsSinceLastActivity = 0;
-    //     }
-
-    //     var activityEvents = [
-    //         'mousedown', 'mousemove', 'mouseup', 'keydown', 'scroll', 'touchstart',
-    //         'click', 'keypress', 'keyup', 'submit', 'change', 'mouseenter', 'resize', 'dblclick'
-    //     ];
-
-    //     activityEvents.forEach(function (e) {
-    //         document.addEventListener(e, activity, true);
-    //     });
-    // }
-
-    // Chat Page for mobile
-    if (window.location.pathname == '/chat-session') {
-        var element = $('#wrapper');
-        var messages = element.find('#chatMessages');
-        var userInput = $('#chatbox');
-        userInput.keydown(onMetaAndEnter).prop("disabled", false).focus();
-        element.find('#sendMessage').click(sendNewMessage);
-        messages.scrollTop(messages.prop("scrollHeight"));
-
-
-        $(document).on('click', '.self, .other', function () {
-            $(this).toggleClass('showTime');
-        });
-
-
-        userInput.each(function () {
-            this.setAttribute("style", `${this.scrollHeight + 2}px`);
-        }).on("input", function () {
-            this.style.height = (this.scrollHeight + 2) + "px";
-        });
-    } else {
-        // Chat Box for desktop
-        var element = $('#therapistChat');
-        var orderId;
-        element.addClass('enter');
-        element.click(openElement);
-
-        function openElement() {
+    function chatSetup() {
+        // Chat Page for mobile
+        if (window.location.pathname == '/chat-session') {
+            var element = $('#wrapper');
             var messages = element.find('#chatMessages');
-            var textInput = element.find('#chatbox');
             var userInput = $('#chatbox');
-            element.find('>i').hide();
-            element.addClass('expand');
-            element.find('.chatContainer').addClass('enter');
-            textInput.keydown(onMetaAndEnter).prop("disabled", false).focus();
-            element.off('click', openElement);
-            element.find('#closeChat').click(closeElement);
+            userInput.keydown(onMetaAndEnter).prop("disabled", false).focus();
             element.find('#sendMessage').click(sendNewMessage);
             messages.scrollTop(messages.prop("scrollHeight"));
-
 
             $(document).on('click', '.self, .other', function () {
                 $(this).toggleClass('showTime');
@@ -308,20 +264,52 @@ $(document).ready(function () {
             }).on("input", function () {
                 this.style.height = (this.scrollHeight + 2) + "px";
             });
+        } else {
+            // Chat Box for desktop
+            var element = $('#therapistChat');
+            element.addClass('enter');
+            element.click(openElement);
         }
+    }
 
-        function closeElement() {
-            element.find('.chatContainer').removeClass('enter').hide();
-            element.find('#chatMsgIcon').show();
-            element.removeClass('expand');
-            element.find('#closeChat').off('click', closeElement);
-            element.find('#sendMessage').off('click', sendNewMessage);
-            element.find('#chatbox').off('keydown', onMetaAndEnter).prop("disabled", true).blur();
-            setTimeout(function () {
-                element.find('.chatContainer').removeClass('enter').show()
-                element.click(openElement);
-            }, 500);
-        }
+    function openElement() {
+        var element = $('#therapistChat');
+        var messages = element.find('#chatMessages');
+        var textInput = element.find('#chatbox');
+        var userInput = $('#chatbox');
+        element.find('>i').hide();
+        element.addClass('expand');
+        element.find('.chatContainer').addClass('enter');
+        textInput.keydown(onMetaAndEnter).prop("disabled", false).focus();
+        element.off('click', openElement);
+        element.find('#closeChat').click(closeElement);
+        element.find('#sendMessage').click(sendNewMessage);
+        messages.scrollTop(messages.prop("scrollHeight"));
+
+
+        $(document).on('click', '.self, .other', function () {
+            $(this).toggleClass('showTime');
+        });
+
+        userInput.each(function () {
+            this.setAttribute("style", `${this.scrollHeight + 2}px`);
+        }).on("input", function () {
+            this.style.height = (this.scrollHeight + 2) + "px";
+        });
+    }
+
+    function closeElement() {
+        var element = $('#therapistChat');
+        element.find('.chatContainer').removeClass('enter').hide();
+        element.find('#chatMsgIcon').show();
+        element.removeClass('expand');
+        element.find('#closeChat').off('click', closeElement);
+        element.find('#sendMessage').off('click', sendNewMessage);
+        element.find('#chatbox').off('keydown', onMetaAndEnter).prop("disabled", true).blur();
+        setTimeout(function () {
+            element.find('.chatContainer').removeClass('enter').show()
+            element.click(openElement);
+        }, 500);
     }
 
     if (window.location.pathname == '/thank-you') {
@@ -337,16 +325,13 @@ $(document).ready(function () {
     function sendNewMessage() {
         var userInput = $('#chatbox');
         var newMessage = userInput.val().trim();
-
         if (!newMessage) {
             userInput.focus();
             return;
         }
 
         socket.emit('chat message', newMessage, orderId);
-
         var messagesContainer = $('#chatMessages');
-
         messagesContainer.append([
             `<li class="self" data-before="Sent at ${new Date().toLocaleString('en-CA', { hour: 'numeric', minute: 'numeric', hour12: true })}">`,
             newMessage,
@@ -369,5 +354,12 @@ $(document).ready(function () {
         if (e.ctrlKey && e.keyCode == 13) {
             sendNewMessage();
         }
+    }
+
+    function changeActiveState(status) {
+        activeStates = document.querySelectorAll("#chatActiveState");
+        activeStates.forEach(function (element) {
+            element.innerHTML = status;
+        })
     }
 });

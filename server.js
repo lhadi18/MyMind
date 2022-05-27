@@ -105,7 +105,7 @@ async function hasActiveSession(req, res, next) {
     var currentTime = new Date();
 
     var patientActiveSession = await Cart.exists({
-        therapist: req.session.user._id,
+        $or: [{therapist: req.session.user._id}, {userId: req.session.user._id}],
         status: "completed",
         expiringTime: {
             $gt: currentTime
@@ -881,12 +881,12 @@ async function sendEmails(userId, therapistId, cartInfo) {
         from: process.env.MAIL_USER,
         to: patientInfo.email,
         subject: 'Thank you for purchasing a session with MyMind!',
-        html: `<div style="display:flex;width:100%;flex-direction:column;background:#09C5A3;padding:5rem;margin-bottom:3rem;">
-        <img src="cid:logo"><h1 style="color:#fff;font-size:2rem;font-weight:700;">Thank you for purchasing!</h1></div>
-        <p>We have activated a therapy session with ${therapistInfo.firstName} ${therapistInfo.lastName}. Your session will expire at ${new Date(cartInfo.expiringTime).toLocaleString('en-CA', { hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true })}, and you can view your cart history at our Order History page at any time! We hope you have a wonderful session, thank you for your time and support. To start your journey, please login to your account and visit <a style="color:#09C5A3;text-decoration:none;font-weight:700;" href="https://mymindweb.herokuapp.com/" target="_blank">MyMind</a> to start your journey!</p>`,
+        html: `<div style="display:flex;width:100%;background:#09C5A3;"><img src="cid:logo" style="width:15%;margin:auto;padding:1.5rem 1rem 1rem;object-fit:contain;object-position:center center;"></div>
+        <div style="display:flex;width:100%;background:#09C5A3;margin-bottom:2rem;"><h1 style="text-align:center;color:#FFF;text-transform:capitalize;font-size:2rem;font-weight:700;padding-top:1rem;padding-bottom:1rem;width: 100%;">Thank you for purchasing!</h1></div>
+        <p style="font-size:14px;color:#000;">We have activated a therapy session with ${therapistInfo.firstName} ${therapistInfo.lastName}. Your session will expire at ${new Date(cartInfo.expiringTime).toLocaleString('en-CA', { hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true })}, and you can view your cart history at our Order History page at any time! We hope you have a wonderful session, thank you for your time and support. To start your journey, please login to your account and visit <a style="color:#09C5A3;text-decoration:none;font-weight:700;" href="https://mymindweb.herokuapp.com/" target="_blank">MyMind</a> to start your journey!</p><p style="font-size:14px;color:#000;">Cheers</p>`,
         attachments: [{
             filename: 'logo.png',
-            path: 'https://imgur.com/2id2jly',
+            path: __dirname +'/public/images/logo.png',
             cid: 'logo'
         }]
     };
@@ -907,7 +907,14 @@ async function sendEmails(userId, therapistId, cartInfo) {
             from: process.env.MAIL_USER,
             to: therapistInfo.email,
             subject: 'You have a new patient waiting for you!',
-            text: `Your patient, ${patientInfo.firstName} ${patientInfo.lastName} has purchased a session with you for ${sessionLength} mins and is waiting to chat! Please get in contact with him as soon as possible!`
+            html: `<div style="display:flex;width:100%;background:#09C5A3;"><img src="cid:logo" style="width:15%;margin:auto;padding:1.5rem 1rem 1rem;object-fit:contain;object-position:center center;"></div>
+            <div style="display:flex;width:100%;background:#09C5A3;margin-bottom:2rem;"><h1 style="text-align:center;color:#FFF;text-transform:capitalize;font-size:2rem;font-weight:700;padding-top:1rem;padding-bottom:1rem;width: 100%;">You have a new patient waiting for you!</h1></div>
+            <p style="font-size:14px;color:#000;">Your patient, ${patientInfo.firstName} ${patientInfo.lastName} has purchased a session with you for ${sessionLength} mins and is waiting to chat! Please get in contact with him as soon as possible!</p><p style="font-size:14px;color:#000;">Cheers</p>`,
+            attachments: [{
+                filename: 'logo.png',
+                path: __dirname +'/public/images/logo.png',
+                cid: 'logo'
+            }]
         }
         transporter.sendMail(mailTherapist, function (err, info) {
             if (err) console.log(err)
