@@ -1,4 +1,47 @@
 $(document).ready(async function () {
+
+    function populatePatients(cartData, patientInfo) {
+        console.log("got here");
+        let multiplier;
+        var x = `<tr class="tableRows">`;
+
+        let purchasedDate = new Date(cartData.purchased);
+        let offSet = purchasedDate.getTimezoneOffset() * 60 * 1000;
+        let tLocalISO = new Date(purchasedDate - offSet).toISOString().slice(0, 10);
+        x += `<td>${tLocalISO}</td>`;
+
+        x += `<td>${new Date(cartData.purchased).toLocaleString('en-CA', { hour: 'numeric', minute: 'numeric', hour12: true })}</td>`
+
+        x += `<td>${patientInfo.fullName}</td>`
+
+        if (cartData.timeLength == 'freePlan') {
+            x += `<td>Trial</td>`
+            multiplier = 0;
+        } else if (cartData.timeLength == 'monthPlan') {
+            x += `<td>1 Month</td>`
+            multiplier = 1;
+        } else if (cartData.timeLength == 'threeMonthPlan') {
+            x += `<td>3 Months</td>`
+            multiplier = 3;
+        } else {
+            x += `<td>1 Year</td>`
+            multiplier = 6;
+        }
+        x += `<td>$${parseFloat(patientInfo.sessionCost * multiplier * 1.12).toFixed(2)}</td>`
+        x += `<td>${cartData.orderId}</td>`
+
+        if (cartData.status == "refunded") {
+            x += `<td>Refunded</td>`
+        } else if (new Date(cartData.expiringTime) > new Date()) {
+            x += `<td class="activeStatus">Active</td>`
+        } else {
+            x += `<td class="expiredStatus">Expired</td>`
+        }
+        x += `</tr>`
+        $("tbody").append(x);
+    }
+
+
     await $.ajax({
         url: '/getPreviousPatients',
         type: "GET",
@@ -9,46 +52,7 @@ $(document).ready(async function () {
                 document.getElementById('patientTableContainer').style.display = 'flex';
 
                 data.forEach(cartData => {
-                    getPatient(cartData.userId, cartData.therapist, patientInfo => {
-                        console.log("got here");
-                        let multiplier;
-                        var x = `<tr class="tableRows">`;
-
-                        let purchasedDate = new Date(cartData.purchased);
-                        let offSet = purchasedDate.getTimezoneOffset() * 60 * 1000;
-                        let tLocalISO = new Date(purchasedDate - offSet).toISOString().slice(0, 10);
-                        x += `<td>${tLocalISO}</td>`;
-
-                        x += `<td>${new Date(cartData.purchased).toLocaleString('en-CA', { hour: 'numeric', minute: 'numeric', hour12: true })}</td>`
-
-                        x += `<td>${patientInfo.fullName}</td>`
-
-                        if (cartData.timeLength == 'freePlan') {
-                            x += `<td>Trial</td>`
-                            multiplier = 0;
-                        } else if (cartData.timeLength == 'monthPlan') {
-                            x += `<td>1 Month</td>`
-                            multiplier = 1;
-                        } else if (cartData.timeLength == 'threeMonthPlan') {
-                            x += `<td>3 Months</td>`
-                            multiplier = 3;
-                        } else {
-                            x += `<td>1 Year</td>`
-                            multiplier = 6;
-                        }
-                        x += `<td>$${parseFloat(patientInfo.sessionCost * multiplier * 1.12).toFixed(2)}</td>`
-                        x += `<td>${cartData.orderId}</td>`
-
-                        if (cartData.status == "refunded") {
-                            x += `<td>Refunded</td>`
-                        } else if (new Date(cartData.expiringTime) > new Date()) {
-                            x += `<td class="activeStatus">Active</td>`
-                        } else {
-                            x += `<td class="expiredStatus">Expired</td>`
-                        }
-                        x += `</tr>`
-                        $("tbody").append(x);
-                    });
+                    getPatient(cartData, populatePatients);
                 });
                 document.getElementById("resultsFound").innerHTML = data.length;
             }
@@ -68,7 +72,9 @@ $(document).ready(async function () {
     sortTable();
 });
 
-function getPatient(userId, therapistId, callback) {
+function getPatient(cartData, callback) {
+    let userId = cartData.userId
+    let therapistId = cartData.therapist
     let patientInfo;
     $.ajax({
         url: '/getPatientInfo',
@@ -88,7 +94,7 @@ function getPatient(userId, therapistId, callback) {
                 },
                 success: function (therapist) {
                     patientInfo.sessionCost = therapist.sessionCost;
-                    callback(patientInfo);
+                    callback(cartData, patientInfo);
                 }
             })
         }
