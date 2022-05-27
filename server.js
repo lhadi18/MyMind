@@ -602,6 +602,14 @@ async function isNotExisting(req, res, next) {
     })
 }
 
+/**
+ * 
+ * This helper function creates an account for user's who are therapists with
+ * different fields to be saved in the database.
+ * 
+ * @param {*} req as request object
+ * @param {*} res as response object
+ */
 async function createTherapistAccount(req, res) {
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
     const new_user = new User({
@@ -622,6 +630,15 @@ async function createTherapistAccount(req, res) {
         });
 }
 
+/**
+ * 
+ * This helper function creates an account for user's who are patients
+ * with different fields than the therapist user's to be saved in the
+ * database.
+ * 
+ * @param {*} req as request object
+ * @param {*} res as response object
+ */
 async function createPatientAccount(req, res) {
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
     const new_user = new User({
@@ -844,6 +861,15 @@ async function isNotExistingAdmin(req, res, next) {
     })
 }
 
+/**
+ * 
+ * This helper function updates a user's account that is a therapist
+ * with certain fields that belong to the therapist user's in the
+ * databsae.
+ * 
+ * @param {*} req as request object
+ * @param {*} res as response object 
+ */
 function updateTherapist(req, res) {
     User.updateOne({
             "_id": req.body.id
@@ -867,6 +893,15 @@ function updateTherapist(req, res) {
         })
 }
 
+/**
+ * 
+ * This helper function updates a user's account that is a patient
+ * with certain fields that belong to the patient user's in the 
+ * database.
+ * 
+ * @param {*} req as request object
+ * @param {*} res as response object 
+ */
 async function updatePatient(req, res) {
     User.updateOne({
             "_id": req.body.id
@@ -892,6 +927,14 @@ async function updatePatient(req, res) {
         })
 }
 
+/**
+ * 
+ * Helper function that updates a therapist's user account AND
+ * updates their password in the database.
+ * 
+ * @param {*} req as request object
+ * @param {*} res as response object
+ */
 async function updateTherapistWithPassword(req, res) {
     var hashedPassword = await bcrypt.hash(req.body.password, 10);
     User.updateOne({
@@ -918,6 +961,14 @@ async function updateTherapistWithPassword(req, res) {
 
 }
 
+/**
+ * 
+ * This helper function updates a patient's user account AND
+ * updates their password in the database.
+ * 
+ * @param {*} req as request object
+ * @param {*} res as response object
+ */
 async function updatePatientWithPassword(req, res) {
     var hashedPassword = await bcrypt.hash(req.body.password, 10);
     User.updateOne({
@@ -1112,6 +1163,16 @@ async function usedTrial(req, res, next) {
     }
 }
 
+/**
+ * 
+ * This helper function sends a formatted email to the patient's email address
+ * which is fetched from the database.
+ * 
+ * @param {*} transporter as function
+ * @param {*} patientInfo as object
+ * @param {*} therapistInfo as object
+ * @param {*} cartInfo as object
+ */
 function sendPatientEmail(transporter, patientInfo, therapistInfo, cartInfo){
     const mailPatient = {
         from: process.env.MAIL_USER,
@@ -1131,6 +1192,16 @@ function sendPatientEmail(transporter, patientInfo, therapistInfo, cartInfo){
     });
 }
 
+/**
+ * 
+ * This helper function sends a formatted email to the therapist's email address
+ * which is fetched from the database.
+ * 
+ * @param {*} transporter as function
+ * @param {*} patientInfo as object
+ * @param {*} therapistInfo as object
+ * @param {*} cartInfo as object
+ */
 function sendTherapistEmail(transporter, patientInfo, therapistInfo, cartInfo){
     let sessionLength;
     if (cartInfo.timeLength == 'yearPlan') sessionLength = 15;
@@ -1334,6 +1405,17 @@ app.get('/recentPurchase', isLoggedIn, (req, res) => {
     });
 })
 
+/**
+ * 
+ * This helper function checks if an active session exists, if it
+ * does it returns an error message to the user when they try
+ * to purchase another session with the same or a different
+ * therapist whilst they have an active one.
+ * 
+ * @param {*} req as request object
+ * @param {*} res as response object
+ * @param {*} sortedCart as object array
+ */
 function getSessionData(req, res, sortedCart) {
     var therapistName;
     var errorMessageVariables;
@@ -1471,6 +1553,16 @@ io.on('connection', (socket) => {
 
 });
 
+/**
+ * 
+ * This helper function fetches and returns a therapist's information
+ * to the chat page to display their information on the chat page in order
+ * to send messages.
+ * 
+ * @param {*} req as request object
+ * @param {*} res as response object
+ * @param {*} carts as object array
+ */
 function getTherapistChat(req, res, carts){
     var orderId = carts.orderId;
     var purchased = carts.expiringTime;
@@ -1498,6 +1590,17 @@ function getTherapistChat(req, res, carts){
         }
     })
 }
+
+/**
+ * 
+ * This helper function fetcehes and returns a patient's information
+ * to the chat page to display their information on the chat page in order
+ * to send messages.
+ * 
+ * @param {*} req as request object
+ * @param {*} res as response object
+ * @param {*} carts as object array
+ */
 function getPatientChat(req, res, carts){
     var orderId = carts.orderId;
     var purchased = carts.expiringTime;
@@ -1526,6 +1629,15 @@ function getPatientChat(req, res, carts){
     })
 }
 
+/**
+ * 
+ * This function calls the helper functions for patient or therapist
+ * based on the user type that is logged in.
+ * 
+ * @param {*} req as request object
+ * @param {*} res as response object
+ * @param {*} carts as object array
+ */
 function getOtherChat(req, res, carts){
     User.findOne({
         _id: req.session.user._id
