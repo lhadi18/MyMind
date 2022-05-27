@@ -74,7 +74,7 @@
                                 <i class="fa-solid fa-users-gear nav-icon"></i>Admin Dashboard
                             </a>
                         </li>
-                        <li class="nav-item isLoggedIn">
+                        <li class="nav-item hasActiveSession">
                             <a href="/chat-session" class="nav-link">
                                 <i class="bi bi-chat-left-dots nav-icon"></i>Chat Session
                             </a>
@@ -143,12 +143,11 @@
                 <div id="tableBody">
                     <div id="orderReview">
                         <div id="cartImg">
-                            <img id="therapistImg" src="./images/therapist1.jpg" alt="Therapist Image">
+                            <img id="therapistImg" src="" alt="Therapist Image">
                         </div>
                         <div id="cartDesc">
-                            <h4 id="therapistName">Towa Quimbayo</h4>
-                            <p id="therapistDesc">15+ years of experience in the profession, and offers $90 per session
-                            </p>
+                            <h4 id="therapistName"></h4>
+                            <p id="therapistDesc"></p>
                             <button type="submit" id="removeItem">Remove</button>
                         </div>
                     </div>
@@ -210,6 +209,17 @@
                     <button id="cancelRemove">Cancel</button>
                     <button id="removeOrderBtn">Confirm</button>
                 </div>
+            </div>
+        </div>
+
+        <!-- Chat Expired Modal -->
+        <div id="chatExpiredModal">
+            <div id="modalContent">
+                <div id="chatExpiredModalMessage">
+                    <h2>Your session has expired!</h2>
+                    <p>Purchase a new session at <a href="/therapists">Therapists</a> to continue your journey.</p>
+                </div>
+                <i class="fa-solid fa-xmark" id="closeChatExpired"></i>
             </div>
         </div>
 

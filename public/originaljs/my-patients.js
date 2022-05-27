@@ -1,36 +1,21 @@
-/**
- * Constant variable.
- */
-const orderRefundModal = document.getElementById('orderRefundModal');
-
 $(document).ready(async function () {
-    /**
-     * 
-     * This helper function allows us to get an actual date with the proper timezone.
-     * 
-     * @param {*} purchasedDate as a DATE
-     * @returns the LocalISO time with proper timezone
-     */
-    function getActuatDate(purchasedDate) {
-        let offSet = purchasedDate.getTimezoneOffset() * 60 * 1000;
-        let tLocalISO = new Date(purchasedDate - offSet).toISOString().slice(0, 10);
-        return tLocalISO;
-    }
 
     /**
      * 
-     * This helper function populates all previous purchases with the therapists for the patient
-     * in a table as rows.
+     * This function will populate the table in the html page after fetching all the data from the database.
      * 
-     * @param {*} therapistInfo as an object 
-     * @param {*} cartData as an object
+     * @param {*} cartData as object
+     * @param {*} patientInfo as array
      */
-    function populateTherapist(therapistInfo, cartData) {
+    function populatePatients(cartData, patientInfo) {
         let multiplier;
         var x = `<tr class="tableRows">`;
-        x += `<td>${getActuatDate(new Date(cartData.purchased))}</td>`;
-        x += `<td>${new Date(cartData.expiringTime).toLocaleString('en-CA', { hour: 'numeric', minute: 'numeric', hour12: true })}</td>`
-        x += `<td>${therapistInfo.fullName}</td>`
+        let purchasedDate = new Date(cartData.purchased);
+        let offSet = purchasedDate.getTimezoneOffset() * 60 * 1000;
+        let tLocalISO = new Date(purchasedDate - offSet).toISOString().slice(0, 10);
+        x += `<td>${tLocalISO}</td>`;
+        x += `<td>${new Date(cartData.purchased).toLocaleString('en-CA', { hour: 'numeric', minute: 'numeric', hour12: true })}</td>`
+        x += `<td>${patientInfo.fullName}</td>`
         if (cartData.timeLength == 'freePlan') {
             x += `<td>Trial</td>`
             multiplier = 0;
@@ -44,32 +29,31 @@ $(document).ready(async function () {
             x += `<td>1 Year</td>`
             multiplier = 6;
         }
-        x += `<td>$${parseFloat(therapistInfo.sessionCost * multiplier * 1.12).toFixed(2)}</td>`
+        x += `<td>$${parseFloat(patientInfo.sessionCost * multiplier * 1.12).toFixed(2)}</td>`
         x += `<td>${cartData.orderId}</td>`
         if (cartData.status == "refunded") {
             x += `<td>Refunded</td></tr>`
         } else if (new Date(cartData.expiringTime) > new Date()) {
             x += `<td class="activeStatus">Active</td></tr>`
-        } else {
-            x += `<td class="expiredStatus">Expired</td></tr>`
-        }
+        } else x += `<td class="expiredStatus">Expired</td></tr>`
         $("tbody").append(x);
     }
 
     /**
-     * AJAX call that gets all previous purchases from the databsae and calls the helper function above to populate them.
+     * AJAX call that finds all previous patients for a certain therapists
+     * and calls the populatepatients helper function to display them.
      */
     await $.ajax({
-        url: '/getPreviousPurchases',
+        url: '/getPreviousPatients',
         type: "GET",
         success: function (data) {
             if (data.length > 0) {
-                document.getElementById('noOrderHistorySummary').style.display = 'none';
-                document.getElementById('orderToolbar').style.display = 'flex';
-                document.getElementById('orderTableContainer').style.display = 'flex';
+                document.getElementById('noPatientsAvailable').style.display = 'none';
+                document.getElementById('patientToolbar').style.display = 'flex';
+                document.getElementById('patientTableContainer').style.display = 'flex';
 
                 data.forEach(cartData => {
-                    getTherapist(cartData, populateTherapist)
+                    getPatient(cartData, populatePatients);
                 });
                 document.getElementById("resultsFound").innerHTML = data.length;
             }
@@ -77,7 +61,7 @@ $(document).ready(async function () {
     });
 
     /**
-     * Set the caret icons faced down by default.
+     * Set the caret icons faced down by default
      */
     document.getElementById('0').setAttribute("class", "bi bi-caret-down-fill");
     document.getElementById('1').setAttribute("class", "bi bi-caret-down-fill");
@@ -91,72 +75,47 @@ $(document).ready(async function () {
      * Call sort table fucntion when user clicks table headings.
      */
     sortTable();
-
-    /**
-     * If create button is clicked, display modal (form).
-     */
-    document.getElementById('refundBtn').onclick = function () {
-        setTimeout(() => {
-            /**
-             * AJAX GET call that checks to see if the user already has an active session.
-             */
-            $.get('/activeSession', function (data) {
-                if (data == "NoActiveSession") {
-                    document.getElementById('modalHeader').style.display = 'block';
-                    document.getElementById("headerRefund").innerHTML = "No active orders found"
-                    document.getElementById("msgRefund").innerHTML = "You have no active session at this time. Please place an order from our <a href='/therapists'>Therapists</a> page"
-                    document.getElementById('refundButtonsSec').style.display = 'none';
-                } else {
-                    $("#refundTherapist").text(`${data.therapistName}.`);
-                    $("#refundPrice").text(`$${data.cost}`)
-                }
-            })
-            orderRefundModal.style.display = "block";
-            document.body.style.overflow = 'hidden';
-        }, 50);
-        $('#orderRefundBtn').off();
-        $('#orderRefundBtn').click(() => {
-            orderRefundModal.style.display = "none";
-            document.getElementById('signupSuccessModal').style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-            setTimeout(() => {
-                /**
-                 * AJAX POST call that allows user to refund their order.
-                 */
-                $.post('/refundOrder', function () {
-                    location.reload();
-                })
-            }, 2500);
-        });
-    }
 });
 
 /**
  * 
- * This function calls an AJAX call to get therapist information.
+ * This function will call an AJAX call to get the patients information.
  * 
- * @param {*} cartData as object
- * @param {*} callback as listener
+ * @param {*} cartData as an object
+ * @param {*} callback as a listener
  */
-function getTherapist(cartData, callback) {
+function getPatient(cartData, callback) {
+    let userId = cartData.userId
     let therapistId = cartData.therapist
-    let therapistInfo;
+    let patientInfo;
     /**
-     * AJAX call that gets the therapists information, adds the required info into an array
-     * and returns it back through the callback.
+     * AJAX call that gets the patient information.
      */
     $.ajax({
-        url: '/getTherapistInfo',
+        url: '/getPatientInfo',
         method: "POST",
         data: {
-            therapistId: therapistId
+            _id: userId
         },
-        success: function (therapist) {
-            therapistInfo = {
-                fullName: `${therapist.firstName.charAt(0)}. ${therapist.lastName}`,
-                sessionCost: therapist.sessionCost
+        success: function (patient) {
+            patientInfo = {
+                fullName: `${patient.firstName.charAt(0)}. ${patient.lastName}`
             }
-            callback(therapistInfo, cartData);
+            /**
+             * AJAX call that gets the therapist's information from the cart
+             * and returns it along with the patient information from previous AJAX call.
+             */
+            $.ajax({
+                url: '/getTherapistInfo',
+                method: "POST",
+                data: {
+                    therapistId: therapistId
+                },
+                success: function (therapist) {
+                    patientInfo.sessionCost = therapist.sessionCost;
+                    callback(cartData, patientInfo);
+                }
+            })
         }
     })
 }
@@ -166,7 +125,7 @@ function getTherapist(cartData, callback) {
  */
 function searchTable() {
     const searchInput = document.getElementById("searchbar").value.toUpperCase();
-    const table = document.getElementById("orderTable");
+    const table = document.getElementById("patientTable");
     const trs = table.tBodies[0].getElementsByTagName("tr");
     let count = 0;
 
@@ -192,7 +151,7 @@ function searchTable() {
  * Sort table function when table headings is clicked.
  */
 function sortTable() {
-    const table = document.getElementById('orderTable');
+    const table = document.getElementById('patientTable');
     const headers = table.querySelectorAll('.tHead');
     const directions = Array.from(headers).map(function (header) {
         return '';
@@ -273,33 +232,4 @@ function sortTable() {
             }
         });
     });
-}
-
-/**
- * If cancel button is clicked, hide modal for Delete User.
- */
-document.getElementById("closeRefund").onclick = function () {
-    orderRefundModal.style.display = "none";
-    document.body.style.overflow = 'auto';
-}
-
-/**
- * If cancel button is clicked, hide modal for Delete User.
- */
-document.getElementById("closeRefundIcon").onclick = function () {
-    orderRefundModal.style.display = "none";
-    document.body.style.overflow = 'auto';
-}
-
-/**
- * 
- * If user clicks outside of the modal for both Create, Edit and Delete then hide modal
- * 
- * @param {*} event as event listener
- */
-window.onclick = function (event) {
-    if (event.target == orderRefundModal) {
-        orderRefundModal.style.display = "none";
-        document.body.style.overflow = 'auto';
-    }
 }

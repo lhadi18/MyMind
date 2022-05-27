@@ -1,6 +1,10 @@
 var therapistInformation;
 var totalPrice;
 $(document).ready(async function () {
+    /**
+     * AJAX call that checks the status of a cart to see if
+     * there is an item that exist in the shopping cart.
+     */
     await $.ajax({
         url: '/checkStatus',
         method: 'GET',
@@ -17,6 +21,13 @@ $(document).ready(async function () {
     })
 })
 
+/**
+ * 
+ * This function has an AJAX call that finds the therapist that is selected from the shopping cart
+ * and displays their information in the checkout page.
+ * 
+ * @param {*} therapistId as object id
+ */
 function getTherapist(therapistId) {
     $.ajax({
         url: '/getTherapistInfo',
@@ -29,38 +40,31 @@ function getTherapist(therapistId) {
             $('#therapistDesc').text(`${therapist.yearsExperience} years of experience in the profession, and offers $${therapist.sessionCost} per session`)
             $('#therapistImg').attr('src', `${therapist.profileImg}`)
             therapistInformation = therapist;
+            therapistInformation._id = therapistId;
+            let multiplier;
             if ($('#cartPlan').val() == "freePlan") {
-                $("#cartCost").html(`0.00`)
-                $("#subTotal").html(`$0.00`)
-                $("#taxTotal").html(`$0.00`)
-                $("#total").html(`$0.00`)
-                totalPrice = parseFloat(0.00).toFixed(2);
+                multiplier = 0;
+            } else if ($('#cartPlan').val() == "monthPlan") {
+                multiplier = 1;
+            } else if ($('#cartPlan').val() == "threeMonthPlan") {
+                multiplier = 3;
+            } else {
+                multiplier = 6;
             }
-            if ($('#cartPlan').val() == "monthPlan") {
-                $("#cartCost").html(`${therapistInformation.sessionCost}.00`)
-                $("#subTotal").html(`$${therapistInformation.sessionCost}.00`)
-                $("#taxTotal").html(`$${parseFloat(therapistInformation.sessionCost * 0.12).toFixed(2)}`)
-                $("#total").html(`$${parseFloat(therapistInformation.sessionCost * 1.12).toFixed(2)}`)
-                totalPrice = `${parseFloat(therapistInformation.sessionCost * 1.12).toFixed(2)}`;
-            }
-            if ($('#cartPlan').val() == "threeMonthPlan") {
-                $("#cartCost").html(`${parseFloat(therapistInformation.sessionCost * 3).toFixed(2)}`)
-                $("#subTotal").html(`${parseFloat(therapistInformation.sessionCost * 3).toFixed(2)}`)
-                $("#taxTotal").html(`$${parseFloat(therapistInformation.sessionCost * 3 * 0.12).toFixed(2)}`)
-                $("#total").html(`$${parseFloat(therapistInformation.sessionCost * 3 * 1.12).toFixed(2)}`)
-                totalPrice = `${parseFloat(therapistInformation.sessionCost * 3 * 1.12).toFixed(2)}`;
-            }
-            if ($('#cartPlan').val() == "yearPlan") {
-                $("#cartCost").html(`${parseFloat(therapistInformation.sessionCost * 6).toFixed(2)}`)
-                $("#subTotal").html(`${parseFloat(therapistInformation.sessionCost * 6).toFixed(2)}`)
-                $("#taxTotal").html(`$${parseFloat(therapistInformation.sessionCost * 6 * 0.12).toFixed(2)}`)
-                $("#total").html(`$${parseFloat(therapistInformation.sessionCost * 6 * 1.12).toFixed(2)}`)
-                totalPrice = `${parseFloat(therapistInformation.sessionCost * 6 * 1.12).toFixed(2)}`;
-            }
+            $("#cartCost").html(`${parseFloat(therapistInformation.sessionCost * multiplier).toFixed(2)}`)
+            $("#subTotal").html(`${parseFloat(therapistInformation.sessionCost * multiplier).toFixed(2)}`)
+            $("#taxTotal").html(`$${parseFloat(therapistInformation.sessionCost * multiplier * 0.12).toFixed(2)}`)
+            $("#total").html(`$${parseFloat(therapistInformation.sessionCost * multiplier * 1.12).toFixed(2)}`)
         }
     })
 }
 
+/**
+ * This function allows users to change their shopping cart's timelength.
+ * It has an AJAX call that changes the timelength for the user's shopping cart
+ * in the database so when the order is confirmed the expiring time changes
+ * corrosponding to the timelength.
+ */
 function updateCart() {
     $('#cartPlan').change(() => {
         $.ajax({
@@ -70,52 +74,41 @@ function updateCart() {
                 timeLength: $('#cartPlan').val()
             },
             success: function () {
+                let multiplier;
                 if ($('#cartPlan').val() == "freePlan") {
-                    $("#cartCost").html(`0.00`)
-                    $("#subTotal").html(`$0.00`)
-                    $("#taxTotal").html(`$0.00`)
-                    $("#total").html(`$0.00`)
-                    totalPrice = parseFloat(0.00).toFixed(2);
+                    multiplier = 0;
+                } else if ($('#cartPlan').val() == "monthPlan") {
+                    multiplier = 1;
+                } else if ($('#cartPlan').val() == "threeMonthPlan") {
+                    multiplier = 3;
+                } else {
+                    multiplier = 6;
                 }
-                if ($('#cartPlan').val() == "monthPlan") {
-                    $("#cartCost").html(`${therapistInformation.sessionCost}.00`)
-                    $("#subTotal").html(`$${therapistInformation.sessionCost}.00`)
-                    $("#taxTotal").html(`$${parseFloat(therapistInformation.sessionCost * 0.12).toFixed(2)}`)
-                    $("#total").html(`$${parseFloat(therapistInformation.sessionCost * 1.12).toFixed(2)}`)
-                    totalPrice = `${parseFloat(therapistInformation.sessionCost * 1.12).toFixed(2)}`;
-                }
-                if ($('#cartPlan').val() == "threeMonthPlan") {
-                    $("#cartCost").html(`${parseFloat(therapistInformation.sessionCost * 3).toFixed(2)}`)
-                    $("#subTotal").html(`${parseFloat(therapistInformation.sessionCost * 3).toFixed(2)}`)
-                    $("#taxTotal").html(`$${parseFloat(therapistInformation.sessionCost * 3 * 0.12).toFixed(2)}`)
-                    $("#total").html(`$${parseFloat(therapistInformation.sessionCost * 3 * 1.12).toFixed(2)}`)
-                    totalPrice = `${parseFloat(therapistInformation.sessionCost * 3 * 1.12).toFixed(2)}`;
-                }
-                if ($('#cartPlan').val() == "yearPlan") {
-                    $("#cartCost").html(`${parseFloat(therapistInformation.sessionCost * 6).toFixed(2)}`)
-                    $("#subTotal").html(`${parseFloat(therapistInformation.sessionCost * 6).toFixed(2)}`)
-                    $("#taxTotal").html(`$${parseFloat(therapistInformation.sessionCost * 6 * 0.12).toFixed(2)}`)
-                    $("#total").html(`$${parseFloat(therapistInformation.sessionCost * 6 * 1.12).toFixed(2)}`)
-                    totalPrice = `${parseFloat(therapistInformation.sessionCost * 6 * 1.12).toFixed(2)}`;
-                }
+                $("#cartCost").html(`${parseFloat(therapistInformation.sessionCost * multiplier).toFixed(2)}`)
+                $("#subTotal").html(`${parseFloat(therapistInformation.sessionCost * multiplier).toFixed(2)}`)
+                $("#taxTotal").html(`$${parseFloat(therapistInformation.sessionCost * multiplier * 0.12).toFixed(2)}`)
+                $("#total").html(`$${parseFloat(therapistInformation.sessionCost * multiplier * 1.12).toFixed(2)}`)
             }
         })
     })
 }
 
-// Variables for Delete User Modal 
+/**
+ * Variables for Delete User Modal.
+ */
 var removeOrderModal = document.getElementById("removeOrderModal");
-
 document.getElementById('removeItem').onclick = function (e) {
     removeOrderModal.style.display = "block";
     document.body.style.overflow = 'hidden';
 
     document.getElementById('removeOrderBtn').onclick = function () {
+        /**
+         * AJAX call that deletes a item from the shopping cart and changes the status of the cart.
+         */
         $.ajax({
             url: '/deleteCart',
             type: 'DELETE',
             success: function (data) {
-                console.log("Deleted successfully");
                 removeOrderModal.style.display = "none";
                 document.getElementById('signupSuccessModal').style.display = 'flex';
                 document.body.style.overflow = 'hidden';
@@ -127,13 +120,20 @@ document.getElementById('removeItem').onclick = function (e) {
     }
 }
 
-// If cancel button is clicked, hide modal for Delete User
+/**
+ * If cancel button is clicked, hide modal for Delete User
+ */
 document.getElementById("cancelRemove").onclick = function () {
     removeOrderModal.style.display = "none";
     document.body.style.overflow = 'auto';
 }
 
-// If user clicks outside of the modal for both Create and Delete then hide modal
+/**
+ * 
+ * If user clicks outside of the modal for both Create and Delete then hide modal
+ * 
+ * @param {*} event as an event listener
+ */
 window.onclick = function (event) {
     if (event.target == removeOrderModal) {
         removeOrderModal.style.display = "none";
@@ -143,6 +143,34 @@ window.onclick = function (event) {
 
 const checkoutErrorMsg = document.getElementById("checkoutErrorMessage");
 
+/**
+ * 
+ * If the order is successfully placed redirect patient to
+ * thank you page and display their order number and a
+ * thank you message.
+ * 
+ * @param {*} data as form field
+ */
+function handleConfirmOrder(data) {
+    if (data.errorMsg) {
+        checkoutErrorMsg.style.display = 'block';
+        checkoutErrorMsg.innerHTML = data.errorMsg;
+    } else {
+        checkoutErrorMsg.style.display = 'none';
+        document.getElementById('signupSuccessModal').style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+        setTimeout(() => {
+            window.location = "/thank-you"
+        }, 2500);
+    }
+}
+
+/**
+ * This onclick calls the AJAX call that confirms an order. Before
+ * calling the AJAX call it will check the timeLength the user
+ * chose for their session. It will then change the expiring time
+ * of the cart based on the timeLength when confirm order is done.
+ */
 document.getElementById('confirmOrder').onclick = function () {
     const time = new Date();
     var timeLengthforUse;
@@ -156,7 +184,9 @@ document.getElementById('confirmOrder').onclick = function () {
     } else if (selectedTime == "yearPlan") {
         timeLengthforUse = new Date(time.setMinutes(time.getMinutes() + 15));
     }
-    console.log(timeLengthforUse.toLocaleTimeString());
+    /**
+     * AJAX call that will confirm the order in the database and start the session for the user.
+     */
     $.ajax({
         url: "/confirmCart",
         method: "POST",
@@ -166,23 +196,16 @@ document.getElementById('confirmOrder').onclick = function () {
             totalPrice: totalPrice,
             therapistID: therapistInformation._id
         },
-        success: function (data) {
-            if (data == "usedTrial") {
-                checkoutErrorMsg.style.display = 'block';
-                checkoutErrorMsg.innerHTML = "You have already used your free trial.";
-            } else {
-                checkoutErrorMsg.style.display = 'none';
-                document.getElementById('signupSuccessModal').style.display = 'flex';
-                document.body.style.overflow = 'hidden';
-                setTimeout(() => {
-                    window.location = "/thank-you"
-                }, 2500);
-            }
-        }
+        success: handleConfirmOrder
     })
 }
 
-// Print invoice function
+/**
+ * 
+ * Print invoice function
+ * 
+ * @returns N/A
+ */
 function printInvoice() {
     var printWindow = window.open('', 'new div', 'height=600,width=600');
     printWindow.document.write('<html><head><title>Print Invoice</title>');
@@ -194,11 +217,12 @@ function printInvoice() {
     printWindow.document.write('</div><hr /><div id="cartTotalSec">');
     printWindow.document.write(document.getElementById('cartTotalSec').innerHTML);
     printWindow.document.write('</div>');
-    // printWindow.document.write(document.getElementById('orderSummary').innerHTML);
     printWindow.document.write('</div></div></body></html>');
     printWindow.document.close();
 
-    printWindow.focus();
-    printWindow.print();
+    setTimeout(() => {
+        printWindow.focus();
+        printWindow.print();
+    }, 1000);
     return false;
 }

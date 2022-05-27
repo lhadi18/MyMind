@@ -1,5 +1,8 @@
 $(document).ready(async function () {
 
+    /**
+     * AJAX call to retreive all users data and display it in the admin panel.
+     */
     await $.ajax({
         url: '/getAllUsersData',
         type: "GET",
@@ -28,45 +31,98 @@ $(document).ready(async function () {
         }
     });
 
-    // Set the caret icons faced down by default
+    /**
+     * Set the caret icons faced down by default.
+     */
     document.getElementById('0').setAttribute("class", "bi bi-caret-down-fill");
     document.getElementById('1').setAttribute("class", "bi bi-caret-down-fill");
     document.getElementById('2').setAttribute("class", "bi bi-caret-down-fill");
     document.getElementById('3').setAttribute("class", "bi bi-caret-down-fill");
     document.getElementById('4').setAttribute("class", "bi bi-caret-down-fill");
 
-    // Call sort table fucntion when user clicks table headings
+    /**
+     * Call sort table fucntion when user clicks table headings.
+     */
     sortTable();
 
-    // Variables for Create and Delete User Modal 
+    /**
+     * Variables for Create and Delete User Modal.
+     */
     var createUserModal = document.getElementById("createUserModal");
     var editUserModal = document.getElementById("editUserModal");
     var deleteUserModal = document.getElementById("deleteUserModal");
 
-    // If create button is clicked, display modal (form)
+
+    /**
+     * 
+     * Display input field errors on profile page depending on which field was invalid.
+     * 
+     * @returns validated true if all fields are valid.
+     */
+    function createInputValidation() {
+        let validated = false;
+        var phoneLength = $("#phone").val();
+        if (phoneLength.length != 10) {
+            document.getElementById("createUserErrorMessage").style.display = 'block';
+            document.getElementById("createUserErrorMessage").innerHTML = "The phone number must be of length 10";
+        } else if (!isEmail($("#email").val())) {
+            document.getElementById("createUserErrorMessage").style.display = 'block';
+            document.getElementById("createUserErrorMessage").innerHTML = "Please follow this email pattern: example@email.com";
+        } else if (inputValidationCreate()) {
+            document.getElementById("createUserErrorMessage").style.display = 'block';
+            document.getElementById("createUserErrorMessage").innerHTML = "There are empty fields";
+        } else if (passwordValidationCreate()) {
+            document.getElementById("createUserErrorMessage").style.display = 'block';
+            document.getElementById("createUserErrorMessage").innerHTML = "Password must be at least 5 or less than 20 characters long";
+        } else if (negativeValidationcreate()) {
+            document.getElementById("createUserErrorMessage").style.display = 'block';
+            document.getElementById("createUserErrorMessage").innerHTML = "Experience or cost of session cannot be less than 0";
+        } else {
+            validated = true
+        }
+        return validated;
+    }
+
+    /**
+     * 
+     * Display input field errors on profile page depending on which field was invalid.
+     * 
+     * @param {*} data from form fields
+     * @returns validated true if all fields are valid.
+     */
+    function handleCreateResponse(data) {
+        if (data == "existingEmail") {
+            document.getElementById("createUserErrorMessage").style.display = 'block';
+            document.getElementById("createUserErrorMessage").innerHTML = "A user with that email already exists";
+        } else if (data == "existingPhone") {
+            document.getElementById("createUserErrorMessage").style.display = 'block';
+            document.getElementById("createUserErrorMessage").innerHTML = "A user with that phone number already exists";
+        } else if (data == "existingUsername") {
+            document.getElementById("createUserErrorMessage").style.display = 'block';
+            document.getElementById("createUserErrorMessage").innerHTML = "A user with that username already exists";
+        } else {
+            document.getElementById('dashboardSuccessModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+            setTimeout(() => {
+                location.reload();
+            }, 2500);
+        }
+
+    }
+
+    /**
+     * If create button is clicked, display modal (form)
+     */
     document.getElementById('createUser').onclick = function () {
         createUserModal.style.display = "block";
         document.body.style.overflow = 'hidden';
         showTherapyOptions($("#userType"));
         $('#createUserBtn').off();
         $('#createUserBtn').click(() => {
-            var phoneLength = $("#phone").val();
-            if (phoneLength.length != 10) {
-                document.getElementById("createUserErrorMessage").style.display = 'block';
-                document.getElementById("createUserErrorMessage").innerHTML = "The phone number must be of length 10";
-            } else if (!isEmail($("#email").val())) {
-                document.getElementById("createUserErrorMessage").style.display = 'block';
-                document.getElementById("createUserErrorMessage").innerHTML = "Please follow this email pattern: example@email.com";
-            } else if (inputValidationCreate()) {
-                document.getElementById("createUserErrorMessage").style.display = 'block';
-                document.getElementById("createUserErrorMessage").innerHTML = "There are empty fields";
-            } else if (passwordValidationCreate()) {
-                document.getElementById("createUserErrorMessage").style.display = 'block';
-                document.getElementById("createUserErrorMessage").innerHTML = "Password must be at least 5 or less than 20 characters long";
-            } else if (negativeValidationcreate()) {
-                document.getElementById("createUserErrorMessage").style.display = 'block';
-                document.getElementById("createUserErrorMessage").innerHTML = "Experience or cost of session cannot be less than 0";
-            } else {
+            if (createInputValidation()) {
+                /**
+                 * AJAX call to create a user with the values from the form admin fills out from the admin panel.
+                 */
                 $.ajax({
                     url: '/createUser',
                     type: 'POST',
@@ -80,29 +136,20 @@ $(document).ready(async function () {
                         yearsExperience: $("#yearsExperience").val(),
                         sessionCost: $("#sessionCost").val(),
                         password: $("#password").val(),
-                    }, success: function (data) {
-                        if (data == "existingEmail") {
-                            document.getElementById("createUserErrorMessage").style.display = 'block';
-                            document.getElementById("createUserErrorMessage").innerHTML = "A user with that email already exists";
-                        } else if (data == "existingPhone") {
-                            document.getElementById("createUserErrorMessage").style.display = 'block';
-                            document.getElementById("createUserErrorMessage").innerHTML = "A user with that phone number already exists";
-                        } else if (data == "existingUsername") {
-                            document.getElementById("createUserErrorMessage").style.display = 'block';
-                            document.getElementById("createUserErrorMessage").innerHTML = "A user with that username already exists";
-                        } else {
-                            document.getElementById('dashboardSuccessModal').style.display = 'flex';
-                            document.body.style.overflow = 'hidden';
-                            setTimeout(() => {
-                                location.reload();
-                            }, 2500);
-                        }
-                    }
+                    },
+                    success: handleCreateResponse
                 })
             }
         });
     }
 
+    /**
+     * 
+     * This function checks to see if the inputted values for the form fields
+     * are valid.
+     * 
+     * @returns true if there are validation errors
+     */
     function inputValidationCreate() {
         const inpObjFirstName = document.getElementById("firstname");
         const inpObjLastName = document.getElementById("lastname");
@@ -111,10 +158,18 @@ $(document).ready(async function () {
         const inpObjSession = document.getElementById("sessionCost");
         if (!inpObjFirstName.checkValidity() || !inpObjLastName.checkValidity() || !inpObjUsername.checkValidity()) {
             return true;
-        } else if ($("#userType").val() == 'therapist' && (!inpObjExperience.checkValidity() || !inpObjSession.checkValidity())){
+        } else if ($("#userType").val() == 'therapist' && (!inpObjExperience.checkValidity() || !inpObjSession.checkValidity())) {
             return true;
         }
     }
+
+    /**
+     * 
+     * This function checks to see if the inputted value for password field
+     * is valid.
+     * 
+     * @returns true if password is invalid
+     */
     function passwordValidationCreate() {
         const inpObjPassword = document.getElementById("password");
         if (!inpObjPassword.checkValidity()) {
@@ -122,18 +177,52 @@ $(document).ready(async function () {
         }
     }
 
+    /**
+     * 
+     * This function checks to see if the inputted values for sessionCost
+     * and yearsExperience fieldsa are valid.
+     * 
+     * @returns true if sessionCost or yearsExperience fields are invalid.
+     */
     function negativeValidationcreate() {
         const yearsExp = document.getElementById("yearsExperience").value;
         const cost = document.getElementById("sessionCost").value;
-        if(yearsExp < 0 || cost < 0) {
+        if (yearsExp < 0 || cost < 0) {
             return true;
         }
     }
 
-    // Get all classnames to check which row was clicked to delete user
+    /**
+     * 
+     * This function checks to see if the to be deleted user is the last
+     * administrator in the database.
+     * 
+     * @param {*} data as form field
+     * @returns error if the deletion fails
+     */
+    function handleDeleteResponse(data) {
+        if (data == 'lastAdmin') {
+            document.getElementById("deleteUserErrorMessage").style.display = 'block';
+            $('#deleteUserErrorMessage').html('Deletion failed. Database needs to have at least 1 administrator.')
+            return;
+        } else {
+            document.getElementById("deleteUserErrorMessage").style.display = 'none';
+            document.getElementById('dashboardSuccessModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+        setTimeout(() => {
+            location.reload();
+        }, 2500);
+    }
+
+    /**
+     * Get all classnames to check which row was clicked to delete user.
+     */
     const deleteUserBtns = document.querySelectorAll('.deleteUser');
 
-    // Loop through each delete icon and set function to display modal
+    /**
+     * Loop through each delete icon and set function to display modal.
+     */
     for (var i = 0; i < deleteUserBtns.length; i++) {
         deleteUserBtns[i].onclick = function (e) {
             deleteUserModal.style.display = "block";
@@ -155,65 +244,122 @@ $(document).ready(async function () {
                         id: currentRow.id,
                         previousUserType: userType
                     },
-                    success: function (data) {
-                        if(data == 'lastAdmin'){
-                            document.getElementById("deleteUserErrorMessage").style.display = 'block';
-                            $('#deleteUserErrorMessage').html('Deletion failed. Database needs to have at least 1 administrator.')
-                            return;
-                        } else {
-                            document.getElementById("deleteUserErrorMessage").style.display = 'none';
-                            document.getElementById('dashboardSuccessModal').style.display = 'flex';
-                            document.body.style.overflow = 'hidden';
-                        }
-                        setTimeout(() => {
-                            location.reload();
-                        }, 2500);
-                    }
+                    success: handleDeleteResponse
                 })
             }
         }
     }
 
-    // Get all classnames to check which row was clicked to edit user
+    /**
+     * 
+     * This function checks inputted values for form fields to make sure
+     * they are valid.
+     * 
+     * @returns true if there are validation errors
+     */
+    function editInputValidation() {
+        let validated = false;
+        var phoneLength = $("#editPhone").val();
+        if (phoneLength.length != 10) {
+            document.getElementById("editUserErrorMessage").style.display = 'block';
+            document.getElementById("editUserErrorMessage").innerHTML = "The phone number must be of length 10";
+        } else if (!isEmail($("#editEmail").val())) {
+            document.getElementById("editUserErrorMessage").style.display = 'block';
+            document.getElementById("editUserErrorMessage").innerHTML = "Please follow this email pattern: example@gmail.com";
+        } else if (inputValidationEdit()) {
+            document.getElementById("editUserErrorMessage").style.display = 'block';
+            document.getElementById("editUserErrorMessage").innerHTML = "There are empty fields.";
+        } else if (passwordValidationEdit()) {
+            document.getElementById("editUserErrorMessage").style.display = 'block';
+            document.getElementById("editUserErrorMessage").innerHTML = "Password must be at least 5 or less than 20 characters long";
+        } else if (negativeValidationEdit()) {
+            document.getElementById("editUserErrorMessage").style.display = 'block';
+            document.getElementById("editUserErrorMessage").innerHTML = "Experience or cost of session cannot be less than 0";
+        } else {
+            validated = true
+        }
+        return validated;
+    }
+
+    /**
+     * 
+     * This helper function checks inputted values for form fields to make sure
+     * they are valid.
+     * 
+     * @param {*} data as form field
+     */
+    function handleEditResponse(data) {
+        if (data == "existingEmail") {
+            document.getElementById("editUserErrorMessage").style.display = 'block';
+            $("#editUserErrorMessage").html("A user with that email already exists");
+        } else if (data == "existingPhone") {
+            document.getElementById("editUserErrorMessage").style.display = 'block';
+            $("#editUserErrorMessage").html("A user with that phone number already exists");
+        } else if (data == "existingUsername") {
+            document.getElementById("editUserErrorMessage").style.display = 'block';
+            $("#editUserErrorMessage").html("A user with that username already exists");
+        } else if (data == "updatedWithPassword") {
+            document.getElementById("editUserErrorMessage").style.display = 'none';
+            document.getElementById('dashboardSuccessModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+            setTimeout(() => {
+                location.reload();
+            }, 2500);
+        } else if (data == 'lastAdmin') {
+            document.getElementById("editUserErrorMessage").style.display = 'block';
+            $("#editUserErrorMessage").html("Edit failed. Database needs to have at least 1 administrator.");
+        } else {
+            document.getElementById("editUserErrorMessage").style.display = 'none';
+            document.getElementById('dashboardSuccessModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+            setTimeout(() => {
+                location.reload();
+            }, 2500);
+        }
+    }
+
+    /**
+     * 
+     * This helper function fetches and display each row (users) information
+     * from the database and displays them on the admin panel's edit user form.
+     * 
+     * @param {*} currentRow as the form field 
+     */
+    function setupEditModal(currentRow) {
+        document.getElementById("editUserErrorMessage").style.display = 'none';
+        document.getElementById('editFirstname').value = currentRow.children[0].innerHTML;
+        document.getElementById('editLastname').value = currentRow.children[1].innerHTML;
+        document.getElementById('editUsername').value = currentRow.children[2].innerHTML;
+        document.getElementById('editEmail').value = currentRow.children[3].innerHTML;
+        document.getElementById('editPhone').value = currentRow.children[4].innerHTML;
+        document.getElementById("editUserType").value = currentRow.children[5].innerHTML.toLowerCase();
+        document.getElementById('editYearsExperience').value = currentRow.children[6].innerHTML;
+        document.getElementById("editSessionCost").value = currentRow.children[7].innerHTML.toLowerCase();
+        document.getElementById("editPassword").value = "";
+        showTherapyOptions($("#editUserType"));
+    }
+
+    /**
+     * Get all classnames to check which row was clicked to edit user.
+     */
     const editUserBtns = document.querySelectorAll('.editUser');
 
-    // Loop through each edit icon and set function to display modal
+    /**
+     * Loop through each edit icon and set function to display modal.
+     */
     for (var i = 0; i < editUserBtns.length; i++) {
         editUserBtns[i].onclick = function (e) {
             editUserModal.style.display = "block";
             document.body.style.overflow = 'hidden';
             const currentRow = this.closest('tr');
-            document.getElementById("editUserErrorMessage").style.display = 'none';
             let previousUserType = currentRow.children[5].innerHTML.toLowerCase();
-            document.getElementById('editFirstname').value = currentRow.children[0].innerHTML;
-            document.getElementById('editLastname').value = currentRow.children[1].innerHTML;
-            document.getElementById('editUsername').value = currentRow.children[2].innerHTML;
-            document.getElementById('editEmail').value = currentRow.children[3].innerHTML;
-            document.getElementById('editPhone').value = currentRow.children[4].innerHTML;
-            document.getElementById("editUserType").value = currentRow.children[5].innerHTML.toLowerCase();
-            document.getElementById('editYearsExperience').value = currentRow.children[6].innerHTML;
-            document.getElementById("editSessionCost").value = currentRow.children[7].innerHTML.toLowerCase();
-            document.getElementById("editPassword").value = "";
-            showTherapyOptions($("#editUserType"));
+            setupEditModal(currentRow);
             $('#editUserBtn').off();
             $('#editUserBtn').click(() => {
-                var phoneLength = $("#editPhone").val();
-                if (phoneLength.length != 10) {
-                    document.getElementById("editUserErrorMessage").style.display = 'block';
-                    document.getElementById("editUserErrorMessage").innerHTML = "The phone number must be of length 10";
-                } else if (!isEmail($("#editEmail").val())) {
-                    document.getElementById("editUserErrorMessage").style.display = 'block';
-                    document.getElementById("editUserErrorMessage").innerHTML = "Please follow this email pattern: example@gmail.com";
-                } else if (inputValidationEdit()) {
-                    document.getElementById("editUserErrorMessage").style.display = 'block';
-                    document.getElementById("editUserErrorMessage").innerHTML = "There are empty fields.";
-                } else if (passwordValidationEdit()) {
-                    document.getElementById("editUserErrorMessage").style.display = 'block';
-                    document.getElementById("editUserErrorMessage").innerHTML = "Password must be at least 5 or less than 20 characters long";
-                } else if (negativeValidationEdit()) {
-                    document.getElementById("editUserErrorMessage").style.display = 'block';
-                    document.getElementById("editUserErrorMessage").innerHTML = "Experience or cost of session cannot be less than 0";
-                } else {
+                if (editInputValidation()) {
+                    /**
+                     * AJAX call to edit a user with the values from the form admin fills out from the admin panel.
+                     */
                     $.ajax({
                         url: '/editUser',
                         type: 'PUT',
@@ -230,41 +376,20 @@ $(document).ready(async function () {
                             sessionCost: $("#editSessionCost").val(),
                             password: $("#editPassword").val()
                         },
-                        success: function (data) {
-                            if (data == "existingEmail") {
-                                document.getElementById("editUserErrorMessage").style.display = 'block';
-                                $("#editUserErrorMessage").html("A user with that email already exists");
-                            } else if (data == "existingPhone") {
-                                document.getElementById("editUserErrorMessage").style.display = 'block';
-                                $("#editUserErrorMessage").html("A user with that phone number already exists");
-                            } else if (data == "existingUsername") {
-                                document.getElementById("editUserErrorMessage").style.display = 'block';
-                                $("#editUserErrorMessage").html("A user with that username already exists");
-                            } else if (data == "updatedWithPassword") {
-                                document.getElementById("editUserErrorMessage").style.display = 'none';
-                                document.getElementById('dashboardSuccessModal').style.display = 'flex';
-                                document.body.style.overflow = 'hidden';
-                                setTimeout(() => {
-                                    location.reload();
-                                }, 2500);
-                            } else if (data == 'lastAdmin'){
-                                document.getElementById("editUserErrorMessage").style.display = 'block';
-                                $("#editUserErrorMessage").html("Edit failed. Database needs to have at least 1 administrator.");
-                            } else {
-                                document.getElementById("editUserErrorMessage").style.display = 'none';
-                                document.getElementById('dashboardSuccessModal').style.display = 'flex';
-                                document.body.style.overflow = 'hidden';
-                                setTimeout(() => {
-                                    location.reload();
-                                }, 2500);
-                            }
-                        }
+                        success: handleEditResponse
                     })
                 }
             });
         }
     }
 
+    /**
+     * 
+     * This helper function checks the inputted valies from the form fields
+     * to make sure they are valid.
+     * 
+     * @returns true if the inputs are invalid
+     */
     function inputValidationEdit() {
         var currentType = document.getElementById("editUserType").value
         const inpObjFirstName = document.getElementById("editFirstname");
@@ -273,16 +398,24 @@ $(document).ready(async function () {
         const inpObjExperience = document.getElementById("editYearsExperience");
         const inpObjSession = document.getElementById("editSessionCost");
         if (currentType == "therapist") {
-        if (!inpObjFirstName.checkValidity() || !inpObjLastName.checkValidity() || !inpObjUsername.checkValidity()
-            || !inpObjExperience.checkValidity() || !inpObjSession.checkValidity()) {
-            return true;
-        }
-    } else {
-        if (!inpObjFirstName.checkValidity() || !inpObjLastName.checkValidity() || !inpObjUsername.checkValidity()) {
-            return true;
+            if (!inpObjFirstName.checkValidity() || !inpObjLastName.checkValidity() || !inpObjUsername.checkValidity() ||
+                !inpObjExperience.checkValidity() || !inpObjSession.checkValidity()) {
+                return true;
+            }
+        } else {
+            if (!inpObjFirstName.checkValidity() || !inpObjLastName.checkValidity() || !inpObjUsername.checkValidity()) {
+                return true;
+            }
         }
     }
-    }
+
+    /**
+     * 
+     * This helper function checks to see if the inputted value for the
+     * password field is valid.
+     * 
+     * @returns true if the input is invalid
+     */
     function passwordValidationEdit() {
         const inpObjPassword = document.getElementById("editPassword");
         if (!inpObjPassword.checkValidity()) {
@@ -290,33 +423,51 @@ $(document).ready(async function () {
         }
     }
 
+    /**
+     * 
+     * This helper function checks to see if the inputted values for
+     * sessionCost and yearsExperience are valid.
+     * 
+     * @returns true if the inputs are invalid.
+     */
     function negativeValidationEdit() {
         const yearsExp = document.getElementById("editYearsExperience").value;
         const cost = document.getElementById("editSessionCost").value;
-        if(yearsExp < 0 || cost < 0) {
+        if (yearsExp < 0 || cost < 0) {
             return true;
         }
     }
 
-    // If close icon is clicked, hide modal for Create User
+    /**
+     * If close icon is clicked, hide modal for Create User.
+     */
     document.getElementById("closeCreate").onclick = function () {
         createUserModal.style.display = "none";
         document.body.style.overflow = 'auto';
     }
 
-    // If close icon is clicked, hide modal for Edit User
+    /**
+     * If close icon is clicked, hide modal for Edit User.
+     */
     document.getElementById("closeEdit").onclick = function () {
         editUserModal.style.display = "none";
         document.body.style.overflow = 'auto';
     }
 
-    // If cancel button is clicked, hide modal for Delete User
+    /**
+     * If cancel button is clicked, hide modal for Delete User.
+     */
     document.getElementById("closeDelete").onclick = function () {
         deleteUserModal.style.display = "none";
         document.body.style.overflow = 'auto';
     }
 
-    // If user clicks outside of the modal for both Create, Edit and Delete then hide modal
+    /**
+     * 
+     * If user clicks outside of the modal for both Create, Edit and Delete then hide modal.
+     * 
+     * @param {*} event as an eventlistened for what the user clicks
+     */
     window.onclick = function (event) {
         if (event.target == createUserModal) {
             document.getElementById("createUserErrorMessage").style.display = 'none';
@@ -333,7 +484,9 @@ $(document).ready(async function () {
         }
     }
 
-    // Get all settings icons from each row and iterate in a loop to check which one was clicked
+    /**
+     * Get all settings icons from each row and iterate in a loop to check which one was clicked.
+     */
     const dashSet = document.querySelectorAll('.dashSettings');
     for (const set of dashSet) {
         set.onclick = function () {
@@ -341,16 +494,15 @@ $(document).ready(async function () {
 
                 // Set the dashsettings icons as active and toggable
                 this.firstElementChild.classList.toggle('active');
-                if (this.children[1].classList.contains('active')
-                    || this.children[1].classList.contains('inactive')
-                    || this.children[2].classList.contains('active')
-                    || this.children[2].classList.contains('inactive')) {
+                if (this.children[1].classList.contains('active') ||
+                    this.children[1].classList.contains('inactive') ||
+                    this.children[2].classList.contains('active') ||
+                    this.children[2].classList.contains('inactive')) {
                     this.children[1].classList.toggle('active');
                     this.children[1].classList.toggle('inactive');
                     this.children[2].classList.toggle('active');
                     this.children[2].classList.toggle('inactive');
-                }
-                else {
+                } else {
                     this.children[1].classList.add('active');
                     this.children[2].classList.add('active');
                 }
@@ -359,7 +511,9 @@ $(document).ready(async function () {
     }
 });
 
-// Live search function for table search 
+/**
+ * Live search function for table search.
+ */
 function searchTable() {
     const searchInput = document.getElementById("searchbar").value.toUpperCase();
     const table = document.getElementById("dashboardTable");
@@ -384,7 +538,9 @@ function searchTable() {
     $("#resultsFound").html(`${count}`);
 }
 
-// Sort table function when table headings is clicked
+/**
+ * Sort table function when table headings is clicked.
+ */
 function sortTable() {
     const table = document.getElementById('dashboardTable');
     const headers = table.querySelectorAll('.tHead');
@@ -464,7 +620,12 @@ function sortTable() {
     });
 }
 
-// Display therapy field options if usertype is a therapist
+/**
+ * 
+ * Display therapy field options if usertype is a therapist.
+ * 
+ * @param {*} selectObject as form field
+ */
 function showTherapyOptions(selectObject) {
     const value = $(selectObject).val();
     const therapyFieldOptions = document.querySelectorAll('.therapistOptions');
@@ -479,12 +640,21 @@ function showTherapyOptions(selectObject) {
     }
 }
 
+/**
+ * 
+ * This function checks to see if the given email matches the pattern.
+ * 
+ * @param {*} email as form field
+ * @returns true if it matches the pattern, else false
+ */
 function isEmail(email) {
     var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
     return regex.test(email);
 }
 
-// Trigger click function for enter key for all input fields for create form
+/**
+ * Trigger click function for enter key for all input fields for create form.
+ */
 const inputCreate = document.querySelectorAll("#createUserForm .form-control");
 for (var i = 0; i < inputCreate.length; i++) {
     inputCreate[i].addEventListener("keypress", function (e) {
@@ -495,7 +665,9 @@ for (var i = 0; i < inputCreate.length; i++) {
     });
 }
 
-// Trigger click function for enter key for all input fields for create form
+/**
+ *  Trigger click function for enter key for all input fields for create form
+ */
 const inputEdit = document.querySelectorAll("#editUserForm .form-control");
 for (var i = 0; i < inputEdit.length; i++) {
     inputEdit[i].addEventListener("keypress", function (e) {

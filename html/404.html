@@ -2,15 +2,15 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="COMP 2800 - MyMind" />
 
-    <title>MyMind</title>
+    <title>MyMind - 404</title>
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="./images/logo.svg" />
+    <link rel="icon" type="image/x-icon" href="../images/logo.svg" />
 
     <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/410249dbdb.js" crossorigin="anonymous"></script>
@@ -26,9 +26,9 @@
         rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" type="text/css" href="./css/style.css" />
-    <link rel="stylesheet" type="text/css" href="./css/home.css" />
-    <link rel="stylesheet" type="text/css" href="./css/responsive.css" />
+    <link rel="stylesheet" type="text/css" href="../css/style.css" />
+    <link rel="stylesheet" type="text/css" href="../css/404.css" />
+    <link rel="stylesheet" type="text/css" href="../css/responsive.css" />
 </head>
 
 <body>
@@ -115,70 +115,17 @@
             </nav>
         </header>
 
-        <div id="bannerHome">
-            <div id="overlay">
-                <div id="homeHeader">
-                    <h2>Our legacy speaks through our healed clients</h2>
-                    <div><a href="/therapists">View Therapists</a></div>
-                </div>
+        <div id="ErrorContainer">
+            <div id="ErrorHeading">
+                <h1>4</h1><img src="../images/logo.svg" alt="Logo">
+                <h1>4</h1>
+            </div>
+            <h2>Oops, smooth brain!</h2>
+            <p>We can't find the page that you're looking for...</p>
+            <div id="returnSection">
+                <a href="/">Return Home</a>
             </div>
         </div>
-
-        <div id="therapySec">
-            <h2>Popular Therapy Sessions</h2>
-            <div id="therapistCards">
-            </div>
-        </div>
-
-        <div id="companySec">
-            <div>
-                <img src="./images/home.jpg" alt="Company Info">
-            </div>
-            <div id="companyDesc">
-                <h2>MyMind Can Help You</h2>
-                <p>MyMind can help anyone that struggles with mental health problems with guided therapy sessions.</p>
-                <p>Although therapy in Canada is available, it is not cheap and fees can range from $50-$240 per
-                    session. Many people with mental health problems require 12-16 sessions on average and only 50
-                    percent of patients recover as indicated by self-reported symptom measures.</p>
-            </div>
-        </div>
-
-        <div id="contactSec">
-            <div id="contactContainer">
-                <div id="contactInfo">
-                    <h4>Contact Details</h4>
-                    <h2>Burnaby</h2>
-                    <p>3700 Willingdon Ave, Burnaby, BC V5G 3H2</p>
-                    <div class="contactDetails">
-                        <div class="contactIcons">
-                            <i class="bi bi-envelope"></i>
-                        </div>
-                        <a href="mailto:info@mymind.com">info@mymind.com</a>
-                    </div>
-                    <div class="contactDetails">
-                        <div class="contactIcons">
-                            <i class="bi bi-telephone"></i>
-                        </div>
-                        <a href="tel:604.555.5012">(604) 555 - 5012</a>
-                    </div>
-                </div>
-                <div id="mapSec">
-                    <div id="map"></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Chat Expired Modal -->
-        <div id="chatExpiredModal">
-            <div id="modalContent">
-                <div id="chatExpiredModalMessage">
-                    <h2>Your session has expired!</h2>
-                    <p>Purchase a new session at <a href="/therapists">Therapists</a> to continue your journey.</p>
-                </div>
-                <i class="fa-solid fa-xmark" id="closeChatExpired"></i>
-            </div>
-        </div>
-
         <div id="therapistChat"></div>
         <div id="footerPlaceHolder"></div>
     </div>
@@ -186,11 +133,7 @@
     <!-- jQuery CDN -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
-    <script src="./js/main.js"></script>
-    <script src="./js/index.js"></script>
-    <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDOLlNwRr6b8WcubKfzxCbEA97HWdcyQsc&callback=initMap">
-        </script>
+    <script src="../js/main.js"></script>
 </body>
 
 </html>

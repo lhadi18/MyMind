@@ -74,7 +74,7 @@
                                 <i class="fa-solid fa-users-gear nav-icon"></i>Admin Dashboard
                             </a>
                         </li>
-                        <li class="nav-item isLoggedIn">
+                        <li class="nav-item hasActiveSession">
                             <a href="/chat-session" class="nav-link">
                                 <i class="bi bi-chat-left-dots nav-icon"></i>Chat Session
                             </a>
@@ -123,8 +123,7 @@
                     </div>
                     <div id="chatProfileDesc">
                         <p id="chatName"></p>
-                        <p>Active <span id="chatActiveState">Now</span></p>
-                        <!-- <p>Active <span id="chatActiveState">10mins ago</span></p> -->
+                        <p><span id="chatActiveState">Offline</span></p>
                     </div>
                 </div>
                 <div id="chatTools">
@@ -133,10 +132,12 @@
             </div>
         </div>
 
-        <ul id="chatMessages"></ul>
+        <ul id="chatMessages">
+            <span id="sessionTimer"></span>
+        </ul>
 
         <div id="sendMessageContainer">
-            <textarea id="chatbox" maxlength="250" contenteditable="true" disabled="true" wrap="soft"></textarea>
+            <textarea id="chatbox" maxlength="250" placeholder="Message..." contenteditable="true" disabled="true" wrap="soft"></textarea>
             <button id="sendMessage">
                 <img src="./images/send.svg">
             </button>

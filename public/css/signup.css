@@ -261,7 +261,7 @@
     transform: translateY(0.25rem);
     stroke-dasharray: 80;
     stroke-dashoffset: 80;
-    -webkit-animation:animateCheck 0.35s forwards 1.25s ease-out;
+    -webkit-animation: animateCheck 0.35s forwards 1.25s ease-out;
     -moz-animation: animateCheck 0.35s forwards 1.25s ease-out;
     -ms-animation: animateCheck 0.35s forwards 1.25s ease-out;
     -o-animation: animateCheck 0.35s forwards 1.25s ease-out;
