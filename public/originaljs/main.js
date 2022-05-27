@@ -1,4 +1,7 @@
 $(document).ready(function () {
+    /**
+     * Constant variables.
+     */
     const navMenu = document.getElementById('nav-menu');
     const navToggle = document.getElementById('nav-toggle');
     const navClose = document.getElementById('nav-close');
@@ -8,45 +11,59 @@ $(document).ready(function () {
     var element;
     const chatExpiredModal = document.getElementById('chatExpiredModal');
 
-    // Load the Navbar and Footer 
+    /**
+     * Load the Navbar and Footer.
+     */
     loadNavbarFooter();
 
-    // Display Patient navbar 
+    /**
+     * Display Patient navbar.
+     */
     function patientNavbarSetup() {
         var patientEls = document.querySelectorAll(".isPatient");
         for (var x = 0; x < patientEls.length; x++)
             patientEls[x].style.display = 'list-item';
     }
 
-    // Display Therapist navbar 
+    /**
+     * Display Therapist navbar.
+     */
     function therapistNavbarSetup() {
         let therapistEls = document.querySelectorAll(".isTherapist");
         for (var x = 0; x < therapistEls.length; x++)
             therapistEls[x].style.display = 'list-item';
     }
 
-    // Display Admin navbar 
+    /**
+     * Display Admin navbar.
+     */
     function adminNavbarSetup() {
         let adminEls = document.querySelectorAll(".isAdmin");
         for (var x = 0; x < adminEls.length; x++)
             adminEls[x].style.display = 'list-item';
     }
 
-    // Display Logged In navbar for standard users 
+    /**
+     * Display Logged In navbar for standard users.
+     */
     function loggedInNavbarSetup() {
         let loggedInEls = document.querySelectorAll(".isLoggedIn");
         for (var x = 0; x < loggedInEls.length; x++)
             loggedInEls[x].style.display = 'list-item';
     }
 
-    // Display logged out navbar
+    /**
+     * Display logged out navbar.
+     */
     function loggedOutNavbarSetup() {
         let loggedOutEls = document.querySelectorAll(".isLoggedOut")
         for (var x = 0; x < loggedOutEls.length; x++)
             loggedOutEls[x].style.display = 'list-item';
     }
 
-    // GET call from server to check which user type has logged in to display its dedicated navbar
+    /**
+     * GET call from server to check which user type has logged in to display its dedicated navbar.
+     */
     setTimeout(() => {
         $.get('/isLoggedIn', function (user) {
             if (user) {
@@ -60,7 +77,6 @@ $(document).ready(function () {
                 }
                 setTimeout(() => {
                     $('.logout-link').click(function () {
-                        console.log('clicked')
                         $.post('/logout');
                         window.location = '/login'
                     })
@@ -72,11 +88,15 @@ $(document).ready(function () {
 
     }, 50);
 
-    // Display hashed password for signup and login form
+    /**
+     * Display hashed password for signup and login form.
+     */
     displayPassword();
 
     /* Show Menu */
-    // Validation if constant var exists
+    /**
+     * Validation if constant var exists.
+     */
     if (navToggle) {
         navToggle.addEventListener('click', function () {
             navMenu.classList.add('show-menu');
@@ -84,15 +104,18 @@ $(document).ready(function () {
     }
 
     /* Hide Menu */
-    // Validation if constant var exists
+    /**
+     * Validation if constant var exists.
+     */
     if (navClose) {
         navClose.addEventListener('click', function () {
             navMenu.classList.remove('show-menu');
         });
     }
 
-
-    // Load the Navbar and Footer 
+    /**
+     * Load the Navbar and Footer.
+     */
     function loadNavbarFooter() {
         $('#navPlaceHolder').load('../temp/nav.html', function () {
             // For mobile nav links
@@ -113,7 +136,9 @@ $(document).ready(function () {
         $('#therapistChat').load('../temp/chatbox.html');
     }
 
-    // Display hashed password for signup and login form
+    /**
+     * Display hashed password for signup and login form.
+     */
     function displayPassword() {
         $("#show-hide-password .input-group-addon a").on('click', function (event) {
             event.preventDefault();
@@ -129,16 +154,25 @@ $(document).ready(function () {
         });
     }
 
-    // Remove Menu Mobile
+    /**
+     * Remove Menu Mobile.
+     */
     function linkAction() {
         // When clicked on each nav link, remove the show menu class
         document.getElementById('nav-menu').classList.remove('show-menu');
     }
 
-    // For mobile nav, each clic on a link will close the nav menu on selected pages
+    /**
+     * For mobile nav, each clic on a link will close the nav menu on selected pages.
+     */
     navLink.forEach(n => n.addEventListener('click', linkAction));
 
-    // AJAX call to load messages for chatbox
+    /**
+     * 
+     * AJAX call to load messages for chatbox.
+     * 
+     * @param {*} data as an object
+     */
     function loadMsgs(data) {
         $.ajax({
             url: '/loadMsgs',
@@ -160,7 +194,12 @@ $(document).ready(function () {
         })
     }
 
-    // Socket setup for chat rooms
+    /**
+     * 
+     * Socket setup for chat rooms.
+     * 
+     * @param {*} data as an object
+     */
     function socketSetup(data) {
         socket.emit('join-room', data.orderId, data.sender);
         socket.emit('check-status', data.other, function () {
@@ -187,7 +226,9 @@ $(document).ready(function () {
 
     }
 
-    // check active session
+    /**
+     * AJAX GET to check active session.
+     */
     $.get('/activeChatSession', function (data) {
         if (data == "NoActiveSession" || data == "notLoggedIn") {
             $('#therapistChat').hide();
@@ -213,7 +254,9 @@ $(document).ready(function () {
 
 
 
-    // Get and display session expiring time
+    /**
+     * Get and display session expiring time.
+     */
     setInterval(getSessionEndTime, 1000);
 
     function getSessionEndTime() {
@@ -246,6 +289,9 @@ $(document).ready(function () {
         })
     }
 
+    /**
+     * This function sets up the chat room for patient and therapist if they are in the chat-session page.
+     */
     function chatSetup() {
         // Chat Page for mobile
         if (window.location.pathname == '/chat-session') {
@@ -273,6 +319,9 @@ $(document).ready(function () {
         }
     }
 
+    /**
+     * If the user click on the "typing" area, open a container to allow users to type.
+     */
     function openElement() {
         var messages = element.find('#chatMessages');
         var textInput = element.find('#chatbox');
@@ -298,6 +347,9 @@ $(document).ready(function () {
         });
     }
 
+    /**
+     * If the user click away from the "typing" area, close the container to disallow the user to type.
+     */
     function closeElement() {
         element.find('.chatContainer').removeClass('enter').hide();
         element.find('#chatMsgIcon').show();
@@ -311,6 +363,9 @@ $(document).ready(function () {
         }, 500);
     }
 
+    /**
+     * call openElement function if the user is on thank-you page and their clientWidth is 992.
+     */
     if (window.location.pathname == '/thank-you') {
         document.getElementById('startSessionBtn').onclick = function () {
             if (document.body.clientWidth >= 992) {
@@ -321,6 +376,12 @@ $(document).ready(function () {
         }
     }
 
+    /**
+     * 
+     * send the message from socket to the room and database.
+     * 
+     * @returns N/A if the newMessage is invalid.
+     */
     function sendNewMessage() {
         var userInput = $('#chatbox');
         var newMessage = userInput.val().trim();
@@ -349,12 +410,25 @@ $(document).ready(function () {
         }, 500);
     }
 
+    /**
+     * 
+     * This function sends the message if user presses CTRL + ENTER on their keyboard.
+     * 
+     * @param {*} e as event listener
+     */
     function onMetaAndEnter(e) {
         if (e.ctrlKey && e.keyCode == 13) {
             sendNewMessage();
         }
     }
 
+    /**
+     * 
+     * Change the status of the user (based on activity).
+     * set status to 'offline' if the user is inactive.
+     * 
+     * @param {*} status as event listener.
+     */
     function changeActiveState(status) {
         activeStates = document.querySelectorAll("#chatActiveState");
         activeStates.forEach(function (element) {
