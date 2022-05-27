@@ -13,7 +13,9 @@ const bcrypt = require('bcrypt');
 const app = express();
 const http = require('http');
 const server = http.createServer(app);
-const { Server } = require("socket.io");
+const {
+    Server
+} = require("socket.io");
 const io = new Server(server);
 const nodemailer = require('nodemailer');
 
@@ -24,10 +26,10 @@ if (process.env.NODE_ENV != 'production') {
     require('dotenv').config()
 }
 mongoose.connect(process.env.DATABASE_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-})
-    .then((obj) => { })
+        useNewUrlParser: true,
+        useUnifiedTopology: true
+    })
+    .then((obj) => {})
     .catch((err) => console.log(err));
 
 /**
@@ -102,8 +104,7 @@ function isAdmin(req, res, next) {
         }
         if (user.userType == 'admin') {
             return next();
-        }
-        else {
+        } else {
             return res.redirect('/userprofile');
         }
     })
@@ -169,7 +170,11 @@ async function hasActiveSession(req, res, next) {
     var currentTime = new Date();
 
     var patientActiveSession = await Cart.exists({
-        $or: [{ therapist: req.session.user._id }, { userId: req.session.user._id }],
+        $or: [{
+            therapist: req.session.user._id
+        }, {
+            userId: req.session.user._id
+        }],
         status: "completed",
         expiringTime: {
             $gt: currentTime
@@ -354,8 +359,7 @@ app.post('/uploadProfile', profileUpload.single('profileFile'), (req, res) => {
             "_id": id
         }, {
             profileImg: "../uploads/" + fileName
-        }).then((obj) => {
-        })
+        }).then((obj) => {})
     } else {
         return;
     }
@@ -534,17 +538,17 @@ app.post('/editProfile', isLoggedIn, isNotExisting, async (req, res) => {
         newpass = hashedPassword;
     }
     User.updateOne({
-        "_id": req.session.user._id
-    }, {
-        "firstName": req.body.firstname,
-        "lastName": req.body.lastname,
-        "username": req.body.username,
-        "email": req.body.email,
-        "phoneNum": req.body.phone,
-        "password": newpass,
-        "yearsExperience": req.body.yearsExperience,
-        "sessionCost": req.body.sessionCost
-    })
+            "_id": req.session.user._id
+        }, {
+            "firstName": req.body.firstname,
+            "lastName": req.body.lastname,
+            "username": req.body.username,
+            "email": req.body.email,
+            "phoneNum": req.body.phone,
+            "password": newpass,
+            "yearsExperience": req.body.yearsExperience,
+            "sessionCost": req.body.sessionCost
+        })
         .then((obj) => {
             return res.json("updated");
         })
@@ -598,6 +602,44 @@ async function isNotExisting(req, res, next) {
     })
 }
 
+async function createTherapistAccount(req, res) {
+    const hashedPassword = await bcrypt.hash(req.body.password, 10);
+    const new_user = new User({
+        firstName: req.body.firstname,
+        lastName: req.body.lastname,
+        username: req.body.username,
+        phoneNum: req.body.phone,
+        userType: req.body.userType,
+        yearsExperience: req.body.yearsExperience,
+        sessionCost: req.body.sessionCost,
+        email: req.body.email,
+        password: hashedPassword
+    });
+
+    new_user.save()
+        .then((result) => {
+            res.json("login");
+        });
+}
+
+async function createPatientAccount(req, res) {
+    const hashedPassword = await bcrypt.hash(req.body.password, 10);
+    const new_user = new User({
+        firstName: req.body.firstname,
+        lastName: req.body.lastname,
+        username: req.body.username,
+        phoneNum: req.body.phone,
+        userType: req.body.userType,
+        email: req.body.email,
+        password: hashedPassword
+    });
+
+    new_user.save()
+        .then((result) => {
+            res.json("login");
+        });
+}
+
 /**
  * This route post allows users to sign up their account and store their information
  * on mongodb and stores the password as a hashed password. Uses isNotRegistered
@@ -605,49 +647,10 @@ async function isNotExisting(req, res, next) {
  * email, phone number, or username does not already exist.
  */
 app.post("/sign-up", isNotRegistered, async (req, res) => {
-    let userType = (req.body.userType != 'patient' && req.body.userType != 'therapist') ? 'patient' : req.body.userType;
     if (req.body.userType == "therapist") {
-        try {
-            const hashedPassword = await bcrypt.hash(req.body.password, 10);
-            const new_user = new User({
-                firstName: req.body.firstname,
-                lastName: req.body.lastname,
-                username: req.body.username,
-                phoneNum: req.body.phone,
-                userType: userType,
-                yearsExperience: req.body.yearsExperience,
-                sessionCost: req.body.sessionCost,
-                email: req.body.email,
-                password: hashedPassword
-            });
-
-            new_user.save()
-                .then((result) => {
-                    res.json("login");
-                });
-        } catch (err) {
-            res.redirect('/sign-up');
-        }
+        return createTherapistAccount(req, res);
     } else {
-        try {
-            const hashedPassword = await bcrypt.hash(req.body.password, 10);
-            const new_user = new User({
-                firstName: req.body.firstname,
-                lastName: req.body.lastname,
-                username: req.body.username,
-                phoneNum: req.body.phone,
-                userType: userType,
-                email: req.body.email,
-                password: hashedPassword
-            });
-
-            new_user.save()
-                .then((result) => {
-                    res.json("login");
-                });
-        } catch (err) {
-            res.redirect('/sign-up');
-        }
+        return createPatientAccount(req, res);
     }
 })
 
@@ -760,8 +763,7 @@ app.get('/getAllUsersData', isLoggedIn, isAdmin, setHeaders, (req, res) => {
         if (err) {
             console.log(err);
         }
-        if (!user) {
-        }
+        if (!user) {}
         res.json(user);
     });
 })
@@ -772,8 +774,8 @@ app.get('/getAllUsersData', isLoggedIn, isAdmin, setHeaders, (req, res) => {
  */
 app.delete('/deleteUser', isLoggedIn, isAdmin, isNotLastAdminDelete, async (req, res) => {
     User.deleteOne({
-        _id: req.body.id
-    })
+            _id: req.body.id
+        })
         .then(function () {
             //if user is deleting themselves, delete session data
             if (req.body.id == req.session.user._id) {
@@ -790,8 +792,8 @@ app.delete('/deleteUser', isLoggedIn, isAdmin, isNotLastAdminDelete, async (req,
  */
 app.delete('/deleteUserProfile', isLoggedIn, isNotLastAdminDelete, async (req, res) => {
     User.deleteOne({
-        _id: req.session.user._id
-    })
+            _id: req.session.user._id
+        })
         .then(function () {
             req.session.destroy();
             res.send();
@@ -842,16 +844,8 @@ async function isNotExistingAdmin(req, res, next) {
     })
 }
 
-/**
- * This put route allows admins to edit a cetain users information in the database from
- * the admin dashboard.
- */
-app.put('/editUser', isLoggedIn, isAdmin, isNotExistingAdmin, isNotLastAdminEdit, (req, res) => {
-    if (req.body.password != "") {
-        return updateUserWithPassword(req, res);
-    }
-    if (req.body.userType == "therapist") {
-        User.updateOne({
+function updateTherapist(req, res) {
+    User.updateOne({
             "_id": req.body.id
         }, {
             "firstName": req.body.firstname,
@@ -863,16 +857,18 @@ app.put('/editUser', isLoggedIn, isAdmin, isNotExistingAdmin, isNotLastAdminEdit
             "yearsExperience": req.body.yearsExperience,
             "sessionCost": req.body.sessionCost
         })
-            .then((obj) => {
-                if (req.session.user._id == req.body.id && req.body.userType != req.session.user.userType)
-                    req.session.destroy();
-                return res.send("updatedWithoutPassword");
-            })
-            .catch((err) => {
-                console.log(err);
-            })
-    } else {
-        User.updateOne({
+        .then((obj) => {
+            if (req.session.user._id == req.body.id && req.body.userType != req.session.user.userType)
+                req.session.destroy();
+            return res.send("updatedWithoutPassword");
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+}
+
+async function updatePatient(req, res) {
+    User.updateOne({
             "_id": req.body.id
         }, {
             $unset: {
@@ -886,26 +882,19 @@ app.put('/editUser', isLoggedIn, isAdmin, isNotExistingAdmin, isNotLastAdminEdit
             "phoneNum": req.body.phone,
             "userType": req.body.userType
         })
-            .then((obj) => {
-                if (req.session.user._id == req.body.id && req.body.userType != req.session.user.userType)
-                    req.session.destroy();
-                return res.send("updatedWithoutPassword");
-            })
-            .catch((err) => {
-                console.log(err);
-            })
-    }
-})
+        .then((obj) => {
+            if (req.session.user._id == req.body.id && req.body.userType != req.session.user.userType)
+                req.session.destroy();
+            return res.send("updatedWithoutPassword");
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+}
 
-/**
- * This helper function allows admins to edit a user's account AND their passwords.
- * @param {*} req as request object
- * @param {*} res as response object
- */
-async function updateUserWithPassword(req, res) {
+async function updateTherapistWithPassword(req, res) {
     var hashedPassword = await bcrypt.hash(req.body.password, 10);
-    if (req.body.userType == "therapist") {
-        User.updateOne({
+    User.updateOne({
             "_id": req.body.id
         }, {
             "firstName": req.body.firstname,
@@ -918,16 +907,20 @@ async function updateUserWithPassword(req, res) {
             "sessionCost": req.body.sessionCost,
             "password": hashedPassword
         })
-            .then((obj) => {
-                if (req.session.user._id == req.body.id && req.body.userType != req.session.user.userType)
-                    req.session.destroy();
-                return res.send("updatedWithPassword");
-            })
-            .catch((err) => {
-                console.log(err);
-            })
-    } else {
-        User.updateOne({
+        .then((obj) => {
+            if (req.session.user._id == req.body.id && req.body.userType != req.session.user.userType)
+                req.session.destroy();
+            return res.send("updatedWithPassword");
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+
+}
+
+async function updatePatientWithPassword(req, res) {
+    var hashedPassword = await bcrypt.hash(req.body.password, 10);
+    User.updateOne({
             "_id": req.body.id
         }, {
             $unset: {
@@ -942,65 +935,47 @@ async function updateUserWithPassword(req, res) {
             "userType": req.body.userType,
             "password": hashedPassword
         })
-            .then((obj) => {
-                if (req.session.user._id == req.body.id && req.body.userType != req.session.user.userType)
-                    req.session.destroy();
-                return res.send("updatedWithPassword");
-            })
-            .catch((err) => {
-                console.log(err);
-            })
-    }
+        .then((obj) => {
+            if (req.session.user._id == req.body.id && req.body.userType != req.session.user.userType)
+                req.session.destroy();
+            return res.send("updatedWithPassword");
+        })
+        .catch((err) => {
+            console.log(err);
+        })
 }
+
+/**
+ * This put route allows admins to edit a cetain users information in the database from
+ * the admin dashboard.
+ */
+app.put('/editUser', isLoggedIn, isAdmin, isNotExistingAdmin, isNotLastAdminEdit, (req, res) => {
+    if (req.body.userType == "therapist") {
+        if (req.body.password != "") {
+            return updateTherapistWithPassword(req, res);
+        } else {
+            return updateTherapist(req, res);
+        }
+    } else {
+        if (req.body.password != "") {
+            return updatePatientWithPassword(req, res);
+        } else {
+            return updatePatient(req, res)
+
+        }
+    }
+})
+
+
 
 /**
  * This post route allows amdministrators to create a user from the admin panel.
  */
-app.post("/createUser", isLoggedIn, isAdmin, isNotRegistered, async (req, res) => {
+app.post("/createUser", isLoggedIn, isAdmin, isNotRegistered, (req, res) => {
     if (req.body.userType == "therapist") {
-        try {
-            const hashedPassword = await bcrypt.hash(req.body.password, 10);
-            const new_user = new User({
-                firstName: req.body.firstname,
-                lastName: req.body.lastname,
-                username: req.body.username,
-                phoneNum: req.body.phone,
-                userType: req.body.userType,
-                yearsExperience: req.body.yearsExperience,
-                sessionCost: req.body.sessionCost,
-                email: req.body.email,
-                password: hashedPassword
-            });
-
-            new_user.save()
-                .then((result) => {
-                    res.json("login");
-                });
-        } catch (err) {
-            console.log(err);
-            res.redirect('/sign-up');
-        }
+        return createTherapistAccount(req, res);
     } else {
-        try {
-            const hashedPassword = await bcrypt.hash(req.body.password, 10);
-            const new_user = new User({
-                firstName: req.body.firstname,
-                lastName: req.body.lastname,
-                username: req.body.username,
-                phoneNum: req.body.phone,
-                userType: req.body.userType,
-                email: req.body.email,
-                password: hashedPassword
-            });
-
-            new_user.save()
-                .then((result) => {
-                    res.json("login");
-                });
-        } catch (err) {
-            console.log(err);
-            res.redirect('/sign-up');
-        }
+        return createPatientAccount(req, res);
     }
 })
 
@@ -1041,8 +1016,7 @@ app.post('/addToCart', isLoggedIn, async (req, res) => {
         status: "active"
     });
     new_cart.save()
-        .then((result) => {
-        });
+        .then((result) => {});
     res.send();
 })
 
@@ -1079,8 +1053,7 @@ app.post('/getTherapistInfo', isLoggedIn, (req, res) => {
         if (err) console.log(err)
         if (!user) {
             return res.redirect('/')
-        }
-        else {
+        } else {
             therapistInfo = {
                 firstName: user.firstName,
                 lastName: user.lastName,
@@ -1157,8 +1130,12 @@ async function sendEmails(userId, therapistId, cartInfo) {
         }
     });
 
-    let patientInfo = await User.findById({ _id: userId });
-    let therapistInfo = await User.findById({ _id: therapistId });
+    let patientInfo = await User.findById({
+        _id: userId
+    });
+    let therapistInfo = await User.findById({
+        _id: therapistId
+    });
 
     const mailPatient = {
         from: process.env.MAIL_USER,
@@ -1220,7 +1197,9 @@ app.post('/confirmCart', isLoggedIn, usedTrial, isTherapistAvailable, (req, res)
             expiringTime: req.body.timeLengthforUse,
             cost: req.body.totalPrice
         }
-    }, { new: true }).then((cart) => {
+    }, {
+        new: true
+    }).then((cart) => {
         sendEmails(req.session.user._id, req.body.therapistID, cart)
         incrementTherapistSessionNum(req.session.user._id);
         res.send(cart);
@@ -1232,8 +1211,7 @@ app.post('/confirmCart', isLoggedIn, usedTrial, isTherapistAvailable, (req, res)
             _id: req.session.user._id
         }, {
             usedTrial: true
-        }).then((obj) => {
-        }).catch(function (error) {
+        }).then((obj) => {}).catch(function (error) {
             console.log(error);
         })
     }
@@ -1262,8 +1240,7 @@ function incrementTherapistSessionNum(userID) {
                 $inc: {
                     numSessions: 1
                 }
-            }).then(() => {
-            }).catch(function (error) {
+            }).then(() => {}).catch(function (error) {
                 console.log(error);
             })
         }
@@ -1349,6 +1326,26 @@ app.get('/recentPurchase', isLoggedIn, (req, res) => {
     });
 })
 
+function getSessionData(req, res, sortedCart) {
+    var therapistName;
+    var errorMessageVariables;
+    User.findOne({
+        _id: sortedCart[0].therapist
+    }, function (err, user) {
+        if (err) console.log(err)
+        if (user) {
+            therapistName = user.firstName + " " + user.lastName
+            errorMessageVariables = {
+                cost: sortedCart[0].cost,
+                purchased: sortedCart[0].expiringTime,
+                therapistName: therapistName
+            };
+            return res.json(errorMessageVariables)
+        }
+    })
+}
+
+
 /**
  * This get route checks to see if there is an active session for the user 'patient'
  * by checking the expiring time on the order (time length they choose when placing an order).
@@ -1367,22 +1364,7 @@ app.get('/activeSession', isLoggedIn, (req, res) => {
         }
         if (carts.length > 0) {
             const sortedCart = carts.sort((a, b) => b.purchased - a.purchased);
-            var therapistName;
-            var errorMessageVariables;
-            User.findOne({
-                _id: sortedCart[0].therapist
-            }, function (err, user) {
-                if (err) console.log(err)
-                if (user) {
-                    therapistName = user.firstName + " " + user.lastName
-                    errorMessageVariables = {
-                        cost: sortedCart[0].cost,
-                        purchased: sortedCart[0].expiringTime,
-                        therapistName: therapistName
-                    };
-                    return res.json(errorMessageVariables)
-                }
-            })
+            return getSessionData(req, res, sortedCart);
         } else {
             return res.json("NoActiveSession");
         }
@@ -1429,7 +1411,9 @@ io.on('connection', (socket) => {
     socket.on("chat message", function (msg, room) {
 
         //broadcast message to everyone in port:8000 except yourself.
-        socket.to(room).emit("chat message", { message: msg });
+        socket.to(room).emit("chat message", {
+            message: msg
+        });
 
         //save chat to the database
         let connect = mongoose.connect(process.env.DATABASE_URL, {
@@ -1591,12 +1575,11 @@ app.post('/loadMsgs', function (req, res) {
 /**
  * This get route renders 404.html page.
  */
- app.get("*", (req, res) => {
+app.get("*", (req, res) => {
     res.sendFile(path.resolve('html/404.html'))
 });
 
 /**
  * This allows the server to listen for a certain port.
  */
-server.listen(process.env.PORT || 8000, () => {
-});
+server.listen(process.env.PORT || 8000, () => {});

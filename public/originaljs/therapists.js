@@ -30,7 +30,7 @@ $(document).ready(async function () {
         }
     })
 
-    function addToCart(data) {
+    function addToCartHandler(data) {
         $.get('/isLoggedIn', function (user) {
             if (user.userType != 'patient') {
                 notAuthorizedModal.style.display = 'block';

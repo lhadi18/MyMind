@@ -1,19 +1,14 @@
 $(document).ready(async function () {
 
     function populatePatients(cartData, patientInfo) {
-        console.log("got here");
         let multiplier;
         var x = `<tr class="tableRows">`;
-
         let purchasedDate = new Date(cartData.purchased);
         let offSet = purchasedDate.getTimezoneOffset() * 60 * 1000;
         let tLocalISO = new Date(purchasedDate - offSet).toISOString().slice(0, 10);
         x += `<td>${tLocalISO}</td>`;
-
         x += `<td>${new Date(cartData.purchased).toLocaleString('en-CA', { hour: 'numeric', minute: 'numeric', hour12: true })}</td>`
-
         x += `<td>${patientInfo.fullName}</td>`
-
         if (cartData.timeLength == 'freePlan') {
             x += `<td>Trial</td>`
             multiplier = 0;
@@ -29,15 +24,11 @@ $(document).ready(async function () {
         }
         x += `<td>$${parseFloat(patientInfo.sessionCost * multiplier * 1.12).toFixed(2)}</td>`
         x += `<td>${cartData.orderId}</td>`
-
         if (cartData.status == "refunded") {
-            x += `<td>Refunded</td>`
+            x += `<td>Refunded</td></tr>`
         } else if (new Date(cartData.expiringTime) > new Date()) {
-            x += `<td class="activeStatus">Active</td>`
-        } else {
-            x += `<td class="expiredStatus">Expired</td>`
-        }
-        x += `</tr>`
+            x += `<td class="activeStatus">Active</td></tr>`
+        } else x += `<td class="expiredStatus">Expired</td></tr>`
         $("tbody").append(x);
     }
 
