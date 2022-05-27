@@ -30,34 +30,20 @@ function getTherapist(therapistId) {
             $('#therapistImg').attr('src', `${therapist.profileImg}`)
             therapistInformation = therapist;
             therapistInformation._id = therapistId;
+            let multiplier;
             if ($('#cartPlan').val() == "freePlan") {
-                $("#cartCost").html(`0.00`)
-                $("#subTotal").html(`$0.00`)
-                $("#taxTotal").html(`$0.00`)
-                $("#total").html(`$0.00`)
-                totalPrice = parseFloat(0.00).toFixed(2);
+                multiplier = 0;
+            } else if ($('#cartPlan').val() == "monthPlan") {
+                multiplier = 1;
+            } else if ($('#cartPlan').val() == "threeMonthPlan") {
+                multiplier = 3;
+            } else {
+                multiplier = 6;
             }
-            if ($('#cartPlan').val() == "monthPlan") {
-                $("#cartCost").html(`${therapistInformation.sessionCost}.00`)
-                $("#subTotal").html(`$${therapistInformation.sessionCost}.00`)
-                $("#taxTotal").html(`$${parseFloat(therapistInformation.sessionCost * 0.12).toFixed(2)}`)
-                $("#total").html(`$${parseFloat(therapistInformation.sessionCost * 1.12).toFixed(2)}`)
-                totalPrice = `${parseFloat(therapistInformation.sessionCost * 1.12).toFixed(2)}`;
-            }
-            if ($('#cartPlan').val() == "threeMonthPlan") {
-                $("#cartCost").html(`${parseFloat(therapistInformation.sessionCost * 3).toFixed(2)}`)
-                $("#subTotal").html(`${parseFloat(therapistInformation.sessionCost * 3).toFixed(2)}`)
-                $("#taxTotal").html(`$${parseFloat(therapistInformation.sessionCost * 3 * 0.12).toFixed(2)}`)
-                $("#total").html(`$${parseFloat(therapistInformation.sessionCost * 3 * 1.12).toFixed(2)}`)
-                totalPrice = `${parseFloat(therapistInformation.sessionCost * 3 * 1.12).toFixed(2)}`;
-            }
-            if ($('#cartPlan').val() == "yearPlan") {
-                $("#cartCost").html(`${parseFloat(therapistInformation.sessionCost * 6).toFixed(2)}`)
-                $("#subTotal").html(`${parseFloat(therapistInformation.sessionCost * 6).toFixed(2)}`)
-                $("#taxTotal").html(`$${parseFloat(therapistInformation.sessionCost * 6 * 0.12).toFixed(2)}`)
-                $("#total").html(`$${parseFloat(therapistInformation.sessionCost * 6 * 1.12).toFixed(2)}`)
-                totalPrice = `${parseFloat(therapistInformation.sessionCost * 6 * 1.12).toFixed(2)}`;
-            }
+            $("#cartCost").html(`${parseFloat(therapistInformation.sessionCost * multiplier).toFixed(2)}`)
+            $("#subTotal").html(`${parseFloat(therapistInformation.sessionCost * multiplier).toFixed(2)}`)
+            $("#taxTotal").html(`$${parseFloat(therapistInformation.sessionCost * multiplier * 0.12).toFixed(2)}`)
+            $("#total").html(`$${parseFloat(therapistInformation.sessionCost * multiplier * 1.12).toFixed(2)}`)
         }
     })
 }
@@ -71,34 +57,20 @@ function updateCart() {
                 timeLength: $('#cartPlan').val()
             },
             success: function () {
+                let multiplier;
                 if ($('#cartPlan').val() == "freePlan") {
-                    $("#cartCost").html(`0.00`)
-                    $("#subTotal").html(`$0.00`)
-                    $("#taxTotal").html(`$0.00`)
-                    $("#total").html(`$0.00`)
-                    totalPrice = parseFloat(0.00).toFixed(2);
+                    multiplier = 0;
+                } else if ($('#cartPlan').val() == "monthPlan") {
+                    multiplier = 1;
+                } else if ($('#cartPlan').val() == "threeMonthPlan") {
+                    multiplier = 3;
+                } else {
+                    multiplier = 6;
                 }
-                if ($('#cartPlan').val() == "monthPlan") {
-                    $("#cartCost").html(`${therapistInformation.sessionCost}.00`)
-                    $("#subTotal").html(`$${therapistInformation.sessionCost}.00`)
-                    $("#taxTotal").html(`$${parseFloat(therapistInformation.sessionCost * 0.12).toFixed(2)}`)
-                    $("#total").html(`$${parseFloat(therapistInformation.sessionCost * 1.12).toFixed(2)}`)
-                    totalPrice = `${parseFloat(therapistInformation.sessionCost * 1.12).toFixed(2)}`;
-                }
-                if ($('#cartPlan').val() == "threeMonthPlan") {
-                    $("#cartCost").html(`${parseFloat(therapistInformation.sessionCost * 3).toFixed(2)}`)
-                    $("#subTotal").html(`${parseFloat(therapistInformation.sessionCost * 3).toFixed(2)}`)
-                    $("#taxTotal").html(`$${parseFloat(therapistInformation.sessionCost * 3 * 0.12).toFixed(2)}`)
-                    $("#total").html(`$${parseFloat(therapistInformation.sessionCost * 3 * 1.12).toFixed(2)}`)
-                    totalPrice = `${parseFloat(therapistInformation.sessionCost * 3 * 1.12).toFixed(2)}`;
-                }
-                if ($('#cartPlan').val() == "yearPlan") {
-                    $("#cartCost").html(`${parseFloat(therapistInformation.sessionCost * 6).toFixed(2)}`)
-                    $("#subTotal").html(`${parseFloat(therapistInformation.sessionCost * 6).toFixed(2)}`)
-                    $("#taxTotal").html(`$${parseFloat(therapistInformation.sessionCost * 6 * 0.12).toFixed(2)}`)
-                    $("#total").html(`$${parseFloat(therapistInformation.sessionCost * 6 * 1.12).toFixed(2)}`)
-                    totalPrice = `${parseFloat(therapistInformation.sessionCost * 6 * 1.12).toFixed(2)}`;
-                }
+                $("#cartCost").html(`${parseFloat(therapistInformation.sessionCost * multiplier).toFixed(2)}`)
+                $("#subTotal").html(`${parseFloat(therapistInformation.sessionCost * multiplier).toFixed(2)}`)
+                $("#taxTotal").html(`$${parseFloat(therapistInformation.sessionCost * multiplier * 0.12).toFixed(2)}`)
+                $("#total").html(`$${parseFloat(therapistInformation.sessionCost * multiplier * 1.12).toFixed(2)}`)
             }
         })
     })
@@ -144,6 +116,21 @@ window.onclick = function (event) {
 
 const checkoutErrorMsg = document.getElementById("checkoutErrorMessage");
 
+function handleConfirmOrder(data) {
+    if (data.errorMsg) {
+        checkoutErrorMsg.style.display = 'block';
+        checkoutErrorMsg.innerHTML = data.errorMsg;
+    } else {
+        checkoutErrorMsg.style.display = 'none';
+        document.getElementById('signupSuccessModal').style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+        setTimeout(() => {
+            window.location = "/thank-you"
+        }, 2500);
+    }
+}
+
+
 document.getElementById('confirmOrder').onclick = function () {
     const time = new Date();
     var timeLengthforUse;
@@ -167,19 +154,7 @@ document.getElementById('confirmOrder').onclick = function () {
             totalPrice: totalPrice,
             therapistID: therapistInformation._id
         },
-        success: function (data) {
-            if (data.errorMsg) {
-                checkoutErrorMsg.style.display = 'block';
-                checkoutErrorMsg.innerHTML = data.errorMsg;
-            } else {
-                checkoutErrorMsg.style.display = 'none';
-                document.getElementById('signupSuccessModal').style.display = 'flex';
-                document.body.style.overflow = 'hidden';
-                setTimeout(() => {
-                    window.location = "/thank-you"
-                }, 2500);
-            }
-        }
+        success: handleConfirmOrder
     })
 }
 
