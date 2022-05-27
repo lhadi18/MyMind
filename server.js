@@ -328,13 +328,6 @@ app.get("/sign-up", isLoggedOut, setHeaders, (req, res) => {
 })
 
 /**
- * This get route renders 404.html page.
- */
- app.get("*", (req, res) => {
-    res.sendFile(path.resolve('html/404.html'))
-});
-
-/**
  * This variable initializes a diskStorage for multer.
  * Multer is a dependency that stores user profile images.
  */
@@ -1604,6 +1597,13 @@ app.post('/loadMsgs', function (req, res) {
     });
 
 })
+
+/**
+ * This get route renders 404.html page.
+ */
+ app.get("*", (req, res) => {
+    res.sendFile(path.resolve('html/404.html'))
+});
 
 /**
  * This allows the server to listen for a certain port.

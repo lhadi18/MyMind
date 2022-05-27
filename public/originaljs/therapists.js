@@ -12,6 +12,7 @@ $(document).ready(async function () {
         url: '/getTherapists',
         type: "GET",
         success: function (data) {
+            console.log("data: ", data)
             var i = 1;
 
             data.forEach(function (Therapist) {
@@ -29,6 +30,37 @@ $(document).ready(async function () {
         }
     })
 
+    function addToCart(data) {
+        $.get('/isLoggedIn', function (user) {
+            if (user.userType != 'patient') {
+                notAuthorizedModal.style.display = 'block';
+                btn.title = "Only patients can purchase therapy sessions."
+                btn.style.cursor = "context-menu";
+            } else {
+                if (data == 'cartExists') {
+                    cartExistModal.style.display = 'block';
+                    document.body.style.overflow = 'hidden';
+                } else if (data == "orderExists") {
+                    setTimeout(() => {
+                        $.get('/activeSession', function (data) {
+                            console.log(data)
+                            $("#therapistName").text(`${data.therapistName}.`);
+                            $("#expireDate").text(`${new Date(data.purchased).toLocaleString('en-CA', {
+                                month: 'short',
+                                day: 'numeric',
+                                year: 'numeric'
+                            })}`)
+                            $("#expireTime").text(`${new Date(data.purchased).toLocaleString('en-CA', { hour: 'numeric', minute: 'numeric', hour12: true })}`)
+                        })
+                        therapistExistModal.style.display = 'block';
+                        document.body.style.overflow = 'hidden';
+                    }, 50);
+                } else {
+                    window.location = "/checkout"
+                }
+            }
+        });
+    }
     // Disable buttons for admin, therapists, and logged out users
     const therapistBtns = document.querySelectorAll(".therapistBtn");
     therapistBtns.forEach(function (btn) {
@@ -39,38 +71,7 @@ $(document).ready(async function () {
                 data: {
                     therapist: btn.id
                 },
-                success: function (data) {
-                    $.get('/isLoggedIn', function (user) {
-                        if (user.userType != 'patient') {
-                            notAuthorizedModal.style.display = 'block';
-                            btn.title = "Only patients can purchase therapy sessions."
-                            btn.style.cursor = "context-menu";
-                        } else {
-                            if (data == 'cartExists') {
-                                cartExistModal.style.display = 'block';
-                                document.body.style.overflow = 'hidden';
-                            } else if (data == "orderExists") {
-                                //display error message pop up for when user already has a therapist.
-                                setTimeout(() => {
-                                    $.get('/activeSession', function (data) {
-                                        console.log(data)
-                                        $("#therapistName").text(`${data.therapistName}.`);
-                                        $("#expireDate").text(`${new Date(data.purchased).toLocaleString('en-CA', {
-                                            month: 'short',
-                                            day: 'numeric',
-                                            year: 'numeric'
-                                        })}`)
-                                        $("#expireTime").text(`${new Date(data.purchased).toLocaleString('en-CA', { hour: 'numeric', minute: 'numeric', hour12: true })}`)
-                                    })
-                                    therapistExistModal.style.display = 'block';
-                                    document.body.style.overflow = 'hidden';
-                                }, 50);
-                            } else {
-                                window.location = "/checkout"
-                            }
-                        }
-                    });
-                }
+                success: addToCartHandler
             })
         })
     })
