@@ -28,6 +28,146 @@ Frontend - HTML, CSS
 Backend - Node.js, JavaScript, jQuery, Ajax,  MongoDB Altlas,  Git, Heroku
 Node.js Modules - Nodemon, Express.js, Express-session, Path, Mongoose, Multer, Http, Socket.io, Nodemailer, Bcrypt
 
+File Contents:
+.env
+│   .gitignore
+│   package-lock.json
+│   package.json
+│   README.md
+│   server.js
+│
+├───data
+│       carts.json
+│       dms.json
+│       users.json
+│
+├───html
+│       404.html
+│       admin-dashboard.html
+│       chat-session.html
+│       checkout.html
+│       edit-account.html
+│       index.html
+│       login.html
+│       my-patients.html
+│       order-history.html
+│       privacypolicy.html
+│       sign-up.html
+│       termsandconditions.html
+│       thank-you.html
+│       therapists.html
+│       userprofile.html
+│
+├───models
+│       BBY_31_messages.js
+│       BBY_31_shoppingCarts.js
+│       BBY_31_users.js
+│
+└───public
+    ├───css
+    │       404.css
+    │       account.css
+    │       admin-dashboard.css
+    │       chat-session.css
+    │       checkout.css
+    │       edit-account.css
+    │       home.css
+    │       login.css
+    │       my-patients.css
+    │       order-history.css
+    │       privacy-terms.css
+    │       responsive.css
+    │       signup.css
+    │       style.css
+    │       thank-you.css
+    │       therapists.css
+    │
+    ├───images
+    │       batman.mp3
+    │       batman.png
+    │       checkout.jpg
+    │       heart-pulse.svg
+    │       hero.jpg
+    │       hero2.jpg
+    │       home.jpg
+    │       login-graphic.svg
+    │       logo-bl.svg
+    │       logo-wh.svg
+    │       logo.png
+    │       logo.svg
+    │       orderhistory.jpg
+    │       placeholder-background.jpg
+    │       placeholder-profile.jpg
+    │       radial-bg.svg
+    │       send.svg
+    │       signup.svg
+    │       thankyou.svg
+    │       therapist1.jpg
+    │       therapist2.jpg
+    │
+    ├───js
+    │       account.js
+    │       admin-dashboard.js
+    │       checkout.js
+    │       home.js
+    │       index.js
+    │       login.js
+    │       main.js
+    │       my-patients.js
+    │       order-history.js
+    │       sign-up.js
+    │       thank-you.js
+    │       therapists.js
+    │
+    ├───originaljs
+    │       account.js
+    │       admin-dashboard.js
+    │       checkout.js
+    │       index.js
+    │       login.js
+    │       main.js
+    │       my-patients.js
+    │       order-history.js
+    │       sign-up.js
+    │       thank-you.js
+    │       therapists.js
+    │
+    ├───temp
+    │       chatbox.html
+    │       footer.html
+    │       nav.html
+    │
+    └───uploads
+        │   0626_celeb100-jackie-chan_1200x675.jpg
+        │   0ea012b1d902c41fecb41ccb572b2414.jpg
+        │   1652122795955lolgta.jpg
+        │   1652132667558gta5.png
+        │   1652217561891cool-profile-pic-matheus-ferrero.jpeg
+        │   1652217690008askdaskdj.jpg
+        │   1652240942593carly_orr_web.jpg
+        │   1652242555319carly_orr_web.jpg
+        │   1652297874730carly_orr_web.jpg
+        │   1652985706882MDot-TheOffice-640x360-MP.jpg
+        │   1653071362456Screenshot_1.png
+        │   6f979ad64096012948b281ce187c59812e30c3ac.png
+        │   as.jpg
+        │   askdaskdj.jpg
+        │   cool-profile-pic-matheus-ferrero.jpeg
+        │   gettyimages-1061959920.jpg
+        │   hero.jpg
+        │   hero2.jpg
+        │   home.jpg
+        │   image.jpg
+        │   placeholder-profile.jpg
+        │   Screenshot_20220507-153952_Gallery.jpg
+        │   tXHWkXQxaRPZwzX2AwmKTJ-1200-80.jpg
+        │
+        ├───banners
+        │       placeholder-background.jpg
+        │       testtest.png
+        │
+        └───profileCover
+
 How to Run the project:
 
 1. Install:
@@ -58,12 +198,12 @@ MAIL_PASS = "--your password--"
 9: How to use main features:
 
 -----Admin Dashboard------
-1. - Make a new Patient Account
-2. - Go to the MongoDB and edit that account's userType attribute to "admin"
-3. - Login with that account
-4. - Click 'Admin Dashboard' on the navbar
-5. - You can now see a list of every user that signed up to your application
-6. - You can Create new users (even admin users), edit and delete existing users
+1. Make a new Patient Account
+2. Go to the MongoDB and edit that account's userType attribute to "admin"
+3. Login with that account
+4. Click 'Admin Dashboard' on the navbar
+5. You can now see a list of every user that signed up to your application
+6. You can Create new users (even admin users), edit and delete existing users
 
 -----Shopping Cart System / Chat -----
 1. Checkout, then live chat. Follow these directions.
