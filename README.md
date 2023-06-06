@@ -111,5 +111,6 @@ Node.js Modules - Nodemon, Express.js, Express-session, Path, Mongoose, Multer, 
 3. Type 'batman' in the username field
 4. Get ***mindblown***
 
-
+## How to contribute
+Pull requests are welcome. Please divide your PRs in 3 sections: `Problem`, `Solution`, `Testing`.
 
