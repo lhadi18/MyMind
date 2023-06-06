@@ -47,24 +47,21 @@ Node.js Modules - Nodemon, Express.js, Express-session, Path, Mongoose, Multer, 
 
 2. Clone this repo from your command line.
 
-3. Open the project with VSCode, open the IDE's terminal and run the command - "npm install nodemon express express-session path mongoose multer http socket.io socket.io-client nodemailer bcrypt"
+3. Open the project with VSCode, open the IDE's terminal and run the command `npm install`
 
-4. Create a new file in the public project directory and call it '.env'. 
+4. Create a new file in the public project directory and call it `.env`. 
 
 5. Connect your project to the database:
 - Create a MongoDB Atlas account at https://mongodb.com
 - Connect your project to the MongoDB Cluster by clicking on the "connect" button, choosing the "connect to your application" option and copying the link.
-- Inside the .env file, make a new variable called 'DATABASE_URL' and assign it (=) to the link you copied from MongoDB, making sure to replace the 'username' and 'password' fields in the url to your database access credentials. 
+- Inside the .env file, make a new variable called `DATABASE_URL` and assign it (=) to the link you copied from MongoDB, making sure to replace the 'username' and 'password' fields in the url to your database access credentials. 
 - Full MongoDB setup tutorial at https://www.youtube.com/watch?v=2QQGWYe7IDU&ab_channel=TraversyMedia
 
-6. Make an hotmail for your project and add 2 variables to your .env file:
-MAIL_USER = "--your email address--"
-MAIL_PASS = "--your password--"
+6. Make an hotmail for your project and add 2 variables to your .env file:\
+`MAIL_USER=<your-email-address>`\
+`MAIL_PASS=<your-password>`
 
 7. Run the project by typing "npm run devStart" and going to http://localhost:8000/ on your browser.
-
-8. Link to MyMind's testing history: https://docs.google.com/spreadsheets/d/1Sbn3BsttAxmWJI4x7CHYlTcI45XZsBZNbALRSHIwSc8/edit?usp=sharing
-
 
 ## How to use main features
 
