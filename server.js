@@ -25,11 +25,15 @@ const nodemailer = require('nodemailer');
 if (process.env.NODE_ENV != 'production') {
     require('dotenv').config()
 }
+
+mongoose.set('strictQuery', false);
 mongoose.connect(process.env.DATABASE_URL, {
         useNewUrlParser: true,
         useUnifiedTopology: true
     })
-    .then((obj) => {})
+    .then(() => {
+        console.log("Connected to MongoDB");
+    })
     .catch((err) => console.log(err));
 
 /**
@@ -1713,4 +1717,6 @@ app.get("*", (req, res) => {
 /**
  * This allows the server to listen for a certain port.
  */
-server.listen(process.env.PORT || 8000, () => {});
+server.listen(process.env.PORT || 8000, () => {
+    console.log(`listening on port ${process.env.PORT || 8000} `)
+});
