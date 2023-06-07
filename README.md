@@ -1,3 +1,5 @@
+<img align="right" src="https://visitor-badge.laobi.icu/badge?page_id=salesp07.MyMind">
+
 # BBY-31 -> MyMind
 <img src="https://raw.githubusercontent.com/salesp07/salesp07.github.io/master/public/mymind-responsive.png" alt="MyMind screenshot"/>
 
